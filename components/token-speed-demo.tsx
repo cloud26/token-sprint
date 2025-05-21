@@ -2,9 +2,8 @@
 
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-// 移除 Tabs 相关导入
 import { Slider } from "@/components/ui/slider"
 
 interface TokenSpeedDemoProps {
@@ -208,9 +207,8 @@ As yonder lady o'er her fellows shows.`,
 
   return (
     <Card className="w-full">
-      <CardHeader></CardHeader>
-      <CardContent className="space-y-6">
-        <div className="space-y-4">
+      <CardContent className="p-3 space-y-3">
+        <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label htmlFor="speed-slider" className="text-sm font-medium">
               {language === "zh" ? "生成速度" : "Generation Speed"}: {speed} tokens/s
@@ -227,7 +225,7 @@ As yonder lady o'er her fellows shows.`,
             value={[speed]}
             onValueChange={handleSpeedChange}
             disabled={isGenerating}
-            className="py-4"
+            className="py-2"
           />
           <div className="flex justify-between text-xs text-muted-foreground">
             <span>1</span>
@@ -245,7 +243,7 @@ As yonder lady o'er her fellows shows.`,
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-1">
           <div className="flex justify-between text-sm">
             <span>Tokens: {tokenCount}</span>
             <span>Time: {elapsedTime.toFixed(2)}s</span>
@@ -253,7 +251,7 @@ As yonder lady o'er her fellows shows.`,
           </div>
           <div
             ref={textContainerRef}
-            className="relative min-h-[300px] max-h-[300px] rounded-md border p-4 font-mono text-sm overflow-auto whitespace-pre-wrap"
+            className="relative min-h-[220px] max-h-[220px] rounded-md border p-3 font-mono text-sm overflow-auto whitespace-pre-wrap"
           >
             {generatedText || (language === "zh" ? "生成的文本将显示在这里..." : "Generated text will appear here...")}
             {isGenerating && (
@@ -261,8 +259,7 @@ As yonder lady o'er her fellows shows.`,
             )}
           </div>
         </div>
-      </CardContent>
-      <CardFooter>
+
         <Button
           onClick={toggleGeneration}
           className="w-full"
@@ -277,7 +274,7 @@ As yonder lady o'er her fellows shows.`,
               ? "开始生成"
               : "Start Generation"}
         </Button>
-      </CardFooter>
+      </CardContent>
     </Card>
   )
 }
