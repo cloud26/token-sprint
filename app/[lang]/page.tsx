@@ -2,7 +2,7 @@ import { use } from "react"
 import { tools, home, type Language } from "@/config/languages"
 import { Metadata } from "next"
 import { SideNav } from "@/components/side-nav"
-import TokenSpeedDemo from "@/components/token-speed-demo"
+import LLMMemoryCalculator from "@/components/llm-memory-calculator"
 import LanguageSwitcher from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
 
@@ -34,19 +34,19 @@ export default function Home({
     return (
         <div className="min-h-screen flex flex-col">
             <LanguageSwitcher language={language} className="fixed top-4 right-4 z-50" />
-            <SideNav language={language} currentPath={`/${language}/${tools.tokenSpeedVisualizer.path}`} />
+            <SideNav language={language} currentPath={`/${language}/${tools.llmGpuCalculator.path}`} />
             
             <main className="ml-64 flex-1 flex flex-col items-center p-4 pt-2 md:p-8 md:pt-4">
-                <div className="w-full max-w-3xl space-y-2 flex-1">
+                <div className="w-full max-w-4xl space-y-2 flex-1">
                     <div className="flex flex-col items-center gap-1 mt-8">
                         <h1 className="text-2xl font-bold text-center">
-                            {tools.tokenSpeedVisualizer.title[language]}
+                            {tools.llmGpuCalculator.title[language]}
                         </h1>
                         <p className="text-center text-muted-foreground text-sm">
-                            {tools.tokenSpeedVisualizer.description[language]}
+                            {tools.llmGpuCalculator.description[language]}
                         </p>
                     </div>
-                    <TokenSpeedDemo initialLanguage={language} />
+                    <LLMMemoryCalculator language={language} />
                 </div>
                 <Footer />
             </main>

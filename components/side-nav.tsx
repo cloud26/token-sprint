@@ -9,8 +9,8 @@ interface SideNavProps {
 
 export function SideNav({ language, currentPath }: SideNavProps) {
     const toolsList = [
-        tools.tokenSpeedVisualizer,
         tools.llmGpuCalculator,
+        tools.tokenSpeedVisualizer,
     ]
 
     return (
