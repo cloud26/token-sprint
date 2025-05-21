@@ -1,12 +1,16 @@
 "use client"
 
-import { useState } from "react"
 import TokenSpeedDemo from "@/components/token-speed-demo"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BackToHome } from "@/components/back-to-home"
+import LanguageSwitcher from "@/components/language-switcher"
+import { use } from "react"
 
-export default function TokenGenerationSpeedVisualizer() {
-    const [language, setLanguage] = useState<"en" | "zh">("zh")
+export default function TokenGenerationSpeedVisualizer({
+    params,
+}: {
+    params: Promise<{ lang: "en" | "zh" }>
+}) {
+    const { lang: language } = use(params)
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-start p-4 pt-2 md:p-8 md:pt-4">
@@ -15,13 +19,10 @@ export default function TokenGenerationSpeedVisualizer() {
                     <div className="w-full flex justify-start mb-4">
                         <BackToHome language={language} />
                     </div>
-                    <Tabs value={language} onValueChange={(value) => setLanguage(value as "en" | "zh")} className="mb-1">
-                        <TabsList className="grid w-32 grid-cols-2">
-                            <TabsTrigger value="zh">中文</TabsTrigger>
-                            <TabsTrigger value="en">EN</TabsTrigger>
-                        </TabsList>
-                    </Tabs>
-                    <h1 className="text-2xl font-bold text-center">{language === "zh" ? "Token 生成速度可视化" : "Token Generation Speed Visualizer"}</h1>
+                    <LanguageSwitcher language={language} />
+                    <h1 className="text-2xl font-bold text-center">
+                        {language === "zh" ? "Token 生成速度可视化" : "Token Generation Speed Visualizer"}
+                    </h1>
                     <p className="text-center text-muted-foreground text-sm">
                         {language === "zh"
                             ? "实时体验不同的 token 生成速度"
