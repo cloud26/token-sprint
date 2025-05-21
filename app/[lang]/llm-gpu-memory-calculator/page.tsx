@@ -1,11 +1,20 @@
 import { BackToHome } from "@/components/back-to-home"
 import LanguageSwitcher from "@/components/language-switcher"
 import { use } from "react"
+import { tools, type Language } from "@/config/languages"
+import { Metadata } from "next"
+
+export async function generateMetadata({ params }: { params: { lang: Language } }): Promise<Metadata> {
+    return {
+        title: tools.llmGpuCalculator.metadata.title[params.lang],
+        description: tools.llmGpuCalculator.metadata.description[params.lang],
+    }
+}
 
 export default function LLMGPUMemoryCalculator({
     params,
 }: {
-    params: Promise<{ lang: "en" | "zh" }>
+    params: Promise<{ lang: Language }>
 }) {
     const { lang: language } = use(params)
 
@@ -18,12 +27,10 @@ export default function LLMGPUMemoryCalculator({
                     </div>
                     <LanguageSwitcher language={language} />
                     <h1 className="text-2xl font-bold text-center">
-                        {language === "zh" ? "大模型推理显存与GPU数量计算器" : "LLM GPU Memory Calculator"}
+                        {tools.llmGpuCalculator.title[language]}
                     </h1>
                     <p className="text-center text-muted-foreground text-sm">
-                        {language === "zh"
-                            ? "计算大语言模型推理所需的显存和GPU数量"
-                            : "Calculate GPU memory requirements and GPU count for LLM inference"}
+                        {tools.llmGpuCalculator.description[language]}
                     </p>
                 </div>
                 <iframe

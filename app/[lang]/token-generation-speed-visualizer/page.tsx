@@ -2,11 +2,20 @@ import TokenSpeedDemo from "@/components/token-speed-demo"
 import { BackToHome } from "@/components/back-to-home"
 import LanguageSwitcher from "@/components/language-switcher"
 import { use } from "react"
+import { tools, type Language } from "@/config/languages"
+import { Metadata } from "next"
+
+export async function generateMetadata({ params }: { params: { lang: Language } }): Promise<Metadata> {
+    return {
+        title: tools.tokenSpeedVisualizer.metadata.title[params.lang],
+        description: tools.tokenSpeedVisualizer.metadata.description[params.lang],
+    }
+}
 
 export default function TokenGenerationSpeedVisualizer({
     params,
 }: {
-    params: Promise<{ lang: "en" | "zh" }>
+    params: Promise<{ lang: Language }>
 }) {
     const { lang: language } = use(params)
 
@@ -19,12 +28,10 @@ export default function TokenGenerationSpeedVisualizer({
                     </div>
                     <LanguageSwitcher language={language} />
                     <h1 className="text-2xl font-bold text-center">
-                        {language === "zh" ? "Token 生成速度可视化" : "Token Generation Speed Visualizer"}
+                        {tools.tokenSpeedVisualizer.title[language]}
                     </h1>
                     <p className="text-center text-muted-foreground text-sm">
-                        {language === "zh"
-                            ? "实时体验不同的 token 生成速度"
-                            : "Experience different token generation speeds in real-time"}
+                        {tools.tokenSpeedVisualizer.description[language]}
                     </p>
                 </div>
                 <TokenSpeedDemo initialLanguage={language} />

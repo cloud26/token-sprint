@@ -1,39 +1,27 @@
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import LanguageSwitcher from "@/components/language-switcher"
 import { use } from "react"
+import { tools, home, type Language } from "@/config/languages"
+import { Metadata } from "next"
+
+export async function generateMetadata({ params }: { params: { lang: Language } }): Promise<Metadata> {
+    return {
+        title: home.metadata.title[params.lang],
+        description: home.metadata.description[params.lang],
+    }
+}
 
 export default function Home({
     params,
 }: {
-    params: Promise<{ lang: "en" | "zh" }>
+    params: Promise<{ lang: Language }>
 }) {
     const { lang: language } = use(params)
 
-    const tools = [
-        {
-            title: {
-                zh: "Token 生成速度可视化",
-                en: "Token Generation Speed Visualizer"
-            },
-            description: {
-                zh: "实时体验不同的 token 生成速度",
-                en: "Experience different token generation speeds in real-time"
-            },
-            path: "token-generation-speed-visualizer"
-        },
-        {
-            title: {
-                zh: "大模型推理显存与GPU数量计算器",
-                en: "LLM GPU Memory Calculator"
-            },
-            description: {
-                zh: "计算大语言模型推理所需的显存和GPU数量",
-                en: "Calculate GPU memory requirements and GPU count for LLM inference"
-            },
-            path: "llm-gpu-memory-calculator"
-        }
+    const toolsList = [
+        tools.tokenSpeedVisualizer,
+        tools.llmGpuCalculator,
     ]
 
     return (
@@ -42,17 +30,15 @@ export default function Home({
                 <div className="flex flex-col items-center gap-1 mt-16">
                     <LanguageSwitcher language={language} />
                     <h1 className="text-3xl font-bold text-center">
-                        {language === "zh" ? "AI 工具集" : "AI Tools Collection"}
+                        {home.title[language]}
                     </h1>
                     <p className="text-center text-muted-foreground text-sm">
-                        {language === "zh"
-                            ? "一系列实用的 AI 相关工具"
-                            : "A collection of useful AI-related tools"}
+                        {home.description[language]}
                     </p>
                 </div>
 
                 <div className="grid gap-4">
-                    {tools.map((tool) => (
+                    {toolsList.map((tool) => (
                         <Link
                             key={tool.path}
                             href={`/${language}/${tool.path}`}
