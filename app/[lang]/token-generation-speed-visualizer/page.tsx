@@ -1,5 +1,3 @@
-"use client"
-
 import TokenSpeedDemo from "@/components/token-speed-demo"
 import { BackToHome } from "@/components/back-to-home"
 import LanguageSwitcher from "@/components/language-switcher"
