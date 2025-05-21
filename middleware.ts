@@ -3,6 +3,22 @@ import type { NextRequest } from "next/server"
 
 export function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname
+    const searchParams = request.nextUrl.searchParams
+    const ref = searchParams.get('ref')
+
+    // 如果有 ref 参数，可以在这里记录
+    if (ref) {
+        // 这里可以用你的分析工具记录，比如：
+        console.log(`Referral from: ${ref}`)
+        
+        // 可以设置 cookie 来追踪用户来源
+        const response = NextResponse.next()
+        response.cookies.set('referral_source', ref, {
+            maxAge: 30 * 24 * 60 * 60, // 30天
+            path: '/',
+        })
+        return response
+    }
 
     // 处理旧路径重定向
     const oldPaths = [

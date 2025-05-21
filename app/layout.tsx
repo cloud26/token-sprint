@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Analytics } from "@vercel/analytics/next"
+import { ReferralTracker } from '@/components/referral-tracker'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
         <meta name="google-adsense-account" content="ca-pub-8472112646404075" />
       </head>
       <body>
+        <ReferralTracker />
         {children}
         <Analytics />
       </body>
