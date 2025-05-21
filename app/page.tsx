@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-start p-4 pt-2 md:p-8 md:pt-4">
       <div className="w-full max-w-3xl space-y-2">
-        <div className="flex flex-col items-center gap-1">
+        <div className="flex flex-col items-center gap-1 mt-16">
           <Tabs value={language} onValueChange={(value) => setLanguage(value as "en" | "zh")} className="mb-1">
             <TabsList className="grid w-32 grid-cols-2">
               <TabsTrigger value="zh">中文</TabsTrigger>
