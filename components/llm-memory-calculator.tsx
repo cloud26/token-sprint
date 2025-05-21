@@ -215,22 +215,7 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                     </div>
                 </CardContent>
             </Card>
-
-            <footer className="py-6 text-center">
-                <p className="text-gray-600 mb-3">{calculatorText.footer.supportText[language]}</p>
-                <a
-                    href="https://www.buymeacoffee.com/pengpeng"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block hover:opacity-90 transition-opacity"
-                >
-                    <img
-                        src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-                        alt="Buy Me A Coffee"
-                        className="h-[60px] w-[217px]"
-                    />
-                </a>
-            </footer>
+                                            
         </TooltipProvider>
     )
 } 

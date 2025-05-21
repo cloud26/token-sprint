@@ -1,6 +1,7 @@
 import TokenSpeedDemo from "@/components/token-speed-demo"
 import { BackToHome } from "@/components/back-to-home"
 import LanguageSwitcher from "@/components/language-switcher"
+import { Footer } from "@/components/footer"
 import { use } from "react"
 import { tools, type Language } from "@/config/languages"
 import { Metadata } from "next"
@@ -22,12 +23,12 @@ export default function TokenGenerationSpeedVisualizer({
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-start p-4 pt-2 md:p-8 md:pt-4">
+            <LanguageSwitcher language={language} />
             <div className="w-full max-w-3xl space-y-2">
                 <div className="flex flex-col items-center gap-1 mt-8">
                     <div className="w-full flex justify-start mb-4">
                         <BackToHome language={language} />
                     </div>
-                    <LanguageSwitcher language={language} />
                     <h1 className="text-2xl font-bold text-center">
                         {tools.tokenSpeedVisualizer.title[language]}
                     </h1>
@@ -37,6 +38,7 @@ export default function TokenGenerationSpeedVisualizer({
                 </div>
                 <TokenSpeedDemo initialLanguage={language} />
             </div>
+            <Footer />
         </main>
     )
 } 

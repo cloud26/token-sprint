@@ -52,7 +52,7 @@ export const common = {
     },
     languageLabels: {
         zh: "中文",
-        en: "EN"
+        en: "English"
     }
 }
 

@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import LanguageSwitcher from "@/components/language-switcher"
+import { Footer } from "@/components/footer"
 import { use } from "react"
 import { tools, home, type Language } from "@/config/languages"
 import { Metadata } from "next"
@@ -27,9 +28,9 @@ export default function Home({
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-start p-4 pt-2 md:p-8 md:pt-4">
+            <LanguageSwitcher language={language} />
             <div className="w-full max-w-3xl space-y-8">
                 <div className="flex flex-col items-center gap-1 mt-16">
-                    <LanguageSwitcher language={language} />
                     <h1 className="text-3xl font-bold text-center">
                         {home.title[language]}
                     </h1>
@@ -54,6 +55,7 @@ export default function Home({
                     ))}
                 </div>
             </div>
+            <Footer />
         </main>
     )
 } 
