@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { BackToHome } from "@/components/back-to-home"
 
 export default function LLMGPUMemoryCalculator() {
     const [language, setLanguage] = useState<"en" | "zh">("zh")
@@ -10,6 +11,9 @@ export default function LLMGPUMemoryCalculator() {
         <main className="flex min-h-screen flex-col items-center justify-start p-4 pt-2 md:p-8 md:pt-4">
             <div className="w-full max-w-4xl space-y-2">
                 <div className="flex flex-col items-center gap-1 mt-8">
+                    <div className="w-full flex justify-start mb-4">
+                        <BackToHome language={language} />
+                    </div>
                     <Tabs value={language} onValueChange={(value) => setLanguage(value as "en" | "zh")} className="mb-1">
                         <TabsList className="grid w-32 grid-cols-2">
                             <TabsTrigger value="zh">中文</TabsTrigger>
