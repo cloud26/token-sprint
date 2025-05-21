@@ -3,15 +3,17 @@ import LanguageSwitcher from "@/components/language-switcher"
 import { use } from "react"
 import { tools, type Language } from "@/config/languages"
 import { Metadata } from "next"
+import LLMMemoryCalculator from "@/components/llm-memory-calculator"
 
-export async function generateMetadata({ params }: { params: { lang: Language } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
+    const { lang } = await params
     return {
-        title: tools.llmGpuCalculator.metadata.title[params.lang],
-        description: tools.llmGpuCalculator.metadata.description[params.lang],
+        title: tools.llmGpuCalculator.metadata.title[lang],
+        description: tools.llmGpuCalculator.metadata.description[lang],
     }
 }
 
-export default function LLMGPUMemoryCalculator({
+export default function LLMGPUMemoryCalculatorPage({
     params,
 }: {
     params: Promise<{ lang: Language }>
@@ -33,13 +35,7 @@ export default function LLMGPUMemoryCalculator({
                         {tools.llmGpuCalculator.description[language]}
                     </p>
                 </div>
-                <iframe
-                    src="https://llm-gpu-memory-calculater.linpp2009.com/"
-                    className="w-full h-[800px] rounded-lg border shadow-lg"
-                    title="LLM GPU Memory Calculator"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                />
+                <LLMMemoryCalculator language={language} />
             </div>
         </main>
     )

@@ -5,10 +5,11 @@ import { use } from "react"
 import { tools, type Language } from "@/config/languages"
 import { Metadata } from "next"
 
-export async function generateMetadata({ params }: { params: { lang: Language } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
+    const { lang } = await params
     return {
-        title: tools.tokenSpeedVisualizer.metadata.title[params.lang],
-        description: tools.tokenSpeedVisualizer.metadata.description[params.lang],
+        title: tools.tokenSpeedVisualizer.metadata.title[lang],
+        description: tools.tokenSpeedVisualizer.metadata.description[lang],
     }
 }
 

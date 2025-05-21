@@ -5,10 +5,11 @@ import { use } from "react"
 import { tools, home, type Language } from "@/config/languages"
 import { Metadata } from "next"
 
-export async function generateMetadata({ params }: { params: { lang: Language } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
+    const { lang } = await params
     return {
-        title: home.metadata.title[params.lang],
-        description: home.metadata.description[params.lang],
+        title: home.metadata.title[lang],
+        description: home.metadata.description[lang],
     }
 }
 
