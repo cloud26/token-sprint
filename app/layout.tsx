@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: 'AI Tools Collection | linpp2009.com',
   description: 'A collection of useful AI-related tools, including token generation speed visualization and LLM GPU memory calculator.',
   generator: 'linpp2009.com',
+  other: {
+    'google-adsense-account': 'ca-pub-8472112646404075',
+  },
 }
 
 export default function RootLayout({
@@ -15,6 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="google-adsense-account" content="ca-pub-8472112646404075" />
+      </head>
       <body>
         {children}
         <Analytics />
