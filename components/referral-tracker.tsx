@@ -2,8 +2,9 @@
 
 import { useEffect } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
-export function ReferralTracker() {
+function ReferralTrackerInner() {
     const pathname = usePathname()
     const searchParams = useSearchParams()
 
@@ -26,4 +27,13 @@ export function ReferralTracker() {
     }, [pathname, searchParams])
 
     return null // 这是一个无渲染组件
+}
+
+// 导出一个包装了 Suspense 的组件
+export function ReferralTracker() {
+    return (
+        <Suspense fallback={null}>
+            <ReferralTrackerInner />
+        </Suspense>
+    )
 } 
