@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import Script from 'next/script'
 import { ReferralTracker } from '@/components/referral-tracker'
 import './globals.css'
@@ -39,6 +40,7 @@ export default function RootLayout({
         <ReferralTracker />
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
