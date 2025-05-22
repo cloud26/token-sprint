@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Analytics } from "@vercel/analytics/next"
+import Script from 'next/script'
 import { ReferralTracker } from '@/components/referral-tracker'
 import './globals.css'
 
@@ -21,6 +22,18 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="google-adsense-account" content="ca-pub-8472112646404075" />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-4Z7YE2WSXQ"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-4Z7YE2WSXQ');
+          `}
+        </Script>
       </head>
       <body>
         <ReferralTracker />
