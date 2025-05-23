@@ -8,9 +8,9 @@ import { Footer } from "@/components/footer"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
     const { lang } = await params
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
         (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://www.linpp2009.com')
-    
+
     return {
         title: home.metadata.title[lang],
         description: home.metadata.description[lang],
@@ -35,8 +35,8 @@ export default function Home({
         <div className="min-h-screen flex flex-col">
             <LanguageSwitcher language={language} className="fixed top-4 right-4 z-50" />
             <SideNav language={language} currentPath={`/${language}/${tools.llmGpuCalculator.path}`} />
-            
-            <main className="ml-64 flex-1 flex flex-col items-center p-4 pt-2 md:p-8 md:pt-4">
+
+            <main className="pt-20 md:pt-4 md:ml-64 flex-1 flex flex-col items-center p-4 md:p-8">
                 <div className="w-full max-w-4xl space-y-2 flex-1">
                     <div className="flex flex-col items-center gap-1 mt-8">
                         <h1 className="text-2xl font-bold text-center">

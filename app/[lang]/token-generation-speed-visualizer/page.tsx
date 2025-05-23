@@ -8,10 +8,10 @@ import { SideNav } from "@/components/side-nav"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
     const { lang } = await params
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
         (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://www.linpp2009.com')
     const path = 'token-generation-speed-visualizer'
-    
+
     return {
         title: tools.tokenSpeedVisualizer.metadata.title[lang],
         description: tools.tokenSpeedVisualizer.metadata.description[lang],
@@ -37,8 +37,8 @@ export default function TokenGenerationSpeedVisualizer({
         <div className="min-h-screen flex flex-col">
             <LanguageSwitcher language={language} className="fixed top-4 right-4 z-50" />
             <SideNav language={language} currentPath={currentPath} />
-            
-            <main className="ml-64 flex-1 flex flex-col items-center p-4 pt-2 md:p-8 md:pt-4">
+
+            <main className="pt-20 md:pt-4 md:ml-64 flex-1 flex flex-col items-center p-4 md:p-8">
                 <div className="w-full max-w-3xl space-y-2 flex-1">
                     <div className="flex flex-col items-center gap-1 mt-8">
                         <h1 className="text-2xl font-bold text-center">
