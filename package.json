@@ -1,6 +1,7 @@
 {
-  "name": "my-v0-project",
+  "name": "token-sprint",
   "version": "0.1.0",
+  "description": "AI 工具集 - 基于 Next.js 15 + shadcn/ui 构建的 Token 生成速度可视化器和 LLM 显存计算器",
   "private": true,
   "scripts": {
     "dev": "next dev",

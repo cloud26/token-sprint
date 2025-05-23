@@ -1,3 +1,6 @@
+/* Global styles for Token Sprint - AI Tools */
+/* Includes shadcn/ui CSS variables and base styles */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,6 +16,9 @@ body {
 }
 
 @layer base {
+
+  /* shadcn/ui design system CSS variables */
+  /* Light theme color palette */
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
@@ -48,6 +54,8 @@ body {
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  /* Dark theme color palette */
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -88,6 +96,7 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
