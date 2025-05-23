@@ -186,32 +186,31 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                         </Popover>
                     </div>
 
-                    <div className="bg-slate-50 p-4 rounded-lg space-y-4">
-                        <div className="space-y-2">
-                            <Label className="text-gray-600">{calculatorText.results.modelMemory[language]}：</Label>
-                            <p className="text-lg">
-                                <span className="text-blue-600 font-semibold">{memory.modelMemory}</span> GB
-                            </p>
-                        </div>
-                        <div className="space-y-2">
-                            <Label className="text-gray-600">{calculatorText.results.inferenceMemory[language]}：</Label>
-                            <p className="text-lg">
-                                <span className="text-blue-600 font-semibold">{memory.inferenceMemory}</span> GB
-                            </p>
-                        </div>
-                        <div className="pt-2 border-t">
-                            <Label className="text-gray-600">{calculatorText.results.totalMemory[language]}：</Label>
-                            <p className="text-xl">
-                                <span className="text-blue-600 font-semibold">{memory.totalMemory}</span> GB
-                            </p>
+                    <div className="bg-slate-50 p-4 rounded-lg">
+                        {/* 单行三列布局 */}
+                        <div className="grid grid-cols-3 gap-4">
+                            <div className="text-center">
+                                <Label className="text-gray-600 text-sm">{calculatorText.results.modelMemory[language]}</Label>
+                                <p className="text-lg font-semibold text-blue-600">{memory.modelMemory} GB</p>
+                            </div>
+                            <div className="text-center">
+                                <Label className="text-gray-600 text-sm">{calculatorText.results.inferenceMemory[language]}</Label>
+                                <p className="text-lg font-semibold text-blue-600">{memory.inferenceMemory} GB</p>
+                            </div>
+                            <div className="text-center border-l-2 border-gray-300 pl-4">
+                                <Label className="text-gray-600 text-sm font-medium">{calculatorText.results.totalMemory[language]}</Label>
+                                <p className="text-xl font-bold text-blue-600">{memory.totalMemory} GB</p>
+                            </div>
                         </div>
                     </div>
 
                     <div className="bg-blue-50 p-4 rounded-lg">
-                        <Label className="text-gray-600">{calculatorText.results.requiredGPUs[language]}：</Label>
-                        <p className="text-xl">
-                            <span className="text-blue-600 font-semibold">{memory.requiredGPUs}</span> {calculatorText.results.unit[language]} {gpuModel}
-                        </p>
+                        <div className="text-center">
+                            <Label className="text-gray-600 text-sm font-medium">{calculatorText.results.requiredGPUs[language]}</Label>
+                            <p className="text-xl font-bold text-blue-600">
+                                {memory.requiredGPUs} {calculatorText.results.unit[language]} {gpuModel}
+                            </p>
+                        </div>
                     </div>
                 </CardContent>
             </Card>
