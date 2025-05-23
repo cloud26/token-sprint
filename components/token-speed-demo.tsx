@@ -207,13 +207,13 @@ As yonder lady o'er her fellows shows.`,
 
   return (
     <Card className="w-full">
-      <CardContent className="p-3 space-y-3">
+      <CardContent className="p-6 space-y-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label htmlFor="speed-slider" className="text-sm font-medium">
+            <Label htmlFor="speed-slider" className="text-base font-medium">
               {language === "zh" ? "生成速度" : "Generation Speed"}: {speed} tokens/s
             </Label>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-base text-muted-foreground">
               {language === "zh" ? "范围" : "Range"}: 1-100 tokens/s
             </span>
           </div>
@@ -243,15 +243,15 @@ As yonder lady o'er her fellows shows.`,
           </div>
         </div>
 
-        <div className="space-y-1">
-          <div className="flex justify-between text-sm">
+        <div className="space-y-2">
+          <div className="flex justify-between text-base">
             <span>Tokens: {tokenCount}</span>
             <span>Time: {elapsedTime.toFixed(2)}s</span>
             <span>Speed: {actualTokensPerSecond} tokens/s</span>
           </div>
           <div
             ref={textContainerRef}
-            className="relative min-h-[220px] max-h-[220px] rounded-md border p-3 font-mono text-sm overflow-auto whitespace-pre-wrap"
+            className="relative min-h-[220px] max-h-[220px] rounded-md border p-4 font-mono text-base overflow-auto whitespace-pre-wrap"
           >
             {generatedText || (language === "zh" ? "生成的文本将显示在这里..." : "Generated text will appear here...")}
             {isGenerating && (

@@ -65,8 +65,8 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
 
     return (
         <TooltipProvider delayDuration={100}>
-            <Card className="p-6">
-                <CardContent className="space-y-6">
+            <Card className="w-full">
+                <CardContent className="p-6 space-y-6">
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
                             <Label htmlFor="parameters">
@@ -94,7 +94,7 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                 type="text"
                                 value={parameters}
                                 onChange={(e) => handleParameterChange(e.target.value)}
-                                className="text-lg w-1/2"
+                                className="text-base w-1/2"
                             />
                             <Select
                                 value={selectedModel}
@@ -133,7 +133,7 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                             </Tooltip>
                         </div>
                         <Select value={precision} onValueChange={setPrecision}>
-                            <SelectTrigger className="text-lg">
+                            <SelectTrigger className="text-base">
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
@@ -151,7 +151,7 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
 
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Button variant="outline" role="combobox" className="w-full justify-between text-lg">
+                                <Button variant="outline" role="combobox" className="w-full justify-between text-base">
                                     {gpuModel ? `${gpuModel}` : calculatorText.gpu.searchPlaceholder[language]}
                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
@@ -186,22 +186,22 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                         </Popover>
                     </div>
 
-                    <div className="bg-slate-50 p-4 rounded-lg space-y-3">
-                        <div className="space-y-1">
+                    <div className="bg-slate-50 p-4 rounded-lg space-y-4">
+                        <div className="space-y-2">
                             <Label className="text-gray-600">{calculatorText.results.modelMemory[language]}：</Label>
-                            <p className="text-xl">
+                            <p className="text-lg">
                                 <span className="text-blue-600 font-semibold">{memory.modelMemory}</span> GB
                             </p>
                         </div>
-                        <div className="space-y-1">
+                        <div className="space-y-2">
                             <Label className="text-gray-600">{calculatorText.results.inferenceMemory[language]}：</Label>
-                            <p className="text-xl">
+                            <p className="text-lg">
                                 <span className="text-blue-600 font-semibold">{memory.inferenceMemory}</span> GB
                             </p>
                         </div>
                         <div className="pt-2 border-t">
                             <Label className="text-gray-600">{calculatorText.results.totalMemory[language]}：</Label>
-                            <p className="text-2xl">
+                            <p className="text-xl">
                                 <span className="text-blue-600 font-semibold">{memory.totalMemory}</span> GB
                             </p>
                         </div>
@@ -209,13 +209,13 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
 
                     <div className="bg-blue-50 p-4 rounded-lg">
                         <Label className="text-gray-600">{calculatorText.results.requiredGPUs[language]}：</Label>
-                        <p className="text-2xl">
+                        <p className="text-xl">
                             <span className="text-blue-600 font-semibold">{memory.requiredGPUs}</span> {calculatorText.results.unit[language]} {gpuModel}
                         </p>
                     </div>
                 </CardContent>
             </Card>
-                                            
+
         </TooltipProvider>
     )
 } 
