@@ -26,20 +26,20 @@ export const tools = {
         path: "llm-gpu-memory-calculator",
         title: {
             zh: "大模型推理显存与GPU数量计算器",
-            en: "LLM GPU Memory Calculator"
+            en: "LLM Inference Hardware Calculator"
         },
         description: {
             zh: "计算大语言模型推理所需的显存和GPU数量",
-            en: "Calculate GPU memory requirements and GPU count for LLM inference"
+            en: "Calculate GPU memory requirements for large language model inference and hardware planning"
         },
         metadata: {
             title: {
                 zh: "大模型推理显存计算器 | AI 工具集",
-                en: "LLM GPU Memory Calculator | AI Tools"
+                en: "LLM Inference Hardware Calculator - GPU Memory Requirements Tool"
             },
             description: {
                 zh: "帮助你计算和规划大语言模型推理所需的GPU显存和数量，优化资源配置。",
-                en: "Help you calculate and plan GPU memory requirements and count for LLM inference, optimizing resource allocation."
+                en: "Free LLM inference hardware calculator. Calculate GPU memory requirements, VRAM usage, and optimal hardware configuration for large language model deployment. Support for NVIDIA H100, A100, RTX series GPUs."
             }
         }
     }

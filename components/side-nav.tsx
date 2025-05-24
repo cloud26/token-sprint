@@ -18,7 +18,7 @@ export function SideNav({ language, currentPath }: SideNavProps) {
             {/* 移动端顶部导航 */}
             <nav className="md:hidden bg-background border-b p-3 fixed top-0 left-0 right-0 z-50">
                 <div className="flex flex-col space-y-2">
-                    <h1 className="text-lg font-semibold">{home.title[language]}</h1>
+                    <div className="text-lg font-semibold">{home.title[language]}</div>
                     <div className="flex gap-2 overflow-x-auto pb-1">
                         {toolsList.map((tool) => {
                             const path = `/${language}/${tool.path}`
@@ -45,7 +45,7 @@ export function SideNav({ language, currentPath }: SideNavProps) {
             <nav className="hidden md:block w-64 h-[calc(100vh-2rem)] border-r p-4 fixed left-0 top-4 overflow-y-auto bg-background">
                 <div className="space-y-6">
                     <div>
-                        <h2 className="text-lg font-semibold mb-2">{home.title[language]}</h2>
+                        <div className="text-lg font-semibold mb-2">{home.title[language]}</div>
                         <p className="text-sm text-muted-foreground mb-4">
                             {home.description[language]}
                         </p>
@@ -66,7 +66,7 @@ export function SideNav({ language, currentPath }: SideNavProps) {
                                         } text-card-foreground transition-all`}
                                 >
                                     <div className="space-y-1 flex-1">
-                                        <h3 className="text-sm font-medium">{tool.title[language]}</h3>
+                                        <div className="text-sm font-medium">{tool.title[language]}</div>
                                         <p className="text-xs text-muted-foreground line-clamp-2">{tool.description[language]}</p>
                                     </div>
                                     <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:translate-x-1 transition-transform mt-1 ml-2 flex-shrink-0" />

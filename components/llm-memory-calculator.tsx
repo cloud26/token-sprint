@@ -65,26 +65,22 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
 
     return (
         <TooltipProvider delayDuration={100}>
-            <Card className="w-full">
+            <Card 
+                className="w-full" 
+                role="main"
+            >
                 <CardContent className="p-6 space-y-6">
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
                             <Label htmlFor="parameters">
                                 {calculatorText.parameters.label[language]}
-                                <span className="hidden">LLM model size in billions of parameters</span>
                             </Label>
                             <Tooltip>
                                 <TooltipTrigger>
                                     <InfoIcon className="h-4 w-4 text-muted-foreground" />
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <div>
-                                        <p>{calculatorText.parameters.tooltip[language]}</p>
-                                        <p className="hidden">
-                                            Common LLM sizes: 7B (Llama 2), 13B, 70B, 175B (GPT-3)
-                                            Used for calculating GPU memory requirements for inference
-                                        </p>
-                                    </div>
+                                    <p>{calculatorText.parameters.tooltip[language]}</p>
                                 </TooltipContent>
                             </Tooltip>
                         </div>
@@ -95,6 +91,7 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                 value={parameters}
                                 onChange={(e) => handleParameterChange(e.target.value)}
                                 className="text-base w-1/2"
+                                placeholder="Enter model size (e.g., 7, 13, 70)"
                             />
                             <Select
                                 value={selectedModel}
@@ -112,7 +109,7 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                 <SelectContent>
                                     {modelExamples.map((model) => (
                                         <SelectItem key={model.name} value={model.name}>
-                                            {model.name}
+                                            {model.name} ({model.parameters})
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
@@ -128,7 +125,7 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                     <InfoIcon className="h-4 w-4 text-muted-foreground" />
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    {calculatorText.precision.tooltip[language]}
+                                    <p>{calculatorText.precision.tooltip[language]}</p>
                                 </TooltipContent>
                             </Tooltip>
                         </div>
@@ -186,32 +183,36 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                         </Popover>
                     </div>
 
-                    <div className="bg-slate-50 p-4 rounded-lg">
-                        {/* 单行三列布局 */}
-                        <div className="grid grid-cols-3 gap-4">
-                            <div className="text-center">
-                                <Label className="text-gray-600 text-sm">{calculatorText.results.modelMemory[language]}</Label>
-                                <p className="text-lg font-semibold text-blue-600">{memory.modelMemory} GB</p>
-                            </div>
-                            <div className="text-center">
-                                <Label className="text-gray-600 text-sm">{calculatorText.results.inferenceMemory[language]}</Label>
-                                <p className="text-lg font-semibold text-blue-600">{memory.inferenceMemory} GB</p>
-                            </div>
-                            <div className="text-center border-l-2 border-gray-300 pl-4">
-                                <Label className="text-gray-600 text-sm font-medium">{calculatorText.results.totalMemory[language]}</Label>
-                                <p className="text-xl font-bold text-blue-600">{memory.totalMemory} GB</p>
+                    <section>
+                        <div className="bg-slate-50 p-4 rounded-lg">
+                            {/* 单行三列布局 */}
+                            <div className="grid grid-cols-3 gap-4">
+                                <div className="text-center">
+                                    <Label className="text-gray-600 text-sm">{calculatorText.results.modelMemory[language]}</Label>
+                                    <p className="text-lg font-semibold text-blue-600">{memory.modelMemory} GB</p>
+                                </div>
+                                <div className="text-center">
+                                    <Label className="text-gray-600 text-sm">{calculatorText.results.inferenceMemory[language]}</Label>
+                                    <p className="text-lg font-semibold text-blue-600">{memory.inferenceMemory} GB</p>
+                                </div>
+                                <div className="text-center border-l-2 border-gray-300 pl-4">
+                                    <Label className="text-gray-600 text-sm font-medium">{calculatorText.results.totalMemory[language]}</Label>
+                                    <p className="text-xl font-bold text-blue-600">{memory.totalMemory} GB</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                        <div className="text-center">
-                            <Label className="text-gray-600 text-sm font-medium">{calculatorText.results.requiredGPUs[language]}</Label>
-                            <p className="text-xl font-bold text-blue-600">
-                                {memory.requiredGPUs} {calculatorText.results.unit[language]} {gpuModel}
-                            </p>
+                    <section>
+                        <div className="bg-blue-50 p-4 rounded-lg">
+                            <div className="text-center">
+                                <Label className="text-gray-600 text-sm font-medium">{calculatorText.results.requiredGPUs[language]}</Label>
+                                <p className="text-xl font-bold text-blue-600">
+                                    {memory.requiredGPUs} {calculatorText.results.unit[language]} {gpuModel}
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </section>
                 </CardContent>
             </Card>
 
