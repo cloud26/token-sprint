@@ -1,0 +1,10 @@
+# Allow all crawlers access to all content
+User-agent: *
+Allow: /
+
+# Ensure Google AdSense crawler has full access
+User-agent: Mediapartners-Google
+Allow: /
+
+# Sitemap location
+Sitemap: https://app.linpp2009.com/sitemap.xml 

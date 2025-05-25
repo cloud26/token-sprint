@@ -69,7 +69,8 @@ export const config = {
          * - favicon.ico
          * - sitemap.xml
          * - ads.txt
+         * - robots.txt
          */
-        "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|ads.txt).*)",
+        "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|ads.txt|robots.txt).*)",
     ],
 } 
