@@ -39,7 +39,7 @@ export default function TokenCounterPage({
             <SideNav language={language} currentPath={currentPath} />
 
             <main className="pt-20 md:pt-4 md:ml-64 flex-1 flex flex-col items-center p-4 md:p-8">
-                <div className="w-full max-w-4xl space-y-2 flex-1">
+                <div className="w-full max-w-2xl space-y-2 flex-1">
                     <header className="flex flex-col items-center gap-1 mt-8">
                         <h1 className="text-2xl font-bold text-center">
                             {tools.tokenCounter.title[language]}
