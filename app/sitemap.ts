@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const languages = ['en', 'zh']
     const routes = [
         '',
+        '/token-counter-visualizer',
         '/token-generation-speed-visualizer',
         '/llm-gpu-memory-calculator',
     ]

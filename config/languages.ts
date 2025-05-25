@@ -42,6 +42,27 @@ export const tools = {
                 en: "Free LLM inference hardware calculator. Calculate GPU memory requirements, VRAM usage, and optimal hardware configuration for large language model deployment. Support for NVIDIA H100, A100, RTX series GPUs."
             }
         }
+    },
+    tokenCounter: {
+        path: "token-counter-visualizer",
+        title: {
+            zh: "Token 计数器与可视化",
+            en: "Token Counter & Visualizer"
+        },
+        description: {
+            zh: "精确计算 token 数量并可视化分解，支持多种模型",
+            en: "Count and visualize tokens with support for multiple AI models"
+        },
+        metadata: {
+            title: {
+                zh: "Token 计数器与可视化 | AI 工具集",
+                en: "Token Counter & Visualizer | AI Tools"
+            },
+            description: {
+                zh: "精确计算文本的 token 数量并可视化分解，支持 GPT、Claude、DeepSeek 等多种模型的 tokenizer，包含成本估算和差异对比功能。",
+                en: "Accurately count and visualize token breakdown for your text. Support GPT, Claude, DeepSeek and other model tokenizers with cost estimation and comparison features."
+            }
+        }
     }
 }
 
@@ -71,8 +92,8 @@ export const home = {
             en: "AI Tools Collection | Useful Tools"
         },
         description: {
-            zh: "发现并使用我们精心打造的 AI 相关工具集，包括 Token 生成速度可视化和大模型推理显存计算器等。",
-            en: "Discover and use our carefully crafted collection of AI-related tools, including Token Generation Speed Visualizer and LLM GPU Memory Calculator."
+            zh: "发现并使用我们精心打造的 AI 相关工具集，包括 Token 计数器与可视化、Token 生成速度可视化和大模型推理显存计算器等。",
+            en: "Discover and use our carefully crafted collection of AI-related tools, including Token Counter & Visualizer, Token Generation Speed Visualizer and LLM GPU Memory Calculator."
         }
     }
 } 

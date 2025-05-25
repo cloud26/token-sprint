@@ -11,6 +11,7 @@ export function SideNav({ language, currentPath }: SideNavProps) {
     const toolsList = [
         tools.llmGpuCalculator,
         tools.tokenSpeedVisualizer,
+        tools.tokenCounter,
     ]
 
     return (
