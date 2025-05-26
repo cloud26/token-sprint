@@ -23,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="google-adsense-account" content="ca-pub-8472112646404075" />
+        {/* Google AdSense */}
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8472112646404075"
@@ -46,6 +47,16 @@ export default function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
+        <script>
+          // 检查 AdSense 对象是否存在
+          console.log('adsbygoogle array:', window.adsbygoogle);
+
+          // 检查脚本是否加载
+          console.log('AdSense script:', document.querySelector('script[src*="adsbygoogle"]'));
+
+          // 检查网络请求
+          console.log('Check Network tab for googlesyndication requests');
+        </script>
       </body>
     </html>
   )
