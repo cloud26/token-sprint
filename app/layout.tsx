@@ -29,6 +29,14 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
+        <Script id="adsense-auto-ads" strategy="afterInteractive">
+          {`
+            (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8472112646404075",
+              enable_page_level_ads: true
+            });
+          `}
+        </Script>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-4Z7YE2WSXQ"
           strategy="afterInteractive"
@@ -42,7 +50,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body>
+      <body data-ad-client="ca-pub-8472112646404075" data-ad-frequency-hint="30s">
         <ReferralTracker />
         {children}
         <Analytics />
