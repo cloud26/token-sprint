@@ -43,7 +43,7 @@ export function SidebarAds() {
                     className="adsbygoogle"
                     style={{ display: 'block', width: '160px', height: '600px' }}
                     data-ad-client="ca-pub-8472112646404075"
-                    data-ad-slot="6070874275"
+                    data-ad-slot="9024626084"
                     data-ad-format="auto"
                     data-full-width-responsive="true"
                 />
