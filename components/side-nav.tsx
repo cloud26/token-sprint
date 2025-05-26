@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, Menu } from "lucide-react"
+import { Menu } from "lucide-react"
 import { tools, home, type Language } from "@/config/languages"
 
 interface SideNavProps {
@@ -43,7 +43,7 @@ export function SideNav({ language, currentPath }: SideNavProps) {
             </nav>
 
             {/* 桌面端侧边导航 */}
-            <nav className="hidden md:block w-64 h-[calc(100vh-2rem)] border-r p-4 fixed left-0 top-4 overflow-y-auto bg-background">
+            <nav className="hidden md:block w-48 h-[calc(100vh-2rem)] border-r p-3 fixed left-0 top-4 overflow-y-auto bg-background">
                 <div className="space-y-6">
                     <div>
                         <div className="text-lg font-semibold mb-2">{home.title[language]}</div>
@@ -61,7 +61,7 @@ export function SideNav({ language, currentPath }: SideNavProps) {
                                 <Link
                                     key={tool.path}
                                     href={path}
-                                    className={`group flex items-start p-3 rounded-lg border ${isActive
+                                    className={`group flex items-start p-2.5 rounded-lg border ${isActive
                                         ? "bg-primary/5 border-primary/20"
                                         : "bg-card hover:bg-card/80"
                                         } text-card-foreground transition-all`}
@@ -70,7 +70,6 @@ export function SideNav({ language, currentPath }: SideNavProps) {
                                         <div className="text-sm font-medium">{tool.title[language]}</div>
                                         <p className="text-xs text-muted-foreground line-clamp-2">{tool.description[language]}</p>
                                     </div>
-                                    <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:translate-x-1 transition-transform mt-1 ml-2 flex-shrink-0" />
                                 </Link>
                             )
                         })}

@@ -38,7 +38,7 @@ export default function LLMGPUMemoryCalculatorPage({
             <LanguageSwitcher language={language} className="fixed top-4 right-4 z-50" />
             <SideNav language={language} currentPath={currentPath} />
 
-            <main className="pt-20 md:pt-4 md:ml-64 flex-1 flex flex-col items-center p-4 md:p-8">
+            <main className="pt-20 md:pt-4 md:ml-48 flex-1 flex flex-col items-center p-4 md:p-8">
                 <div className="w-full max-w-2xl space-y-2 flex-1">
                     <header className="flex flex-col items-center gap-1 mt-8">
                         <h1 className="text-2xl font-bold text-center">
@@ -48,9 +48,9 @@ export default function LLMGPUMemoryCalculatorPage({
                             {tools.llmGpuCalculator.description[language]}
                         </p>
                     </header>
-                    
+
                     <LLMMemoryCalculator language={language} />
-                    
+
                     {/* 使用说明 - 真正有SEO价值的内容 */}
                     <section className="mt-8 space-y-4">
                         <h2 className="text-lg font-semibold">
