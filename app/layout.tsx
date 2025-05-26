@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import Script from 'next/script'
 import { ReferralTracker } from '@/components/referral-tracker'
+import { SidebarAds } from '@/components/sidebar-ads'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -44,19 +45,10 @@ export default function RootLayout({
       </head>
       <body>
         <ReferralTracker />
+        <SidebarAds />
         {children}
         <Analytics />
         <SpeedInsights />
-        <script>
-          // 检查 AdSense 对象是否存在
-          console.log('adsbygoogle array:', window.adsbygoogle);
-
-          // 检查脚本是否加载
-          console.log('AdSense script:', document.querySelector('script[src*="adsbygoogle"]'));
-
-          // 检查网络请求
-          console.log('Check Network tab for googlesyndication requests');
-        </script>
       </body>
     </html>
   )
