@@ -23,20 +23,11 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="google-adsense-account" content="ca-pub-8472112646404075" />
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8472112646404075"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
         />
-        <Script id="adsense-auto-ads" strategy="afterInteractive">
-          {`
-            (adsbygoogle = window.adsbygoogle || []).push({
-              google_ad_client: "ca-pub-8472112646404075",
-              enable_page_level_ads: true
-            });
-          `}
-        </Script>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-4Z7YE2WSXQ"
           strategy="afterInteractive"
@@ -50,7 +41,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body data-ad-client="ca-pub-8472112646404075" data-ad-frequency-hint="30s">
+      <body>
         <ReferralTracker />
         {children}
         <Analytics />
