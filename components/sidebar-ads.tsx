@@ -32,10 +32,9 @@ export function SidebarAds() {
 
     return (
         <>
-            {/* 大屏幕设备（iPad + PC）- 左右两侧广告 */}
-            {/* 位置计算：页面max-w-xl=576px，一半是288px，再向外偏移200px放置广告 */}
-            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden lg:block" 
-                 style={{ left: 'calc(50% - 288px - 200px)', width: '160px' }}>
+            {/* 超大屏幕 - 基于内容区域精确定位 */}
+            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden 2xl:block" 
+                 style={{ left: 'calc(50% - 288px - 200px - 160px)', width: '160px' }}>
                 <ins 
                     className="adsbygoogle"
                     style={{ display: 'block', width: '160px', height: '600px' }}
@@ -46,8 +45,33 @@ export function SidebarAds() {
                 />
             </div>
 
-            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden lg:block" 
+            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden 2xl:block" 
                  style={{ left: 'calc(50% + 288px + 200px)', width: '160px' }}>
+                <ins 
+                    className="adsbygoogle"
+                    style={{ display: 'block', width: '160px', height: '600px' }}
+                    data-ad-client="ca-pub-8472112646404075"
+                    data-ad-slot="9024626084"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"
+                />
+            </div>
+
+            {/* iPad/平板 - 保守定位，避免溢出 */}
+            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden lg:block 2xl:hidden" 
+                 style={{ left: '60px', width: '160px' }}>
+                <ins 
+                    className="adsbygoogle"
+                    style={{ display: 'block', width: '160px', height: '600px' }}
+                    data-ad-client="ca-pub-8472112646404075"
+                    data-ad-slot="6070874275"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"
+                />
+            </div>
+
+            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden lg:block 2xl:hidden" 
+                 style={{ right: '20px', width: '160px' }}>
                 <ins 
                     className="adsbygoogle"
                     style={{ display: 'block', width: '160px', height: '600px' }}
