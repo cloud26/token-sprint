@@ -11,19 +11,10 @@ declare global {
 export function SidebarAds() {
     useEffect(() => {
         try {
-            // 只为大屏幕设备推送广告
+            // 为每个广告位推送一次
             if (typeof window !== 'undefined' && window.adsbygoogle) {
-                // 延迟推送，确保DOM已渲染
-                setTimeout(() => {
-                    const screenWidth = window.innerWidth
-                    
-                    if (screenWidth >= 1024) {
-                        // 大屏幕设备（包括iPad）：2个广告
-                        window.adsbygoogle.push({})
-                        window.adsbygoogle.push({})
-                    }
-                    // 手机端不推送，让 Auto ads 自动处理
-                }, 100)
+                window.adsbygoogle.push({})
+                window.adsbygoogle.push({})
             }
         } catch (err) {
             console.error('AdSense error:', err)
@@ -32,9 +23,8 @@ export function SidebarAds() {
 
     return (
         <>
-            {/* 大屏幕设备（iPad + PC）- 左右两侧广告 */}
-            {/* 位置计算：页面max-w-xl=576px，一半是288px，再向外偏移200px放置广告 */}
-            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden lg:block" 
+            {/* 左广告 - 主内容左侧 200px */}
+            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden 2xl:block" 
                  style={{ left: 'calc(50% - 288px - 200px)', width: '160px' }}>
                 <ins 
                     className="adsbygoogle"
@@ -46,7 +36,8 @@ export function SidebarAds() {
                 />
             </div>
 
-            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden lg:block" 
+            {/* 右广告 - 主内容右侧 200px */}
+            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden 2xl:block" 
                  style={{ left: 'calc(50% + 288px + 200px)', width: '160px' }}>
                 <ins 
                     className="adsbygoogle"
