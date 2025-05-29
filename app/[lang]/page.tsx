@@ -1,4 +1,4 @@
-import { use } from "react"
+import { use, Suspense } from "react"
 import { tools, home, type Language } from "@/config/languages"
 import { Metadata } from "next"
 import { SideNav } from "@/components/side-nav"
@@ -46,7 +46,9 @@ export default function Home({
                             {tools.llmGpuCalculator.description[language]}
                         </p>
                     </div>
-                    <LLMMemoryCalculator language={language} />
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <LLMMemoryCalculator language={language} />
+                    </Suspense>
                 </div>
                 <Footer />
             </main>

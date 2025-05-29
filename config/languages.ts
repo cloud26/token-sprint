@@ -34,12 +34,12 @@ export const tools = {
         },
         metadata: {
             title: {
-                zh: "大模型部署GPU计算器 | 精确计算显存需求",
-                en: "LLM GPU Requirements Calculator - Precise Memory & Hardware Planning"
+                zh: "LLM GPU需求计算器 | 支持最新AI大模型 | Qwen3 DeepSeek Llama等",
+                en: "LLM GPU Requirements Calculator | Latest AI Models | Qwen3 DeepSeek Llama Claude"
             },
             description: {
-                zh: "免费的大语言模型GPU计算器，精确计算模型部署所需的显存、GPU数量和最优硬件配置。支持主流GPU型号，助力AI项目规划。",
-                en: "Free LLM GPU calculator for precise hardware planning. Calculate VRAM requirements, optimal GPU configurations for model deployment. Supports NVIDIA H100, A100, RTX series. Essential for AI infrastructure planning."
+                zh: "免费的大语言模型GPU需求计算器，支持最新AI模型包括Qwen3-235B、DeepSeek-R1、Llama 3.1等。精确计算GPU显存需求，支持H100、A100、RTX 4090等GPU型号，提供专业硬件配置建议。",
+                en: "Free LLM GPU requirements calculator supporting latest AI models including Qwen3-235B, DeepSeek-R1, Llama 3.1, and more. Calculate precise VRAM requirements for H100, A100, RTX 4090. Professional hardware planning tool for AI infrastructure."
             }
         }
     },

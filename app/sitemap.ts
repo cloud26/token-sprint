@@ -46,5 +46,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
         }))
     )
 
-    return [...baseUrls, ...modelSpecificUrls]
+    // 添加模型特定的GPU calculator URLs - 使用不同的URL格式
+    const gpuCalculatorModels = [
+        // 最新Qwen3系列
+        'qwen3-235b-a22b',
+        'qwen3-30b-a3b', 
+        'qwen3-32b',
+        'qwen3-14b',
+        'qwen3-8b',
+        'qwen3-4b',
+        // 热门模型
+        'deepseek-r1',
+        'deepseek-v3',
+        'llama-3.1-70b', 
+        'llama-3.1-405b',
+        'llama-3.1-8b',
+        'qwen-72b',
+        'qwen-7b',
+        'llama-7b'
+    ]
+    
+    const gpuCalculatorUrls = gpuCalculatorModels.flatMap(model =>
+        languages.map(lang => ({
+            url: `${baseUrl}/${lang}/llm-gpu-memory-calculator?model=${model}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.6,
+        }))
+    )
+
+    return [...baseUrls, ...modelSpecificUrls, ...gpuCalculatorUrls]
 } 

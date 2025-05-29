@@ -11,8 +11,8 @@ export const calculatorText = {
             en: "Model Parameters (Billions)"
         },
         tooltip: {
-            zh: "模型的参数量，例如：7B (Llama 2)、13B、70B、175B (GPT-3)",
-            en: "Model size in billions of parameters, e.g., 7B (Llama 2), 13B, 70B, 175B (GPT-3)"
+            zh: "模型的参数量，例如：671B (DeepSeek R1)、70B (Llama 3.1 70B)、405B (Llama 3.1 405B)、7B、13B",
+            en: "Model size in billions of parameters, e.g., 671B (DeepSeek R1), 70B (Llama 3.1 70B), 405B (Llama 3.1 405B), 7B, 13B"
         },
         selectPlaceholder: {
             zh: "选择预设模型",

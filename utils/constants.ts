@@ -172,22 +172,32 @@ export const gpuModels = [
 ].sort((a, b) => b.memory - a.memory) // 按显存大小排序
 
 export const modelExamples = [
-  // Base Models
-  { name: "DeepSeek-R1", parameters: "671B" },
-  { name: "DeepSeek-V3", parameters: "671B" },
+  // 最新发布的Qwen3系列（2025年4月）
+  { name: "Qwen3-235B-A22B", parameters: "235B", value: "qwen3-235b-a22b" },
+  { name: "Qwen3-30B-A3B", parameters: "30B", value: "qwen3-30b-a3b" },
+  { name: "Qwen3-32B", parameters: "32B", value: "qwen3-32b" },
+  { name: "Qwen3-14B", parameters: "14B", value: "qwen3-14b" },
+  { name: "Qwen3-8B", parameters: "8B", value: "qwen3-8b" },
+  { name: "Qwen3-4B", parameters: "4B", value: "qwen3-4b" },
+  
+  // 最热门的搜索模型
+  { name: "DeepSeek-R1", parameters: "671B", value: "deepseek-r1" },
+  { name: "Llama 3.1 70B", parameters: "70B", value: "llama-3.1-70b" },
+  { name: "DeepSeek-V3", parameters: "671B", value: "deepseek-v3" },
+  { name: "Llama 3.1 405B", parameters: "405B", value: "llama-3.1-405b" },
+  { name: "Llama 3.1 8B", parameters: "8B", value: "llama-3.1-8b" },
+  
+  // 其他流行模型
+  { name: "Qwen-72B", parameters: "72B", value: "qwen-72b" },
+  { name: "Qwen-32B", parameters: "32B", value: "qwen-32b" },
+  { name: "Qwen-14B", parameters: "14B", value: "qwen-14b" },
+  { name: "Qwen-7B", parameters: "7B", value: "qwen-7b" },
+  { name: "Qwen-1.5B", parameters: "1.5B", value: "qwen-1.5b" },
 
-  // Qwen 系列
-  { name: "Qwen-72B", parameters: "72B" },
-  { name: "Qwen-32B", parameters: "32B" },
-  { name: "Qwen-14B", parameters: "14B" },
-  { name: "Qwen-7B", parameters: "7B" },
-  { name: "Qwen-1.5B", parameters: "1.5B" },
-
-  // Llama 系列
-  { name: "Llama-70B", parameters: "70B" },
-  { name: "Llama-65B", parameters: "65B" },
-  { name: "Llama-33B", parameters: "33B" },
-  { name: "Llama-13B", parameters: "13B" },
-  { name: "Llama-7B", parameters: "7B" },
+  // 通用Llama系列
+  { name: "Llama-65B", parameters: "65B", value: "llama-65b" },
+  { name: "Llama-33B", parameters: "33B", value: "llama-33b" },
+  { name: "Llama-13B", parameters: "13B", value: "llama-13b" },
+  { name: "Llama-7B", parameters: "7B", value: "llama-7b" },
 ]
 
