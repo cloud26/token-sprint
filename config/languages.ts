@@ -4,63 +4,63 @@ export const tools = {
     tokenSpeedVisualizer: {
         path: "token-generation-speed-visualizer",
         title: {
-            zh: "Token 生成速度可视化",
-            en: "Token Generation Speed Visualizer"
+            zh: "AI Token 生成速度体验器",
+            en: "AI Token Generation Speed Simulator"
         },
         description: {
-            zh: "实时体验不同的 token 生成速度",
-            en: "Experience different token generation speeds in real-time"
+            zh: "直观体验不同速度的 AI 文本生成效果，感受真实的对话体验",
+            en: "Experience realistic AI text generation at different speeds and understand the impact on user experience"
         },
         metadata: {
             title: {
-                zh: "Token 生成速度可视化 | AI 工具集",
-                en: "Token Generation Speed Visualizer | AI Tools"
+                zh: "AI Token 生成速度体验器 | 模拟真实AI对话体验",
+                en: "AI Token Generation Speed Simulator | Experience Real AI Conversation"
             },
             description: {
-                zh: "通过这个可视化工具，你可以实时体验和理解不同的 token 生成速度对用户体验的影响。",
-                en: "Experience and understand how different token generation speeds affect user experience through this interactive visualization tool."
+                zh: "通过这个交互式可视化工具，直观体验不同 token 生成速度对 AI 对话体验的影响，帮助开发者优化用户体验设计。",
+                en: "Interactive AI text generation speed simulator. Experience how different token generation speeds affect user experience in AI conversations. Perfect for developers optimizing AI chat interfaces."
             }
         }
     },
     llmGpuCalculator: {
         path: "llm-gpu-memory-calculator",
         title: {
-            zh: "大模型推理显存与GPU数量计算器",
-            en: "LLM Inference Hardware Calculator"
+            zh: "大模型部署GPU计算器",
+            en: "LLM GPU Requirements Calculator"
         },
         description: {
-            zh: "计算大语言模型推理所需的显存和GPU数量",
-            en: "Calculate GPU memory requirements for large language model inference and hardware planning"
+            zh: "精确计算大语言模型部署所需的GPU显存和硬件配置",
+            en: "Calculate precise GPU memory and hardware requirements for deploying large language models"
         },
         metadata: {
             title: {
-                zh: "大模型推理显存计算器 | AI 工具集",
-                en: "LLM Inference Hardware Calculator - GPU Memory Requirements Tool"
+                zh: "大模型部署GPU计算器 | 精确计算显存需求",
+                en: "LLM GPU Requirements Calculator - Precise Memory & Hardware Planning"
             },
             description: {
-                zh: "帮助你计算和规划大语言模型推理所需的GPU显存和数量，优化资源配置。",
-                en: "Free LLM inference hardware calculator. Calculate GPU memory requirements, VRAM usage, and optimal hardware configuration for large language model deployment. Support for NVIDIA H100, A100, RTX series GPUs."
+                zh: "免费的大语言模型GPU计算器，精确计算模型部署所需的显存、GPU数量和最优硬件配置。支持主流GPU型号，助力AI项目规划。",
+                en: "Free LLM GPU calculator for precise hardware planning. Calculate VRAM requirements, optimal GPU configurations for model deployment. Supports NVIDIA H100, A100, RTX series. Essential for AI infrastructure planning."
             }
         }
     },
     tokenCounter: {
         path: "token-counter-visualizer",
         title: {
-            zh: "Token 计数器与可视化",
-            en: "Token Counter & Visualizer"
+            zh: "智能Token计数与成本分析器",
+            en: "Smart Token Counter & Cost Analyzer"
         },
         description: {
-            zh: "精确计算 token 数量并可视化分解，支持多种模型",
-            en: "Count and visualize tokens with support for multiple AI models"
+            zh: "多模型Token精确计数，可视化分析，实时成本估算",
+            en: "Accurate token counting for multiple AI models with visualization and real-time cost estimation"
         },
         metadata: {
             title: {
-                zh: "Token 计数器与可视化 | AI 工具集",
-                en: "Token Counter & Visualizer | AI Tools"
+                zh: "智能Token计数器 | 多模型支持 | 成本分析",
+                en: "Smart Token Counter | Multi-Model Support | Cost Analysis Tool"
             },
             description: {
-                zh: "精确计算文本的 token 数量并可视化分解，支持 GPT、Claude、DeepSeek 等多种模型的 tokenizer，包含成本估算和差异对比功能。",
-                en: "Accurately count and visualize token breakdown for your text. Support GPT, Claude, DeepSeek and other model tokenizers with cost estimation and comparison features."
+                zh: "专业的Token计数与成本分析工具，支持GPT、Claude、DeepSeek等主流模型。提供精确计数、可视化分解、成本估算和模型对比功能。",
+                en: "Professional token counter and cost analyzer supporting GPT, Claude, DeepSeek and more. Features accurate counting, visual breakdown, cost estimation, and model comparison for AI development."
             }
         }
     }
@@ -79,21 +79,21 @@ export const common = {
 
 export const home = {
     title: {
-        zh: "AI 工具集",
-        en: "AI Tools Collection"
+        zh: "专业AI开发工具集",
+        en: "Professional AI Development Tools"
     },
     description: {
-        zh: "一系列实用的 AI 相关工具",
-        en: "A collection of useful AI-related tools"
+        zh: "精选实用的AI开发与分析工具，助力您的AI项目",
+        en: "Curated collection of practical AI development and analysis tools for your projects"
     },
     metadata: {
         title: {
-            zh: "AI 工具集 | 实用工具合集",
-            en: "AI Tools Collection | Useful Tools"
+            zh: "专业AI开发工具集 | Token计数器 | GPU计算器 | 免费在线工具",
+            en: "Professional AI Development Tools | Token Counter | GPU Calculator | Free Online Tools"
         },
         description: {
-            zh: "发现并使用我们精心打造的 AI 相关工具集，包括 Token 计数器与可视化、Token 生成速度可视化和大模型推理显存计算器等。",
-            en: "Discover and use our carefully crafted collection of AI-related tools, including Token Counter & Visualizer, Token Generation Speed Visualizer and LLM GPU Memory Calculator."
+            zh: "免费的专业AI开发工具集，包含智能Token计数器、大模型GPU计算器、AI生成速度体验器等实用工具。助力AI开发者提升效率，优化项目成本。",
+            en: "Free professional AI development tools including smart token counter, LLM GPU calculator, and AI generation speed simulator. Essential tools for AI developers to optimize efficiency and project costs."
         }
     }
 } 
