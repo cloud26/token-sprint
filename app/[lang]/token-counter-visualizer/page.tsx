@@ -63,7 +63,7 @@ export default function TokenCounterPage({
         "supportedModels": [
             "GPT-4o", "GPT-4", "GPT-4 Turbo", "GPT-3.5 Turbo",
             "Gemini 1.5 Pro", "Gemini 1.5 Flash", "Gemini Pro",
-            "Claude 4 Opus", "Claude 4 Sonnet", "Claude 3.5 Sonnet", "Claude 3.5 Haiku",
+            "Claude 4 Opus", "Claude 4 Sonnet", "Claude 3.7 Sonnet", "Claude 3.5 Sonnet", "Claude 3.5 Haiku",
             "Claude 3 Opus", "Claude 3 Sonnet", "Claude 3 Haiku",
             "Llama 3.1 405B", "Llama 3.1 70B", "Llama 3.1 8B", "Llama 2 70B", "Llama 2 13B", "Llama 2 7B",
             "DeepSeek-V3 Chat", "DeepSeek-R1 Reasoner"
@@ -118,9 +118,13 @@ export default function TokenCounterPage({
                                    className="px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-xs transition-colors">
                                     GPT-4o Counter
                                 </Link>
-                                <Link href={`/${language}/token-counter-visualizer?model=claude-3.5-sonnet`} 
+                                <Link href={`/${language}/token-counter-visualizer?model=claude-4-opus`} 
                                    className="px-3 py-1 bg-purple-100 hover:bg-purple-200 text-purple-800 rounded text-xs transition-colors">
-                                    Claude Counter
+                                    Claude 4 Counter
+                                </Link>
+                                <Link href={`/${language}/token-counter-visualizer?model=claude-3.5-sonnet`} 
+                                   className="px-3 py-1 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded text-xs transition-colors">
+                                    Claude 3.5 Counter
                                 </Link>
                                 <Link href={`/${language}/token-counter-visualizer?model=gemini-1.5-pro`} 
                                    className="px-3 py-1 bg-green-100 hover:bg-green-200 text-green-800 rounded text-xs transition-colors">
@@ -189,7 +193,7 @@ export default function TokenCounterPage({
                                 </div>
                                 <div>
                                     <p className="font-medium text-gray-700">Anthropic Claude:</p>
-                                    <p>Claude 4, Claude 3.5 Sonnet, Claude 3.5 Haiku</p>
+                                    <p>Claude 4 (Opus, Sonnet), Claude 3.7, Claude 3.5 (Sonnet, Haiku)</p>
                                 </div>
                                 <div>
                                     <p className="font-medium text-gray-700">Meta Llama:</p>

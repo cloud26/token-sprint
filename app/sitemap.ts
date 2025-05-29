@@ -12,13 +12,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '/llm-gpu-memory-calculator',
     ]
 
-    // 添加模型特定的URL
+    // 添加模型特定的URL - 按流行度排序
     const popularModels = [
         'gpt-4o',
-        'claude-3.5-sonnet', 
+        'claude-4-sonnet',      // 最新的Claude 4 Sonnet
+        'claude-4-opus',        // 最强的Claude 4 Opus
+        'claude-3.5-sonnet',    // 流行的3.5版本
         'gemini-1.5-pro',
         'llama-3.1-70b',
-        'deepseek-chat'
+        'deepseek-chat',
+        'deepseek-r1',
+        'claude-3.7-sonnet',    // 新增的3.7版本
+        'gpt-4',
+        'gemini-1.5-flash'
     ]
 
     const baseUrls = routes.flatMap(route => 

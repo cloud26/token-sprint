@@ -48,6 +48,7 @@ const models: ModelInfo[] = [
     // Claude 系列 (近似估算)
     { value: "claude-4-opus", label: "Claude 4 Opus ⚠️", encoding: "gpt-4", currency: 'USD' },
     { value: "claude-4-sonnet", label: "Claude 4 Sonnet ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "claude-3.7-sonnet", label: "Claude 3.7 Sonnet ⚠️", encoding: "gpt-4", currency: 'USD' },
     { value: "claude-3.5-sonnet", label: "Claude 3.5 Sonnet ⚠️", encoding: "gpt-4", currency: 'USD' },
     { value: "claude-3.5-haiku", label: "Claude 3.5 Haiku ⚠️", encoding: "gpt-4", currency: 'USD' },
     { value: "claude-3-opus", label: "Claude 3 Opus ⚠️", encoding: "gpt-4", currency: 'USD' },
@@ -61,7 +62,7 @@ export default function TokenCounter({ language }: TokenCounterProps) {
     const pathname = usePathname()
     
     // URL参数中的模型，如果没有则使用默认值
-    const initialModel = searchParams.get('model') || "deepseek-chat"
+    const initialModel = searchParams.get('model') || "gpt-4o"
     
     const [text, setText] = useState("")
     const [selectedModel, setSelectedModel] = useState(initialModel)
@@ -76,7 +77,7 @@ export default function TokenCounter({ language }: TokenCounterProps) {
     const updateURLParams = (newModel: string) => {
         const params = new URLSearchParams(searchParams.toString())
         
-        if (newModel && newModel !== "deepseek-chat") {
+        if (newModel && newModel !== "claude-4-sonnet") {
             params.set('model', newModel)
         } else {
             params.delete('model')
@@ -97,7 +98,7 @@ export default function TokenCounter({ language }: TokenCounterProps) {
 
     // 监听URL参数变化，更新选中的模型
     useEffect(() => {
-        const urlModel = searchParams.get('model') || "deepseek-chat"
+        const urlModel = searchParams.get('model') || "claude-4-sonnet"
         
         // 只有当URL参数与当前状态不同时才更新，避免循环更新
         if (urlModel !== selectedModel) {
@@ -294,7 +295,19 @@ export default function TokenCounter({ language }: TokenCounterProps) {
                             <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
                                 Claude 4 系列
                             </div>
-                            {models.filter(m => m.value.startsWith('claude-4')).map((model) => (
+                            {models.filter(m => m.value.startsWith('claude-4-opus') || m.value.startsWith('claude-4-sonnet')).map((model) => (
+                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                    <div className="flex items-center justify-between w-full">
+                                        <div className="font-medium text-sm">{model.label}</div>
+                                    </div>
+                                </SelectItem>
+                            ))}
+
+                            {/* Claude 3.7 系列 */}
+                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
+                                Claude 3.7 系列
+                            </div>
+                            {models.filter(m => m.value.startsWith('claude-3.7')).map((model) => (
                                 <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
                                     <div className="flex items-center justify-between w-full">
                                         <div className="font-medium text-sm">{model.label}</div>
@@ -318,7 +331,7 @@ export default function TokenCounter({ language }: TokenCounterProps) {
                             <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
                                 Claude 3 系列
                             </div>
-                            {models.filter(m => m.value.startsWith('claude-3') && !m.value.startsWith('claude-3.5')).map((model) => (
+                            {models.filter(m => m.value.startsWith('claude-3') && !m.value.startsWith('claude-3.5') && !m.value.startsWith('claude-3.7')).map((model) => (
                                 <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
                                     <div className="flex items-center justify-between w-full">
                                         <div className="font-medium text-sm">{model.label}</div>
