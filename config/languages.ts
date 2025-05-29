@@ -46,21 +46,21 @@ export const tools = {
     tokenCounter: {
         path: "token-counter-visualizer",
         title: {
-            zh: "智能Token计数与成本分析器",
-            en: "Smart Token Counter & Cost Analyzer"
+            zh: "AI Token 计数器",
+            en: "AI Token Counter"
         },
         description: {
-            zh: "多模型Token精确计数，可视化分析，实时成本估算",
-            en: "Accurate token counting for multiple AI models with visualization and real-time cost estimation"
+            zh: "多模型Token精确计数，可视化分析",
+            en: "Accurate token counting for multiple AI models with visualization"
         },
         metadata: {
             title: {
-                zh: "智能Token计数器 | 多模型支持 | 成本分析",
-                en: "Smart Token Counter | Multi-Model Support | Cost Analysis Tool"
+                zh: "Token Counter & Tokenizer | AI Token 计数器 | GPT Claude Gemini DeepSeek",
+                en: "Token Counter & Tokenizer | AI Token Counter for GPT Claude Gemini DeepSeek Llama"
             },
             description: {
-                zh: "专业的Token计数与成本分析工具，支持GPT、Claude、DeepSeek等主流模型。提供精确计数、可视化分解、成本估算和模型对比功能。",
-                en: "Professional token counter and cost analyzer supporting GPT, Claude, DeepSeek and more. Features accurate counting, visual breakdown, cost estimation, and model comparison for AI development."
+                zh: "免费的Token Counter和Tokenizer工具，支持GPT、Claude、Gemini、DeepSeek、Llama等主流LLM模型的token计数。提供精确计数、可视化分解和模型对比功能。",
+                en: "Free token counter and tokenizer for GPT, Claude, Gemini, DeepSeek, Llama and other LLM models. Professional AI token counter with accurate counting, visual breakdown, and model comparison features."
             }
         }
     }

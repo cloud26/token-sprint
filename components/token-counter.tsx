@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useMemo, useRef } from "react"
+import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -16,46 +17,93 @@ interface ModelInfo {
     value: string
     label: string
     encoding: string
-    costPer1kTokens?: number // USD
-    costPer1kTokensCNY?: number // CNY (for Chinese models)
     currency?: 'USD' | 'CNY'
 }
 
 const models: ModelInfo[] = [
     // OpenAI GPT 系列
-    { value: "gpt-4o", label: "GPT-4o", encoding: "gpt-4o", costPer1kTokens: 0.005, currency: 'USD' },
-    { value: "gpt-4", label: "GPT-4", encoding: "gpt-4", costPer1kTokens: 0.03, currency: 'USD' },
-    { value: "gpt-4-turbo", label: "GPT-4 Turbo", encoding: "gpt-4-turbo", costPer1kTokens: 0.01, currency: 'USD' },
-    { value: "gpt-3.5-turbo", label: "GPT-3.5 Turbo", encoding: "gpt-3.5-turbo", costPer1kTokens: 0.0015, currency: 'USD' },
-    { value: "text-davinci-003", label: "GPT-3 Davinci", encoding: "text-davinci-003", costPer1kTokens: 0.02, currency: 'USD' },
+    { value: "gpt-4o", label: "GPT-4o", encoding: "gpt-4o", currency: 'USD' },
+    { value: "gpt-4", label: "GPT-4", encoding: "gpt-4", currency: 'USD' },
+    { value: "gpt-4-turbo", label: "GPT-4 Turbo", encoding: "gpt-4-turbo", currency: 'USD' },
+    { value: "gpt-3.5-turbo", label: "GPT-3.5 Turbo", encoding: "gpt-3.5-turbo", currency: 'USD' },
+    { value: "text-davinci-003", label: "GPT-3 Davinci", encoding: "text-davinci-003", currency: 'USD' },
     
-    // DeepSeek 系列 (中国模型)
-    { value: "deepseek-chat", label: "DeepSeek-V3 Chat", encoding: "gpt-4", costPer1kTokensCNY: 0.01, currency: 'CNY' }, // 标准时段：输入2元+输出8元=10元/百万tokens，换算为1k tokens = 0.01元
-    { value: "deepseek-reasoner", label: "DeepSeek-R1 Reasoner", encoding: "gpt-4", costPer1kTokensCNY: 0.02, currency: 'CNY' }, // 标准时段：输入4元+输出16元=20元/百万tokens，换算为1k tokens = 0.02元
+    // Google Gemini 系列 (近似估算)
+    { value: "gemini-1.5-pro", label: "Gemini 1.5 Pro ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "gemini-1.5-flash", label: "Gemini 1.5 Flash ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "gemini-pro", label: "Gemini Pro ⚠️", encoding: "gpt-4", currency: 'USD' },
     
-    // Claude 4 系列 (最新)
-    { value: "claude-4-opus", label: "Claude 4 Opus", encoding: "gpt-4", costPer1kTokens: 0.015, currency: 'USD' },
-    { value: "claude-4-sonnet", label: "Claude 4 Sonnet", encoding: "gpt-4", costPer1kTokens: 0.003, currency: 'USD' },
+    // Meta Llama 系列 (近似估算)
+    { value: "llama-3.1-405b", label: "Llama 3.1 405B ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "llama-3.1-70b", label: "Llama 3.1 70B ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "llama-3.1-8b", label: "Llama 3.1 8B ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "llama-2-70b", label: "Llama 2 70B ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "llama-2-13b", label: "Llama 2 13B ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "llama-2-7b", label: "Llama 2 7B ⚠️", encoding: "gpt-4", currency: 'USD' },
     
-    // Claude 3.5 系列
-    { value: "claude-3.5-sonnet", label: "Claude 3.5 Sonnet", encoding: "gpt-4", costPer1kTokens: 0.003, currency: 'USD' },
-    { value: "claude-3.5-haiku", label: "Claude 3.5 Haiku", encoding: "gpt-4", costPer1kTokens: 0.0008, currency: 'USD' },
+    // DeepSeek 系列 (近似估算)
+    { value: "deepseek-chat", label: "DeepSeek-V3 Chat ⚠️", encoding: "gpt-4", currency: 'CNY' },
+    { value: "deepseek-reasoner", label: "DeepSeek-R1 Reasoner ⚠️", encoding: "gpt-4", currency: 'CNY' },
     
-    // Claude 3 系列 (Legacy)
-    { value: "claude-3-opus", label: "Claude 3 Opus", encoding: "gpt-4", costPer1kTokens: 0.015, currency: 'USD' },
-    { value: "claude-3-sonnet", label: "Claude 3 Sonnet", encoding: "gpt-4", costPer1kTokens: 0.003, currency: 'USD' },
-    { value: "claude-3-haiku", label: "Claude 3 Haiku", encoding: "gpt-4", costPer1kTokens: 0.00025, currency: 'USD' },
+    // Claude 系列 (近似估算)
+    { value: "claude-4-opus", label: "Claude 4 Opus ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "claude-4-sonnet", label: "Claude 4 Sonnet ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "claude-3.5-sonnet", label: "Claude 3.5 Sonnet ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "claude-3.5-haiku", label: "Claude 3.5 Haiku ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "claude-3-opus", label: "Claude 3 Opus ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "claude-3-sonnet", label: "Claude 3 Sonnet ⚠️", encoding: "gpt-4", currency: 'USD' },
+    { value: "claude-3-haiku", label: "Claude 3 Haiku ⚠️", encoding: "gpt-4", currency: 'USD' },
 ]
 
 export default function TokenCounter({ language }: TokenCounterProps) {
+    const searchParams = useSearchParams()
+    const router = useRouter()
+    const pathname = usePathname()
+    
+    // URL参数中的模型，如果没有则使用默认值
+    const initialModel = searchParams.get('model') || "deepseek-chat"
+    
     const [text, setText] = useState("")
-    const [selectedModel, setSelectedModel] = useState("deepseek-chat")
+    const [selectedModel, setSelectedModel] = useState(initialModel)
     const [debouncedText, setDebouncedText] = useState("")
     const [showTokenBreakdown, setShowTokenBreakdown] = useState(true)
     const [tokenDisplayMode, setTokenDisplayMode] = useState<'text' | 'ids'>('text')
     const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
     
     const currentModel = models.find(m => m.value === selectedModel) || models[0]
+
+    // 更新URL参数
+    const updateURLParams = (newModel: string) => {
+        const params = new URLSearchParams(searchParams.toString())
+        
+        if (newModel && newModel !== "deepseek-chat") {
+            params.set('model', newModel)
+        } else {
+            params.delete('model')
+        }
+        
+        const queryString = params.toString()
+        const newUrl = queryString ? `${pathname}?${queryString}` : pathname
+        
+        // 使用replace避免在浏览器历史中创建过多条目
+        router.replace(newUrl, { scroll: false })
+    }
+
+    // 当模型选择改变时更新URL
+    const handleModelChange = (newModel: string) => {
+        setSelectedModel(newModel)
+        updateURLParams(newModel)
+    }
+
+    // 监听URL参数变化，更新选中的模型
+    useEffect(() => {
+        const urlModel = searchParams.get('model') || "deepseek-chat"
+        
+        // 只有当URL参数与当前状态不同时才更新，避免循环更新
+        if (urlModel !== selectedModel) {
+            setSelectedModel(urlModel)
+        }
+    }, [searchParams.get('model')])
 
     // 防抖处理文本输入
     useEffect(() => {
@@ -117,14 +165,6 @@ export default function TokenCounter({ language }: TokenCounterProps) {
 
     const characterCount = text.length
     const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0
-    const estimatedCost = useMemo(() => {
-        if (currentModel.currency === 'CNY' && currentModel.costPer1kTokensCNY) {
-            return (tokenCount / 1000) * currentModel.costPer1kTokensCNY
-        } else if (currentModel.costPer1kTokens) {
-            return (tokenCount / 1000) * currentModel.costPer1kTokens
-        }
-        return null
-    }, [tokenCount, currentModel])
 
     // 记录使用日志 - 只在用户停止输入后记录
     useEffect(() => {
@@ -182,14 +222,6 @@ export default function TokenCounter({ language }: TokenCounterProps) {
             zh: "单词数",
             en: "Words"
         },
-        estimatedCost: {
-            zh: "预估成本",
-            en: "Estimated Cost"
-        },
-        costNote: {
-            zh: "* 基于当前API定价的大概估算",
-            en: "* Approximate estimate based on current API pricing"
-        },
         calculating: {
             zh: "计算中...",
             en: "Calculating..."
@@ -205,7 +237,7 @@ export default function TokenCounter({ language }: TokenCounterProps) {
                 {/* 模型选择 */}
                 <div className="space-y-2">
                     <Label>{texts.model[language]}</Label>
-                    <Select value={selectedModel} onValueChange={setSelectedModel}>
+                    <Select value={selectedModel} onValueChange={handleModelChange}>
                         <SelectTrigger className="text-base">
                             <SelectValue />
                         </SelectTrigger>
@@ -218,9 +250,30 @@ export default function TokenCounter({ language }: TokenCounterProps) {
                                 <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
                                     <div className="flex items-center justify-between w-full">
                                         <div className="font-medium text-sm">{model.label}</div>
-                                        <div className="text-xs text-gray-500 ml-4">
-                                            ${model.costPer1kTokens}/1k
-                                        </div>
+                                    </div>
+                                </SelectItem>
+                            ))}
+                            
+                            {/* Google Gemini 系列 */}
+                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
+                                Google Gemini 系列
+                            </div>
+                            {models.filter(m => m.value.startsWith('gemini')).map((model) => (
+                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                    <div className="flex items-center justify-between w-full">
+                                        <div className="font-medium text-sm">{model.label}</div>
+                                    </div>
+                                </SelectItem>
+                            ))}
+                            
+                            {/* Meta Llama 系列 */}
+                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
+                                Meta Llama 系列
+                            </div>
+                            {models.filter(m => m.value.startsWith('llama')).map((model) => (
+                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                    <div className="flex items-center justify-between w-full">
+                                        <div className="font-medium text-sm">{model.label}</div>
                                     </div>
                                 </SelectItem>
                             ))}
@@ -233,24 +286,18 @@ export default function TokenCounter({ language }: TokenCounterProps) {
                                 <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
                                     <div className="flex items-center justify-between w-full">
                                         <div className="font-medium text-sm">{model.label}</div>
-                                        <div className="text-xs text-gray-500 ml-4">
-                                            ¥{model.costPer1kTokensCNY}/1k
-                                        </div>
                                     </div>
                                 </SelectItem>
                             ))}
                             
                             {/* Claude 4 系列 */}
                             <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                Claude 4 系列 (最新)
+                                Claude 4 系列
                             </div>
                             {models.filter(m => m.value.startsWith('claude-4')).map((model) => (
                                 <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
                                     <div className="flex items-center justify-between w-full">
                                         <div className="font-medium text-sm">{model.label}</div>
-                                        <div className="text-xs text-gray-500 ml-4">
-                                            ${model.costPer1kTokens}/1k
-                                        </div>
                                     </div>
                                 </SelectItem>
                             ))}
@@ -263,24 +310,18 @@ export default function TokenCounter({ language }: TokenCounterProps) {
                                 <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
                                     <div className="flex items-center justify-between w-full">
                                         <div className="font-medium text-sm">{model.label}</div>
-                                        <div className="text-xs text-gray-500 ml-4">
-                                            ${model.costPer1kTokens}/1k
-                                        </div>
                                     </div>
                                 </SelectItem>
                             ))}
                             
                             {/* Claude 3 系列 */}
                             <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                Claude 3 系列 (Legacy)
+                                Claude 3 系列
                             </div>
                             {models.filter(m => m.value.startsWith('claude-3') && !m.value.startsWith('claude-3.5')).map((model) => (
                                 <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
                                     <div className="flex items-center justify-between w-full">
                                         <div className="font-medium text-sm">{model.label}</div>
-                                        <div className="text-xs text-gray-500 ml-4">
-                                            ${model.costPer1kTokens}/1k
-                                        </div>
                                     </div>
                                 </SelectItem>
                             ))}
@@ -402,7 +443,7 @@ export default function TokenCounter({ language }: TokenCounterProps) {
                         )}
                     </Label>
                     <div className="bg-slate-50 p-3 rounded-lg">
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                             <div className="text-center">
                                 <Label className="text-gray-600 text-xs block mb-1">{texts.tokens[language]}</Label>
                                 <p className={`text-lg font-bold ${isCalculating ? 'text-gray-400' : 'text-blue-600'}`}>
@@ -418,29 +459,10 @@ export default function TokenCounter({ language }: TokenCounterProps) {
                                 <Label className="text-gray-600 text-xs block mb-1">{texts.words[language]}</Label>
                                 <p className="text-lg font-semibold text-purple-600">{wordCount.toLocaleString()}</p>
                             </div>
-                            <div className="text-center">
-                                <Label className="text-gray-600 text-xs block mb-1">{texts.estimatedCost[language]}</Label>
-                                {estimatedCost !== null ? (
-                                    <p className={`text-lg font-semibold ${isCalculating ? 'text-gray-400' : 'text-orange-600'}`}>
-                                        {currentModel.currency === 'CNY' ? (
-                                            estimatedCost < 0.001 ? '<¥0.001' : `¥${estimatedCost.toFixed(3)}`
-                                        ) : (
-                                            estimatedCost < 0.001 ? '<$0.001' : `$${estimatedCost.toFixed(3)}`
-                                        )}
-                                    </p>
-                                ) : (
-                                    <p className="text-lg font-semibold text-gray-400">-</p>
-                                )}
-                            </div>
                         </div>
-                        {estimatedCost !== null && (
+                        {isCalculating && (
                             <p className="text-xs text-gray-500 mt-2 text-center">
-                                {texts.costNote[language]}
-                                {isCalculating && (
-                                    <span className="block mt-0.5">
-                                        * {language === 'en' ? 'Approximate count, precise calculation in progress...' : '近似计数，精确计算中...'}
-                                    </span>
-                                )}
+                                {language === 'en' ? 'Approximate count, precise calculation in progress...' : '近似计数，精确计算中...'}
                             </p>
                         )}
                     </div>
@@ -554,22 +576,24 @@ export default function TokenCounter({ language }: TokenCounterProps) {
                     <div className="text-sm text-blue-800 space-y-2">
                         {language === 'en' ? (
                             <div>
-                                <p className="font-medium">Tips for accurate token counting:</p>
+                                <p className="font-medium">Important Notes:</p>
                                 <ul className="list-disc pl-5 space-y-1 mt-2">
-                                    <li>Different models use different tokenizers, so token counts may vary</li>
+                                    <li><strong>OpenAI models</strong> use accurate native tokenizers</li>
+                                    <li><strong>Other models (⚠️)</strong> use GPT-4 tokenizer for approximation</li>
                                     <li>Punctuation, spaces, and special characters all affect token count</li>
-                                    <li>Longer words generally use more tokens than shorter ones</li>
                                     <li>Non-English text may use more tokens per character</li>
+                                    <li>For precise counts of non-OpenAI models, use their official tokenizers</li>
                                 </ul>
                             </div>
                         ) : (
                             <div>
-                                <p className="font-medium">准确计算token的小贴士：</p>
+                                <p className="font-medium">重要说明：</p>
                                 <ul className="list-disc pl-5 space-y-1 mt-2">
-                                    <li>不同模型使用不同的分词器，token数量可能有所差异</li>
+                                    <li><strong>OpenAI模型</strong> 使用准确的原生分词器</li>
+                                    <li><strong>其他模型 (⚠️)</strong> 使用GPT-4分词器进行近似估算</li>
                                     <li>标点符号、空格和特殊字符都会影响token数量</li>
-                                    <li>较长的单词通常比较短的单词使用更多token</li>
                                     <li>非英语文本每个字符可能使用更多token</li>
+                                    <li>要获得非OpenAI模型的精确计数，请使用其官方分词器</li>
                                 </ul>
                             </div>
                         )}
