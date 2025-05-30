@@ -149,30 +149,84 @@ export default function TokenCounterPage({
                     {/* 使用说明 - SEO内容 */}
                     <section className="mt-8 space-y-4">
                         <h2 className="text-lg font-semibold">
-                            {language === 'en' ? 'How to Use This Token Counter & Tokenizer Tool' : '如何使用这个Token计数器和分词器工具'}
+                            {language === 'en' ? 'Business Guide: Token Optimization & Cost Control' : '业务指南：Token优化与成本控制'}
                         </h2>
-                        <div className="text-sm text-muted-foreground space-y-2">
+                        <div className="text-sm text-muted-foreground space-y-4">
                             {language === 'en' ? (
                                 <>
-                                    <p>This token counter and tokenizer tool helps you accurately count tokens in your text for AI applications:</p>
-                                    <ul className="list-disc pl-5 space-y-1">
-                                        <li><strong>Text Input:</strong> Paste or type your text in the input area</li>
-                                        <li><strong>Tokenizer Selection:</strong> Choose from different AI model tokenizers (GPT-3.5, GPT-4, Claude, Gemini, Llama, DeepSeek, etc.)</li>
-                                        <li><strong>Real-time Counting:</strong> See token count, character count, and word count update in real-time</li>
-                                        <li><strong>Visual Breakdown:</strong> See how your text is tokenized with color-coded visualization</li>
-                                    </ul>
-                                    <p>Perfect for developers, content creators, and anyone working with AI APIs who need to optimize text length and understand tokenization. Our online tokenizer supports all major AI models including GPT, Claude, Gemini, Llama, and DeepSeek.</p>
+                                    <div>
+                                        <h3 className="font-semibold text-gray-700 mb-2">💰 API Cost Estimation</h3>
+                                        <p>Understanding token counts is crucial for cost management. For example:</p>
+                                        <ul className="list-disc pl-5 space-y-1 mt-2">
+                                            <li><strong>GPT-4o:</strong> $15/1M input tokens - A 1000-token prompt costs ~$0.015</li>
+                                            <li><strong>Claude 3.5 Sonnet:</strong> $3/1M tokens - Same prompt costs ~$0.003</li>
+                                            <li><strong>Gemini 1.5 Pro:</strong> $1.25/1M tokens - Same prompt costs ~$0.00125</li>
+                                        </ul>
+                                        <p className="mt-2">Use our calculator to estimate costs before scaling your application.</p>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="font-semibold text-gray-700 mb-2">🎯 Business Scenarios</h3>
+                                        <ul className="list-disc pl-5 space-y-1">
+                                            <li><strong>Content Generation:</strong> Pre-calculate token limits for blog posts, marketing copy</li>
+                                            <li><strong>Customer Support:</strong> Optimize chatbot responses to stay within context windows</li>
+                                            <li><strong>Document Analysis:</strong> Chunk large documents efficiently for processing</li>
+                                            <li><strong>API Integration:</strong> Validate input size before expensive API calls</li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="font-semibold text-gray-700 mb-2">⚡ Optimization Strategies</h3>
+                                        <ul className="list-disc pl-5 space-y-1">
+                                            <li><strong>Model Selection:</strong> Use cheaper models for simple tasks, premium for complex ones</li>
+                                            <li><strong>Prompt Engineering:</strong> Shorter, more specific prompts often yield better results</li>
+                                            <li><strong>Context Management:</strong> Monitor conversation length to avoid hitting limits</li>
+                                            <li><strong>Batch Processing:</strong> Combine multiple requests to reduce overhead</li>
+                                        </ul>
+                                    </div>
+
+                                    <div className="bg-blue-50 p-3 rounded border border-blue-200">
+                                        <p className="font-medium text-blue-800">💡 Pro Tip:</p>
+                                        <p className="text-blue-700">Different tokenizers can produce 20-40% variation in token counts for the same text. Test with your target model's tokenizer for accurate cost estimation.</p>
+                                    </div>
                                 </>
                             ) : (
                                 <>
-                                    <p>这个Token计数器和分词器工具帮助您准确计算AI应用中文本的token数量：</p>
-                                    <ul className="list-disc pl-5 space-y-1">
-                                        <li><strong>文本输入：</strong> 在输入区域粘贴或输入您的文本</li>
-                                        <li><strong>分词器选择：</strong> 从不同的AI模型分词器中选择（GPT-3.5、GPT-4、Claude、Gemini、Llama、DeepSeek等）</li>
-                                        <li><strong>实时计数：</strong> 实时查看token数量、字符数和单词数</li>
-                                        <li><strong>可视化分解：</strong> 通过彩色编码可视化查看文本如何被分词</li>
-                                    </ul>
-                                    <p>适合开发者、内容创作者以及任何需要优化文本长度和理解分词机制的AI API用户。我们的在线分词器支持所有主流AI模型，包括GPT、Claude、Gemini、Llama和DeepSeek。</p>
+                                    <div>
+                                        <h3 className="font-semibold text-gray-700 mb-2">💰 API成本估算</h3>
+                                        <p>理解token数量对成本管控至关重要。例如：</p>
+                                        <ul className="list-disc pl-5 space-y-1 mt-2">
+                                            <li><strong>GPT-4o:</strong> $15/100万token - 1000个token的提示词成本约$0.015</li>
+                                            <li><strong>Claude 3.5 Sonnet:</strong> $3/100万token - 相同提示词成本约$0.003</li>
+                                            <li><strong>Gemini 1.5 Pro:</strong> $1.25/100万token - 相同提示词成本约$0.00125</li>
+                                        </ul>
+                                        <p className="mt-2">在扩展应用前使用我们的计算器评估成本。</p>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="font-semibold text-gray-700 mb-2">🎯 业务场景应用</h3>
+                                        <ul className="list-disc pl-5 space-y-1">
+                                            <li><strong>内容生成：</strong> 为博客文章、营销文案预先计算token限制</li>
+                                            <li><strong>客户支持：</strong> 优化聊天机器人响应以保持在上下文窗口内</li>
+                                            <li><strong>文档分析：</strong> 高效分块大型文档进行处理</li>
+                                            <li><strong>API集成：</strong> 在昂贵的API调用前验证输入大小</li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="font-semibold text-gray-700 mb-2">⚡ 优化策略</h3>
+                                        <ul className="list-disc pl-5 space-y-1">
+                                            <li><strong>模型选择：</strong> 简单任务使用便宜模型，复杂任务使用高级模型</li>
+                                            <li><strong>提示工程：</strong> 更短、更具体的提示词往往产生更好的结果</li>
+                                            <li><strong>上下文管理：</strong> 监控对话长度以避免达到限制</li>
+                                            <li><strong>批处理：</strong> 合并多个请求以减少开销</li>
+                                        </ul>
+                                    </div>
+
+                                    <div className="bg-blue-50 p-3 rounded border border-blue-200">
+                                        <p className="font-medium text-blue-800">💡 专业提示：</p>
+                                        <p className="text-blue-700">不同的分词器对相同文本可能产生20-40%的token数量差异。使用目标模型的分词器测试以获得准确的成本估算。</p>
+                                    </div>
                                 </>
                             )}
                         </div>
