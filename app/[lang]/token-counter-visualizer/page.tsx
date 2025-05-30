@@ -10,7 +10,7 @@ import Link from "next/link"
 export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
     const { lang } = await params
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
-        (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://www.linpp2009.com')
+        (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://app.linpp2009.com')
     const path = 'token-counter-visualizer'
 
     return {
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
         },
         other: {
             'application-name': 'AI Token Counter',
-            'keywords': lang === 'en' ? 
+            'keywords': lang === 'en' ?
                 'token counter, ai token counter, ai tokenizer, gpt token counter, claude token counter, gemini token counter, deepseek token counter, llama token counter, token calculator, ai tokenizer online, best ai tokenizer' :
                 'token计数器, AI token计数器, AI tokenizer, GPT token计数器, Claude token计数器, Gemini token计数器, DeepSeek token计数器, Llama token计数器, token计算器, AI分词器, 在线tokenizer'
         }
@@ -46,7 +46,7 @@ export default function TokenCounterPage({
         "@type": "SoftwareApplication",
         "name": language === 'en' ? "AI Token Counter" : "AI Token 计数器",
         "description": tools.tokenCounter.metadata.description[language],
-        "url": `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.linpp2009.com'}/${language}/token-counter-visualizer`,
+        "url": `${process.env.NEXT_PUBLIC_BASE_URL || 'https://app.linpp2009.com'}/${language}/token-counter-visualizer`,
         "applicationCategory": "UtilityApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -71,7 +71,7 @@ export default function TokenCounterPage({
         "author": {
             "@type": "Organization",
             "name": "linpp2009.com",
-            "url": "https://www.linpp2009.com"
+            "url": "https://app.linpp2009.com"
         },
         "datePublished": "2024-01-01",
         "dateModified": new Date().toISOString().split('T')[0]
@@ -86,7 +86,7 @@ export default function TokenCounterPage({
                     __html: JSON.stringify(structuredData)
                 }}
             />
-            
+
             <LanguageSwitcher language={language} className="fixed top-4 right-4 z-50" />
             <SideNav language={language} currentPath={currentPath} />
 
@@ -108,34 +108,34 @@ export default function TokenCounterPage({
                         </h2>
                         <div className="text-sm space-y-3">
                             <p className="text-muted-foreground">
-                                {language === 'en' ? 
-                                    'Click to quickly test different AI model tokenizers:' : 
+                                {language === 'en' ?
+                                    'Click to quickly test different AI model tokenizers:' :
                                     '点击快速测试不同AI模型的分词器：'
                                 }
                             </p>
                             <div className="flex flex-wrap gap-2">
-                                <Link href={`/${language}/token-counter-visualizer?model=gpt-4o`} 
-                                   className="px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-xs transition-colors">
+                                <Link href={`/${language}/token-counter-visualizer?model=gpt-4o`}
+                                    className="px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-xs transition-colors">
                                     GPT-4o Counter
                                 </Link>
-                                <Link href={`/${language}/token-counter-visualizer?model=claude-4-opus`} 
-                                   className="px-3 py-1 bg-purple-100 hover:bg-purple-200 text-purple-800 rounded text-xs transition-colors">
+                                <Link href={`/${language}/token-counter-visualizer?model=claude-4-opus`}
+                                    className="px-3 py-1 bg-purple-100 hover:bg-purple-200 text-purple-800 rounded text-xs transition-colors">
                                     Claude 4 Counter
                                 </Link>
-                                <Link href={`/${language}/token-counter-visualizer?model=claude-3.5-sonnet`} 
-                                   className="px-3 py-1 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded text-xs transition-colors">
+                                <Link href={`/${language}/token-counter-visualizer?model=claude-3.5-sonnet`}
+                                    className="px-3 py-1 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded text-xs transition-colors">
                                     Claude 3.5 Counter
                                 </Link>
-                                <Link href={`/${language}/token-counter-visualizer?model=gemini-1.5-pro`} 
-                                   className="px-3 py-1 bg-green-100 hover:bg-green-200 text-green-800 rounded text-xs transition-colors">
+                                <Link href={`/${language}/token-counter-visualizer?model=gemini-1.5-pro`}
+                                    className="px-3 py-1 bg-green-100 hover:bg-green-200 text-green-800 rounded text-xs transition-colors">
                                     Gemini Counter
                                 </Link>
-                                <Link href={`/${language}/token-counter-visualizer?model=llama-3.1-70b`} 
-                                   className="px-3 py-1 bg-orange-100 hover:bg-orange-200 text-orange-800 rounded text-xs transition-colors">
+                                <Link href={`/${language}/token-counter-visualizer?model=llama-3.1-70b`}
+                                    className="px-3 py-1 bg-orange-100 hover:bg-orange-200 text-orange-800 rounded text-xs transition-colors">
                                     Llama Counter
                                 </Link>
-                                <Link href={`/${language}/token-counter-visualizer?model=deepseek-chat`} 
-                                   className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded text-xs transition-colors">
+                                <Link href={`/${language}/token-counter-visualizer?model=deepseek-chat`}
+                                    className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded text-xs transition-colors">
                                     DeepSeek Counter
                                 </Link>
                             </div>
@@ -230,7 +230,7 @@ export default function TokenCounterPage({
                                 </>
                             )}
                         </div>
-                        
+
                         {/* 支持的模型列表 - SEO优化 */}
                         <div className="mt-6">
                             <h3 className="text-md font-semibold mb-2">

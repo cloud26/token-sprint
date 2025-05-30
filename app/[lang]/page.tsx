@@ -9,7 +9,7 @@ import { Footer } from "@/components/footer"
 export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
     const { lang } = await params
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
-        (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://www.linpp2009.com')
+        (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://app.linpp2009.com')
 
     return {
         title: home.metadata.title[lang],
@@ -19,7 +19,16 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
             languages: {
                 'en': `${baseUrl}/en`,
                 'zh': `${baseUrl}/zh`,
+                'x-default': `${baseUrl}/en`,
             },
+        },
+        openGraph: {
+            title: home.metadata.title[lang],
+            description: home.metadata.description[lang],
+            url: `${baseUrl}/${lang}`,
+            siteName: 'AI Tools Collection',
+            locale: lang === 'en' ? 'en_US' : 'zh_CN',
+            type: 'website',
         },
     }
 }

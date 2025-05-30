@@ -9,7 +9,7 @@ import { SideNav } from "@/components/side-nav"
 export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
     const { lang } = await params
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
-        (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://www.linpp2009.com')
+        (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://app.linpp2009.com')
     const path = 'token-generation-speed-visualizer'
 
     return {
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
         },
         other: {
             'application-name': 'AI Token Generation Speed Visualizer',
-            'keywords': lang === 'en' ? 
+            'keywords': lang === 'en' ?
                 'ai token speed, ai generation speed, token generation simulator, ai response time, chatbot speed, ai performance, token visualization, ai user experience, streaming response, ai latency test, token speed tester, ai benchmark' :
                 'AI token生成速度, AI生成速度, token生成模拟器, AI响应时间, 聊天机器人速度, AI性能, token可视化, AI用户体验, 流式响应, AI延迟测试, token速度测试, AI基准测试'
         }
@@ -66,7 +66,7 @@ export default function TokenGenerationSpeedVisualizer({
                             {language === 'en' ? (
                                 <>
                                     <p>Token generation speed directly impacts user experience in AI applications. Research shows delays over 3 seconds significantly increase user abandonment rates.</p>
-                                    
+
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
                                             <h3 className="font-medium text-blue-900 mb-2">📊 Speed Benchmarks</h3>
@@ -76,7 +76,7 @@ export default function TokenGenerationSpeedVisualizer({
                                                 <li>• Local models: 5-200+ tokens/sec</li>
                                             </ul>
                                         </div>
-                                        
+
                                         <div className="bg-green-50 p-4 rounded-lg border border-green-200">
                                             <h3 className="font-medium text-green-900 mb-2">⚡ Optimization Tips</h3>
                                             <ul className="text-green-800 text-xs space-y-1">
@@ -96,7 +96,7 @@ export default function TokenGenerationSpeedVisualizer({
                             ) : (
                                 <>
                                     <p>Token生成速度直接影响AI应用的用户体验。研究表明，超过3秒的延迟会显著增加用户流失率。</p>
-                                    
+
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
                                             <h3 className="font-medium text-blue-900 mb-2">📊 速度基准</h3>
@@ -106,7 +106,7 @@ export default function TokenGenerationSpeedVisualizer({
                                                 <li>• 本地模型: 5-200+ tokens/秒</li>
                                             </ul>
                                         </div>
-                                        
+
                                         <div className="bg-green-50 p-4 rounded-lg border border-green-200">
                                             <h3 className="font-medium text-green-900 mb-2">⚡ 优化建议</h3>
                                             <ul className="text-green-800 text-xs space-y-1">

@@ -9,7 +9,7 @@ import { SideNav } from "@/components/side-nav"
 export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
     const { lang } = await params
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
-        (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://www.linpp2009.com')
+        (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://app.linpp2009.com')
     const path = 'llm-gpu-memory-calculator'
 
     return {

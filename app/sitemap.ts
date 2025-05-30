@@ -1,9 +1,9 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
         (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://app.linpp2009.com')
-        
+
     const languages = ['en', 'zh']
     const routes = [
         '',
@@ -27,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         'gemini-1.5-flash'
     ]
 
-    const baseUrls = routes.flatMap(route => 
+    const baseUrls = routes.flatMap(route =>
         languages.map(lang => ({
             url: `${baseUrl}/${lang}${route}`,
             lastModified: new Date(),
@@ -50,7 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const gpuCalculatorModels = [
         // 最新Qwen3系列
         'qwen3-235b-a22b',
-        'qwen3-30b-a3b', 
+        'qwen3-30b-a3b',
         'qwen3-32b',
         'qwen3-14b',
         'qwen3-8b',
@@ -58,14 +58,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
         // 热门模型
         'deepseek-r1',
         'deepseek-v3',
-        'llama-3.1-70b', 
+        'llama-3.1-70b',
         'llama-3.1-405b',
         'llama-3.1-8b',
         'qwen-72b',
         'qwen-7b',
         'llama-7b'
     ]
-    
+
     const gpuCalculatorUrls = gpuCalculatorModels.flatMap(model =>
         languages.map(lang => ({
             url: `${baseUrl}/${lang}/llm-gpu-memory-calculator?model=${model}`,
