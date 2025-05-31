@@ -5,6 +5,7 @@ import { SideNav } from "@/components/side-nav"
 import LLMMemoryCalculator from "@/components/llm-memory-calculator"
 import LanguageSwitcher from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
+import { GPUSelectionGuide } from "@/components/gpu-selection-guide"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
     const { lang } = await params
@@ -58,6 +59,11 @@ export default function Home({
                     <Suspense fallback={<div>Loading...</div>}>
                         <LLMMemoryCalculator language={language} />
                     </Suspense>
+                    
+                    {/* GPU Selection Guide */}
+                    <div className="mt-8">
+                        <GPUSelectionGuide language={language} />
+                    </div>
                 </div>
                 <Footer />
             </main>
