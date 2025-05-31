@@ -6,6 +6,7 @@ import { Metadata } from "next"
 import LLMMemoryCalculator from "@/components/llm-memory-calculator"
 import { SideNav } from "@/components/side-nav"
 import { GPUSelectionGuide } from "@/components/gpu-selection-guide"
+import { Breadcrumb } from "@/components/breadcrumb"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
     const { lang } = await params
@@ -34,6 +35,18 @@ export default function LLMGPUMemoryCalculatorPage({
     const { lang: language } = use(params)
     const currentPath = `/${language}/llm-gpu-memory-calculator`
 
+    // 面包屑导航项
+    const breadcrumbItems = [
+        {
+            label: language === 'en' ? 'AI Tools' : 'AI工具',
+            href: `/${language}`
+        },
+        {
+            label: tools.llmGpuCalculator.title[language],
+            current: true
+        }
+    ]
+
     return (
         <div className="min-h-screen flex flex-col">
             <LanguageSwitcher language={language} className="fixed top-4 right-4 z-50" />
@@ -41,6 +54,9 @@ export default function LLMGPUMemoryCalculatorPage({
 
             <main className="pt-20 md:pt-4 md:ml-48 flex-1 flex flex-col items-center p-4 md:p-8">
                 <div className="w-full max-w-2xl space-y-2 flex-1">
+                    {/* 面包屑导航 */}
+                    <Breadcrumb items={breadcrumbItems} language={language} />
+                    
                     <header className="flex flex-col items-center gap-1 mt-8">
                         <h1 className="text-2xl font-bold text-center">
                             {tools.llmGpuCalculator.title[language]}
