@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { type Language } from '@/config/languages'
+import { encodingForModel } from "js-tiktoken"
 
 interface TokenCounterProps {
     language: Language
@@ -76,7 +77,7 @@ export default function TokenCounter({ language }: TokenCounterProps) {
     const updateURLParams = (newModel: string) => {
         const params = new URLSearchParams(searchParams.toString())
         
-        if (newModel && newModel !== "gpt-4o") {
+        if (newModel && newModel !== "claude-4-sonnet") {
             params.set('model', newModel)
         } else {
             params.delete('model')
@@ -97,7 +98,7 @@ export default function TokenCounter({ language }: TokenCounterProps) {
 
     // 监听URL参数变化，更新选中的模型
     useEffect(() => {
-        const urlModel = searchParams.get('model') || "gpt-4o"
+        const urlModel = searchParams.get('model') || "claude-4-sonnet"
         
         // 只有当URL参数与当前状态不同时才更新，避免循环更新
         if (urlModel !== selectedModel) {
@@ -122,49 +123,21 @@ export default function TokenCounter({ language }: TokenCounterProps) {
         }
     }, [text])
 
-    // 懒加载并缓存encoding实例
+    // 缓存encoding实例
     const encoding = useMemo(() => {
-        // 只有当有文本需要处理时才加载tiktoken
-        if (!debouncedText.trim()) {
+        try {
+            return encodingForModel(currentModel.encoding as any)
+        } catch (error) {
+            console.error("Error getting encoding:", error)
             return null
         }
-        
-        return import("js-tiktoken").then(({ encodingForModel }) => {
-            try {
-                return encodingForModel(currentModel.encoding as any)
-            } catch (error) {
-                console.error("Error getting encoding:", error)
-                return null
-            }
-        }).catch(error => {
-            console.error("Error loading js-tiktoken:", error)
-            return null
-        })
-    }, [currentModel.encoding, debouncedText.trim()])
+    }, [currentModel.encoding])
 
     const tokenData = useMemo(() => {
-        if (!debouncedText.trim()) {
+        if (!debouncedText.trim() || !encoding) {
             // 快速预估，用于实时显示
             return {
                 count: Math.ceil(text.length / 4),
-                tokens: [],
-                tokenIds: []
-            }
-        }
-
-        // 如果encoding是Promise，返回加载状态
-        if (encoding instanceof Promise) {
-            return {
-                count: Math.ceil(debouncedText.length / 4), // 临时估算
-                tokens: [],
-                tokenIds: [],
-                isLoading: true
-            }
-        }
-        
-        if (!encoding) {
-            return {
-                count: Math.ceil(debouncedText.length / 4),
                 tokens: [],
                 tokenIds: []
             }
@@ -189,19 +162,6 @@ export default function TokenCounter({ language }: TokenCounterProps) {
         }
     }, [debouncedText, encoding, text.length])
 
-    // 异步处理encoding加载
-    useEffect(() => {
-        if (encoding instanceof Promise) {
-            encoding.then(loadedEncoding => {
-                if (loadedEncoding && debouncedText.trim()) {
-                    // 强制重新计算tokenData
-                    // 这里我们通过更新一个dummy state来触发重新渲染
-                    setText(text => text) // 这会触发重新计算
-                }
-            })
-        }
-    }, [encoding, debouncedText])
-
     const tokenCount = tokenData.count
 
     const characterCount = text.length
@@ -209,7 +169,7 @@ export default function TokenCounter({ language }: TokenCounterProps) {
 
     // 记录使用日志 - 只在用户停止输入后记录
     useEffect(() => {
-        if (debouncedText.trim() && tokenCount > 0 && !tokenData.isLoading) {
+        if (debouncedText.trim() && tokenCount > 0) {
             const logUsage = async () => {
                 try {
                     await fetch('/api/log', {
@@ -232,7 +192,7 @@ export default function TokenCounter({ language }: TokenCounterProps) {
             };
             logUsage();
         }
-    }, [debouncedText, selectedModel, tokenCount, characterCount, wordCount, language, tokenData.isLoading]);
+    }, [debouncedText, selectedModel, tokenCount, characterCount, wordCount, language]);
 
     const texts = {
         input: {
@@ -270,7 +230,7 @@ export default function TokenCounter({ language }: TokenCounterProps) {
     }
 
     // 判断是否正在计算精确值
-    const isCalculating = (text !== debouncedText && text.trim().length > 0) || tokenData.isLoading
+    const isCalculating = text !== debouncedText && text.trim().length > 0
 
     return (
         <Card className="w-full">
@@ -652,6 +612,8 @@ export default function TokenCounter({ language }: TokenCounterProps) {
                         )}
                     </div>
                 </div>
+
+
             </CardContent>
         </Card>
     )
