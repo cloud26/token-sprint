@@ -25,21 +25,21 @@ export const tools = {
     llmGpuCalculator: {
         path: "llm-gpu-memory-calculator",
         title: {
-            zh: "大模型部署GPU计算器",
-            en: "LLM GPU Requirements Calculator"
+            zh: "AI大模型显卡需求计算器",
+            en: "LLM GPU Calculator: Estimate GPU Count & VRAM"
         },
         description: {
-            zh: "精确计算大语言模型部署所需的GPU显存和硬件配置",
-            en: "Calculate precise GPU memory and hardware requirements for deploying large language models"
+            zh: "精确计算部署AI大模型需要多少张显卡，支持NVIDIA/AMD/华为昇腾/Mac M系列全平台",
+            en: "Accurately calculate how many GPUs you need to deploy LLMs. Supports NVIDIA, AMD, Huawei Ascend, Mac M-series. Get instant hardware recommendations."
         },
         metadata: {
             title: {
-                zh: "LLM GPU需求计算器 | 支持最新AI大模型 | Qwen3 DeepSeek Llama等",
-                en: "GPU VRAM Calculator | LLM Memory Requirements Tool"
+                zh: "AI显卡计算器 | 精确计算GPU数量与显存 | 支持最新大模型",
+                en: "AI GPU Calculator: Estimate GPUs for LLAMA, Qwen, DeepSeek"
             },
             description: {
-                zh: "免费的大语言模型GPU需求计算器，支持最新AI模型包括Qwen3-235B、DeepSeek-R1、Llama 3.1等。精确计算GPU显存需求，支持H100、A100、RTX 4090等GPU型号，提供专业硬件配置建议。",
-                en: "Free LLM GPU requirements calculator supporting latest AI models including Qwen3-235B, DeepSeek-R1, Llama 3.1, and more. Calculate precise VRAM requirements for H100, A100, RTX 4090. Professional hardware planning tool for AI infrastructure."
+                zh: "免费AI大模型显卡需求计算工具，精确计算部署Qwen3-235B、DeepSeek-R1、Llama 3.1等模型需要多少张显卡。支持NVIDIA H100/A100、AMD、华为昇腾910B、Mac M1/M2/M3/M4系列，提供专业级硬件配置方案。",
+                en: "Free AI GPU calculator for LLM deployment. Calculate exact GPU count and VRAM requirements for Qwen3-235B, DeepSeek-R1, Llama 3.1. Supports NVIDIA H100/A100/RTX 4090, AMD GPUs, Huawei Ascend 910B, Mac M1/M2/M3/M4 series. Professional hardware planning tool."
             }
         }
     },

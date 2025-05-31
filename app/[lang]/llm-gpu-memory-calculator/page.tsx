@@ -73,7 +73,7 @@ export default function LLMGPUMemoryCalculatorPage({
                     {/* GPU Selection Guide */}
                     <div className="mt-8">
                         <GPUSelectionGuide language={language} />
-                    </div>
+                        </div>
                 </div>
                 <Footer />
             </main>

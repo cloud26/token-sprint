@@ -2,8 +2,8 @@ import { Language } from "./languages"
 
 export const calculatorText = {
     title: {
-        zh: "大模型推理显存与GPU数量计算器",
-        en: "LLM GPU Memory Calculator"
+        zh: "AI大模型显卡需求计算器",
+        en: "LLM GPU Calculator: Estimate GPU Count & VRAM"
     },
     parameters: {
         label: {
