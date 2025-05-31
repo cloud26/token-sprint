@@ -68,9 +68,8 @@ export const config = {
          * - 图片文件
          * - favicon.ico
          * - sitemap.xml
-         * - ads.txt
-         * - robots.txt
+         * - 所有 .txt 文件（验证文件等）
          */
-        "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|ads.txt|robots.txt).*)",
+        "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|.*\\.txt).*)",
     ],
 } 
