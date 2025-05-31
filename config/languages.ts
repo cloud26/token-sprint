@@ -14,7 +14,7 @@ export const tools = {
         metadata: {
             title: {
                 zh: "AI Token 生成速度体验器 | 模拟真实AI对话体验",
-                en: "AI Token Generation Speed Simulator | Experience Real AI Conversation"
+                en: "AI Token Speed Simulator | Real AI Chat Experience"
             },
             description: {
                 zh: "通过这个交互式可视化工具，直观体验不同 token 生成速度对 AI 对话体验的影响，帮助开发者优化用户体验设计。",
@@ -35,7 +35,7 @@ export const tools = {
         metadata: {
             title: {
                 zh: "LLM GPU需求计算器 | 支持最新AI大模型 | Qwen3 DeepSeek Llama等",
-                en: "LLM GPU Requirements Calculator | Latest AI Models | Qwen3 DeepSeek Llama Claude"
+                en: "GPU VRAM Calculator | LLM Memory Requirements Tool"
             },
             description: {
                 zh: "免费的大语言模型GPU需求计算器，支持最新AI模型包括Qwen3-235B、DeepSeek-R1、Llama 3.1等。精确计算GPU显存需求，支持H100、A100、RTX 4090等GPU型号，提供专业硬件配置建议。",
@@ -55,8 +55,8 @@ export const tools = {
         },
         metadata: {
             title: {
-                zh: "Token Counter & Tokenizer | AI Token 计数器 | GPT Claude Gemini DeepSeek",
-                en: "Token Counter & Tokenizer | AI Token Counter for GPT Claude Gemini DeepSeek Llama"
+                zh: "AI Token计数器 | GPT Claude Gemini DeepSeek Llama",
+                en: "AI Token Counter | GPT Claude Gemini DeepSeek Llama"
             },
             description: {
                 zh: "免费的Token Counter和Tokenizer工具，支持GPT、Claude、Gemini、DeepSeek、Llama等主流LLM模型的token计数。提供精确计数、可视化分解和模型对比功能。",
@@ -89,7 +89,7 @@ export const home = {
     metadata: {
         title: {
             zh: "专业AI开发工具集 | Token计数器 | GPU计算器 | 免费在线工具",
-            en: "Professional AI Development Tools | Token Counter | GPU Calculator | Free Online Tools"
+            en: "AI Development Tools | Token Counter | GPU Calculator"
         },
         description: {
             zh: "免费的专业AI开发工具集，包含智能Token计数器、大模型GPU计算器、AI生成速度体验器等实用工具。助力AI开发者提升效率，优化项目成本。",

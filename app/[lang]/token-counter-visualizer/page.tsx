@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
         other: {
             'application-name': 'AI Token Counter',
             'keywords': lang === 'en' ?
-                'token counter, ai token counter, ai tokenizer, gpt token counter, claude token counter, gemini token counter, deepseek token counter, llama token counter, token calculator, ai tokenizer online, best ai tokenizer' :
-                'token计数器, AI token计数器, AI tokenizer, GPT token计数器, Claude token计数器, Gemini token计数器, DeepSeek token计数器, Llama token计数器, token计算器, AI分词器, 在线tokenizer'
+                'token counter, ai tokenizer, gpt token counter, claude token counter, gemini counter' :
+                'token计数器, AI token计数器, GPT token计数器, Claude token计数器, Gemini计数器'
         }
     }
 }

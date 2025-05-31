@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
         other: {
             'application-name': 'AI Token Generation Speed Visualizer',
             'keywords': lang === 'en' ?
-                'ai token speed, ai generation speed, token generation simulator, ai response time, chatbot speed, ai performance, token visualization, ai user experience, streaming response, ai latency test, token speed tester, ai benchmark' :
-                'AI token生成速度, AI生成速度, token生成模拟器, AI响应时间, 聊天机器人速度, AI性能, token可视化, AI用户体验, 流式响应, AI延迟测试, token速度测试, AI基准测试'
+                'ai token speed, ai generation speed, token generation, ai response time, ai performance' :
+                'AI token生成速度, AI生成速度, token生成模拟器, AI响应时间, AI性能测试'
         }
     }
 }
