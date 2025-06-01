@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { getAllModelSlugs } from '@/config/models'
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
@@ -12,21 +13,44 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '/llm-gpu-memory-calculator',
     ]
 
-    // 添加模型特定的URL - 按流行度排序
-    const popularModels = [
+    // Token Counter 的热门模型（按使用频率排序）
+    const popularTokenCounterModels = [
+        // OpenAI 最受欢迎
         'gpt-4o',
-        'claude-4-sonnet',      // 最新的Claude 4 Sonnet
-        'claude-4-opus',        // 最强的Claude 4 Opus
-        'claude-3.5-sonnet',    // 流行的3.5版本
-        'gemini-1.5-pro',
-        'llama-3.1-70b',
-        'deepseek-chat',
-        'deepseek-r1',
-        'claude-3.7-sonnet',    // 新增的3.7版本
         'gpt-4',
-        'gemini-1.5-flash'
+        'gpt-4-turbo',
+        'gpt-3.5-turbo',
+        
+        // Claude 系列（最新最热门）
+        'claude-4-opus',        // 最强的Claude 4
+        'claude-4-sonnet',      // 最新的Claude 4 Sonnet
+        'claude-3.7-sonnet',    // 新增的3.7版本
+        'claude-3.5-sonnet',    // 非常流行的3.5版本
+        'claude-3.5-haiku',     // 轻量级但流行
+        'claude-3-opus',
+        'claude-3-sonnet',
+        'claude-3-haiku',
+        
+        // Google Gemini
+        'gemini-1.5-pro',
+        'gemini-1.5-flash',
+        'gemini-pro',
+        
+        // Meta Llama
+        'llama-3.1-405b',
+        'llama-3.1-70b',
+        'llama-3.1-8b',
+        'llama-2-70b',
+        'llama-2-13b',
+        'llama-2-7b',
+        
+        // DeepSeek
+        'deepseek-r1',
+        'deepseek-chat',
+        'deepseek-v3'
     ]
 
+    // 基础路由页面
     const baseUrls = routes.flatMap(route =>
         languages.map(lang => ({
             url: `${baseUrl}/${lang}${route}`,
@@ -36,44 +60,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
         }))
     )
 
-    // 添加模型特定的token counter URLs
-    const modelSpecificUrls = popularModels.flatMap(model =>
+    // LLM GPU 计算器的专门模型页面 - 高SEO优先级
+    const modelSpecificPages = getAllModelSlugs().flatMap(modelSlug =>
+        languages.map(lang => ({
+            url: `${baseUrl}/${lang}/llm-gpu-memory-calculator/${modelSlug}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.9, // 高优先级，专门为SEO长尾关键词设计
+        }))
+    )
+
+    // Token Counter 的模型特定URLs（仍然有价值，因为没有专门页面）
+    const tokenCounterUrls = popularTokenCounterModels.flatMap(model =>
         languages.map(lang => ({
             url: `${baseUrl}/${lang}/token-counter-visualizer?model=${model}`,
             lastModified: new Date(),
             changeFrequency: 'weekly' as const,
-            priority: 0.6,
+            priority: 0.6, // 中等优先级，为功能性URL
         }))
     )
 
-    // 添加模型特定的GPU calculator URLs - 使用不同的URL格式
-    const gpuCalculatorModels = [
-        // 最新Qwen3系列
-        'qwen3-235b-a22b',
-        'qwen3-30b-a3b',
-        'qwen3-32b',
-        'qwen3-14b',
-        'qwen3-8b',
-        'qwen3-4b',
-        // 热门模型
-        'deepseek-r1',
-        'deepseek-v3',
-        'llama-3.1-70b',
-        'llama-3.1-405b',
-        'llama-3.1-8b',
-        'qwen-72b',
-        'qwen-7b',
-        'llama-7b'
-    ]
-
-    const gpuCalculatorUrls = gpuCalculatorModels.flatMap(model =>
-        languages.map(lang => ({
-            url: `${baseUrl}/${lang}/llm-gpu-memory-calculator?model=${model}`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly' as const,
-            priority: 0.6,
-        }))
-    )
-
-    return [...baseUrls, ...modelSpecificUrls, ...gpuCalculatorUrls]
+    return [...baseUrls, ...modelSpecificPages, ...tokenCounterUrls]
 } 

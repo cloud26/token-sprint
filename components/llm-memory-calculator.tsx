@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import { Check, ChevronsUpDown, InfoIcon } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
@@ -16,71 +15,79 @@ import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { calculatorText } from "@/config/calculator"
+import React from "react"
 
 interface CalculatorProps {
     language: Language
+    preferredModelType?: string // 优先显示的模型类型，如 'deepseek', 'llama', 'qwen' 等
 }
 
-export default function LLMMemoryCalculator({ language }: CalculatorProps) {
-    const searchParams = useSearchParams()
-    const router = useRouter()
-    const pathname = usePathname()
+export default function LLMMemoryCalculator({ language, preferredModelType }: CalculatorProps) {
+    // 根据优先模型类型重新排序模型列表
+    const sortedModelExamples = React.useMemo(() => {
+        if (!preferredModelType) return modelExamples
+        
+        const preferred: typeof modelExamples = []
+        const others: typeof modelExamples = []
+        
+        modelExamples.forEach(model => {
+            const modelName = model.name.toLowerCase()
+            if (
+                (preferredModelType === 'deepseek' && modelName.includes('deepseek')) ||
+                (preferredModelType === 'llama' && modelName.includes('llama')) ||
+                (preferredModelType === 'qwen' && modelName.includes('qwen')) ||
+                (preferredModelType === 'claude' && modelName.includes('claude')) ||
+                (preferredModelType === 'gemini' && modelName.includes('gemini'))
+            ) {
+                preferred.push(model)
+            } else {
+                others.push(model)
+            }
+        })
+        
+        return [...preferred, ...others]
+    }, [preferredModelType])
     
-    // 从URL参数中获取模型，如果没有则使用默认值
-    const urlModel = searchParams.get('model')
-    const initialModel = urlModel ? 
-        modelExamples.find(m => m.value === urlModel)?.name || "DeepSeek-R1" : 
-        "DeepSeek-R1"
-    
-    const [parameters, setParameters] = useState<string>("671")
+    // 根据优先模型类型设置默认模型
+    const getDefaultModel = () => {
+        if (!preferredModelType) return "DeepSeek-R1"
+        
+        const defaultModels: Record<string, string> = {
+            'deepseek': 'DeepSeek-R1',
+            'llama': 'Llama 3.1 70B', 
+            'qwen': 'Qwen3-235B-A22B',
+            'claude': 'DeepSeek-R1', // Claude模型不在modelExamples中，使用默认
+            'gemini': 'DeepSeek-R1'  // Gemini模型不在modelExamples中，使用默认
+        }
+        
+        return defaultModels[preferredModelType] || "DeepSeek-R1"
+    }
+
+    // 根据默认模型设置默认参数
+    const getDefaultParameters = () => {
+        const defaultModel = getDefaultModel()
+        const model = sortedModelExamples.find(m => m.name === defaultModel)
+        return model ? model.parameters.replace("B", "") : "671"
+    }
+
+    const [parameters, setParameters] = useState<string>(getDefaultParameters())
     const [precision, setPrecision] = useState<string>("FP8")
     const [gpuModel, setGpuModel] = useState<string>("NVIDIA H100")
-    const [selectedModel, setSelectedModel] = useState<string>(initialModel)
+    const [selectedModel, setSelectedModel] = useState<string>(getDefaultModel())
 
     const selectedGpu = gpuModels.find((gpu) => `${gpu.name} (${gpu.memory}GB)` === gpuModel)
     const gpuMemory = selectedGpu ? selectedGpu.memory : 80 // 默认使用 80GB
 
     const memory = calculateInferenceMemory(Number(parameters), precision, gpuMemory)
 
-    // 更新URL参数
-    const updateURLParams = (newModel: string) => {
-        const params = new URLSearchParams(searchParams.toString())
-        const modelValue = modelExamples.find(m => m.name === newModel)?.value
-        
-        if (modelValue && modelValue !== "deepseek-r1") {
-            params.set('model', modelValue)
-        } else {
-            params.delete('model')
-        }
-        
-        const queryString = params.toString()
-        const newUrl = queryString ? `${pathname}?${queryString}` : pathname
-        
-        // 使用replace避免在浏览器历史中创建过多条目
-        router.replace(newUrl, { scroll: false })
-    }
-
-    // 当模型选择改变时更新URL和参数
+    // 当模型选择改变时更新参数
     const handleModelChange = (newModel: string) => {
         setSelectedModel(newModel)
-        const model = modelExamples.find(m => m.name === newModel)
+        const model = sortedModelExamples.find(m => m.name === newModel)
         if (model) {
             setParameters(model.parameters.replace("B", ""))
         }
-        updateURLParams(newModel)
     }
-
-    // 监听URL参数变化，更新选中的模型
-    useEffect(() => {
-        const urlModel = searchParams.get('model')
-        if (urlModel) {
-            const model = modelExamples.find(m => m.value === urlModel)
-            if (model && model.name !== selectedModel) {
-                setSelectedModel(model.name)
-                setParameters(model.parameters.replace("B", ""))
-            }
-        }
-    }, [searchParams.get('model')])
 
     // 添加日志记录函数
     const logCalculation = async () => {
@@ -154,7 +161,7 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                     <SelectValue placeholder={calculatorText.parameters.selectPlaceholder[language]} />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {modelExamples.map((model) => (
+                                    {sortedModelExamples.map((model) => (
                                         <SelectItem key={model.name} value={model.name}>
                                             {model.name} ({model.parameters})
                                         </SelectItem>
@@ -279,7 +286,6 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                                         setParameters("235")
                                                         setPrecision("FP8")
                                                         setGpuModel("NVIDIA H100 (80GB)")
-                                                        updateURLParams("Qwen3-235B-A22B")
                                                     }}
                                                 >
                                                     🆕 Qwen3-235B + H100
@@ -291,7 +297,6 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                                         setParameters("671")
                                                         setPrecision("FP8")
                                                         setGpuModel("NVIDIA H100 (80GB)")
-                                                        updateURLParams("DeepSeek-R1")
                                                     }}
                                                 >
                                                     DeepSeek R1 + H100
@@ -303,7 +308,6 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                                         setParameters("70")
                                                         setPrecision("FP16")
                                                         setGpuModel("NVIDIA A100 (80GB)")
-                                                        updateURLParams("Llama 3.1 70B")
                                                     }}
                                                 >
                                                     Llama 3.1 70B + A100
@@ -315,7 +319,6 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                                         setParameters("8")
                                                         setPrecision("FP16")
                                                         setGpuModel("NVIDIA RTX 4090 (24GB)")
-                                                        updateURLParams("Llama 3.1 8B")
                                                     }}
                                                 >
                                                     Llama 3.1 8B + RTX 4090
@@ -327,7 +330,6 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                                         setParameters("7")
                                                         setPrecision("FP16")
                                                         setGpuModel("NVIDIA RTX 3090 (24GB)")
-                                                        updateURLParams("Qwen-7B")
                                                     }}
                                                 >
                                                     Qwen 7B + RTX 3090
@@ -339,7 +341,6 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                                         setParameters("70")
                                                         setPrecision("FP8")
                                                         setGpuModel("NVIDIA H100 (80GB)")
-                                                        updateURLParams("Llama 3.1 70B")
                                                     }}
                                                 >
                                                     Llama 70B + H100 (FP8)
@@ -359,7 +360,6 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                                         setParameters("235")
                                                         setPrecision("FP8")
                                                         setGpuModel("NVIDIA H100 (80GB)")
-                                                        updateURLParams("Qwen3-235B-A22B")
                                                     }}
                                                 >
                                                     🆕 Qwen3-235B + H100
@@ -371,7 +371,6 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                                         setParameters("671")
                                                         setPrecision("FP8")
                                                         setGpuModel("NVIDIA H100 (80GB)")
-                                                        updateURLParams("DeepSeek-R1")
                                                     }}
                                                 >
                                                     DeepSeek R1 + H100
@@ -383,7 +382,6 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                                         setParameters("70")
                                                         setPrecision("FP16")
                                                         setGpuModel("NVIDIA A100 (80GB)")
-                                                        updateURLParams("Llama 3.1 70B")
                                                     }}
                                                 >
                                                     Llama 3.1 70B + A100
@@ -395,7 +393,6 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                                         setParameters("8")
                                                         setPrecision("FP16")
                                                         setGpuModel("NVIDIA RTX 4090 (24GB)")
-                                                        updateURLParams("Llama 3.1 8B")
                                                     }}
                                                 >
                                                     Llama 3.1 8B + RTX 4090
@@ -407,7 +404,6 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                                         setParameters("7")
                                                         setPrecision("FP16")
                                                         setGpuModel("NVIDIA RTX 3090 (24GB)")
-                                                        updateURLParams("Qwen-7B")
                                                     }}
                                                 >
                                                     Qwen 7B + RTX 3090
@@ -419,7 +415,6 @@ export default function LLMMemoryCalculator({ language }: CalculatorProps) {
                                                         setParameters("70")
                                                         setPrecision("FP8")
                                                         setGpuModel("NVIDIA H100 (80GB)")
-                                                        updateURLParams("Llama 3.1 70B")
                                                     }}
                                                 >
                                                     Llama 70B + H100 (FP8)
