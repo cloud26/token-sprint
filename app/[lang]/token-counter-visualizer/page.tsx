@@ -117,47 +117,6 @@ export default function TokenCounterPage({
                         </p>
                     </header>
 
-                    {/* Quick Start Links - 优先体验 */}
-                    <section className="mt-6 space-y-4">
-                        <h2 className="text-lg font-semibold">
-                            {language === 'en' ? 'Quick Start Examples' : '快速开始示例'}
-                        </h2>
-                        <div className="text-sm space-y-3">
-                            <p className="text-muted-foreground">
-                                {language === 'en' ?
-                                    'Click to quickly test different AI model tokenizers:' :
-                                    '点击快速测试不同AI模型的分词器：'
-                                }
-                            </p>
-                            <div className="flex flex-wrap gap-2">
-                                <Link href={`/${language}/token-counter-visualizer?model=gpt-4o`}
-                                    className="px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-xs transition-colors">
-                                    GPT-4o Counter
-                                </Link>
-                                <Link href={`/${language}/token-counter-visualizer?model=claude-4-opus`}
-                                    className="px-3 py-1 bg-purple-100 hover:bg-purple-200 text-purple-800 rounded text-xs transition-colors">
-                                    Claude 4 Counter
-                                </Link>
-                                <Link href={`/${language}/token-counter-visualizer?model=claude-3.5-sonnet`}
-                                    className="px-3 py-1 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded text-xs transition-colors">
-                                    Claude 3.5 Counter
-                                </Link>
-                                <Link href={`/${language}/token-counter-visualizer?model=gemini-1.5-pro`}
-                                    className="px-3 py-1 bg-green-100 hover:bg-green-200 text-green-800 rounded text-xs transition-colors">
-                                    Gemini Counter
-                                </Link>
-                                <Link href={`/${language}/token-counter-visualizer?model=llama-3.1-70b`}
-                                    className="px-3 py-1 bg-orange-100 hover:bg-orange-200 text-orange-800 rounded text-xs transition-colors">
-                                    Llama Counter
-                                </Link>
-                                <Link href={`/${language}/token-counter-visualizer?model=deepseek-chat`}
-                                    className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded text-xs transition-colors">
-                                    DeepSeek Counter
-                                </Link>
-                            </div>
-                        </div>
-                    </section>
-
                     <Suspense fallback={<div>Loading...</div>}>
                         <TokenCounter language={language} />
                     </Suspense>

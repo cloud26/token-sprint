@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { getAllModelSlugs } from '@/config/models'
+import { getAllModelSlugs, getAllTokenCounterModelSlugs } from '@/config/models'
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
@@ -61,7 +61,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     )
 
     // LLM GPU 计算器的专门模型页面 - 高SEO优先级
-    const modelSpecificPages = getAllModelSlugs().flatMap(modelSlug =>
+    const gpuCalculatorPages = getAllModelSlugs().flatMap(modelSlug =>
         languages.map(lang => ({
             url: `${baseUrl}/${lang}/llm-gpu-memory-calculator/${modelSlug}`,
             lastModified: new Date(),
@@ -70,15 +70,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
         }))
     )
 
-    // Token Counter 的模型特定URLs（仍然有价值，因为没有专门页面）
-    const tokenCounterUrls = popularTokenCounterModels.flatMap(model =>
+    // Token Counter 的AI公司页面 - 高SEO优先级
+    const tokenCounterPages = getAllTokenCounterModelSlugs().flatMap(companySlug =>
         languages.map(lang => ({
-            url: `${baseUrl}/${lang}/token-counter-visualizer?model=${model}`,
+            url: `${baseUrl}/${lang}/token-counter-visualizer/${companySlug}`,
             lastModified: new Date(),
             changeFrequency: 'weekly' as const,
-            priority: 0.6, // 中等优先级，为功能性URL
+            priority: 0.9, // 高优先级，专门为SEO公司关键词设计
         }))
     )
 
-    return [...baseUrls, ...modelSpecificPages, ...tokenCounterUrls]
+    return [...baseUrls, ...gpuCalculatorPages, ...tokenCounterPages]
 } 

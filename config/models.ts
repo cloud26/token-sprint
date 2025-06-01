@@ -242,4 +242,235 @@ export function getModelBySlug(slug: string): ModelConfig | null {
 
 export function getAllModelSlugs(): string[] {
     return Object.keys(models)
+}
+
+// Token Counter 模型配置 - 按AI公司分类用于SEO优化
+export interface TokenCounterModel {
+    slug: string
+    name: string
+    company: string
+    description: {
+        en: string
+        zh: string
+    }
+    seoTitle: {
+        en: string
+        zh: string
+    }
+    seoDescription: {
+        en: string
+        zh: string
+    }
+    features: {
+        en: string[]
+        zh: string[]
+    }
+    useCases: {
+        en: string[]
+        zh: string[]
+    }
+    representativeModels: {
+        en: string[]
+        zh: string[]
+    }
+    defaultModel: string // 页面默认选择的具体模型
+}
+
+export const tokenCounterModels: TokenCounterModel[] = [
+    {
+        slug: 'openai-gpt',
+        name: 'OpenAI GPT',
+        company: 'OpenAI',
+        description: {
+            en: 'OpenAI token counter with native tokenizer for GPT models. The most accurate OpenAI token counting tool.',
+            zh: 'OpenAI token计数器，采用原生tokenizer支持GPT模型。最精确的OpenAI token计数工具。'
+        },
+        seoTitle: {
+            en: 'OpenAI GPT Token Counter: GPT-4o, GPT-4, GPT-3.5 Token Calculator',
+            zh: 'OpenAI GPT Token计数器：GPT-4o、GPT-4、GPT-3.5计算工具'
+        },
+        seoDescription: {
+            en: 'Professional OpenAI token counter for GPT-4o, GPT-4, GPT-4 Turbo, GPT-3.5 Turbo. Best OpenAI token counter tool with native tokenizer support for accurate cost estimation.',
+            zh: '专业的OpenAI GPT token计数器，支持GPT-4o、GPT-4、GPT-4 Turbo、GPT-3.5 Turbo。最佳OpenAI token计数工具，原生分词器支持精确成本估算。'
+        },
+        features: {
+            en: ['Native tokenizer accuracy', 'Real-time cost calculation', 'Multiple GPT model support', 'Prompt optimization'],
+            zh: ['原生分词器精度', '实时成本计算', '多GPT模型支持', '提示词优化']
+        },
+        useCases: {
+            en: ['API cost planning', 'Content generation', 'Chatbot development', 'Prompt engineering'],
+            zh: ['API成本规划', '内容生成', '聊天机器人开发', '提示工程']
+        },
+        representativeModels: {
+            en: ['GPT-4o', 'GPT-4', 'GPT-4 Turbo', 'GPT-3.5 Turbo'],
+            zh: ['GPT-4o', 'GPT-4', 'GPT-4 Turbo', 'GPT-3.5 Turbo']
+        },
+        defaultModel: 'gpt-4o'
+    },
+    {
+        slug: 'anthropic-claude',
+        name: 'Anthropic Claude',
+        company: 'Anthropic',
+        description: {
+            en: 'Anthropic Claude token counter and tokenizer tool. Approximate token counting for Claude models using advanced estimation.',
+            zh: 'Anthropic Claude token计数器和tokenizer工具。使用先进估算算法为Claude模型提供近似token计数。'
+        },
+        seoTitle: {
+            en: 'Anthropic Claude Token Counter: Claude 4, Claude 3.5, Claude 3 Calculator',
+            zh: 'Anthropic Claude Token计数器：Claude 4、Claude 3.5、Claude 3计算工具'
+        },
+        seoDescription: {
+            en: 'Accurate Anthropic Claude token counter for Claude 4 Opus/Sonnet, Claude 3.7, Claude 3.5 Sonnet/Haiku, Claude 3. Long context support, safety analysis, cost estimation.',
+            zh: '精确的Anthropic Claude token计数器，支持Claude 4 Opus/Sonnet、Claude 3.7、Claude 3.5 Sonnet/Haiku、Claude 3。长上下文支持，安全分析，成本估算。'
+        },
+        features: {
+            en: ['Ultra-long context counting', 'Safety-focused analysis', 'Advanced reasoning support', 'Constitutional AI optimization'],
+            zh: ['超长上下文计数', '安全性分析', '高级推理支持', '宪法AI优化']
+        },
+        useCases: {
+            en: ['Document analysis', 'Research assistance', 'Content moderation', 'Long-form writing'],
+            zh: ['文档分析', '研究辅助', '内容审核', '长文写作']
+        },
+        representativeModels: {
+            en: ['Claude 4 Opus', 'Claude 4 Sonnet', 'Claude 3.5 Sonnet', 'Claude 3.5 Haiku'],
+            zh: ['Claude 4 Opus', 'Claude 4 Sonnet', 'Claude 3.5 Sonnet', 'Claude 3.5 Haiku']
+        },
+        defaultModel: 'claude-3.5-sonnet'
+    },
+    {
+        slug: 'google-gemini',
+        name: 'Google Gemini',
+        company: 'Google',
+        description: {
+            en: 'Google Gemini token counter and tokenizer tool. Approximate token counting for Gemini models using advanced estimation.',
+            zh: 'Google Gemini token计数器和tokenizer工具。使用先进估算算法为Gemini模型提供近似token计数。'
+        },
+        seoTitle: {
+            en: 'Google Gemini Token Counter: Gemini 1.5 Pro, Flash Token Calculator',
+            zh: 'Google Gemini Token计数器：Gemini 1.5 Pro、Flash计算工具'
+        },
+        seoDescription: {
+            en: 'Professional Google Gemini token counter for Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini Pro. Supports up to 2M token context, multimodal counting, document processing.',
+            zh: '专业的Google Gemini token计数器，支持Gemini 1.5 Pro、Gemini 1.5 Flash、Gemini Pro。支持最多200万token上下文，多模态计数，文档处理。'
+        },
+        features: {
+            en: ['2M token context support', 'Multimodal token counting', 'Document processing', 'Video content analysis'],
+            zh: ['200万token上下文支持', '多模态token计数', '文档处理', '视频内容分析']
+        },
+        useCases: {
+            en: ['Long document analysis', 'Multimodal AI applications', 'Video processing', 'Large dataset analysis'],
+            zh: ['长文档分析', '多模态AI应用', '视频处理', '大数据分析']
+        },
+        representativeModels: {
+            en: ['Gemini 1.5 Pro', 'Gemini 1.5 Flash', 'Gemini Pro'],
+            zh: ['Gemini 1.5 Pro', 'Gemini 1.5 Flash', 'Gemini Pro']
+        },
+        defaultModel: 'gemini-1.5-pro'
+    },
+    {
+        slug: 'meta-llama',
+        name: 'Meta Llama',
+        company: 'Meta',
+        description: {
+            en: 'Meta Llama token counter and tokenizer tool. Approximate token counting for Llama models using advanced estimation.',
+            zh: 'Meta Llama token计数器和tokenizer工具。使用先进估算算法为Llama模型提供近似token计数。'
+        },
+        seoTitle: {
+            en: 'Meta Llama Token Counter: Llama 3.1, Llama 2 Open Source Calculator',
+            zh: 'Meta Llama Token计数器：Llama 3.1、Llama 2开源计算工具'
+        },
+        seoDescription: {
+            en: 'Free Meta Llama token counter for Llama 3.1 (405B, 70B, 8B), Llama 2 models. Open source optimization, local deployment planning, custom fine-tuning support.',
+            zh: '免费的Meta Llama token计数器，支持Llama 3.1 (405B, 70B, 8B)、Llama 2模型。开源优化，本地部署规划，自定义微调支持。'
+        },
+        features: {
+            en: ['Open source optimization', 'Local deployment support', 'Custom fine-tuning ready', 'Resource planning tools'],
+            zh: ['开源优化', '本地部署支持', '自定义微调准备', '资源规划工具']
+        },
+        useCases: {
+            en: ['Local AI deployment', 'Custom model training', 'Research projects', 'Private cloud solutions'],
+            zh: ['本地AI部署', '自定义模型训练', '研究项目', '私有云解决方案']
+        },
+        representativeModels: {
+            en: ['Llama 3.1 405B', 'Llama 3.1 70B', 'Llama 3.1 8B', 'Llama 2 70B'],
+            zh: ['Llama 3.1 405B', 'Llama 3.1 70B', 'Llama 3.1 8B', 'Llama 2 70B']
+        },
+        defaultModel: 'llama-3.1-70b'
+    },
+    {
+        slug: 'deepseek',
+        name: 'DeepSeek',
+        company: 'DeepSeek',
+        description: {
+            en: 'DeepSeek token counter and tokenizer tool. Approximate token counting for DeepSeek models using advanced estimation.',
+            zh: 'DeepSeek token计数器和tokenizer工具。使用先进估算算法为DeepSeek模型提供近似token计数。'
+        },
+        seoTitle: {
+            en: 'DeepSeek Token Counter: DeepSeek-R1, DeepSeek-V3 Reasoning Calculator',
+            zh: 'DeepSeek Token计数器：DeepSeek-R1、DeepSeek-V3推理计算工具'
+        },
+        seoDescription: {
+            en: 'Specialized DeepSeek token counter for DeepSeek-R1 Reasoner, DeepSeek-V3 Chat. Reasoning task optimization, mathematical analysis, step-by-step logic counting.',
+            zh: '专门的DeepSeek token计数器，支持DeepSeek-R1推理器、DeepSeek-V3聊天。推理任务优化，数学分析，分步逻辑计数。'
+        },
+        features: {
+            en: ['Reasoning task optimization', 'Mathematical analysis support', 'Step-by-step logic counting', 'Cost-efficient calculations'],
+            zh: ['推理任务优化', '数学分析支持', '分步逻辑计数', '成本效率计算']
+        },
+        useCases: {
+            en: ['Mathematical reasoning', 'Logic problem solving', 'Code analysis', 'Research assistance'],
+            zh: ['数学推理', '逻辑问题求解', '代码分析', '研究辅助']
+        },
+        representativeModels: {
+            en: ['DeepSeek-R1', 'DeepSeek-V3 Chat'],
+            zh: ['DeepSeek-R1', 'DeepSeek-V3 Chat']
+        },
+        defaultModel: 'deepseek-reasoner'
+    },
+    {
+        slug: 'qwen',
+        name: 'Qwen3',
+        company: 'Alibaba',
+        description: {
+            en: 'Qwen3 token counter and tokenizer tool. Approximate token counting for Qwen models using advanced estimation.',
+            zh: 'Qwen3 token计数器和tokenizer工具。使用先进估算算法为Qwen模型提供近似token计数。'
+        },
+        seoTitle: {
+            en: 'Qwen3 Token Counter: Alibaba Qwen Token Calculator & Tokenizer',
+            zh: 'Qwen3 Token计数器：阿里巴巴Qwen Token计算器和分词器'
+        },
+        seoDescription: {
+            en: 'Professional Qwen3 token counter for Alibaba Qwen models. Accurate token counting for Qwen-Plus, Qwen-Turbo, and other Qwen models with cost estimation.',
+            zh: '专业的Qwen3 token计数器，支持阿里巴巴Qwen模型。精确计算Qwen-Plus、Qwen-Turbo等模型的token数量，提供成本估算。'
+        },
+        features: {
+            en: ['MoE architecture support', 'Multilingual optimization', 'Cost-efficient counting', 'Chinese language specialized'],
+            zh: ['MoE架构支持', '多语言优化', '成本效率计算', '中文语言专门优化']
+        },
+        useCases: {
+            en: ['Chinese AI applications', 'Multilingual content', 'Cost optimization', 'Enterprise deployment'],
+            zh: ['中文AI应用', '多语言内容', '成本优化', '企业级部署']
+        },
+        representativeModels: {
+            en: ['Qwen3-235B-A22B', 'Qwen-Plus', 'Qwen-Turbo', 'Qwen-Max'],
+            zh: ['Qwen3-235B-A22B', 'Qwen-Plus', 'Qwen-Turbo', 'Qwen-Max']
+        },
+        defaultModel: 'qwen3-235b'
+    }
+]
+
+// 获取所有Token Counter模型的slug
+export function getAllTokenCounterModelSlugs(): string[] {
+    return tokenCounterModels.map(model => model.slug)
+}
+
+// 根据slug获取Token Counter模型
+export function getTokenCounterModelBySlug(slug: string): TokenCounterModel | undefined {
+    return tokenCounterModels.find(model => model.slug === slug)
+}
+
+// 根据公司slug获取默认模型值（用于token counter组件）
+export function getTokenCounterDefaultModel(companySlug: string): string {
+    const model = getTokenCounterModelBySlug(companySlug)
+    return model ? model.defaultModel : 'gpt-4o'
 } 

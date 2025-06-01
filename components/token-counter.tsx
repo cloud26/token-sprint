@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useMemo, useRef } from "react"
-import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -11,6 +10,8 @@ import { encodingForModel } from "js-tiktoken"
 
 interface TokenCounterProps {
     language: Language
+    defaultModel?: string
+    preferredCompany?: string // 优先显示的公司，如 'OpenAI', 'Anthropic', 'Google' 等
 }
 
 interface ModelInfo {
@@ -45,6 +46,12 @@ const models: ModelInfo[] = [
     { value: "deepseek-chat", label: "DeepSeek-V3 Chat ⚠️", encoding: "gpt-4", currency: 'CNY' },
     { value: "deepseek-reasoner", label: "DeepSeek-R1 Reasoner ⚠️", encoding: "gpt-4", currency: 'CNY' },
     
+    // Qwen3 系列 (近似估算)
+    { value: "qwen3-235b", label: "Qwen3-235B-A22B ⚠️", encoding: "gpt-4", currency: 'CNY' },
+    { value: "qwen-plus", label: "Qwen-Plus ⚠️", encoding: "gpt-4", currency: 'CNY' },
+    { value: "qwen-turbo", label: "Qwen-Turbo ⚠️", encoding: "gpt-4", currency: 'CNY' },
+    { value: "qwen-max", label: "Qwen-Max ⚠️", encoding: "gpt-4", currency: 'CNY' },
+    
     // Claude 系列 (近似估算)
     { value: "claude-4-opus", label: "Claude 4 Opus ⚠️", encoding: "gpt-4", currency: 'USD' },
     { value: "claude-4-sonnet", label: "Claude 4 Sonnet ⚠️", encoding: "gpt-4", currency: 'USD' },
@@ -56,55 +63,56 @@ const models: ModelInfo[] = [
     { value: "claude-3-haiku", label: "Claude 3 Haiku ⚠️", encoding: "gpt-4", currency: 'USD' },
 ]
 
-export default function TokenCounter({ language }: TokenCounterProps) {
-    const searchParams = useSearchParams()
-    const router = useRouter()
-    const pathname = usePathname()
-    
-    // URL参数中的模型，如果没有则使用默认值
-    const initialModel = searchParams.get('model') || "gpt-4o"
-    
+export default function TokenCounter({ language, defaultModel, preferredCompany }: TokenCounterProps) {
     const [text, setText] = useState("")
-    const [selectedModel, setSelectedModel] = useState(initialModel)
+    const [selectedModel, setSelectedModel] = useState(defaultModel || "gpt-4o")
     const [debouncedText, setDebouncedText] = useState("")
     const [showTokenBreakdown, setShowTokenBreakdown] = useState(true)
     const [tokenDisplayMode, setTokenDisplayMode] = useState<'text' | 'ids'>('text')
     const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
     
-    const currentModel = models.find(m => m.value === selectedModel) || models[0]
+    // 根据优先公司重新排序模型列表
+    const sortedModels = useMemo(() => {
+        if (!preferredCompany) return models
+        
+        const preferred: typeof models = []
+        const others: typeof models = []
+        
+        models.forEach(model => {
+            const modelValue = model.value.toLowerCase()
+            const company = preferredCompany.toLowerCase()
+            
+            let isPreferred = false
+            if (company === 'openai' && (modelValue.startsWith('gpt-') || modelValue.startsWith('text-'))) {
+                isPreferred = true
+            } else if (company === 'anthropic' && modelValue.startsWith('claude')) {
+                isPreferred = true
+            } else if (company === 'google' && modelValue.startsWith('gemini')) {
+                isPreferred = true
+            } else if (company === 'meta' && modelValue.startsWith('llama')) {
+                isPreferred = true
+            } else if (company === 'deepseek' && modelValue.startsWith('deepseek')) {
+                isPreferred = true
+            } else if (company === 'alibaba' && (modelValue.startsWith('qwen'))) {
+                isPreferred = true
+            }
+            
+            if (isPreferred) {
+                preferred.push(model)
+            } else {
+                others.push(model)
+            }
+        })
+        
+        return [...preferred, ...others]
+    }, [preferredCompany])
+    
+    const currentModel = sortedModels.find(m => m.value === selectedModel) || sortedModels[0]
 
-    // 更新URL参数
-    const updateURLParams = (newModel: string) => {
-        const params = new URLSearchParams(searchParams.toString())
-        
-        if (newModel && newModel !== "claude-4-sonnet") {
-            params.set('model', newModel)
-        } else {
-            params.delete('model')
-        }
-        
-        const queryString = params.toString()
-        const newUrl = queryString ? `${pathname}?${queryString}` : pathname
-        
-        // 使用replace避免在浏览器历史中创建过多条目
-        router.replace(newUrl, { scroll: false })
-    }
-
-    // 当模型选择改变时更新URL
+    // 当模型选择改变时直接更新状态
     const handleModelChange = (newModel: string) => {
         setSelectedModel(newModel)
-        updateURLParams(newModel)
     }
-
-    // 监听URL参数变化，更新选中的模型
-    useEffect(() => {
-        const urlModel = searchParams.get('model') || "claude-4-sonnet"
-        
-        // 只有当URL参数与当前状态不同时才更新，避免循环更新
-        if (urlModel !== selectedModel) {
-            setSelectedModel(urlModel)
-        }
-    }, [searchParams.get('model')])
 
     // 防抖处理文本输入
     useEffect(() => {
@@ -243,101 +251,192 @@ export default function TokenCounter({ language }: TokenCounterProps) {
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="max-h-80 overflow-y-auto">
-                            {/* OpenAI GPT 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50">
-                                OpenAI GPT 系列
-                            </div>
-                            {models.filter(m => m.value.startsWith('gpt-') || m.value.startsWith('text-')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
+                            {/* 动态排序分组 - 优先公司在前 */}
+                            {preferredCompany && preferredCompany.toLowerCase() === 'openai' && (
+                                <>
+                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-blue-50">
+                                        ⭐ OpenAI GPT 系列
                                     </div>
-                                </SelectItem>
-                            ))}
+                                    {sortedModels.filter(m => m.value.startsWith('gpt-') || m.value.startsWith('text-')).map((model) => (
+                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                            <div className="flex items-center justify-between w-full">
+                                                <div className="font-medium text-sm">{model.label}</div>
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </>
+                            )}
                             
-                            {/* Google Gemini 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                Google Gemini 系列
-                            </div>
-                            {models.filter(m => m.value.startsWith('gemini')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
+                            {preferredCompany && preferredCompany.toLowerCase() === 'google' && (
+                                <>
+                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-green-50 mt-1">
+                                        ⭐ Google Gemini 系列
                                     </div>
-                                </SelectItem>
-                            ))}
+                                    {sortedModels.filter(m => m.value.startsWith('gemini')).map((model) => (
+                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                            <div className="flex items-center justify-between w-full">
+                                                <div className="font-medium text-sm">{model.label}</div>
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </>
+                            )}
                             
-                            {/* Meta Llama 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                Meta Llama 系列
-                            </div>
-                            {models.filter(m => m.value.startsWith('llama')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
+                            {preferredCompany && preferredCompany.toLowerCase() === 'anthropic' && (
+                                <>
+                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-purple-50 mt-1">
+                                        ⭐ Anthropic Claude 系列
                                     </div>
-                                </SelectItem>
-                            ))}
+                                    {sortedModels.filter(m => m.value.startsWith('claude')).map((model) => (
+                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                            <div className="flex items-center justify-between w-full">
+                                                <div className="font-medium text-sm">{model.label}</div>
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </>
+                            )}
                             
-                            {/* DeepSeek 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                DeepSeek 系列
-                            </div>
-                            {models.filter(m => m.value.startsWith('deepseek')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
+                            {preferredCompany && preferredCompany.toLowerCase() === 'meta' && (
+                                <>
+                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-orange-50 mt-1">
+                                        ⭐ Meta Llama 系列
                                     </div>
-                                </SelectItem>
-                            ))}
+                                    {sortedModels.filter(m => m.value.startsWith('llama')).map((model) => (
+                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                            <div className="flex items-center justify-between w-full">
+                                                <div className="font-medium text-sm">{model.label}</div>
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </>
+                            )}
                             
-                            {/* Claude 4 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                Claude 4 系列
-                            </div>
-                            {models.filter(m => m.value.startsWith('claude-4-opus') || m.value.startsWith('claude-4-sonnet')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
+                            {preferredCompany && preferredCompany.toLowerCase() === 'deepseek' && (
+                                <>
+                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
+                                        ⭐ DeepSeek 系列
                                     </div>
-                                </SelectItem>
-                            ))}
+                                    {sortedModels.filter(m => m.value.startsWith('deepseek')).map((model) => (
+                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                            <div className="flex items-center justify-between w-full">
+                                                <div className="font-medium text-sm">{model.label}</div>
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </>
+                            )}
 
-                            {/* Claude 3.7 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                Claude 3.7 系列
-                            </div>
-                            {models.filter(m => m.value.startsWith('claude-3.7')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
+                            {preferredCompany && preferredCompany.toLowerCase() === 'alibaba' && (
+                                <>
+                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-orange-50 mt-1">
+                                        ⭐ Qwen3 系列
                                     </div>
-                                </SelectItem>
-                            ))}
+                                    {sortedModels.filter(m => m.value.startsWith('qwen')).map((model) => (
+                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                            <div className="flex items-center justify-between w-full">
+                                                <div className="font-medium text-sm">{model.label}</div>
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </>
+                            )}
+
+                            {/* OpenAI GPT 系列 - 非优先时显示 */}
+                            {(!preferredCompany || preferredCompany.toLowerCase() !== 'openai') && (
+                                <>
+                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50">
+                                        OpenAI GPT 系列
+                                    </div>
+                                    {sortedModels.filter(m => m.value.startsWith('gpt-') || m.value.startsWith('text-')).map((model) => (
+                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                            <div className="flex items-center justify-between w-full">
+                                                <div className="font-medium text-sm">{model.label}</div>
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </>
+                            )}
                             
-                            {/* Claude 3.5 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                Claude 3.5 系列
-                            </div>
-                            {models.filter(m => m.value.startsWith('claude-3.5')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
+                            {/* Google Gemini 系列 - 非优先时显示 */}
+                            {(!preferredCompany || preferredCompany.toLowerCase() !== 'google') && (
+                                <>
+                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
+                                        Google Gemini 系列
                                     </div>
-                                </SelectItem>
-                            ))}
+                                    {sortedModels.filter(m => m.value.startsWith('gemini')).map((model) => (
+                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                            <div className="flex items-center justify-between w-full">
+                                                <div className="font-medium text-sm">{model.label}</div>
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </>
+                            )}
                             
-                            {/* Claude 3 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                Claude 3 系列
-                            </div>
-                            {models.filter(m => m.value.startsWith('claude-3') && !m.value.startsWith('claude-3.5') && !m.value.startsWith('claude-3.7')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
+                            {/* Anthropic Claude 系列 - 非优先时显示 */}
+                            {(!preferredCompany || preferredCompany.toLowerCase() !== 'anthropic') && (
+                                <>
+                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
+                                        Anthropic Claude 系列
                                     </div>
-                                </SelectItem>
-                            ))}
+                                    {sortedModels.filter(m => m.value.startsWith('claude')).map((model) => (
+                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                            <div className="flex items-center justify-between w-full">
+                                                <div className="font-medium text-sm">{model.label}</div>
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </>
+                            )}
+                            
+                            {/* Meta Llama 系列 - 非优先时显示 */}
+                            {(!preferredCompany || preferredCompany.toLowerCase() !== 'meta') && (
+                                <>
+                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
+                                        Meta Llama 系列
+                                    </div>
+                                    {sortedModels.filter(m => m.value.startsWith('llama')).map((model) => (
+                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                            <div className="flex items-center justify-between w-full">
+                                                <div className="font-medium text-sm">{model.label}</div>
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </>
+                            )}
+                            
+                            {/* DeepSeek 系列 - 非优先时显示 */}
+                            {(!preferredCompany || preferredCompany.toLowerCase() !== 'deepseek') && (
+                                <>
+                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
+                                        DeepSeek 系列
+                                    </div>
+                                    {sortedModels.filter(m => m.value.startsWith('deepseek')).map((model) => (
+                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                            <div className="flex items-center justify-between w-full">
+                                                <div className="font-medium text-sm">{model.label}</div>
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </>
+                            )}
+                            
+                            {/* Qwen3 系列 - 非优先时显示 */}
+                            {(!preferredCompany || preferredCompany.toLowerCase() !== 'alibaba') && (
+                                <>
+                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
+                                        Qwen3 系列
+                                    </div>
+                                    {sortedModels.filter(m => m.value.startsWith('qwen')).map((model) => (
+                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                            <div className="flex items-center justify-between w-full">
+                                                <div className="font-medium text-sm">{model.label}</div>
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </>
+                            )}
                         </SelectContent>
                     </Select>
                 </div>
