@@ -12,7 +12,12 @@ export const metadata: Metadata = {
   generator: 'linpp2009.com',
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://app.linpp2009.com'),
   alternates: {
-    canonical: '/',
+    canonical: '/en',
+    languages: {
+      'en': '/en',
+      'zh': '/zh',
+      'x-default': '/en',
+    },
   },
   other: {
     'google-adsense-account': 'ca-pub-8472112646404075',

@@ -50,15 +50,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
         'deepseek-v3'
     ]
 
-    // 基础路由页面
+    // 基础路由页面 - 只包含语言版本，不包含根路径以避免重复
     const baseUrls = routes.flatMap(route =>
         languages.map(lang => ({
             url: `${baseUrl}/${lang}${route}`,
             lastModified: new Date(),
             changeFrequency: 'daily' as const,
-            priority: route === '' ? 1 : 0.8,
+            priority: route === '' ? 0.9 : 0.8, // 降低首页优先级，因为它不是canonical
         }))
     )
+
+    // 添加根路径作为canonical首页
+    const canonicalHome = {
+        url: baseUrl,
+        lastModified: new Date(),
+        changeFrequency: 'daily' as const,
+        priority: 1.0, // 最高优先级，作为canonical首页
+    }
 
     // LLM GPU 计算器的专门模型页面 - 高SEO优先级
     const gpuCalculatorPages = getAllModelSlugs().flatMap(modelSlug =>
@@ -80,5 +88,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
         }))
     )
 
-    return [...baseUrls, ...gpuCalculatorPages, ...tokenCounterPages]
+    return [canonicalHome, ...baseUrls, ...gpuCalculatorPages, ...tokenCounterPages]
 } 

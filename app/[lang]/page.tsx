@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
         title: home.metadata.title[lang],
         description: home.metadata.description[lang],
         alternates: {
-            canonical: `${baseUrl}/${lang}`,
+            canonical: lang === 'en' ? baseUrl : `${baseUrl}/${lang}`,
             languages: {
                 'en': `${baseUrl}/en`,
                 'zh': `${baseUrl}/zh`,
