@@ -176,12 +176,12 @@ export const modelExamples = [
   { name: "DeepSeek-R1", parameters: "671B", value: "deepseek-r1" },
   { name: "DeepSeek-V3", parameters: "671B", value: "deepseek-v3" },
   
-  // Llama 4 系列（按Meta官方规格）
-  { name: "Llama 4 Maverick", parameters: "400B (17B active)", value: "llama-4-maverick" },
+  // Llama 4 系列（按Meta官方规格，parameters用于计算）
+  { name: "Llama 4 Maverick", parameters: "400B", value: "llama-4-maverick" },
   
   // Llama 3 系列（按参数量排序）
   { name: "Llama 3.1 405B", parameters: "405B", value: "llama-3.1-405b" },
-  { name: "Llama 4 Scout", parameters: "109B (17B active)", value: "llama-4-scout" },
+  { name: "Llama 4 Scout", parameters: "109B", value: "llama-4-scout" },
   { name: "Llama 3.1 70B", parameters: "70B", value: "llama-3.1-70b" },
   { name: "Llama-65B", parameters: "65B", value: "llama-65b" },
   { name: "Llama-33B", parameters: "33B", value: "llama-33b" },
