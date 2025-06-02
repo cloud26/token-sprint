@@ -26,43 +26,43 @@ export interface ModelConfig {
 export const models: Record<string, ModelConfig> = {
     llama: {
         slug: "llama",
-        name: "Llama 3.1",
-        parameters: 70,
-        recommendedPrecision: "FP16",
+        name: "Llama 4",
+        parameters: 109, // Llama 4 Scout默认参数
+        recommendedPrecision: "FP8",
         seoTitle: {
-            zh: "Llama本地部署GPU需求计算器 | Llama 70B/405B显卡配置",
-            en: "Llama VRAM Calculator | GPU Requirements for 70B/405B"
+            zh: "Llama GPU计算器 | Llama 3/4 Scout/Maverick显卡配置",
+            en: "Llama VRAM Calculator | Llama 3/4 GPU Requirements"
         },
         seoDescription: {
-            zh: "专业的Llama本地部署GPU计算器，精确计算Llama 3.1 70B/405B模型本地运行需要多少张显卡。支持NVIDIA H100/A100/RTX 4090、AMD、华为昇腾、Mac M系列，提供最优本地部署方案。",
-            en: "Professional Llama VRAM calculator and GPU requirements tool. Calculate exact VRAM and GPU count for Llama 3.1 70B/405B models. NVIDIA H100/A100/RTX 4090."
+            zh: "专业的Llama GPU计算器，支持Llama 3.1(405B/70B/8B)和最新Llama 4(Scout/Maverick)模型。MoE架构，多模态支持，H100/A100配置方案。",
+            en: "Professional Llama VRAM calculator for Llama 3.1 (405B/70B/8B) and latest Llama 4 (Scout/Maverick). MoE architecture, GPU requirements calculation."
         },
         specialFeatures: {
             zh: [
-                "开源免费，完全本地部署",
-                "支持商用，无使用限制",
-                "模型性能优秀，推理速度快",
-                "社区活跃，资源丰富"
+                "支持Llama 3.1全系列",
+                "最新Llama 4系列",
+                "MoE混合专家架构",
+                "多模态AI能力"
             ],
             en: [
-                "Open source and completely local deployment", 
-                "Commercial use allowed, no restrictions",
-                "Excellent performance with fast inference",
-                "Active community with rich resources"
+                "Llama 3.1 full series support",
+                "Latest Llama 4 series",
+                "Mixture-of-Experts (MoE) architecture", 
+                "Multimodal AI capabilities"
             ]
         },
         useCases: {
             zh: [
-                "企业内部AI助手",
-                "私有化聊天机器人",
-                "本地代码生成",
-                "离线文本分析"
+                "Llama 3.1本地部署",
+                "Llama 4多模态应用",
+                "企业级推理服务",
+                "高性能AI工作站"
             ],
             en: [
-                "Enterprise AI assistant",
-                "Private chatbot deployment", 
-                "Local code generation",
-                "Offline text analysis"
+                "Llama 3.1 local deployment",
+                "Llama 4 multimodal applications",
+                "Enterprise inference services",
+                "High-performance AI workstations"
             ]
         }
     },

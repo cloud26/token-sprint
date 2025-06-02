@@ -54,7 +54,7 @@ export default function LLMMemoryCalculator({ language, preferredModelType }: Ca
         
         const defaultModels: Record<string, string> = {
             'deepseek': 'DeepSeek-R1',
-            'llama': 'Llama 3.1 70B', 
+            'llama': 'Llama 4 Scout',
             'qwen': 'Qwen3-235B-A22B',
             'claude': 'DeepSeek-R1', // Claude模型不在modelExamples中，使用默认
             'gemini': 'DeepSeek-R1'  // Gemini模型不在modelExamples中，使用默认
