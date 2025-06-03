@@ -8,59 +8,84 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { type Language } from '@/config/languages'
 import { encodingForModel } from "js-tiktoken"
 
+// 使用 Hugging Face Transformers.js 进行本地 tokenization
+// 支持多种模型的社区 tokenizer
+let AutoTokenizer: any = null
+
+// 动态导入 Transformers.js (仅在浏览器环境)
+const loadTransformers = async () => {
+    if (typeof window !== 'undefined' && !AutoTokenizer) {
+        try {
+            const transformers = await import('@huggingface/transformers')
+            AutoTokenizer = transformers.AutoTokenizer
+            return transformers.AutoTokenizer
+        } catch (error) {
+            console.warn('Failed to load @huggingface/transformers:', error)
+            return null
+        }
+    }
+    return AutoTokenizer
+}
+
 interface TokenCounterProps {
     language: Language
     defaultModel?: string
-    preferredCompany?: string // 优先显示的公司，如 'OpenAI', 'Anthropic', 'Google' 等
+    preferredCompany?: string
 }
 
 interface ModelInfo {
     value: string
     label: string
     encoding: string
-    currency?: 'USD' | 'CNY'
+    hub?: string  // Hugging Face Hub 模型路径
 }
 
+// 基于参考项目的模型配置，使用 Hugging Face 社区 tokenizer
 const models: ModelInfo[] = [
-    // OpenAI GPT 系列
-    { value: "gpt-4o", label: "GPT-4o", encoding: "gpt-4o", currency: 'USD' },
-    { value: "gpt-4", label: "GPT-4", encoding: "gpt-4", currency: 'USD' },
-    { value: "gpt-4-turbo", label: "GPT-4 Turbo", encoding: "gpt-4-turbo", currency: 'USD' },
-    { value: "gpt-3.5-turbo", label: "GPT-3.5 Turbo", encoding: "gpt-3.5-turbo", currency: 'USD' },
-    { value: "text-davinci-003", label: "GPT-3 Davinci", encoding: "text-davinci-003", currency: 'USD' },
-    
-    // Google Gemini 系列 (近似估算)
-    { value: "gemini-1.5-pro", label: "Gemini 1.5 Pro ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "gemini-1.5-flash", label: "Gemini 1.5 Flash ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "gemini-pro", label: "Gemini Pro ⚠️", encoding: "gpt-4", currency: 'USD' },
-    
-    // Meta Llama 系列 (近似估算)
-    { value: "llama-3.1-405b", label: "Llama 3.1 405B ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "llama-3.1-70b", label: "Llama 3.1 70B ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "llama-3.1-8b", label: "Llama 3.1 8B ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "llama-2-70b", label: "Llama 2 70B ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "llama-2-13b", label: "Llama 2 13B ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "llama-2-7b", label: "Llama 2 7B ⚠️", encoding: "gpt-4", currency: 'USD' },
-    
-    // DeepSeek 系列 (近似估算)
-    { value: "deepseek-chat", label: "DeepSeek-V3 Chat ⚠️", encoding: "gpt-4", currency: 'CNY' },
-    { value: "deepseek-reasoner", label: "DeepSeek-R1 Reasoner ⚠️", encoding: "gpt-4", currency: 'CNY' },
-    
-    // Qwen3 系列 (近似估算)
-    { value: "qwen3-235b", label: "Qwen3-235B-A22B ⚠️", encoding: "gpt-4", currency: 'CNY' },
-    { value: "qwen-plus", label: "Qwen-Plus ⚠️", encoding: "gpt-4", currency: 'CNY' },
-    { value: "qwen-turbo", label: "Qwen-Turbo ⚠️", encoding: "gpt-4", currency: 'CNY' },
-    { value: "qwen-max", label: "Qwen-Max ⚠️", encoding: "gpt-4", currency: 'CNY' },
-    
-    // Claude 系列 (近似估算)
-    { value: "claude-4-opus", label: "Claude 4 Opus ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "claude-4-sonnet", label: "Claude 4 Sonnet ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "claude-3.7-sonnet", label: "Claude 3.7 Sonnet ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "claude-3.5-sonnet", label: "Claude 3.5 Sonnet ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "claude-3.5-haiku", label: "Claude 3.5 Haiku ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "claude-3-opus", label: "Claude 3 Opus ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "claude-3-sonnet", label: "Claude 3 Sonnet ⚠️", encoding: "gpt-4", currency: 'USD' },
-    { value: "claude-3-haiku", label: "Claude 3 Haiku ⚠️", encoding: "gpt-4", currency: 'USD' },
+    // OpenAI GPT 系列 - 使用原生 js-tiktoken
+    { value: "gpt-4o", label: "GPT-4o", encoding: "gpt-4o" },
+    { value: "gpt-4", label: "GPT-4", encoding: "gpt-4" },
+    { value: "gpt-4-turbo", label: "GPT-4 Turbo", encoding: "gpt-4-turbo" },
+    { value: "gpt-3.5-turbo", label: "GPT-3.5 Turbo", encoding: "gpt-3.5-turbo" },
+    { value: "text-davinci-003", label: "GPT-3 Davinci", encoding: "text-davinci-003" },
+
+    // Claude 系列 - 使用 Hugging Face 社区 tokenizer
+    { value: "claude-opus-4", label: "Claude 4 Opus 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
+    { value: "claude-sonnet-4", label: "Claude 4 Sonnet 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
+    { value: "claude-3.5-sonnet", label: "Claude 3.5 Sonnet 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
+    { value: "claude-3.5-haiku", label: "Claude 3.5 Haiku 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
+    { value: "claude-3-opus", label: "Claude 3 Opus 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
+    { value: "claude-3-sonnet", label: "Claude 3 Sonnet 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
+    { value: "claude-3-haiku", label: "Claude 3 Haiku 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
+
+    // Meta Llama 系列 - 使用 Hugging Face tokenizer
+    { value: "llama-3.3", label: "Llama 3.3 70B 🤗", encoding: "huggingface", hub: "unsloth/Llama-3.3-70B-Instruct" },
+    { value: "llama-3.2", label: "Llama 3.2 🤗", encoding: "huggingface", hub: "Xenova/Llama-3.2-Tokenizer" },
+    { value: "llama-3.1", label: "Llama 3.1 🤗", encoding: "huggingface", hub: "Xenova/Meta-Llama-3.1-Tokenizer" },
+    { value: "llama-3", label: "Llama 3 🤗", encoding: "huggingface", hub: "Xenova/llama3-tokenizer-new" },
+    { value: "llama-2", label: "Llama 2 🤗", encoding: "huggingface", hub: "Xenova/llama2-tokenizer" },
+    { value: "code-llama", label: "Code Llama 🤗", encoding: "huggingface", hub: "Xenova/llama-code-tokenizer" },
+
+    // DeepSeek 系列 - 使用官方 Hugging Face 模型
+    { value: "deepseek-r1", label: "DeepSeek R1 🤗", encoding: "huggingface", hub: "deepseek-ai/DeepSeek-R1" },
+    { value: "deepseek-v3", label: "DeepSeek V3 🤗", encoding: "huggingface", hub: "deepseek-ai/DeepSeek-V3" },
+    { value: "deepseek-v2", label: "DeepSeek V2 🤗", encoding: "huggingface", hub: "deepseek-ai/DeepSeek-V2" },
+
+    // Mistral 系列 - 使用 Hugging Face tokenizer
+    { value: "mistral-large", label: "Mistral Large 🤗", encoding: "huggingface", hub: "Xenova/mistral-tokenizer-v3" },
+    { value: "mistral-nemo", label: "Mistral Nemo 🤗", encoding: "huggingface", hub: "Xenova/Mistral-Nemo-Instruct-Tokenizer" },
+    { value: "codestral", label: "Codestral 🤗", encoding: "huggingface", hub: "Xenova/mistral-tokenizer-v3" },
+
+    // Google Gemini 系列 - 使用估算（因为没有官方 tokenizer）
+    { value: "gemini-1.5-pro", label: "Gemini 1.5 Pro ⚠️", encoding: "gpt-4" },
+    { value: "gemini-1.5-flash", label: "Gemini 1.5 Flash ⚠️", encoding: "gpt-4" },
+    { value: "gemini-pro", label: "Gemini Pro ⚠️", encoding: "gpt-4" },
+
+    // Qwen 系列 - 暂时使用估算，等待社区 tokenizer
+    { value: "qwen3-235b", label: "Qwen3-235B ⚠️", encoding: "gpt-4" },
+    { value: "qwen-plus", label: "Qwen-Plus ⚠️", encoding: "gpt-4" },
+    { value: "qwen-turbo", label: "Qwen-Turbo ⚠️", encoding: "gpt-4" },
+    { value: "qwen-max", label: "Qwen-Max ⚠️", encoding: "gpt-4" },
 ]
 
 export default function TokenCounter({ language, defaultModel, preferredCompany }: TokenCounterProps) {
@@ -69,19 +94,22 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
     const [debouncedText, setDebouncedText] = useState("")
     const [showTokenBreakdown, setShowTokenBreakdown] = useState(true)
     const [tokenDisplayMode, setTokenDisplayMode] = useState<'text' | 'ids'>('text')
+    const [isLoadingHFTokenizer, setIsLoadingHFTokenizer] = useState(false)
+    const [hfTokenizerError, setHfTokenizerError] = useState<string | null>(null)
+    const [tokenizerCache, setTokenizerCache] = useState<Map<string, any>>(new Map())
     const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
-    
+
     // 根据优先公司重新排序模型列表
     const sortedModels = useMemo(() => {
         if (!preferredCompany) return models
-        
+
         const preferred: typeof models = []
         const others: typeof models = []
-        
+
         models.forEach(model => {
             const modelValue = model.value.toLowerCase()
             const company = preferredCompany.toLowerCase()
-            
+
             let isPreferred = false
             if (company === 'openai' && (modelValue.startsWith('gpt-') || modelValue.startsWith('text-'))) {
                 isPreferred = true
@@ -95,23 +123,26 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                 isPreferred = true
             } else if (company === 'alibaba' && (modelValue.startsWith('qwen'))) {
                 isPreferred = true
+            } else if (company === 'mistral' && (modelValue.startsWith('mistral') || modelValue.startsWith('codestral'))) {
+                isPreferred = true
             }
-            
+
             if (isPreferred) {
                 preferred.push(model)
             } else {
                 others.push(model)
             }
         })
-        
+
         return [...preferred, ...others]
     }, [preferredCompany])
-    
+
     const currentModel = sortedModels.find(m => m.value === selectedModel) || sortedModels[0]
 
     // 当模型选择改变时直接更新状态
     const handleModelChange = (newModel: string) => {
         setSelectedModel(newModel)
+        setHfTokenizerError(null)
     }
 
     // 防抖处理文本输入
@@ -119,11 +150,11 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
         if (debounceTimerRef.current) {
             clearTimeout(debounceTimerRef.current)
         }
-        
+
         debounceTimerRef.current = setTimeout(() => {
             setDebouncedText(text)
-        }, 300) // 300ms 防抖延迟
-        
+        }, 300)
+
         return () => {
             if (debounceTimerRef.current) {
                 clearTimeout(debounceTimerRef.current)
@@ -131,53 +162,125 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
         }
     }, [text])
 
-    // 缓存encoding实例
-    const encoding = useMemo(() => {
+    // 加载 Hugging Face tokenizer
+    const loadHuggingFaceTokenizer = async (hubPath: string) => {
+        try {
+            setIsLoadingHFTokenizer(true)
+            setHfTokenizerError(null)
+
+            // 检查缓存
+            if (tokenizerCache.has(hubPath)) {
+                return tokenizerCache.get(hubPath)
+            }
+
+            const HFTokenizer = await loadTransformers()
+            if (!HFTokenizer) {
+                throw new Error('Failed to load Hugging Face Transformers')
+            }
+
+            console.log(`Loading tokenizer: ${hubPath}`)
+            const tokenizer = await HFTokenizer.from_pretrained(hubPath)
+
+            // 缓存 tokenizer
+            setTokenizerCache(prev => new Map(prev).set(hubPath, tokenizer))
+            return tokenizer
+
+        } catch (error: any) {
+            console.error('Failed to load HF tokenizer:', error)
+            setHfTokenizerError(`Failed to load ${hubPath}: ${error.message}`)
+            return null
+        } finally {
+            setIsLoadingHFTokenizer(false)
+        }
+    }
+
+    // js-tiktoken encoding for OpenAI models
+    const jsTokenizerEncoding = useMemo(() => {
+        if (currentModel.encoding === 'huggingface') {
+            return null
+        }
+
         try {
             return encodingForModel(currentModel.encoding as any)
         } catch (error) {
-            console.error("Error getting encoding:", error)
+            console.error("Error getting js-tiktoken encoding:", error)
             return null
         }
     }, [currentModel.encoding])
 
+    // Token 计算逻辑
     const tokenData = useMemo(() => {
-        if (!debouncedText.trim() || !encoding) {
-            // 快速预估，用于实时显示
+        if (!debouncedText.trim()) {
             return {
-                count: Math.ceil(text.length / 4),
+                count: 0,
                 tokens: [],
-                tokenIds: []
+                tokenIds: [],
+                isLoading: false
             }
         }
-        
-        try {
-            const tokenIds = encoding.encode(debouncedText)
-            const tokens = tokenIds.map(id => encoding.decode([id]))
-            return {
-                count: tokenIds.length,
-                tokens: tokens,
-                tokenIds: tokenIds
-            }
-        } catch (error) {
-            console.error("Error encoding text:", error)
-            // Fallback: rough estimation of 1 token per 4 characters
-            return {
-                count: Math.ceil(debouncedText.length / 4),
-                tokens: [],
-                tokenIds: []
+
+        // OpenAI 模型使用 js-tiktoken
+        if (currentModel.encoding !== 'huggingface' && jsTokenizerEncoding) {
+            try {
+                const tokenIds = jsTokenizerEncoding.encode(debouncedText)
+                const tokens = tokenIds.map(id => jsTokenizerEncoding.decode([id]))
+                return {
+                    count: tokenIds.length,
+                    tokens: tokens,
+                    tokenIds: tokenIds,
+                    isLoading: false
+                }
+            } catch (error) {
+                console.error("Error with js-tiktoken:", error)
             }
         }
-    }, [debouncedText, encoding, text.length])
+
+        // Hugging Face 模型需要异步加载
+        if (currentModel.encoding === 'huggingface' && currentModel.hub) {
+            // 检查缓存
+            if (tokenizerCache.has(currentModel.hub)) {
+                try {
+                    const tokenizer = tokenizerCache.get(currentModel.hub)
+                    const encoded = tokenizer.encode(debouncedText)
+                    const tokens = encoded.map((id: number) => tokenizer.decode([id]))
+                    return {
+                        count: encoded.length,
+                        tokens: tokens,
+                        tokenIds: encoded,
+                        isLoading: false
+                    }
+                } catch (error) {
+                    console.error("Error using cached HF tokenizer:", error)
+                }
+            }
+
+            // 触发异步加载
+            loadHuggingFaceTokenizer(currentModel.hub)
+
+            return {
+                count: Math.ceil(debouncedText.length / 4), // 估算
+                tokens: [],
+                tokenIds: [],
+                isLoading: true
+            }
+        }
+
+        // 回退估算
+        return {
+            count: Math.ceil(debouncedText.length / 4),
+            tokens: [],
+            tokenIds: [],
+            isLoading: false
+        }
+    }, [debouncedText, currentModel, jsTokenizerEncoding, tokenizerCache])
 
     const tokenCount = tokenData.count
-
     const characterCount = text.length
     const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0
 
-    // 记录使用日志 - 只在用户停止输入后记录
+    // 记录使用日志
     useEffect(() => {
-        if (debouncedText.trim() && tokenCount > 0) {
+        if (debouncedText.trim() && tokenCount > 0 && !tokenData.isLoading) {
             const logUsage = async () => {
                 try {
                     await fetch('/api/log', {
@@ -200,7 +303,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
             };
             logUsage();
         }
-    }, [debouncedText, selectedModel, tokenCount, characterCount, wordCount, language]);
+    }, [debouncedText, selectedModel, tokenCount, characterCount, wordCount, language, tokenData.isLoading]);
 
     const texts = {
         input: {
@@ -238,7 +341,8 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
     }
 
     // 判断是否正在计算精确值
-    const isCalculating = text !== debouncedText && text.trim().length > 0
+    const isCalculating = (text !== debouncedText && text.trim().length > 0) ||
+        isLoadingHFTokenizer || tokenData.isLoading
 
     return (
         <Card className="w-full">
@@ -251,209 +355,105 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="max-h-80 overflow-y-auto">
-                            {/* 动态排序分组 - 优先公司在前 */}
-                            {preferredCompany && preferredCompany.toLowerCase() === 'openai' && (
-                                <>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-blue-50">
-                                        ⭐ OpenAI GPT 系列
+                            {/* OpenAI GPT 系列 */}
+                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-blue-50">
+                                OpenAI GPT 系列 (原生)
+                            </div>
+                            {sortedModels.filter(m => m.value.startsWith('gpt-') || m.value.startsWith('text-')).map((model) => (
+                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                    <div className="flex items-center justify-between w-full">
+                                        <div className="font-medium text-sm">{model.label}</div>
                                     </div>
-                                    {sortedModels.filter(m => m.value.startsWith('gpt-') || m.value.startsWith('text-')).map((model) => (
-                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="font-medium text-sm">{model.label}</div>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </>
-                            )}
-                            
-                            {preferredCompany && preferredCompany.toLowerCase() === 'google' && (
-                                <>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-green-50 mt-1">
-                                        ⭐ Google Gemini 系列
-                                    </div>
-                                    {sortedModels.filter(m => m.value.startsWith('gemini')).map((model) => (
-                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="font-medium text-sm">{model.label}</div>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </>
-                            )}
-                            
-                            {preferredCompany && preferredCompany.toLowerCase() === 'anthropic' && (
-                                <>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-purple-50 mt-1">
-                                        ⭐ Anthropic Claude 系列
-                                    </div>
-                                    {sortedModels.filter(m => m.value.startsWith('claude')).map((model) => (
-                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="font-medium text-sm">{model.label}</div>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </>
-                            )}
-                            
-                            {preferredCompany && preferredCompany.toLowerCase() === 'meta' && (
-                                <>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-orange-50 mt-1">
-                                        ⭐ Meta Llama 系列
-                                    </div>
-                                    {sortedModels.filter(m => m.value.startsWith('llama')).map((model) => (
-                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="font-medium text-sm">{model.label}</div>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </>
-                            )}
-                            
-                            {preferredCompany && preferredCompany.toLowerCase() === 'deepseek' && (
-                                <>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                        ⭐ DeepSeek 系列
-                                    </div>
-                                    {sortedModels.filter(m => m.value.startsWith('deepseek')).map((model) => (
-                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="font-medium text-sm">{model.label}</div>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </>
-                            )}
+                                </SelectItem>
+                            ))}
 
-                            {preferredCompany && preferredCompany.toLowerCase() === 'alibaba' && (
-                                <>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-orange-50 mt-1">
-                                        ⭐ Qwen3 系列
+                            {/* Claude 系列 */}
+                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-purple-50 mt-1">
+                                Anthropic Claude 系列 (🤗)
+                            </div>
+                            {sortedModels.filter(m => m.value.startsWith('claude')).map((model) => (
+                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                    <div className="flex items-center justify-between w-full">
+                                        <div className="font-medium text-sm">{model.label}</div>
                                     </div>
-                                    {sortedModels.filter(m => m.value.startsWith('qwen')).map((model) => (
-                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="font-medium text-sm">{model.label}</div>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </>
-                            )}
+                                </SelectItem>
+                            ))}
 
-                            {/* OpenAI GPT 系列 - 非优先时显示 */}
-                            {(!preferredCompany || preferredCompany.toLowerCase() !== 'openai') && (
-                                <>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50">
-                                        OpenAI GPT 系列
+                            {/* Meta Llama 系列 */}
+                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-orange-50 mt-1">
+                                Meta Llama 系列 (🤗)
+                            </div>
+                            {sortedModels.filter(m => m.value.startsWith('llama') || m.value.startsWith('code-llama')).map((model) => (
+                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                    <div className="flex items-center justify-between w-full">
+                                        <div className="font-medium text-sm">{model.label}</div>
                                     </div>
-                                    {sortedModels.filter(m => m.value.startsWith('gpt-') || m.value.startsWith('text-')).map((model) => (
-                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="font-medium text-sm">{model.label}</div>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </>
-                            )}
-                            
-                            {/* Google Gemini 系列 - 非优先时显示 */}
-                            {(!preferredCompany || preferredCompany.toLowerCase() !== 'google') && (
-                                <>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                        Google Gemini 系列
+                                </SelectItem>
+                            ))}
+
+                            {/* DeepSeek 系列 */}
+                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
+                                DeepSeek 系列 (🤗)
+                            </div>
+                            {sortedModels.filter(m => m.value.startsWith('deepseek')).map((model) => (
+                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                    <div className="flex items-center justify-between w-full">
+                                        <div className="font-medium text-sm">{model.label}</div>
                                     </div>
-                                    {sortedModels.filter(m => m.value.startsWith('gemini')).map((model) => (
-                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="font-medium text-sm">{model.label}</div>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </>
-                            )}
-                            
-                            {/* Anthropic Claude 系列 - 非优先时显示 */}
-                            {(!preferredCompany || preferredCompany.toLowerCase() !== 'anthropic') && (
-                                <>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                        Anthropic Claude 系列
+                                </SelectItem>
+                            ))}
+
+                            {/* Mistral 系列 */}
+                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-indigo-50 mt-1">
+                                Mistral 系列 (🤗)
+                            </div>
+                            {sortedModels.filter(m => m.value.startsWith('mistral') || m.value.startsWith('codestral')).map((model) => (
+                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                    <div className="flex items-center justify-between w-full">
+                                        <div className="font-medium text-sm">{model.label}</div>
                                     </div>
-                                    {sortedModels.filter(m => m.value.startsWith('claude')).map((model) => (
-                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="font-medium text-sm">{model.label}</div>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </>
-                            )}
-                            
-                            {/* Meta Llama 系列 - 非优先时显示 */}
-                            {(!preferredCompany || preferredCompany.toLowerCase() !== 'meta') && (
-                                <>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                        Meta Llama 系列
+                                </SelectItem>
+                            ))}
+
+                            {/* Google Gemini 系列 */}
+                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-green-50 mt-1">
+                                Google Gemini 系列 (估算)
+                            </div>
+                            {sortedModels.filter(m => m.value.startsWith('gemini')).map((model) => (
+                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                    <div className="flex items-center justify-between w-full">
+                                        <div className="font-medium text-sm">{model.label}</div>
                                     </div>
-                                    {sortedModels.filter(m => m.value.startsWith('llama')).map((model) => (
-                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="font-medium text-sm">{model.label}</div>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </>
-                            )}
-                            
-                            {/* DeepSeek 系列 - 非优先时显示 */}
-                            {(!preferredCompany || preferredCompany.toLowerCase() !== 'deepseek') && (
-                                <>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                        DeepSeek 系列
+                                </SelectItem>
+                            ))}
+
+                            {/* Qwen 系列 */}
+                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-yellow-50 mt-1">
+                                Qwen 系列 (估算)
+                            </div>
+                            {sortedModels.filter(m => m.value.startsWith('qwen')).map((model) => (
+                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                    <div className="flex items-center justify-between w-full">
+                                        <div className="font-medium text-sm">{model.label}</div>
                                     </div>
-                                    {sortedModels.filter(m => m.value.startsWith('deepseek')).map((model) => (
-                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="font-medium text-sm">{model.label}</div>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </>
-                            )}
-                            
-                            {/* Qwen3 系列 - 非优先时显示 */}
-                            {(!preferredCompany || preferredCompany.toLowerCase() !== 'alibaba') && (
-                                <>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                        Qwen3 系列
-                                    </div>
-                                    {sortedModels.filter(m => m.value.startsWith('qwen')).map((model) => (
-                                        <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                            <div className="flex items-center justify-between w-full">
-                                                <div className="font-medium text-sm">{model.label}</div>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </>
-                            )}
+                                </SelectItem>
+                            ))}
                         </SelectContent>
                     </Select>
                 </div>
 
                 {/* 文本输入 */}
                 <div className="space-y-2">
-                    <Label htmlFor="text-input">{texts.input[language]}</Label>
+                    <Label>{texts.input[language]}</Label>
                     <Textarea
-                        id="text-input"
+                        placeholder={texts.inputPlaceholder[language]}
                         value={text}
                         onChange={(e) => setText(e.target.value)}
-                        placeholder={texts.inputPlaceholder[language]}
-                        className="min-h-[200px] text-base resize-none"
+                        className="min-h-[120px] text-base"
                     />
                 </div>
 
-                {/* 示例演示 */}
+                {/* 示例文本按钮 */}
                 <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
                     <div className="text-sm text-amber-800 space-y-3">
                         <p className="font-medium">
@@ -463,7 +463,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                             {language === 'en' ? (
                                 <>
                                     <div className="flex gap-2">
-                                        <button 
+                                        <button
                                             className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                             onClick={() => {
                                                 setText("系列")
@@ -472,7 +472,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                         >
                                             Test "系列"
                                         </button>
-                                        <button 
+                                        <button
                                             className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                             onClick={() => {
                                                 setText("GPT-4模型系列")
@@ -481,7 +481,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                         >
                                             Test "GPT-4模型系列"
                                         </button>
-                                        <button 
+                                        <button
                                             className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                             onClick={() => {
                                                 setText("人工智能技术发展")
@@ -498,7 +498,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                             ) : (
                                 <>
                                     <div className="flex gap-2 flex-wrap">
-                                        <button 
+                                        <button
                                             className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                             onClick={() => {
                                                 setText("系列")
@@ -507,7 +507,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                         >
                                             测试"系列"
                                         </button>
-                                        <button 
+                                        <button
                                             className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                             onClick={() => {
                                                 setText("GPT-4模型系列")
@@ -516,7 +516,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                         >
                                             测试"GPT-4模型系列"
                                         </button>
-                                        <button 
+                                        <button
                                             className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                             onClick={() => {
                                                 setText("人工智能技术发展")
@@ -525,7 +525,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                         >
                                             测试"人工智能技术发展"
                                         </button>
-                                        <button 
+                                        <button
                                             className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                             onClick={() => {
                                                 setText("Machine learning algorithms")
@@ -536,7 +536,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                         </button>
                                     </div>
                                     <p className="text-xs italic">
-                                        试试这些示例并在不同模型间切换，看看相同文本在不同tokenizer下的token数量差异！
+                                        试试这些示例并在不同模型间切换，看看相同文本在不同tokenizer下的token数量差异！现在支持本地Hugging Face tokenizer！
                                     </p>
                                 </>
                             )}
@@ -562,6 +562,11 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                     {tokenCount.toLocaleString()}
                                     {isCalculating && <span className="text-xs">*</span>}
                                 </p>
+                                {hfTokenizerError && (
+                                    <p className="text-xs text-red-500 mt-1">
+                                        {language === 'en' ? 'Tokenizer Error: Using estimation' : 'Tokenizer错误：使用估算值'}
+                                    </p>
+                                )}
                             </div>
                             <div className="text-center">
                                 <Label className="text-gray-600 text-xs block mb-1">{texts.characters[language]}</Label>
@@ -574,14 +579,17 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                         </div>
                         {isCalculating && (
                             <p className="text-xs text-gray-500 mt-2 text-center">
-                                {language === 'en' ? 'Approximate count, precise calculation in progress...' : '近似计数，精确计算中...'}
+                                {currentModel.encoding === 'huggingface' ?
+                                    (language === 'en' ? 'Loading Hugging Face tokenizer...' : '正在加载Hugging Face tokenizer...') :
+                                    (language === 'en' ? 'Approximate count, precise calculation in progress...' : '近似计数，精确计算中...')
+                                }
                             </p>
                         )}
                     </div>
                 </div>
 
-                {/* Token 可视化 */}
-                {text.trim() && (
+                {/* Token 可视化 - 显示 token 分解 */}
+                {text.trim() && tokenData.tokens.length > 0 && (
                     <div className="space-y-4">
                         <div className="flex items-center justify-between">
                             <Label className="text-lg font-semibold">
@@ -591,60 +599,57 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                 onClick={() => setShowTokenBreakdown(!showTokenBreakdown)}
                                 className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
                             >
-                                {showTokenBreakdown ? 
-                                    (language === 'en' ? 'Hide' : '隐藏') : 
+                                {showTokenBreakdown ?
+                                    (language === 'en' ? 'Hide' : '隐藏') :
                                     (language === 'en' ? 'Show' : '显示')
                                 }
                             </button>
                         </div>
-                        
-                        {showTokenBreakdown && tokenData.tokens.length > 0 && (
+
+                        {showTokenBreakdown && (
                             <div className="bg-gray-50 p-4 rounded-lg border">
                                 {/* 切换显示模式 */}
                                 <div className="flex gap-2 mb-4">
                                     <button
                                         onClick={() => setTokenDisplayMode('text')}
-                                        className={`px-3 py-1 rounded text-sm transition-colors ${
-                                            tokenDisplayMode === 'text' 
-                                                ? 'bg-blue-500 text-white' 
-                                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                                        }`}
+                                        className={`px-3 py-1 rounded text-sm transition-colors ${tokenDisplayMode === 'text'
+                                            ? 'bg-blue-500 text-white'
+                                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                            }`}
                                     >
                                         {language === 'en' ? 'Text' : '文本'}
                                     </button>
                                     <button
                                         onClick={() => setTokenDisplayMode('ids')}
-                                        className={`px-3 py-1 rounded text-sm transition-colors ${
-                                            tokenDisplayMode === 'ids' 
-                                                ? 'bg-blue-500 text-white' 
-                                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                                        }`}
+                                        className={`px-3 py-1 rounded text-sm transition-colors ${tokenDisplayMode === 'ids'
+                                            ? 'bg-blue-500 text-white'
+                                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                            }`}
                                     >
                                         {language === 'en' ? 'Token IDs' : 'Token ID'}
                                     </button>
                                 </div>
-                                
+
                                 {/* Token 显示区域 */}
                                 <div className="space-y-2">
                                     <div className="text-xs text-gray-600 mb-2">
-                                        {language === 'en' ? 
-                                            `${tokenData.tokens.length} tokens found:` : 
+                                        {language === 'en' ?
+                                            `${tokenData.tokens.length} tokens found:` :
                                             `发现 ${tokenData.tokens.length} 个 tokens：`
                                         }
                                     </div>
                                     <div className="flex flex-wrap gap-1">
-                                        {tokenData.tokens.map((token, index) => {
-                                            // 为不同token添加不同颜色，循环使用
+                                        {tokenData.tokens.map((token: string, index: number) => {
                                             const colors = [
                                                 'bg-blue-100 text-blue-800 hover:bg-blue-200',
-                                                'bg-green-100 text-green-800 hover:bg-green-200', 
+                                                'bg-green-100 text-green-800 hover:bg-green-200',
                                                 'bg-purple-100 text-purple-800 hover:bg-purple-200',
                                                 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200',
                                                 'bg-pink-100 text-pink-800 hover:bg-pink-200',
                                                 'bg-indigo-100 text-indigo-800 hover:bg-indigo-200'
                                             ]
                                             const colorClass = colors[index % colors.length]
-                                            
+
                                             return (
                                                 <span
                                                     key={index}
@@ -652,7 +657,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                                     title={`Token ${index + 1}: "${token}" (ID: ${tokenData.tokenIds[index]})`}
                                                 >
                                                     {tokenDisplayMode === 'text' ? (
-                                                        token.replace(/\s/g, '⎵') // 显示空格为可见字符
+                                                        token.replace(/\s/g, '⎵')
                                                     ) : (
                                                         tokenData.tokenIds[index]
                                                     )}
@@ -660,20 +665,21 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                             )
                                         })}
                                     </div>
-                                    
-                                    {/* 说明文字 */}
+
                                     <div className="text-xs text-gray-500 mt-3">
                                         {language === 'en' ? (
                                             <div>
                                                 <p>• Each colored block represents one token</p>
                                                 <p>• Hover over tokens to see their IDs</p>
                                                 <p>• ⎵ represents spaces</p>
+                                                <p>• 🤗 models use Hugging Face community tokenizers</p>
                                             </div>
                                         ) : (
                                             <div>
                                                 <p>• 每个彩色块代表一个 token</p>
                                                 <p>• 悬停在 token 上查看其 ID</p>
                                                 <p>• ⎵ 代表空格</p>
+                                                <p>• 🤗 模型使用 Hugging Face 社区 tokenizer</p>
                                             </div>
                                         )}
                                     </div>
@@ -683,35 +689,69 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                     </div>
                 )}
 
+                {/* Hugging Face 模型说明 */}
+                {currentModel.encoding === 'huggingface' && (
+                    <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                        <div className="text-sm text-purple-800 space-y-2">
+                            {language === 'en' ? (
+                                <div>
+                                    <p className="font-medium flex items-center gap-2">
+                                        <span>🤗</span> Hugging Face Community Tokenizer
+                                    </p>
+                                    <ul className="list-disc pl-5 space-y-1 mt-2">
+                                        <li><strong>Local processing</strong> - No API calls required</li>
+                                        <li><strong>Community tokenizers</strong> - Maintained by the open source community</li>
+                                        <li><strong>Token breakdown</strong> - Full tokenization details available</li>
+                                        <li><strong>Hub model:</strong> {currentModel.hub}</li>
+                                        <li>First load may take time to download the tokenizer</li>
+                                    </ul>
+                                </div>
+                            ) : (
+                                <div>
+                                    <p className="font-medium flex items-center gap-2">
+                                        <span>🤗</span> Hugging Face 社区 Tokenizer
+                                    </p>
+                                    <ul className="list-disc pl-5 space-y-1 mt-2">
+                                        <li><strong>本地处理</strong> - 无需API调用</li>
+                                        <li><strong>社区维护</strong> - 开源社区维护的tokenizer</li>
+                                        <li><strong>完整分解</strong> - 提供详细的token分解信息</li>
+                                        <li><strong>Hub模型:</strong> {currentModel.hub}</li>
+                                        <li>首次加载可能需要下载tokenizer，请耐心等待</li>
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+
                 {/* 使用提示 */}
                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
                     <div className="text-sm text-blue-800 space-y-2">
                         {language === 'en' ? (
                             <div>
-                                <p className="font-medium">Important Notes:</p>
+                                <p className="font-medium">Tokenizer Types:</p>
                                 <ul className="list-disc pl-5 space-y-1 mt-2">
-                                    <li><strong>OpenAI models</strong> use accurate native tokenizers</li>
-                                    <li><strong>Other models (⚠️)</strong> use GPT-4 tokenizer for approximation</li>
-                                    <li>Punctuation, spaces, and special characters all affect token count</li>
-                                    <li>Non-English text may use more tokens per character</li>
-                                    <li>For precise counts of non-OpenAI models, use their official tokenizers</li>
+                                    <li><strong>OpenAI models</strong> - Native js-tiktoken (most accurate)</li>
+                                    <li><strong>🤗 models</strong> - Hugging Face community tokenizers (very good approximation)</li>
+                                    <li><strong>⚠️ models</strong> - GPT-4 tokenizer estimation</li>
+                                    <li>Community tokenizers are reverse-engineered but quite accurate</li>
+                                    <li>All tokenizers now run locally in your browser!</li>
                                 </ul>
                             </div>
                         ) : (
                             <div>
-                                <p className="font-medium">重要说明：</p>
+                                <p className="font-medium">Tokenizer 类型说明：</p>
                                 <ul className="list-disc pl-5 space-y-1 mt-2">
-                                    <li><strong>OpenAI模型</strong> 使用准确的原生分词器</li>
-                                    <li><strong>其他模型 (⚠️)</strong> 使用GPT-4分词器进行近似估算</li>
-                                    <li>标点符号、空格和特殊字符都会影响token数量</li>
-                                    <li>非英语文本每个字符可能使用更多token</li>
-                                    <li>要获得非OpenAI模型的精确计数，请使用其官方分词器</li>
+                                    <li><strong>OpenAI模型</strong> - 原生 js-tiktoken（最准确）</li>
+                                    <li><strong>🤗 模型</strong> - Hugging Face 社区 tokenizer（很好的近似）</li>
+                                    <li><strong>⚠️ 模型</strong> - GPT-4 tokenizer 估算</li>
+                                    <li>社区 tokenizer 是逆向工程的，但相当准确</li>
+                                    <li>所有 tokenizer 现在都在您的浏览器中本地运行！</li>
                                 </ul>
                             </div>
                         )}
                     </div>
                 </div>
-
 
             </CardContent>
         </Card>
