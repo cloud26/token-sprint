@@ -26,7 +26,7 @@ export interface ModelConfig {
 export const models: Record<string, ModelConfig> = {
     llama: {
         slug: "llama",
-        name: "Llama 4",
+        name: "Llama",
         parameters: 109, // Llama 4 Scout默认参数
         recommendedPrecision: "FP8",
         seoTitle: {
@@ -47,7 +47,7 @@ export const models: Record<string, ModelConfig> = {
             en: [
                 "Llama 3.1 full series support",
                 "Latest Llama 4 series",
-                "Mixture-of-Experts (MoE) architecture", 
+                "Mixture-of-Experts (MoE) architecture",
                 "Multimodal AI capabilities"
             ]
         },
@@ -68,16 +68,16 @@ export const models: Record<string, ModelConfig> = {
     },
     deepseek: {
         slug: "deepseek",
-        name: "DeepSeek-R1",
+        name: "DeepSeek",
         parameters: 671,
         recommendedPrecision: "FP8",
         seoTitle: {
-            zh: "DeepSeek R1本地部署GPU计算器 | 671B超大模型显卡需求",
-            en: "DeepSeek R1 VRAM Calculator | 671B GPU Requirements"
+            zh: "DeepSeek V3/R1 本地部署GPU计算器 | 671B 超大模型显卡需求",
+            en: "DeepSeek V3/R1 VRAM Calculator | 671B GPU Requirements"
         },
         seoDescription: {
-            zh: "DeepSeek R1 (671B) 本地部署专用GPU计算器，精确计算超大规模模型运行需要的显卡数量。支持FP8优化部署，提供H100/A100集群配置方案，专业级推理部署规划。",
-            en: "DeepSeek R1 VRAM calculator for 671B model. Calculate exact VRAM and GPU requirements with FP8 optimization. Professional H100/A100 cluster planning."
+            zh: "DeepSeek V3/R1 (671B) 本地部署专用GPU计算器，精确计算超大规模模型运行需要的显卡数量。支持FP8优化部署，提供H100/A100集群配置方案，专业级推理部署规划。",
+            en: "DeepSeek V3/R1 VRAM calculator for 671B model. Calculate exact VRAM and GPU requirements with FP8 optimization. Professional H100/A100 cluster planning."
         },
         specialFeatures: {
             zh: [
@@ -88,7 +88,7 @@ export const models: Record<string, ModelConfig> = {
             ],
             en: [
                 "Massive 671B parameter scale",
-                "Industry-leading reasoning capabilities", 
+                "Industry-leading reasoning capabilities",
                 "Supports FP8 precision optimization",
                 "Suitable for enterprise deployment"
             ]
@@ -103,14 +103,14 @@ export const models: Record<string, ModelConfig> = {
             en: [
                 "Advanced reasoning tasks",
                 "Complex problem solving",
-                "Enterprise AI applications", 
+                "Enterprise AI applications",
                 "Research and development"
             ]
         }
     },
     qwen: {
         slug: "qwen",
-        name: "Qwen3-235B-A22B",
+        name: "Qwen",
         parameters: 235,
         recommendedPrecision: "FP8",
         seoTitle: {
@@ -131,7 +131,7 @@ export const models: Record<string, ModelConfig> = {
             en: [
                 "Mixture-of-Experts (MoE) architecture",
                 "235B total, 22B active parameters",
-                "Extremely memory efficient", 
+                "Extremely memory efficient",
                 "Excellent multilingual support"
             ]
         },
@@ -147,90 +147,6 @@ export const models: Record<string, ModelConfig> = {
                 "Efficient inference deployment",
                 "Resource-constrained environments",
                 "Cost-optimized solutions"
-            ]
-        }
-    },
-    claude: {
-        slug: "claude",
-        name: "Claude 3.5 Sonnet",
-        parameters: 200, // 估计值
-        recommendedPrecision: "FP16",
-        seoTitle: {
-            zh: "Claude本地部署GPU计算器 | Claude 3.5模型显卡需求",
-            en: "Claude VRAM Calculator | Claude 3.5 GPU Requirements"
-        },
-        seoDescription: {
-            zh: "Claude 3.5 Sonnet本地部署GPU计算器，计算Anthropic Claude模型的显卡配置需求。支持长上下文处理，提供专业的本地化部署方案和硬件配置建议。",
-            en: "Claude 3.5 VRAM calculator and GPU requirements tool. Calculate VRAM needs for Anthropic Claude model with long context. Professional deployment planning."
-        },
-        specialFeatures: {
-            zh: [
-                "超长上下文支持",
-                "安全性极高",
-                "推理质量优秀",
-                "多模态能力"
-            ],
-            en: [
-                "Ultra-long context support",
-                "Extremely high safety standards",
-                "Excellent reasoning quality",
-                "Multimodal capabilities"
-            ]
-        },
-        useCases: {
-            zh: [
-                "长文档分析",
-                "安全敏感应用",
-                "高质量内容生成",
-                "复杂推理任务"
-            ],
-            en: [
-                "Long document analysis",
-                "Safety-sensitive applications",
-                "High-quality content generation",
-                "Complex reasoning tasks"
-            ]
-        }
-    },
-    gemini: {
-        slug: "gemini",
-        name: "Gemini 1.5 Pro",
-        parameters: 175, // 估计值
-        recommendedPrecision: "FP16",
-        seoTitle: {
-            zh: "Gemini本地部署GPU计算器 | Gemini 1.5 Pro显卡配置",
-            en: "Gemini VRAM Calculator | Gemini 1.5 Pro GPU Requirements"
-        },
-        seoDescription: {
-            zh: "Gemini 1.5 Pro本地部署GPU计算器，计算Google Gemini模型的本地运行显卡需求。支持多模态处理，提供专业的GPU配置方案和部署建议。",
-            en: "Gemini 1.5 Pro VRAM calculator. Calculate VRAM and GPU requirements for Google Gemini model with multimodal processing. Professional GPU planning."
-        },
-        specialFeatures: {
-            zh: [
-                "强大的多模态能力",
-                "Google技术支持",
-                "优秀的代码理解",
-                "高效的推理速度"
-            ],
-            en: [
-                "Powerful multimodal capabilities",
-                "Google technology backing",
-                "Excellent code understanding",
-                "Efficient inference speed"
-            ]
-        },
-        useCases: {
-            zh: [
-                "多模态AI应用",
-                "代码分析生成",
-                "图像文本理解",
-                "教育培训平台"
-            ],
-            en: [
-                "Multimodal AI applications",
-                "Code analysis and generation",
-                "Image and text understanding",
-                "Educational platforms"
             ]
         }
     }
@@ -429,7 +345,7 @@ export const tokenCounterModels: TokenCounterModel[] = [
     },
     {
         slug: 'qwen',
-        name: 'Qwen3',
+        name: 'Qwen',
         company: 'Alibaba',
         description: {
             en: 'Qwen3 token counter and tokenizer tool. Approximate token counting for Qwen models using advanced estimation.',
