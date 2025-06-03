@@ -84,9 +84,9 @@ export function GPUSelectionGuide({ language }: GPUSelectionGuideProps) {
                     {language === 'en' ? (
                         <>
                             <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
-                                <h3 className="font-medium text-emerald-900 mb-2">🆕 Qwen3-235B-A22B GPU Requirements</h3>
+                                <h3 className="font-medium text-emerald-900 mb-2">🆕 Qwen2.5 & Qwen3 GPU Requirements</h3>
                                 <p className="text-emerald-800">
-                                    <strong>Qwen3-235B-A22B (235B total, 22B active)</strong> is the latest flagship MoE model. With FP8 precision, you'll need 4x H100 GPUs. This efficient MoE architecture provides competitive performance with DeepSeek-R1 while using 60% less memory.
+                                    <strong>Qwen2.5-72B & Qwen3-235B-A22B</strong> are the latest flagship models. Qwen2.5-72B needs 2x H100 with FP8, while Qwen3-235B-A22B (MoE) needs 4x H100. The Qwen2.5 series offers excellent multilingual capabilities with efficient deployment.
                                 </p>
                             </div>
                             <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
@@ -114,9 +114,9 @@ export function GPUSelectionGuide({ language }: GPUSelectionGuideProps) {
                     ) : (
                         <>
                             <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
-                                <h3 className="font-medium text-emerald-900 mb-2">🆕 Qwen3-235B-A22B GPU需求</h3>
+                                <h3 className="font-medium text-emerald-900 mb-2">🆕 Qwen2.5 & Qwen3 GPU需求</h3>
                                 <p className="text-emerald-800">
-                                    <strong>Qwen3-235B-A22B（235B总，22B活跃）</strong>是最新旗舰MoE模型。使用FP8精度，您只需要4块H100 GPU！这种高效的MoE架构提供了与DeepSeek-R1相竞争的性能，同时减少60%的内存使用。
+                                    <strong>Qwen2.5-72B & Qwen3-235B-A22B</strong>是最新旗舰模型。Qwen2.5-72B需要2块H100与FP8，而Qwen3-235B-A22B（MoE）需要4块H100。Qwen2.5系列提供了出色的多语言能力，高效部署。
                                 </p>
                             </div>
                             <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">

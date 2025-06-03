@@ -189,17 +189,25 @@ export const modelExamples = [
   { name: "Llama 3.1 8B", parameters: "8B", value: "llama-3.1-8b" },
   { name: "Llama-7B", parameters: "7B", value: "llama-7b" },
   
-  // Qwen 系列（按参数量排序）
+  // Qwen 系列（按参数量排序，包含最热门的千问模型）
   { name: "Qwen3-235B-A22B", parameters: "235B", value: "qwen3-235b-a22b" },
-  { name: "Qwen-72B", parameters: "72B", value: "qwen-72b" },
-  { name: "Qwen-32B", parameters: "32B", value: "qwen-32b" },
+  { name: "Qwen2.5-Coder-32B", parameters: "32B", value: "qwen2.5-coder-32b" },
+  { name: "Qwen2.5-Math-72B", parameters: "72B", value: "qwen2.5-math-72b" },
+  { name: "Qwen2.5-72B", parameters: "72B", value: "qwen2.5-72b" },
+  { name: "Qwen2-72B", parameters: "72B", value: "qwen2-72b" },
   { name: "Qwen3-32B", parameters: "32B", value: "qwen3-32b" },
+  { name: "Qwen2.5-32B", parameters: "32B", value: "qwen2.5-32b" },
+  { name: "Qwen2-32B", parameters: "32B", value: "qwen2-32b" },
   { name: "Qwen3-30B-A3B", parameters: "30B", value: "qwen3-30b-a3b" },
-  { name: "Qwen-14B", parameters: "14B", value: "qwen-14b" },
+  { name: "Qwen2.5-14B", parameters: "14B", value: "qwen2.5-14b" },
   { name: "Qwen3-14B", parameters: "14B", value: "qwen3-14b" },
+  { name: "Qwen2-14B", parameters: "14B", value: "qwen2-14b" },
   { name: "Qwen3-8B", parameters: "8B", value: "qwen3-8b" },
-  { name: "Qwen-7B", parameters: "7B", value: "qwen-7b" },
+  { name: "Qwen2.5-7B", parameters: "7B", value: "qwen2.5-7b" },
+  { name: "Qwen2-7B", parameters: "7B", value: "qwen2-7b" },
   { name: "Qwen3-4B", parameters: "4B", value: "qwen3-4b" },
-  { name: "Qwen-1.5B", parameters: "1.5B", value: "qwen-1.5b" },
+  { name: "Qwen2.5-3B", parameters: "3B", value: "qwen2.5-3b" },
+  { name: "Qwen2.5-1.5B", parameters: "1.5B", value: "qwen2.5-1.5b" },
+  { name: "Qwen2.5-0.5B", parameters: "0.5B", value: "qwen2.5-0.5b" },
 ]
 

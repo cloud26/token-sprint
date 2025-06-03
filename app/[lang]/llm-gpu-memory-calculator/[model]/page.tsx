@@ -130,46 +130,20 @@ export default function ModelSpecificCalculatorPage({
                     {/* 面包屑导航 */}
                     <Breadcrumb items={breadcrumbItems} language={language} />
                     
-                    <header className="flex flex-col items-center gap-1 mt-8">
+                    <header className="flex flex-col items-center gap-2 mt-8">
                         <h1 className="text-2xl font-bold text-center">
-                            {model.name} {language === 'en' ? 'GPU Calculator' : 'GPU计算器'}
-                        </h1>
-                        <p className="text-center text-muted-foreground text-sm">
                             {language === 'en' ? 
-                                `Calculate GPU requirements for ${model.name} local deployment` :
-                                `计算${model.name}本地部署的GPU需求`
+                                `${model.name} VRAM & GPU Calculator` :
+                                `${model.name} 显存与GPU计算器`
+                            }
+                        </h1>
+                        <p className="text-center text-muted-foreground text-sm max-w-md">
+                            {language === 'en' ? 
+                                `Calculate VRAM requirements and GPU count for ${model.name} deployment. Support for NVIDIA, AMD, Apple, and Huawei` :
+                                `计算${model.name}部署所需的显存和GPU数量，支持NVIDIA、AMD、苹果、华为等各厂商显卡`
                             }
                         </p>
                     </header>
-
-                    {/* 模型特色说明 */}
-                    <section className="mt-6 space-y-4">
-                        <h2 className="text-lg font-semibold">
-                            {language === 'en' ? `Why Choose ${model.name}?` : `为什么选择${model.name}？`}
-                        </h2>
-                        <div className="grid md:grid-cols-2 gap-4">
-                            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                                <h3 className="font-medium text-blue-900 mb-2">
-                                    {language === 'en' ? '🌟 Key Features' : '🌟 核心特性'}
-                                </h3>
-                                <ul className="text-blue-800 text-sm space-y-1">
-                                    {model.specialFeatures[language].map((feature, index) => (
-                                        <li key={index}>• {feature}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                                <h3 className="font-medium text-green-900 mb-2">
-                                    {language === 'en' ? '🎯 Use Cases' : '🎯 应用场景'}
-                                </h3>
-                                <ul className="text-green-800 text-sm space-y-1">
-                                    {model.useCases[language].map((useCase, index) => (
-                                        <li key={index}>• {useCase}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
 
                     <Suspense fallback={<div>Loading...</div>}>
                         <LLMMemoryCalculator language={language} preferredModelType={modelSlug} />

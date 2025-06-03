@@ -26,12 +26,12 @@ export const models: Record<string, ModelConfig> = {
         parameters: 109, // Llama 4 Scout默认参数
         recommendedPrecision: "FP8",
         seoTitle: {
-            zh: "Llama GPU计算器 | Llama 3/4 Scout/Maverick显卡配置",
-            en: "Llama VRAM Calculator | Llama 3/4 GPU Requirements"
+            zh: "Llama 显存与GPU计算器 | Llama 3/4 VRAM需求配置",
+            en: "Llama VRAM & GPU Calculator | Llama 3/4 Requirements"
         },
         seoDescription: {
-            zh: "专业的Llama GPU计算器，支持Llama 3.1(405B/70B/8B)和最新Llama 4(Scout/Maverick)模型。MoE架构，多模态支持，H100/A100配置方案。",
-            en: "Professional Llama VRAM calculator for Llama 3.1 (405B/70B/8B) and latest Llama 4 (Scout/Maverick). MoE architecture, GPU requirements calculation."
+            zh: "Llama VRAM与GPU计算器，计算Llama 3.1(405B/70B/8B)和Llama 4部署所需的显存和GPU数量。支持NVIDIA、AMD、苹果、华为等各厂商显卡，专业MoE架构部署方案。",
+            en: "Llama VRAM & GPU calculator for Llama 3.1 (405B/70B/8B) and Llama 4 deployment. Calculate exact VRAM requirements and GPU count. Support for NVIDIA, AMD, Apple, and Huawei GPUs."
         },
         specialFeatures: {
             zh: [
@@ -54,12 +54,12 @@ export const models: Record<string, ModelConfig> = {
         parameters: 671,
         recommendedPrecision: "FP8",
         seoTitle: {
-            zh: "DeepSeek V3/R1 本地部署GPU计算器 | 671B 超大模型显卡需求",
-            en: "DeepSeek V3/R1 VRAM Calculator | 671B GPU Requirements"
+            zh: "DeepSeek 显存与GPU计算器 | DeepSeek V3/R1 VRAM需求配置",
+            en: "DeepSeek VRAM & GPU Calculator | DeepSeek V3/R1 Requirements"
         },
         seoDescription: {
-            zh: "DeepSeek V3/R1 (671B) 本地部署专用GPU计算器，精确计算超大规模模型运行需要的显卡数量。支持FP8优化部署，提供H100/A100集群配置方案，专业级推理部署规划。",
-            en: "DeepSeek V3/R1 VRAM calculator for 671B model. Calculate exact VRAM and GPU requirements with FP8 optimization. Professional H100/A100 cluster planning."
+            zh: "DeepSeek VRAM与GPU计算器，计算DeepSeek V3/R1 (671B)部署所需的显存和GPU数量。支持NVIDIA、AMD、苹果、华为等各厂商显卡，超大模型专业部署方案。",
+            en: "DeepSeek VRAM & GPU calculator for DeepSeek V3/R1 (671B) deployment. Calculate exact VRAM requirements and GPU count. Support for NVIDIA, AMD, Apple, and Huawei GPUs."
         },
         specialFeatures: {
             zh: [
@@ -82,12 +82,12 @@ export const models: Record<string, ModelConfig> = {
         parameters: 235,
         recommendedPrecision: "FP8",
         seoTitle: {
-            zh: "Qwen3本地部署GPU计算器 | 235B MoE模型显卡配置",
-            en: "Qwen3 VRAM Calculator | 235B MoE GPU Requirements"
+            zh: "Qwen 显存与GPU计算器 | Qwen3 MoE VRAM需求配置",
+            en: "Qwen VRAM & GPU Calculator | Qwen3 MoE Requirements"
         },
         seoDescription: {
-            zh: "Qwen3-235B-A22B MoE模型本地部署GPU计算器，计算混合专家模型的精确显卡需求。235B总参数，22B激活参数，高效节省显存，提供专业MoE架构部署方案。",
-            en: "Qwen3 VRAM calculator for 235B MoE model. Calculate VRAM and GPU requirements for mixture-of-experts with 22B active parameters. Memory-efficient."
+            zh: "Qwen VRAM与GPU计算器，计算Qwen3-235B-A22B MoE模型部署所需的显存和GPU数量。支持NVIDIA、AMD、苹果、华为等各厂商显卡，高效MoE架构部署方案。",
+            en: "Qwen VRAM & GPU calculator for Qwen3-235B-A22B MoE deployment. Calculate exact VRAM requirements and GPU count. Support for NVIDIA, AMD, Apple, and Huawei GPUs."
         },
         specialFeatures: {
             zh: [

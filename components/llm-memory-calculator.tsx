@@ -326,13 +326,24 @@ export default function LLMMemoryCalculator({ language, preferredModelType }: Ca
                                                 <button 
                                                     className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                                     onClick={() => {
-                                                        setSelectedModel("Qwen-7B")
+                                                        setSelectedModel("Qwen2.5-72B")
+                                                        setParameters("72")
+                                                        setPrecision("FP8")
+                                                        setGpuModel("NVIDIA H100 (80GB)")
+                                                    }}
+                                                >
+                                                    🔥 Qwen2.5-72B + H100
+                                                </button>
+                                                <button 
+                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                                    onClick={() => {
+                                                        setSelectedModel("Qwen2.5-7B")
                                                         setParameters("7")
                                                         setPrecision("FP16")
                                                         setGpuModel("NVIDIA RTX 3090 (24GB)")
                                                     }}
                                                 >
-                                                    Qwen 7B + RTX 3090
+                                                    Qwen2.5-7B + RTX 3090
                                                 </button>
                                                 <button 
                                                     className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
@@ -400,13 +411,24 @@ export default function LLMMemoryCalculator({ language, preferredModelType }: Ca
                                                 <button 
                                                     className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                                     onClick={() => {
-                                                        setSelectedModel("Qwen-7B")
+                                                        setSelectedModel("Qwen2.5-72B")
+                                                        setParameters("72")
+                                                        setPrecision("FP8")
+                                                        setGpuModel("NVIDIA H100 (80GB)")
+                                                    }}
+                                                >
+                                                    🔥 Qwen2.5-72B + H100
+                                                </button>
+                                                <button 
+                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                                    onClick={() => {
+                                                        setSelectedModel("Qwen2.5-7B")
                                                         setParameters("7")
                                                         setPrecision("FP16")
                                                         setGpuModel("NVIDIA RTX 3090 (24GB)")
                                                     }}
                                                 >
-                                                    Qwen 7B + RTX 3090
+                                                    Qwen2.5-7B + RTX 3090
                                                 </button>
                                                 <button 
                                                     className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
