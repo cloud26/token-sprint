@@ -13,43 +13,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '/llm-gpu-memory-calculator',
     ]
 
-    // Token Counter 的热门模型（按使用频率排序）
-    const popularTokenCounterModels = [
-        // OpenAI 最受欢迎
-        'gpt-4o',
-        'gpt-4',
-        'gpt-4-turbo',
-        'gpt-3.5-turbo',
-        
-        // Claude 系列（最新最热门）
-        'claude-4-opus',        // 最强的Claude 4
-        'claude-4-sonnet',      // 最新的Claude 4 Sonnet
-        'claude-3.7-sonnet',    // 新增的3.7版本
-        'claude-3.5-sonnet',    // 非常流行的3.5版本
-        'claude-3.5-haiku',     // 轻量级但流行
-        'claude-3-opus',
-        'claude-3-sonnet',
-        'claude-3-haiku',
-        
-        // Google Gemini
-        'gemini-1.5-pro',
-        'gemini-1.5-flash',
-        'gemini-pro',
-        
-        // Meta Llama
-        'llama-3.1-405b',
-        'llama-3.1-70b',
-        'llama-3.1-8b',
-        'llama-2-70b',
-        'llama-2-13b',
-        'llama-2-7b',
-        
-        // DeepSeek
-        'deepseek-r1',
-        'deepseek-chat',
-        'deepseek-v3'
-    ]
-
     // 基础路由页面 - 只包含语言版本，不包含根路径以避免重复
     const baseUrls = routes.flatMap(route =>
         languages.map(lang => ({
@@ -65,28 +28,33 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: baseUrl,
         lastModified: new Date(),
         changeFrequency: 'daily' as const,
-        priority: 1.0, // 最高优先级，作为canonical首页
+        priority: 1.0, // 最高优先级给canonical首页
     }
 
-    // LLM GPU 计算器的专门模型页面 - 高SEO优先级
-    const gpuCalculatorPages = getAllModelSlugs().flatMap(modelSlug =>
+    // GPU Calculator 页面
+    const gpuCalculatorUrls = getAllModelSlugs().flatMap(modelSlug =>
         languages.map(lang => ({
             url: `${baseUrl}/${lang}/llm-gpu-memory-calculator/${modelSlug}`,
             lastModified: new Date(),
             changeFrequency: 'weekly' as const,
-            priority: 0.9, // 高优先级，专门为SEO长尾关键词设计
+            priority: 0.9,
         }))
     )
 
-    // Token Counter 的AI公司页面 - 高SEO优先级
-    const tokenCounterPages = getAllTokenCounterModelSlugs().flatMap(companySlug =>
+    // Token Counter 页面
+    const tokenCounterUrls = getAllTokenCounterModelSlugs().flatMap(modelSlug =>
         languages.map(lang => ({
-            url: `${baseUrl}/${lang}/token-counter-visualizer/${companySlug}`,
+            url: `${baseUrl}/${lang}/token-counter-visualizer/${modelSlug}`,
             lastModified: new Date(),
             changeFrequency: 'weekly' as const,
-            priority: 0.9, // 高优先级，专门为SEO公司关键词设计
+            priority: 0.9,
         }))
     )
 
-    return [canonicalHome, ...baseUrls, ...gpuCalculatorPages, ...tokenCounterPages]
+    return [
+        canonicalHome,
+        ...baseUrls,
+        ...gpuCalculatorUrls,
+        ...tokenCounterUrls,
+    ]
 } 

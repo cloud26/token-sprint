@@ -97,7 +97,6 @@ export default function TokenCounterModelPage({
             "price": "0",
             "priceCurrency": "USD"
         },
-        "featureList": model.features[language],
         "provider": {
             "@type": "Organization",
             "name": model.company
@@ -151,22 +150,6 @@ export default function TokenCounterModelPage({
                             preferredCompany={model.company}
                         />
                     </Suspense>
-
-                    {/* 使用场景 */}
-                    <section className="mt-8 space-y-4">
-                        <h2 className="text-lg font-semibold">
-                            {language === 'en' ? `Best Use Cases for ${model.name}` : `${model.name} 最佳使用场景`}
-                        </h2>
-                        <div className="text-sm text-muted-foreground space-y-3">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {model.useCases[language].map((useCase, index) => (
-                                    <div key={index} className="bg-amber-50 p-3 rounded-lg border border-amber-200">
-                                        <p className="text-amber-800">{useCase}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
 
                     {/* 专业提示 */}
                     <section className="mt-6 bg-gray-50 p-4 rounded-lg">

@@ -17,10 +17,6 @@ export interface ModelConfig {
         zh: string[]
         en: string[]
     }
-    useCases: {
-        zh: string[]
-        en: string[]
-    }
 }
 
 export const models: Record<string, ModelConfig> = {
@@ -50,20 +46,6 @@ export const models: Record<string, ModelConfig> = {
                 "Mixture-of-Experts (MoE) architecture",
                 "Multimodal AI capabilities"
             ]
-        },
-        useCases: {
-            zh: [
-                "Llama 3.1本地部署",
-                "Llama 4多模态应用",
-                "企业级推理服务",
-                "高性能AI工作站"
-            ],
-            en: [
-                "Llama 3.1 local deployment",
-                "Llama 4 multimodal applications",
-                "Enterprise inference services",
-                "High-performance AI workstations"
-            ]
         }
     },
     deepseek: {
@@ -92,20 +74,6 @@ export const models: Record<string, ModelConfig> = {
                 "Supports FP8 precision optimization",
                 "Suitable for enterprise deployment"
             ]
-        },
-        useCases: {
-            zh: [
-                "高级推理任务",
-                "复杂问题求解",
-                "企业级AI应用",
-                "研究与开发"
-            ],
-            en: [
-                "Advanced reasoning tasks",
-                "Complex problem solving",
-                "Enterprise AI applications",
-                "Research and development"
-            ]
         }
     },
     qwen: {
@@ -133,20 +101,6 @@ export const models: Record<string, ModelConfig> = {
                 "235B total, 22B active parameters",
                 "Extremely memory efficient",
                 "Excellent multilingual support"
-            ]
-        },
-        useCases: {
-            zh: [
-                "多语言AI应用",
-                "高效推理部署",
-                "资源受限环境",
-                "成本优化方案"
-            ],
-            en: [
-                "Multilingual AI applications",
-                "Efficient inference deployment",
-                "Resource-constrained environments",
-                "Cost-optimized solutions"
             ]
         }
     }
@@ -177,14 +131,6 @@ export interface TokenCounterModel {
         en: string
         zh: string
     }
-    features: {
-        en: string[]
-        zh: string[]
-    }
-    useCases: {
-        en: string[]
-        zh: string[]
-    }
     representativeModels: {
         en: string[]
         zh: string[]
@@ -202,20 +148,12 @@ export const tokenCounterModels: TokenCounterModel[] = [
             zh: 'OpenAI token计数器，采用原生tokenizer支持GPT模型。最精确的OpenAI token计数工具。'
         },
         seoTitle: {
-            en: 'OpenAI Token Counter: GPT-4o, GPT-4, GPT-3.5 Calculator',
-            zh: 'OpenAI GPT Token计数器：GPT-4o、GPT-4、GPT-3.5计算工具'
+            en: 'OpenAI Token Counter: GPT-4o, GPT-4, GPT-3.5 Calculator & Tokenizer',
+            zh: 'OpenAI Token计数器：GPT-4o、GPT-4、GPT-3.5计算器和分词器'
         },
         seoDescription: {
-            en: 'Professional OpenAI token counter for GPT-4o, GPT-4, GPT-3.5. Native tokenizer accuracy, real-time cost calculation, prompt optimization.',
-            zh: '专业的OpenAI GPT token计数器，支持GPT-4o、GPT-4、GPT-4 Turbo、GPT-3.5 Turbo。最佳OpenAI token计数工具，原生分词器支持精确成本估算。'
-        },
-        features: {
-            en: ['Native tokenizer accuracy', 'Real-time cost calculation', 'Multiple GPT model support', 'Prompt optimization'],
-            zh: ['原生分词器精度', '实时成本计算', '多GPT模型支持', '提示词优化']
-        },
-        useCases: {
-            en: ['API cost planning', 'Content generation', 'Chatbot development', 'Prompt engineering'],
-            zh: ['API成本规划', '内容生成', '聊天机器人开发', '提示工程']
+            en: 'OpenAI token counter & tokenizer for GPT-4o, GPT-4, GPT-3.5. Native js-tiktoken accuracy, real-time cost calculation.',
+            zh: 'OpenAI token计数器和分词器，支持GPT-4o、GPT-4、GPT-3.5。原生js-tiktoken精度，实时成本计算。'
         },
         representativeModels: {
             en: ['GPT-4o', 'GPT-4', 'GPT-4 Turbo', 'GPT-3.5 Turbo'],
@@ -232,20 +170,12 @@ export const tokenCounterModels: TokenCounterModel[] = [
             zh: 'Anthropic Claude token计数器和tokenizer工具。使用先进估算算法为Claude模型提供近似token计数。'
         },
         seoTitle: {
-            en: 'Claude Token Counter: Claude 4, Claude 3.5 Calculator',
-            zh: 'Anthropic Claude Token计数器：Claude 4、Claude 3.5、Claude 3计算工具'
+            en: 'Claude Token Counter: Claude 4, Claude 3.5 Calculator & Tokenizer',
+            zh: 'Claude Token计数器：Claude 4、Claude 3.5计算器和分词器'
         },
         seoDescription: {
-            en: 'Accurate Claude token counter for Claude 4 Opus/Sonnet, Claude 3.5 Sonnet/Haiku. Long context support, safety analysis, cost estimation.',
-            zh: '精确的Anthropic Claude token计数器，支持Claude 4 Opus/Sonnet、Claude 3.7、Claude 3.5 Sonnet/Haiku、Claude 3。长上下文支持，安全分析，成本估算。'
-        },
-        features: {
-            en: ['Ultra-long context counting', 'Safety-focused analysis', 'Advanced reasoning support', 'Constitutional AI optimization'],
-            zh: ['超长上下文计数', '安全性分析', '高级推理支持', '宪法AI优化']
-        },
-        useCases: {
-            en: ['Document analysis', 'Research assistance', 'Content moderation', 'Long-form writing'],
-            zh: ['文档分析', '研究辅助', '内容审核', '长文写作']
+            en: 'Claude token counter & tokenizer for Claude 4 Opus/Sonnet, Claude 3.5. Hugging Face tokenizer, long context support.',
+            zh: 'Claude token计数器和分词器，支持Claude 4 Opus/Sonnet、Claude 3.5 Sonnet/Haiku。长上下文支持。'
         },
         representativeModels: {
             en: ['Claude 4 Opus', 'Claude 4 Sonnet', 'Claude 3.5 Sonnet', 'Claude 3.5 Haiku'],
@@ -262,20 +192,12 @@ export const tokenCounterModels: TokenCounterModel[] = [
             zh: 'Google Gemini token计数器和tokenizer工具。使用先进估算算法为Gemini模型提供近似token计数。'
         },
         seoTitle: {
-            en: 'Gemini Token Counter: Gemini 1.5 Pro, Flash Calculator',
-            zh: 'Google Gemini Token计数器：Gemini 1.5 Pro、Flash计算工具'
+            en: 'Gemini Token Counter: Gemini 1.5 Pro, Flash Calculator & Tokenizer',
+            zh: 'Gemini Token计数器：Gemini 1.5 Pro、Flash计算器和分词器'
         },
         seoDescription: {
-            en: 'Professional Gemini token counter for Gemini 1.5 Pro, Flash. Supports 2M token context, multimodal counting, document processing.',
-            zh: '专业的Google Gemini token计数器，支持Gemini 1.5 Pro、Gemini 1.5 Flash、Gemini Pro。支持最多200万token上下文，多模态计数，文档处理。'
-        },
-        features: {
-            en: ['2M token context support', 'Multimodal token counting', 'Document processing', 'Video content analysis'],
-            zh: ['200万token上下文支持', '多模态token计数', '文档处理', '视频内容分析']
-        },
-        useCases: {
-            en: ['Long document analysis', 'Multimodal AI applications', 'Video processing', 'Large dataset analysis'],
-            zh: ['长文档分析', '多模态AI应用', '视频处理', '大数据分析']
+            en: 'Gemini token counter & tokenizer for Gemini 1.5 Pro, Flash.',
+            zh: 'Gemini token计数器和分词器，支持Gemini 1.5 Pro、Flash。'
         },
         representativeModels: {
             en: ['Gemini 1.5 Pro', 'Gemini 1.5 Flash', 'Gemini Pro'],
@@ -292,26 +214,18 @@ export const tokenCounterModels: TokenCounterModel[] = [
             zh: 'Meta Llama token计数器和tokenizer工具。使用先进估算算法为Llama模型提供近似token计数。'
         },
         seoTitle: {
-            en: 'Llama Token Counter: Llama 3.1, Llama 2 Calculator',
-            zh: 'Meta Llama Token计数器：Llama 3.1、Llama 2开源计算工具'
+            en: 'Llama Token Counter: Llama 4, Llama 3 Calculator & Tokenizer',
+            zh: 'Llama Token计数器：Llama 4、Llama 3计算器和分词器'
         },
         seoDescription: {
-            en: 'Free Llama token counter for Llama 3.1 (405B, 70B, 8B), Llama 2. Open source optimization, local deployment, custom fine-tuning.',
-            zh: '免费的Meta Llama token计数器，支持Llama 3.1 (405B, 70B, 8B)、Llama 2模型。开源优化，本地部署规划，自定义微调支持。'
-        },
-        features: {
-            en: ['Open source optimization', 'Local deployment support', 'Custom fine-tuning ready', 'Resource planning tools'],
-            zh: ['开源优化', '本地部署支持', '自定义微调准备', '资源规划工具']
-        },
-        useCases: {
-            en: ['Local AI deployment', 'Custom model training', 'Research projects', 'Private cloud solutions'],
-            zh: ['本地AI部署', '自定义模型训练', '研究项目', '私有云解决方案']
+            en: 'Llama token counter & tokenizer for Llama 4 Scout/Maverick, Llama 3.3, 3.1. Hugging Face tokenizer, open source models.',
+            zh: 'Llama token计数器和分词器，支持Llama 4 Scout/Maverick、Llama 3.3、3.1。开源模型优化。'
         },
         representativeModels: {
             en: ['Llama 3.1 405B', 'Llama 3.1 70B', 'Llama 3.1 8B', 'Llama 2 70B'],
             zh: ['Llama 3.1 405B', 'Llama 3.1 70B', 'Llama 3.1 8B', 'Llama 2 70B']
         },
-        defaultModel: 'llama-3.1-70b'
+        defaultModel: 'llama-3.3'
     },
     {
         slug: 'deepseek',
@@ -322,54 +236,38 @@ export const tokenCounterModels: TokenCounterModel[] = [
             zh: 'DeepSeek token计数器和tokenizer工具。使用先进估算算法为DeepSeek模型提供近似token计数。'
         },
         seoTitle: {
-            en: 'DeepSeek Token Counter: R1, V3 Reasoning Calculator',
-            zh: 'DeepSeek Token计数器：DeepSeek-R1、DeepSeek-V3推理计算工具'
+            en: 'DeepSeek Token Counter: R1, V3 Calculator & Tokenizer',
+            zh: 'DeepSeek Token计数器：R1、V3计算器和分词器'
         },
         seoDescription: {
-            en: 'Specialized DeepSeek token counter for R1 Reasoner, V3 Chat. Reasoning optimization, mathematical analysis, step-by-step logic counting.',
-            zh: '专门的DeepSeek token计数器，支持DeepSeek-R1推理器、DeepSeek-V3聊天。推理任务优化，数学分析，分步逻辑计数。'
-        },
-        features: {
-            en: ['Reasoning task optimization', 'Mathematical analysis support', 'Step-by-step logic counting', 'Cost-efficient calculations'],
-            zh: ['推理任务优化', '数学分析支持', '分步逻辑计数', '成本效率计算']
-        },
-        useCases: {
-            en: ['Mathematical reasoning', 'Logic problem solving', 'Code analysis', 'Research assistance'],
-            zh: ['数学推理', '逻辑问题求解', '代码分析', '研究辅助']
+            en: 'DeepSeek token counter & tokenizer for R1 Reasoner, V3 Chat. Hugging Face tokenizer, cost estimation.',
+            zh: 'DeepSeek token计数器和分词器，支持R1推理器、V3聊天。成本估算，token优化。'
         },
         representativeModels: {
             en: ['DeepSeek-R1', 'DeepSeek-V3 Chat'],
             zh: ['DeepSeek-R1', 'DeepSeek-V3 Chat']
         },
-        defaultModel: 'deepseek-reasoner'
+        defaultModel: 'deepseek-r1'
     },
     {
         slug: 'qwen',
         name: 'Qwen',
         company: 'Alibaba',
         description: {
-            en: 'Qwen3 token counter and tokenizer tool. Approximate token counting for Qwen models using advanced estimation.',
-            zh: 'Qwen3 token计数器和tokenizer工具。使用先进估算算法为Qwen模型提供近似token计数。'
+            en: 'Qwen2/Qwen3 token counter and tokenizer tool. Approximate token counting for Qwen models using advanced estimation.',
+            zh: 'Qwen2/Qwen3 token计数器和tokenizer工具。使用先进估算算法为Qwen模型提供近似token计数。'
         },
         seoTitle: {
-            en: 'Qwen Token Counter: Alibaba Qwen Calculator & Tokenizer',
-            zh: 'Qwen3 Token计数器：阿里巴巴Qwen Token计算器和分词器'
+            en: 'Qwen Token Counter: Qwen2, Qwen3 Calculator & Tokenizer',
+            zh: 'Qwen Token计数器：Qwen2、Qwen3计算器和分词器'
         },
         seoDescription: {
-            en: 'Professional Qwen token counter for Alibaba Qwen models. Accurate counting for Qwen-Plus, Qwen-Turbo with cost estimation.',
-            zh: '专业的Qwen3 token计数器，支持阿里巴巴Qwen模型。精确计算Qwen-Plus、Qwen-Turbo等模型的token数量，提供成本估算。'
-        },
-        features: {
-            en: ['MoE architecture support', 'Multilingual optimization', 'Cost-efficient counting', 'Chinese language specialized'],
-            zh: ['MoE架构支持', '多语言优化', '成本效率计算', '中文语言专门优化']
-        },
-        useCases: {
-            en: ['Chinese AI applications', 'Multilingual content', 'Cost optimization', 'Enterprise deployment'],
-            zh: ['中文AI应用', '多语言内容', '成本优化', '企业级部署']
+            en: 'Qwen token counter & tokenizer for Qwen2, Qwen3 models. GPT-4 estimation, cost calculation, multilingual support.',
+            zh: 'Qwen token计数器和分词器，支持Qwen2、Qwen3模型。成本计算，多语言支持。'
         },
         representativeModels: {
-            en: ['Qwen3-235B-A22B', 'Qwen-Plus', 'Qwen-Turbo', 'Qwen-Max'],
-            zh: ['Qwen3-235B-A22B', 'Qwen-Plus', 'Qwen-Turbo', 'Qwen-Max']
+            en: ['Qwen3-235B-A22B', 'Qwen2.5', 'Qwen-Plus', 'Qwen-Turbo', 'Qwen-Max'],
+            zh: ['Qwen3-235B-A22B', 'Qwen2.5', 'Qwen-Plus', 'Qwen-Turbo', 'Qwen-Max']
         },
         defaultModel: 'qwen3-235b'
     }

@@ -52,6 +52,8 @@ const models: ModelInfo[] = [
     // Claude 系列 - 使用 Hugging Face 社区 tokenizer
     { value: "claude-opus-4", label: "Claude 4 Opus 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
     { value: "claude-sonnet-4", label: "Claude 4 Sonnet 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
+    { value: "claude-3.7-sonnet", label: "Claude 3.7 Sonnet 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
+    { value: "claude-3.7-haiku", label: "Claude 3.7 Haiku 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
     { value: "claude-3.5-sonnet", label: "Claude 3.5 Sonnet 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
     { value: "claude-3.5-haiku", label: "Claude 3.5 Haiku 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
     { value: "claude-3-opus", label: "Claude 3 Opus 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
@@ -59,7 +61,7 @@ const models: ModelInfo[] = [
     { value: "claude-3-haiku", label: "Claude 3 Haiku 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
 
     // Meta Llama 系列 - 使用 Hugging Face tokenizer
-    { value: "llama-3.3", label: "Llama 3.3 70B 🤗", encoding: "huggingface", hub: "unsloth/Llama-3.3-70B-Instruct" },
+    { value: "llama-3.3", label: "Llama 3.3 🤗", encoding: "huggingface", hub: "unsloth/Llama-3.3-70B-Instruct" },
     { value: "llama-3.2", label: "Llama 3.2 🤗", encoding: "huggingface", hub: "Xenova/Llama-3.2-Tokenizer" },
     { value: "llama-3.1", label: "Llama 3.1 🤗", encoding: "huggingface", hub: "Xenova/Meta-Llama-3.1-Tokenizer" },
     { value: "llama-3", label: "Llama 3 🤗", encoding: "huggingface", hub: "Xenova/llama3-tokenizer-new" },
@@ -83,6 +85,12 @@ const models: ModelInfo[] = [
 
     // Qwen 系列 - 暂时使用估算，等待社区 tokenizer
     { value: "qwen3-235b", label: "Qwen3-235B ⚠️", encoding: "gpt-4" },
+    { value: "qwen2.5-72b", label: "Qwen2.5-72B ⚠️", encoding: "gpt-4" },
+    { value: "qwen2.5-32b", label: "Qwen2.5-32B ⚠️", encoding: "gpt-4" },
+    { value: "qwen2.5-14b", label: "Qwen2.5-14B ⚠️", encoding: "gpt-4" },
+    { value: "qwen2.5-7b", label: "Qwen2.5-7B ⚠️", encoding: "gpt-4" },
+    { value: "qwen2-72b", label: "Qwen2-72B ⚠️", encoding: "gpt-4" },
+    { value: "qwen2-7b", label: "Qwen2-7B ⚠️", encoding: "gpt-4" },
     { value: "qwen-plus", label: "Qwen-Plus ⚠️", encoding: "gpt-4" },
     { value: "qwen-turbo", label: "Qwen-Turbo ⚠️", encoding: "gpt-4" },
     { value: "qwen-max", label: "Qwen-Max ⚠️", encoding: "gpt-4" },

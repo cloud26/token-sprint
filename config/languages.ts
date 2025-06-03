@@ -46,21 +46,21 @@ export const tools = {
     tokenCounter: {
         path: "token-counter-visualizer",
         title: {
-            zh: "AI Token 计数器",
-            en: "AI Token Counter"
+            zh: "AI Token计数器和分词器",
+            en: "AI Token Counter & Tokenizer"
         },
         description: {
-            zh: "多模型Token精确计数，可视化分析",
-            en: "Accurate token counting for multiple AI models with visualization"
+            zh: "支持GPT-4o、Claude 4、Gemini 1.5 Pro、Llama 4、DeepSeek-R1、Qwen3等主流模型",
+            en: "Support for GPT-4o, Claude 4, Gemini 1.5 Pro, Llama 4, DeepSeek-R1, Qwen3 and other leading models"
         },
         metadata: {
             title: {
-                zh: "AI Token计数器 | GPT Claude Gemini DeepSeek Llama",
-                en: "AI Token Counter | GPT Claude Gemini DeepSeek Llama"
+                zh: "AI Token计数器：GPT、Claude、Gemini、Llama、DeepSeek计算器和分词器",
+                en: "AI Token Counter: GPT, Claude, Gemini, Llama, DeepSeek Calculator & Tokenizer"
             },
             description: {
-                zh: "免费的Token Counter和Tokenizer工具，支持GPT、Claude、Gemini、DeepSeek、Llama等主流LLM模型的token计数。提供精确计数、可视化分解和模型对比功能。",
-                en: "Free token counter and tokenizer for GPT, Claude, Gemini, DeepSeek, Llama and other LLM models. Professional AI token counter with accurate counting, visual breakdown, and model comparison features."
+                zh: "AI token计数器和分词器，支持GPT-4o、Claude 4、Gemini 1.5 Pro、Llama 4、DeepSeek-R1、Qwen3等模型。实时token计数、成本估算、API优化。",
+                en: "AI token counter & tokenizer for GPT-4o, Claude 4, Gemini 1.5 Pro, Llama 4, DeepSeek-R1, Qwen3. Real-time counting, cost estimation, API optimization."
             }
         }
     }
