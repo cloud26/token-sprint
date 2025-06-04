@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
     return {
         title: tools.llmGpuCalculator.metadata.title[lang],
         description: tools.llmGpuCalculator.metadata.description[lang],
+        keywords: tools.llmGpuCalculator.metadata.keywords[lang],
         alternates: {
             canonical: `${baseUrl}/${lang}/${path}`,
             languages: {
@@ -56,7 +57,7 @@ export default function LLMGPUMemoryCalculatorPage({
                 <div className="w-full max-w-2xl space-y-2 flex-1">
                     {/* 面包屑导航 */}
                     <Breadcrumb items={breadcrumbItems} language={language} />
-                    
+
                     <header className="flex flex-col items-center gap-1 mt-8">
                         <h1 className="text-2xl font-bold text-center">
                             {tools.llmGpuCalculator.title[language]}
@@ -73,7 +74,7 @@ export default function LLMGPUMemoryCalculatorPage({
                     {/* GPU Selection Guide */}
                     <div className="mt-8">
                         <GPUSelectionGuide language={language} />
-                        </div>
+                    </div>
                 </div>
                 <Footer />
             </main>

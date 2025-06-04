@@ -13,8 +13,8 @@ import { notFound } from "next/navigation"
 export async function generateStaticParams() {
     const modelSlugs = getAllModelSlugs()
     const languages: Language[] = ['en', 'zh']
-    
-    return languages.flatMap(lang => 
+
+    return languages.flatMap(lang =>
         modelSlugs.map(model => ({
             lang,
             model
@@ -22,14 +22,14 @@ export async function generateStaticParams() {
     )
 }
 
-export async function generateMetadata({ 
-    params 
-}: { 
-    params: Promise<{ lang: Language; model: string }> 
+export async function generateMetadata({
+    params
+}: {
+    params: Promise<{ lang: Language; model: string }>
 }): Promise<Metadata> {
     const { lang, model: modelSlug } = await params
     const model = getModelBySlug(modelSlug)
-    
+
     if (!model) {
         return {
             title: 'Model Not Found',
@@ -44,6 +44,9 @@ export async function generateMetadata({
     return {
         title: model.seoTitle[lang],
         description: model.seoDescription[lang],
+        keywords: lang === 'en' ?
+            `${model.name.toLowerCase()},${model.name.toLowerCase()} gpu requirements,${model.name.toLowerCase()} vram calculator,${model.name.toLowerCase()} deployment,llm vram calculator,vram calculator,llm vram,llm inference hardware calculator,ai gpu calculator,gpu memory calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,vram requirements,${model.name.toLowerCase()} local deployment,${model.name.toLowerCase()} hardware requirements` :
+            `${model.name},${model.name}GPU需求,${model.name}显存计算器,${model.name}部署,AI显卡计算器,大模型GPU计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,GPU显存需求,大模型部署计算器,AI硬件配置,显卡选择工具,LLM显存计算,${model.name}本地部署,${model.name}硬件需求`,
         alternates: {
             canonical: `${baseUrl}/${lang}/${path}`,
             languages: {
@@ -52,10 +55,7 @@ export async function generateMetadata({
             },
         },
         other: {
-            'application-name': `${model.name} GPU Calculator`,
-            'keywords': lang === 'en' ? 
-                `${model.name.toLowerCase()}, gpu requirements, local deployment, ${model.name.toLowerCase()} requirements, ai model deployment` :
-                `${model.name}, GPU需求, 本地部署, ${model.name}显卡需求, AI模型部署`
+            'application-name': `${model.name} GPU Calculator`
         }
     }
 }
@@ -67,7 +67,7 @@ export default function ModelSpecificCalculatorPage({
 }) {
     const { lang: language, model: modelSlug } = use(params)
     const model = getModelBySlug(modelSlug)
-    
+
     if (!model) {
         notFound()
     }
@@ -129,16 +129,16 @@ export default function ModelSpecificCalculatorPage({
                 <div className="w-full max-w-2xl space-y-2 flex-1">
                     {/* 面包屑导航 */}
                     <Breadcrumb items={breadcrumbItems} language={language} />
-                    
+
                     <header className="flex flex-col items-center gap-2 mt-8">
                         <h1 className="text-2xl font-bold text-center">
-                            {language === 'en' ? 
+                            {language === 'en' ?
                                 `${model.name} VRAM & GPU Calculator` :
                                 `${model.name} 显存与GPU计算器`
                             }
                         </h1>
                         <p className="text-center text-muted-foreground text-sm max-w-md">
-                            {language === 'en' ? 
+                            {language === 'en' ?
                                 `Calculate VRAM requirements and GPU count for ${model.name} deployment. Support for NVIDIA, AMD, Apple, and Huawei` :
                                 `计算${model.name}部署所需的显存和GPU数量，支持NVIDIA、AMD、苹果、华为等各厂商显卡`
                             }
