@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
     return {
         title: tools.tokenCounter.metadata.title[lang],
         description: tools.tokenCounter.metadata.description[lang],
+        keywords: tools.tokenCounter.metadata.keywords[lang],
         alternates: {
             canonical: `${baseUrl}/${lang}/${path}`,
             languages: {
@@ -25,10 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
             },
         },
         other: {
-            'application-name': 'AI Token Counter',
-            'keywords': lang === 'en' ?
-                'token counter, ai tokenizer, gpt token counter, claude token counter, gemini counter' :
-                'token计数器, AI token计数器, GPT token计数器, Claude token计数器, Gemini计数器'
+            'application-name': 'AI Token Counter'
         }
     }
 }
@@ -107,7 +105,7 @@ export default function TokenCounterPage({
                 <div className="w-full max-w-2xl space-y-2 flex-1">
                     {/* 面包屑导航 */}
                     <Breadcrumb items={breadcrumbItems} language={language} />
-                    
+
                     <header className="flex flex-col items-center gap-1 mt-8">
                         <h1 className="text-2xl font-bold text-center">
                             {tools.tokenCounter.title[language]}

@@ -59,12 +59,16 @@ export const tools = {
         },
         metadata: {
             title: {
-                zh: "AI Token计数器：GPT、Claude、Gemini、Llama、DeepSeek计算器和分词器",
-                en: "AI Token Counter: GPT, Claude, Gemini, Llama, DeepSeek Calculator & Tokenizer"
+                zh: "Token计数器和计算器：ChatGPT、GPT、Claude、Llama、DeepSeek分词器",
+                en: "Token Counter & Calculator: ChatGPT, GPT, Claude, Llama Token Estimator"
             },
             description: {
-                zh: "AI token计数器和分词器，支持GPT-4o、Claude 4、Gemini 1.5 Pro、Llama 4、DeepSeek-R1、Qwen3等模型。实时token计数、成本估算、API优化。",
-                en: "AI token counter & tokenizer for GPT-4o, Claude 4, Gemini 1.5 Pro, Llama 4, DeepSeek-R1, Qwen3. Real-time counting, cost estimation, API optimization."
+                zh: "免费在线token计数器和计算器，支持ChatGPT、GPT-4o、Claude 4、Llama等AI模型。实时token计算、成本估算、API优化工具。",
+                en: "Free online token counter & calculator for ChatGPT, GPT-4o, Claude 4, Llama models. Real-time token counting, cost estimation, LLM token calculator."
+            },
+            keywords: {
+                zh: "token计数器,token计算器,GPT token计数器,ChatGPT token计数器,LLM token计数器,AI token计数器",
+                en: "token counter,token calculator,gpt token counter,chatgpt token counter,llm token counter,token estimator"
             }
         }
     }

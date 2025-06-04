@@ -12,8 +12,8 @@ import { notFound } from "next/navigation"
 export async function generateStaticParams() {
     const modelSlugs = getAllTokenCounterModelSlugs()
     const languages: Language[] = ['en', 'zh']
-    
-    return languages.flatMap(lang => 
+
+    return languages.flatMap(lang =>
         modelSlugs.map(model => ({
             lang,
             model
@@ -24,7 +24,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ lang: Language; model: string }> }): Promise<Metadata> {
     const { lang, model: companySlug } = await params
     const model = getTokenCounterModelBySlug(companySlug)
-    
+
     if (!model) {
         notFound()
     }
@@ -46,8 +46,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
         other: {
             'application-name': `${model.name} Token Counter`,
             'keywords': lang === 'en' ?
-                `${model.name} token counter, ${model.name} tokenizer, ${model.company} tokens, AI token calculator, ${model.name} cost calculator` :
-                `${model.name} token计数器, ${model.name} 分词器, ${model.company} tokens, AI token计算器, ${model.name} 成本计算器`
+                `${model.name.toLowerCase()} token counter,token calculator,${model.name.toLowerCase()} token estimator,free token counter` :
+                `${model.name} token计数器,token计算器,${model.name} token估算器,免费token计数器`
         }
     }
 }
@@ -59,7 +59,7 @@ export default function TokenCounterModelPage({
 }) {
     const { lang: language, model: companySlug } = use(params)
     const model = getTokenCounterModelBySlug(companySlug)
-    
+
     if (!model) {
         notFound()
     }
@@ -133,7 +133,7 @@ export default function TokenCounterModelPage({
                 <div className="w-full max-w-2xl space-y-2 flex-1">
                     {/* 面包屑导航 */}
                     <Breadcrumb items={breadcrumbItems} language={language} />
-                    
+
                     <header className="flex flex-col items-center gap-1 mt-8">
                         <h1 className="text-2xl font-bold text-center">
                             {model.seoTitle[language]}
@@ -144,8 +144,8 @@ export default function TokenCounterModelPage({
                     </header>
 
                     <Suspense fallback={<div>Loading...</div>}>
-                        <TokenCounter 
-                            language={language} 
+                        <TokenCounter
+                            language={language}
                             defaultModel={defaultModelValue}
                             preferredCompany={model.company}
                         />
