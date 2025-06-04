@@ -19,6 +19,15 @@ export const metadata: Metadata = {
       'x-default': '/en',
     },
   },
+  icons: {
+    icon: [
+      { url: `/favicon.svg?v=${Date.now()}`, type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    apple: [
+      { url: `/favicon.svg?v=${Date.now()}`, sizes: '180x180', type: 'image/svg+xml' },
+    ],
+  },
   other: {
     'google-adsense-account': 'ca-pub-8472112646404075',
   },

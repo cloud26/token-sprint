@@ -66,10 +66,10 @@ export const config = {
          * - api 路由
          * - _next 静态文件
          * - 图片文件
-         * - favicon.ico
+         * - favicon 相关文件 (ico, svg, png)
          * - sitemap.xml
          * - 所有 .txt 文件（验证文件等）
          */
-        "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|.*\\.txt).*)",
+        "/((?!api|_next/static|_next/image|favicon|.*\\.ico|.*\\.svg|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.gif|.*\\.webp|sitemap.xml|.*\\.txt).*)",
     ],
 } 
