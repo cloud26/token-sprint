@@ -46,8 +46,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
         other: {
             'application-name': `${model.name} Token Counter`,
             'keywords': lang === 'en' ?
-                `${model.name.toLowerCase()} token counter,token calculator,${model.name.toLowerCase()} token estimator,free token counter` :
-                `${model.name} token计数器,token计算器,${model.name} token估算器,免费token计数器`
+                `token counter,tokenizers ai,token calculator,tokenization tools,${model.name.toLowerCase()} token counter` :
+                `token计数器,AI分词器,token计算器,分词工具,${model.name} token计数器`
         }
     }
 }

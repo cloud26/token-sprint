@@ -67,8 +67,8 @@ export const tools = {
                 en: "Free online token counter & calculator for ChatGPT, GPT-4o, Claude 4, Llama models. Real-time token counting, cost estimation, LLM token calculator."
             },
             keywords: {
-                zh: "token计数器,token计算器,GPT token计数器,ChatGPT token计数器,LLM token计数器,AI token计数器",
-                en: "token counter,token calculator,gpt token counter,chatgpt token counter,llm token counter,token estimator"
+                zh: "token计数器,AI分词器,token计算器,分词工具,GPT token计数器,ChatGPT token计数器",
+                en: "token counter,tokenizers ai,token calculator,tokenization tools,gpt token counter,chatgpt token counter"
             }
         }
     }
