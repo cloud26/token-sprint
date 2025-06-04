@@ -45,8 +45,8 @@ export async function generateMetadata({
         title: model.seoTitle[lang],
         description: model.seoDescription[lang],
         keywords: lang === 'en' ?
-            `${model.name.toLowerCase()},${model.name.toLowerCase()} gpu requirements,${model.name.toLowerCase()} vram calculator,${model.name.toLowerCase()} deployment,llm vram calculator,vram calculator,llm vram,llm inference hardware calculator,ai gpu calculator,gpu memory calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,vram requirements,${model.name.toLowerCase()} local deployment,${model.name.toLowerCase()} hardware requirements` :
-            `${model.name},${model.name}GPU需求,${model.name}显存计算器,${model.name}部署,AI显卡计算器,大模型GPU计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,GPU显存需求,大模型部署计算器,AI硬件配置,显卡选择工具,LLM显存计算,${model.name}本地部署,${model.name}硬件需求`,
+            `${model.name.toLowerCase()},${model.name.toLowerCase()} gpu requirements,${model.name.toLowerCase()} deployment,llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,${model.name.toLowerCase()} local deployment` :
+            `${model.name},${model.name}GPU需求,${model.name}部署,AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,大模型部署计算器,AI硬件配置,显卡选择工具,${model.name}本地部署`,
         alternates: {
             canonical: `${baseUrl}/${lang}/${path}`,
             languages: {
