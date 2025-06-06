@@ -461,95 +461,17 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                     />
                 </div>
 
-                {/* 示例文本按钮 */}
-                <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
-                    <div className="text-sm text-amber-800 space-y-3">
-                        <p className="font-medium">
-                            {language === 'en' ? 'Examples:' : '示例：'}
-                        </p>
-                        <div className="space-y-2">
-                            {language === 'en' ? (
-                                <>
-                                    <div className="flex gap-2">
-                                        <button
-                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                            onClick={() => {
-                                                setText("系列")
-                                                setShowTokenBreakdown(true)
-                                            }}
-                                        >
-                                            Test "系列"
-                                        </button>
-                                        <button
-                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                            onClick={() => {
-                                                setText("GPT-4模型系列")
-                                                setShowTokenBreakdown(true)
-                                            }}
-                                        >
-                                            Test "GPT-4模型系列"
-                                        </button>
-                                        <button
-                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                            onClick={() => {
-                                                setText("人工智能技术发展")
-                                                setShowTokenBreakdown(true)
-                                            }}
-                                        >
-                                            Test "人工智能技术发展"
-                                        </button>
-                                    </div>
-                                    <p className="text-xs italic">
-                                        Try these examples and switch between different models to see how the same text produces different token counts!
-                                    </p>
-                                </>
-                            ) : (
-                                <>
-                                    <div className="flex gap-2 flex-wrap">
-                                        <button
-                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                            onClick={() => {
-                                                setText("系列")
-                                                setShowTokenBreakdown(true)
-                                            }}
-                                        >
-                                            测试"系列"
-                                        </button>
-                                        <button
-                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                            onClick={() => {
-                                                setText("GPT-4模型系列")
-                                                setShowTokenBreakdown(true)
-                                            }}
-                                        >
-                                            测试"GPT-4模型系列"
-                                        </button>
-                                        <button
-                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                            onClick={() => {
-                                                setText("人工智能技术发展")
-                                                setShowTokenBreakdown(true)
-                                            }}
-                                        >
-                                            测试"人工智能技术发展"
-                                        </button>
-                                        <button
-                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                            onClick={() => {
-                                                setText("Machine learning algorithms")
-                                                setShowTokenBreakdown(true)
-                                            }}
-                                        >
-                                            测试英文文本
-                                        </button>
-                                    </div>
-                                    <p className="text-xs italic">
-                                        试试这些示例并在不同模型间切换，看看相同文本在不同tokenizer下的token数量差异！现在支持本地Hugging Face tokenizer！
-                                    </p>
-                                </>
-                            )}
-                        </div>
-                    </div>
+                {/* 生成示例文本按钮 */}
+                <div className="bg-amber-50/50 px-3 py-2 rounded text-center border border-amber-200/50">
+                    <button
+                        className="px-4 py-2 bg-amber-200 hover:bg-amber-300 rounded text-sm transition-colors font-medium"
+                        onClick={() => {
+                            setText(`Two households, both alike in dignity, In fair Verona, where we lay our scene, From ancient grudge break to new mutiny, Where civil blood makes civil hands unclean. From forth the fatal loins of these two foes A pair of star-cross'd lovers take their life; Whose misadventured piteous overthrows Do with their death bury their parents' strife.`)
+                            setShowTokenBreakdown(true)
+                        }}
+                    >
+                        {language === 'en' ? 'Generate Example' : '生成示例'}
+                    </button>
                 </div>
 
                 {/* 统计结果 */}
