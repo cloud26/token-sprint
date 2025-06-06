@@ -24,8 +24,8 @@ export function SidebarAds() {
     return (
         <>
             {/* 左广告 - 主内容左侧 200px */}
-            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden 2xl:block"
-                style={{ left: 'calc(50% - 336px - 200px)', width: '160px' }}>
+            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden xl:block"
+                style={{ left: 'calc(50% - 336px - 120px)', width: '160px' }}>
                 <ins
                     className="adsbygoogle"
                     style={{ display: 'block', width: '160px', height: '600px' }}
@@ -37,8 +37,8 @@ export function SidebarAds() {
             </div>
 
             {/* 右广告 - 主内容右侧 200px */}
-            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden 2xl:block"
-                style={{ left: 'calc(50% + 336px + 200px)', width: '160px' }}>
+            <div className="fixed top-1/2 transform -translate-y-1/2 z-10 hidden xl:block"
+                style={{ left: 'calc(50% + 336px + 150px)', width: '160px' }}>
                 <ins
                     className="adsbygoogle"
                     style={{ display: 'block', width: '160px', height: '600px' }}
