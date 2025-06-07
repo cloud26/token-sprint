@@ -1,7 +1,7 @@
 import LanguageSwitcher from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
 import { use, Suspense } from "react"
-import { tools, type Language } from "@/config/languages"
+import { type Language } from "@/config/languages"
 import { Metadata } from "next"
 import LLMMemoryCalculator from "@/components/llm-memory-calculator"
 import { SideNav } from "@/components/side-nav"
@@ -9,6 +9,8 @@ import { GPUSelectionGuide } from "@/components/gpu-selection-guide"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { getModelBySlug, getAllModelSlugs } from "@/config/models"
 import { notFound } from "next/navigation"
+import { getTranslations } from 'next-intl/server'
+import { useTranslations, useLocale } from 'next-intl'
 
 export async function generateStaticParams() {
     const modelSlugs = getAllModelSlugs()
@@ -37,16 +39,15 @@ export async function generateMetadata({
         }
     }
 
+    const t = await getTranslations({ locale: lang, namespace: 'models' })
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
         (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://app.linpp2009.com')
     const path = `llm-gpu-memory-calculator/${modelSlug}`
 
     return {
-        title: model.seoTitle[lang],
-        description: model.seoDescription[lang],
-        keywords: lang === 'en' ?
-            `${model.name.toLowerCase()},${model.name.toLowerCase()} gpu requirements,${model.name.toLowerCase()} deployment,llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,${model.name.toLowerCase()} local deployment` :
-            `${model.name},${model.name}GPU需求,${model.name}部署,AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,大模型部署计算器,AI硬件配置,显卡选择工具,${model.name}本地部署`,
+        title: t(`${modelSlug}.seoTitle`),
+        description: t(`${modelSlug}.seoDescription`),
+        keywords: t(`${modelSlug}.keywords`),
         alternates: {
             canonical: `${baseUrl}/${lang}/${path}`,
             languages: {
@@ -74,15 +75,47 @@ export default function ModelSpecificCalculatorPage({
 
     const currentPath = `/${language}/llm-gpu-memory-calculator/${modelSlug}`
 
+    return (
+        <div className="min-h-screen flex flex-col">
+            <StructuredData language={language} model={model} modelSlug={modelSlug} />
+
+            <LanguageSwitcher className="fixed top-4 right-4 z-50" />
+            <SideNav currentPath={currentPath} />
+
+            <main className="pt-20 md:pt-4 md:ml-48 flex-1 flex flex-col items-center p-4 md:p-8">
+                <div className="w-full max-w-2xl space-y-2 flex-1">
+                    <PageContent model={model} />
+
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <LLMMemoryCalculator preferredModelType={modelSlug} />
+                    </Suspense>
+
+                    <div className="mt-8">
+                        <GPUSelectionGuide />
+                    </div>
+
+                    <DeploymentTipsSection model={model} />
+                </div>
+                <Footer />
+            </main>
+        </div>
+    )
+}
+
+function PageContent({ model }: { model: any }) {
+    const t = useTranslations('tools.llmGpuCalculator')
+    const tn = useTranslations('nav')
+    const locale = useLocale()
+    
     // 面包屑导航项
     const breadcrumbItems = [
         {
-            label: language === 'en' ? 'AI Tools' : 'AI工具',
-            href: `/${language}`
+            label: tn('aiTools'),
+            href: `/`
         },
         {
-            label: language === 'en' ? 'GPU Calculator' : 'GPU计算器',
-            href: `/${language}/llm-gpu-memory-calculator`
+            label: tn('gpuCalculator'),
+            href: `/llm-gpu-memory-calculator`
         },
         {
             label: model.name,
@@ -90,12 +123,30 @@ export default function ModelSpecificCalculatorPage({
         }
     ]
 
+    return (
+        <>
+            <Breadcrumb items={breadcrumbItems} />
+            <header className="flex flex-col items-center gap-2 mt-8">
+                <h1 className="text-2xl font-bold text-center">
+                    {t('calculatorTitle', { model: model.name })}
+                </h1>
+                <p className="text-center text-muted-foreground text-sm max-w-md">
+                    {t('calculatorDescription', { model: model.name })}
+                </p>
+            </header>
+        </>
+    )
+}
+
+function StructuredData({ language, model, modelSlug }: { language: Language, model: any, modelSlug: string }) {
+    const t = useTranslations('models')
+    
     // 结构化数据
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": `${model.name} GPU Calculator`,
-        "description": model.seoDescription[language],
+        "description": t(`${modelSlug}.seoDescription`),
         "url": `${process.env.NEXT_PUBLIC_BASE_URL || 'https://app.linpp2009.com'}/${language}/llm-gpu-memory-calculator/${modelSlug}`,
         "applicationCategory": "UtilityApplication",
         "operatingSystem": "Any",
@@ -113,79 +164,34 @@ export default function ModelSpecificCalculatorPage({
     }
 
     return (
-        <div className="min-h-screen flex flex-col">
-            {/* SEO结构化数据 */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(structuredData)
-                }}
-            />
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+                __html: JSON.stringify(structuredData)
+            }}
+        />
+    )
+}
 
-            <LanguageSwitcher language={language} className="fixed top-4 right-4 z-50" />
-            <SideNav language={language} currentPath={currentPath} />
-
-            <main className="pt-20 md:pt-4 md:ml-48 flex-1 flex flex-col items-center p-4 md:p-8">
-                <div className="w-full max-w-2xl space-y-2 flex-1">
-                    {/* 面包屑导航 */}
-                    <Breadcrumb items={breadcrumbItems} language={language} />
-
-                    <header className="flex flex-col items-center gap-2 mt-8">
-                        <h1 className="text-2xl font-bold text-center">
-                            {language === 'en' ?
-                                `${model.name} VRAM & GPU Calculator` :
-                                `${model.name} 显存与GPU计算器`
-                            }
-                        </h1>
-                        <p className="text-center text-muted-foreground text-sm max-w-md">
-                            {language === 'en' ?
-                                `Calculate VRAM requirements and GPU count for ${model.name} deployment. Support for NVIDIA, AMD, Apple, and Huawei` :
-                                `计算${model.name}部署所需的显存和GPU数量，支持NVIDIA、AMD、苹果、华为等各厂商显卡`
-                            }
-                        </p>
-                    </header>
-
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <LLMMemoryCalculator language={language} preferredModelType={modelSlug} />
-                    </Suspense>
-
-                    {/* GPU Selection Guide */}
-                    <div className="mt-8">
-                        <GPUSelectionGuide language={language} />
-                    </div>
-
-                    {/* 模型专属建议 */}
-                    <section className="mt-8 space-y-4">
-                        <h2 className="text-lg font-semibold">
-                            {language === 'en' ? `${model.name} Deployment Tips` : `${model.name}部署建议`}
-                        </h2>
-                        <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-                            <div className="text-sm text-yellow-800">
-                                {language === 'en' ? (
-                                    <>
-                                        <p className="font-medium mb-2">💡 Optimization Recommendations:</p>
-                                        <ul className="space-y-1">
-                                            <li>• <strong>Precision:</strong> {model.recommendedPrecision} recommended for optimal performance/memory balance</li>
-                                            <li>• <strong>Parameters:</strong> ~{model.parameters}B parameters require careful memory planning</li>
-                                            <li>• <strong>Deployment:</strong> Consider using model parallelism for large models</li>
-                                        </ul>
-                                    </>
-                                ) : (
-                                    <>
-                                        <p className="font-medium mb-2">💡 优化建议：</p>
-                                        <ul className="space-y-1">
-                                            <li>• <strong>精度:</strong> 推荐使用{model.recommendedPrecision}以获得最佳性能/内存平衡</li>
-                                            <li>• <strong>参数量:</strong> 约{model.parameters}B参数需要仔细规划内存</li>
-                                            <li>• <strong>部署:</strong> 大模型建议使用模型并行化</li>
-                                        </ul>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                    </section>
+function DeploymentTipsSection({ model }: { model: any }) {
+    const locale = useLocale()
+    const t = useTranslations('common.ui')
+    
+    return (
+        <section className="mt-8 space-y-4">
+            <h2 className="text-lg font-semibold">
+                {`${model.name} ${t('deploymentTips')}`}
+            </h2>
+            <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                <div className="text-sm text-yellow-800">
+                    <p className="font-medium mb-2">{t('optimizationRecommendations')}</p>
+                    <ul className="space-y-1">
+                        <li>• <strong>{t('precisionRecommendation', { precision: model.recommendedPrecision })}</strong></li>
+                        <li>• <strong>{t('parametersInfo', { parameters: model.parameters })}</strong></li>
+                        <li>• <strong>{t('deploymentInfo')}</strong></li>
+                    </ul>
                 </div>
-                <Footer />
-            </main>
-        </div>
+            </div>
+        </section>
     )
 } 

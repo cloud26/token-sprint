@@ -9,20 +9,20 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { calculateInferenceMemory } from "@/utils/calculations"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip"
 import { precisions, gpuModels, modelExamples } from "@/utils/constants"
-import { type Language } from '@/config/languages'
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { calculatorText } from "@/config/calculator"
+import { useTranslations, useLocale } from 'next-intl'
 import React from "react"
 
 interface CalculatorProps {
-    language: Language
     preferredModelType?: string // 优先显示的模型类型，如 'deepseek', 'llama', 'qwen' 等
 }
 
-export default function LLMMemoryCalculator({ language, preferredModelType }: CalculatorProps) {
+export default function LLMMemoryCalculator({ preferredModelType }: CalculatorProps) {
+    const t = useTranslations('calculator')
+    const locale = useLocale()
     // 根据优先模型类型重新排序模型列表
     const sortedModelExamples = React.useMemo(() => {
         if (!preferredModelType) return modelExamples
@@ -104,7 +104,7 @@ export default function LLMMemoryCalculator({ language, preferredModelType }: Ca
                     gpuMemory,
                     totalMemory: memory.totalMemory,
                     requiredGPUs: memory.requiredGPUs,
-                    locale: language
+                    locale: locale
                 }),
             });
         } catch (error) {
@@ -131,14 +131,14 @@ export default function LLMMemoryCalculator({ language, preferredModelType }: Ca
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
                             <Label htmlFor="parameters">
-                                {calculatorText.parameters.label[language]}
+                                {t('parameters.label')}
                             </Label>
                             <Tooltip>
                                 <TooltipTrigger>
                                     <InfoIcon className="h-4 w-4 text-muted-foreground" />
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <p>{calculatorText.parameters.tooltip[language]}</p>
+                                    <p>{t('parameters.tooltip')}</p>
                                 </TooltipContent>
                             </Tooltip>
                         </div>
@@ -158,7 +158,7 @@ export default function LLMMemoryCalculator({ language, preferredModelType }: Ca
                                 }}
                             >
                                 <SelectTrigger>
-                                    <SelectValue placeholder={calculatorText.parameters.selectPlaceholder[language]} />
+                                    <SelectValue placeholder={t('parameters.selectPlaceholder')} />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {sortedModelExamples.map((model) => (
@@ -173,13 +173,13 @@ export default function LLMMemoryCalculator({ language, preferredModelType }: Ca
 
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                            <Label>{calculatorText.precision.label[language]}</Label>
+                            <Label>{t("precision.label")}</Label>
                             <Tooltip>
                                 <TooltipTrigger>
                                     <InfoIcon className="h-4 w-4 text-muted-foreground" />
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <p>{calculatorText.precision.tooltip[language]}</p>
+                                    <p>{t("precision.tooltip")}</p>
                                 </TooltipContent>
                             </Tooltip>
                         </div>
@@ -198,20 +198,20 @@ export default function LLMMemoryCalculator({ language, preferredModelType }: Ca
                     </div>
 
                     <div className="space-y-2">
-                        <Label>{calculatorText.gpu.label[language]}</Label>
+                        <Label>{t("gpu.label")}</Label>
 
                         <Popover>
                             <PopoverTrigger asChild>
                                 <Button variant="outline" role="combobox" className="w-full justify-between text-base">
-                                    {gpuModel ? `${gpuModel}` : calculatorText.gpu.searchPlaceholder[language]}
+                                    {gpuModel ? `${gpuModel}` : t("gpu.searchPlaceholder")}
                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
                             </PopoverTrigger>
                             <PopoverContent className="w-full p-0">
                                 <Command>
-                                    <CommandInput placeholder={calculatorText.gpu.searchPlaceholder[language]} />
+                                    <CommandInput placeholder={t("gpu.searchPlaceholder")} />
                                     <CommandList>
-                                        <CommandEmpty>{calculatorText.gpu.notFound[language]}</CommandEmpty>
+                                        <CommandEmpty>{t("gpu.notFound")}</CommandEmpty>
                                         <CommandGroup>
                                             {gpuModels.map((gpu) => (
                                                 <CommandItem
@@ -242,15 +242,15 @@ export default function LLMMemoryCalculator({ language, preferredModelType }: Ca
                             {/* 单行三列布局 */}
                             <div className="grid grid-cols-3 gap-4">
                                 <div className="text-center">
-                                    <Label className="text-gray-600 text-sm">{calculatorText.results.modelMemory[language]}</Label>
+                                    <Label className="text-gray-600 text-sm">{t("results.modelMemory")}</Label>
                                     <p className="text-lg font-semibold text-blue-600">{memory.modelMemory} GB</p>
                                 </div>
                                 <div className="text-center">
-                                    <Label className="text-gray-600 text-sm">{calculatorText.results.inferenceMemory[language]}</Label>
+                                    <Label className="text-gray-600 text-sm">{t("results.inferenceMemory")}</Label>
                                     <p className="text-lg font-semibold text-blue-600">{memory.inferenceMemory} GB</p>
                                 </div>
                                 <div className="text-center border-l-2 border-gray-300 pl-4">
-                                    <Label className="text-gray-600 text-sm font-medium">{calculatorText.results.totalMemory[language]}</Label>
+                                    <Label className="text-gray-600 text-sm font-medium">{t("results.totalMemory")}</Label>
                                     <p className="text-xl font-bold text-blue-600">{memory.totalMemory} GB</p>
                                 </div>
                             </div>
@@ -260,9 +260,9 @@ export default function LLMMemoryCalculator({ language, preferredModelType }: Ca
                     <section>
                         <div className="bg-blue-50 p-4 rounded-lg">
                             <div className="text-center">
-                                <Label className="text-gray-600 text-sm font-medium">{calculatorText.results.requiredGPUs[language]}</Label>
+                                <Label className="text-gray-600 text-sm font-medium">{t("results.requiredGPUs")}</Label>
                                 <p className="text-xl font-bold text-blue-600">
-                                    {memory.requiredGPUs} {calculatorText.results.unit[language]} {gpuModel}
+                                    {memory.requiredGPUs} {t("results.unit")} {gpuModel}
                                 </p>
                             </div>
                         </div>
@@ -273,10 +273,10 @@ export default function LLMMemoryCalculator({ language, preferredModelType }: Ca
                         <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
                             <div className="text-sm text-amber-800 space-y-3">
                                 <p className="font-medium">
-                                    {language === 'en' ? 'Quick Start Examples:' : '快速开始示例：'}
+                                    {t('quickStart.title')}
                                 </p>
                                 <div className="space-y-2">
-                                    {language === 'en' ? (
+                                    {locale === 'en' ? (
                                         <>
                                             <div className="flex gap-2 flex-wrap">
                                                 <button 
@@ -358,7 +358,7 @@ export default function LLMMemoryCalculator({ language, preferredModelType }: Ca
                                                 </button>
                                             </div>
                                             <p className="text-xs italic">
-                                                Click these examples to quickly configure popular model deployment scenarios!
+                                                {t('quickStart.description')}
                                             </p>
                                         </>
                                     ) : (
@@ -443,7 +443,7 @@ export default function LLMMemoryCalculator({ language, preferredModelType }: Ca
                                                 </button>
                                             </div>
                                             <p className="text-xs italic">
-                                                点击这些示例快速配置热门模型部署方案！
+                                                {t('quickStart.description')}
                                             </p>
                                         </>
                                     )}

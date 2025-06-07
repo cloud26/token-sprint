@@ -1,147 +1,81 @@
-import { type Language } from "@/config/languages"
+"use client"
 
-interface GPUSelectionGuideProps {
-    language: Language
-}
+import { useTranslations, useLocale } from 'next-intl'
 
-export function GPUSelectionGuide({ language }: GPUSelectionGuideProps) {
+export function GPUSelectionGuide() {
+    const locale = useLocale()
+    const t = useTranslations('common')
+    
     return (
         <div className="space-y-8">
             {/* GPU选择指南 - 更有价值的内容 */}
             <section className="space-y-4">
                 <h2 className="text-lg font-semibold">
-                    {language === 'en' ? 'GPU Selection Guide for LLM Deployment' : 'LLM部署GPU选择指南'}
+                    {t('gpu.selectionGuide')}
                 </h2>
                 <div className="text-sm text-muted-foreground space-y-3">
-                    {language === 'en' ? (
-                        <>
-                            <div className="bg-gray-50 p-4 rounded-lg">
-                                <h3 className="font-medium text-gray-900 mb-2">💰 Budget-Friendly Options (Under $10k)</h3>
-                                <ul className="list-disc pl-5 space-y-1">
-                                    <li><strong>RTX 4090 (24GB):</strong> Best for 7B-13B models, single card setup</li>
-                                    <li><strong>RTX 3090 (24GB):</strong> Good value for smaller models and experimentation</li>
-                                    <li><strong>Multiple RTX 4060 Ti (16GB):</strong> Cost-effective for distributed inference</li>
-                                </ul>
-                            </div>
-                            <div className="bg-gray-50 p-4 rounded-lg">
-                                <h3 className="font-medium text-gray-900 mb-2">🏢 Enterprise Solutions ($50k+)</h3>
-                                <ul className="list-disc pl-5 space-y-1">
-                                    <li><strong>NVIDIA H100 (80GB):</strong> Industry standard for production LLM deployment</li>
-                                    <li><strong>NVIDIA A100 (80GB):</strong> Proven reliability, good for 70B+ models</li>
-                                    <li><strong>AMD MI300X (192GB):</strong> Highest memory capacity, excellent for largest models</li>
-                                </ul>
-                            </div>
-                            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                                <h3 className="font-medium text-blue-900 mb-2">⚡ Pro Tips for Optimization</h3>
-                                <ul className="list-disc pl-5 space-y-1 text-blue-800">
-                                    <li><strong>Use FP8/INT8:</strong> Reduce memory usage by 50-75% with minimal quality loss</li>
-                                    <li><strong>Consider MoE Models:</strong> Qwen3-235B-A22B offers flagship performance with 4x H100 (vs 10x for DeepSeek-R1)</li>
-                                    <li><strong>Model Parallelism:</strong> Split large models across multiple GPUs</li>
-                                    <li><strong>Mixed Precision:</strong> Combine FP16 inference with FP32 gradients for training</li>
-                                    <li><strong>Memory Mapping:</strong> Use CPU RAM for model storage, GPU for active layers</li>
-                                </ul>
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <div className="bg-gray-50 p-4 rounded-lg">
-                                <h3 className="font-medium text-gray-900 mb-2">💰 预算友好选择（1万美元以下）</h3>
-                                <ul className="list-disc pl-5 space-y-1">
-                                    <li><strong>RTX 4090 (24GB):</strong> 最适合7B-13B模型，单卡配置</li>
-                                    <li><strong>RTX 3090 (24GB):</strong> 小型模型和实验的高性价比选择</li>
-                                    <li><strong>多卡RTX 4060 Ti (16GB):</strong> 分布式推理的经济高效方案</li>
-                                </ul>
-                            </div>
-                            <div className="bg-gray-50 p-4 rounded-lg">
-                                <h3 className="font-medium text-gray-900 mb-2">🏢 企业级解决方案（5万美元以上）</h3>
-                                <ul className="list-disc pl-5 space-y-1">
-                                    <li><strong>NVIDIA H100 (80GB):</strong> 生产级LLM部署的行业标准</li>
-                                    <li><strong>NVIDIA A100 (80GB):</strong> 经过验证的可靠性，适合70B+模型</li>
-                                    <li><strong>AMD MI300X (192GB):</strong> 最高显存容量，适合最大模型</li>
-                                </ul>
-                            </div>
-                            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                                <h3 className="font-medium text-blue-900 mb-2">⚡ 优化专业技巧</h3>
-                                <ul className="list-disc pl-5 space-y-1 text-blue-800">
-                                    <li><strong>使用FP8/INT8:</strong> 在质量损失最小的情况下减少50-75%显存使用</li>
-                                    <li><strong>考虑MoE模型:</strong> Qwen3-235B-A22B提供4块H100旗舰性能（对比DeepSeek-R1需要10块）</li>
-                                    <li><strong>模型并行:</strong> 在多个GPU上分割大型模型</li>
-                                    <li><strong>混合精度:</strong> 结合FP16推理和FP32梯度进行训练</li>
-                                    <li><strong>内存映射:</strong> 使用CPU内存存储模型，GPU处理活跃层</li>
-                                </ul>
-                            </div>
-                        </>
-                    )}
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                        <h3 className="font-medium text-gray-900 mb-2">{t('gpu.guide.budgetOptions.title')}</h3>
+                        <ul className="list-disc pl-5 space-y-1">
+                            <li><strong>{t('gpu.guide.budgetOptions.rtx4090')}</strong></li>
+                            <li><strong>{t('gpu.guide.budgetOptions.rtx3090')}</strong></li>
+                            <li><strong>{t('gpu.guide.budgetOptions.rtx4060ti')}</strong></li>
+                        </ul>
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                        <h3 className="font-medium text-gray-900 mb-2">{t('gpu.guide.enterpriseSolutions.title')}</h3>
+                        <ul className="list-disc pl-5 space-y-1">
+                            <li><strong>{t('gpu.guide.enterpriseSolutions.h100')}</strong></li>
+                            <li><strong>{t('gpu.guide.enterpriseSolutions.a100')}</strong></li>
+                            <li><strong>{t('gpu.guide.enterpriseSolutions.mi300x')}</strong></li>
+                        </ul>
+                    </div>
+                    <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <h3 className="font-medium text-blue-900 mb-2">{t('gpu.guide.proTips.title')}</h3>
+                        <ul className="list-disc pl-5 space-y-1 text-blue-800">
+                            <li><strong>{t('gpu.guide.proTips.fp8')}</strong></li>
+                            <li><strong>{t('gpu.guide.proTips.moe')}</strong></li>
+                            <li><strong>{t('gpu.guide.proTips.parallel')}</strong></li>
+                            <li><strong>{t('gpu.guide.proTips.precision')}</strong></li>
+                            <li><strong>{t('gpu.guide.proTips.mapping')}</strong></li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
             {/* 热门模型GPU需求 */}
             <section className="space-y-4">
                 <h2 className="text-lg font-semibold">
-                    {language === 'en' ? 'Popular AI Models GPU Requirements' : '热门AI模型GPU需求'}
+                    {t('gpu.popularModels')}
                 </h2>
                 <div className="text-sm text-muted-foreground space-y-4">
-                    {language === 'en' ? (
-                        <>
-                            <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
-                                <h3 className="font-medium text-emerald-900 mb-2">🆕 Qwen2.5 & Qwen3 GPU Requirements</h3>
-                                <p className="text-emerald-800">
-                                    <strong>Qwen2.5-72B & Qwen3-235B-A22B</strong> are the latest flagship models. Qwen2.5-72B needs 2x H100 with FP8, while Qwen3-235B-A22B (MoE) needs 4x H100. The Qwen2.5 series offers excellent multilingual capabilities with efficient deployment.
-                                </p>
-                            </div>
-                            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                                <h3 className="font-medium text-blue-900 mb-2">DeepSeek R1 GPU Requirements</h3>
-                                <p className="text-blue-800">
-                                    <strong>DeepSeek R1 (671B parameters)</strong> requires substantial GPU memory. With FP8 precision, you'll need approximately 10x NVIDIA H100 GPUs or equivalent high-memory configurations for optimal inference performance.
-                                </p>
-                            </div>
-                            <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                                <h3 className="font-medium text-green-900 mb-2">Llama 3.1 70B GPU Requirements</h3>
-                                <p className="text-green-800">
-                                    <strong>Llama 3.1 70B</strong> is more accessible. With FP16 precision, you'll need 2x NVIDIA A100 (80GB) or H100. For consumer hardware, you'll need 7x RTX 4090 cards (24GB each).
-                                </p>
-                            </div>
-                            <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                                <h3 className="font-medium text-purple-900 mb-2">Llama 3.1 405B GPU Requirements</h3>
-                                <p className="text-purple-800">
-                                    <strong>Llama 3.1 405B</strong> requires high-end infrastructure. With FP8 precision, you'll need 6x H100 GPUs. With FP16 precision, you'll need 11x A100 GPUs for deployment.
-                                </p>
-                            </div>
-                            <p className="mt-4 text-gray-600">
-                                Use this calculator to get precise memory requirements for your specific use case and budget planning.
-                            </p>
-                        </>
-                    ) : (
-                        <>
-                            <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
-                                <h3 className="font-medium text-emerald-900 mb-2">🆕 Qwen2.5 & Qwen3 GPU需求</h3>
-                                <p className="text-emerald-800">
-                                    <strong>Qwen2.5-72B & Qwen3-235B-A22B</strong>是最新旗舰模型。Qwen2.5-72B需要2块H100与FP8，而Qwen3-235B-A22B（MoE）需要4块H100。Qwen2.5系列提供了出色的多语言能力，高效部署。
-                                </p>
-                            </div>
-                            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                                <h3 className="font-medium text-blue-900 mb-2">DeepSeek R1 GPU需求</h3>
-                                <p className="text-blue-800">
-                                    <strong>DeepSeek R1（671B参数）</strong>需要大量GPU显存。使用FP8精度，您需要大约8-10块NVIDIA H100 GPU或同等的高显存配置来获得最佳推理性能。
-                                </p>
-                            </div>
-                            <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                                <h3 className="font-medium text-green-900 mb-2">Llama 3.1 70B GPU需求</h3>
-                                <p className="text-green-800">
-                                    <strong>Llama 3.1 70B</strong>更容易部署。使用FP16精度，您需要2块NVIDIA A100（80GB）或H100。对于消费级硬件，需要7块RTX 4090显卡（每块24GB）。
-                                </p>
-                            </div>
-                            <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                                <h3 className="font-medium text-purple-900 mb-2">Llama 3.1 405B GPU需求</h3>
-                                <p className="text-purple-800">
-                                    <strong>Llama 3.1 405B</strong>需要高端基础设施。使用FP8精度需要6块H100 GPU。使用FP16精度需要11块A100 GPU进行部署。
-                                </p>
-                            </div>
-                            <p className="mt-4 text-gray-600">
-                                使用这个计算器来获得您特定用例的精确显存需求和预算规划。
-                            </p>
-                        </>
-                    )}
+                    <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
+                        <h3 className="font-medium text-emerald-900 mb-2">{t('gpu.models.qwen.title')}</h3>
+                        <p className="text-emerald-800">
+                            {t('gpu.models.qwen.description')}
+                        </p>
+                    </div>
+                    <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <h3 className="font-medium text-blue-900 mb-2">{t('gpu.models.deepseek.title')}</h3>
+                        <p className="text-blue-800">
+                            {t('gpu.models.deepseek.description')}
+                        </p>
+                    </div>
+                    <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                        <h3 className="font-medium text-green-900 mb-2">{t('gpu.models.llama70b.title')}</h3>
+                        <p className="text-green-800">
+                            {t('gpu.models.llama70b.description')}
+                        </p>
+                    </div>
+                    <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                        <h3 className="font-medium text-purple-900 mb-2">{t('gpu.models.llama405b.title')}</h3>
+                        <p className="text-purple-800">
+                            {t('gpu.models.llama405b.description')}
+                        </p>
+                    </div>
+                    <p className="mt-4 text-gray-600">
+                        {t('gpu.models.footer')}
+                    </p>
                 </div>
             </section>
         </div>

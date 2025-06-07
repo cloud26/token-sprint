@@ -1,27 +1,30 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { common, type Language } from "@/config/languages"
 import { Globe } from "lucide-react"
+import { useLocale, useTranslations } from 'next-intl'
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { cn } from "@/lib/utils"
 
 interface LanguageSwitcherProps {
-    language: Language
     className?: string
 }
 
-export default function LanguageSwitcher({ language, className }: LanguageSwitcherProps) {
+export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     const router = useRouter()
+    const pathname = usePathname()
+    const currentLocale = useLocale()
+    const t = useTranslations('common')
 
-    const handleLanguageChange = (value: string) => {
-        router.push(`/${value}${window.location.pathname.substring(3)}`)
+    const handleLanguageChange = (newLocale: string) => {
+        // 将当前路径的语言部分替换为新语言
+        const newPath = pathname.replace(`/${currentLocale}`, `/${newLocale}`)
+        router.push(newPath)
     }
 
     return (
@@ -30,15 +33,15 @@ export default function LanguageSwitcher({ language, className }: LanguageSwitch
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="sm" className="w-24 justify-start gap-2">
                         <Globe className="h-4 w-4" />
-                        {common.languageLabels[language]}
+                        {t(`languageLabels.${currentLocale}`)}
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                     <DropdownMenuItem onClick={() => handleLanguageChange("en")}>
-                        {common.languageLabels.en}
+                        {t('languageLabels.en')}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => handleLanguageChange("zh")}>
-                        {common.languageLabels.zh}
+                        {t('languageLabels.zh')}
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

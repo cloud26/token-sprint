@@ -1,0 +1,329 @@
+{
+  "common": {
+    "backToHome": "返回主页",
+    "languageLabels": {
+      "en": "English",
+      "zh": "中文"
+    },
+    "navigation": {
+      "home": "首页"
+    },
+    "ui": {
+      "generateExample": "生成示例",
+      "tokenizerError": "Tokenizer错误：使用估算值",
+      "loadingTokenizer": "正在加载Hugging Face tokenizer...",
+      "approximateCount": "近似计数，精确计算中...",
+      "tokenBreakdown": "Token 分解",
+      "hide": "隐藏",
+      "show": "显示",
+      "text": "文本",
+      "tokenIds": "Token ID",
+      "tokensFound": "发现 {count} 个 tokens：",
+      "tokenTooltip": "Token {index}: \"{token}\" (ID: {id})",
+      "businessGuide": "业务指南：Token优化与成本控制",
+      "whySpeedMatters": "为什么Token生成速度很重要",
+      "deploymentTips": "部署建议",
+      "optimizationRecommendations": "💡 优化建议：",
+      "precisionRecommendation": "精度: 推荐使用{precision}以获得最佳性能/内存平衡",
+      "parametersInfo": "参数量: 约{parameters}B参数需要仔细规划内存",
+      "deploymentInfo": "部署: 大模型建议使用模型并行化",
+      "optimizationTipsFor": "{model} 优化建议",
+      "tokenEfficiency": "Token效率: 使用精确、简洁的提示词来最小化token使用量和成本。",
+      "modelSelection": "模型选择: 根据您的具体用例和预算选择合适的{company}模型。",
+      "batchProcessing": "批处理: 尽可能合并多个请求以减少API开销。",
+      "contextManagement": "上下文管理: 监控对话长度以保持在模型限制内。",
+      "costPlanning": "成本规划: 在生产环境实施前使用此计数器估算成本。",
+      "optimizationTips": "优化建议",
+      "speedGuideContent": {
+        "intro": "Token生成速度直接影响AI应用的用户体验。研究表明，超过3秒的延迟会显著增加用户流失率。",
+        "speedBenchmarks": {
+          "title": "📊 速度基准",
+          "chatgpt": "ChatGPT-4: ~20-40 tokens/秒",
+          "claude": "Claude 3.5: ~25-50 tokens/秒",
+          "local": "本地模型: 5-200+ tokens/秒"
+        },
+        "optimizationTips": {
+          "title": "⚡ 优化建议",
+          "streaming": "使用流式响应提升感知速度",
+          "progress": "显示进度指示器",
+          "optimize": "针对用例优化速度"
+        },
+        "useTool": {
+          "title": "使用此工具:",
+          "description": "测试聊天机器人（15-30 tokens/秒）、内容工具（40+ tokens/秒）或教育平台（5-15 tokens/秒）的最佳速度。找到性能与用户体验之间的最佳平衡点。"
+        }
+      },
+      "tokenGuide": {
+        "colorBlocks": "每个彩色块代表一个 token",
+        "hover": "悬停在 token 上查看其 ID",
+        "spaces": "⎵ 代表空格",
+        "hfModels": "🤗 模型使用 Hugging Face 社区 tokenizer"
+      },
+      "hfSection": {
+        "title": "Hugging Face 社区 Tokenizer",
+        "localProcessing": {
+          "title": "本地处理",
+          "description": "无需API调用"
+        },
+        "communityTokenizers": {
+          "title": "社区维护",
+          "description": "开源社区维护的tokenizer"
+        },
+        "tokenBreakdown": {
+          "title": "完整分解",
+          "description": "提供详细的token分解信息"
+        },
+        "hubModel": "Hub模型",
+        "firstLoad": "首次加载可能需要下载tokenizer，请耐心等待"
+      },
+      "usageTips": {
+        "title": "Tokenizer 类型说明：",
+        "openaiModels": "OpenAI模型",
+        "nativeJs": "原生 js-tiktoken（最准确）",
+        "hfModels": "🤗 模型",
+        "communityTokenizers": "Hugging Face 社区 tokenizer（很好的近似）",
+        "warningModels": "⚠️ 模型",
+        "gpt4Estimation": "GPT-4 tokenizer 估算",
+        "communityAccuracy": "社区 tokenizer 是逆向工程的，但相当准确",
+        "localRun": "所有 tokenizer 现在都在您的浏览器中本地运行！"
+      },
+      "businessGuideContent": {
+        "costEstimation": {
+          "title": "💰 API成本估算",
+          "description": "理解token数量对成本管控至关重要。例如：",
+          "examples": {
+            "gpt4o": "GPT-4o: $15/100万token - 1000个token的提示词成本约$0.015",
+            "claude": "Claude 3.5 Sonnet: $3/100万token - 相同提示词成本约$0.003",
+            "gemini": "Gemini 1.5 Pro: $1.25/100万token - 相同提示词成本约$0.00125"
+          },
+          "tip": "在扩展应用前使用我们的计算器评估成本。"
+        },
+        "businessScenarios": {
+          "title": "🎯 业务场景应用",
+          "contentGeneration": "内容生成：为博客文章、营销文案预先计算token限制",
+          "customerSupport": "客户支持：优化聊天机器人响应以保持在上下文窗口内",
+          "documentAnalysis": "文档分析：高效分块大型文档进行处理",
+          "apiIntegration": "API集成：在昂贵的API调用前验证输入大小"
+        },
+        "optimizationStrategies": {
+          "title": "⚡ 优化策略",
+          "modelSelection": "模型选择：简单任务使用便宜模型，复杂任务使用高级模型",
+          "promptEngineering": "提示工程：更短、更具体的提示词往往产生更好的结果",
+          "contextManagement": "上下文管理：监控对话长度以避免达到限制",
+          "batchProcessing": "批处理：合并多个请求以减少开销"
+        },
+        "proTip": {
+          "title": "💡 专业提示：",
+          "content": "不同的分词器对相同文本的token计数可能有20-40%的差异。使用目标模型的分词器进行测试以获得准确的成本估算。"
+        }
+      }
+    },
+    "gpu": {
+      "selectionGuide": "LLM部署GPU选择指南",
+      "popularModels": "热门AI模型GPU需求",
+      "guide": {
+        "budgetOptions": {
+          "title": "💰 预算友好选择（1万美元以下）",
+          "rtx4090": "RTX 4090 (24GB): 最适合7B-13B模型，单卡配置",
+          "rtx3090": "RTX 3090 (24GB): 小型模型和实验的高性价比选择",
+          "rtx4060ti": "多卡RTX 4060 Ti (16GB): 分布式推理的经济高效方案"
+        },
+        "enterpriseSolutions": {
+          "title": "🏢 企业级解决方案（5万美元以上）",
+          "h100": "NVIDIA H100 (80GB): 生产级LLM部署的行业标准",
+          "a100": "NVIDIA A100 (80GB): 经过验证的可靠性，适合70B+模型",
+          "mi300x": "AMD MI300X (192GB): 最高显存容量，适合最大模型"
+        },
+        "proTips": {
+          "title": "⚡ 优化专业技巧",
+          "fp8": "使用FP8/INT8: 在质量损失最小的情况下减少50-75%显存使用",
+          "moe": "考虑MoE模型: Qwen3-235B-A22B提供4块H100旗舰性能（对比DeepSeek-R1需要10块）",
+          "parallel": "模型并行: 在多个GPU上分割大型模型",
+          "precision": "混合精度: 结合FP16推理和FP32梯度进行训练",
+          "mapping": "内存映射: 使用CPU内存存储模型，GPU处理活跃层"
+        }
+      },
+      "models": {
+        "qwen": {
+          "title": "🆕 Qwen2.5 & Qwen3 GPU需求",
+          "description": "Qwen2.5-72B & Qwen3-235B-A22B是最新旗舰模型。Qwen2.5-72B需要2块H100与FP8，而Qwen3-235B-A22B（MoE）需要4块H100。Qwen2.5系列提供了出色的多语言能力，高效部署。"
+        },
+        "deepseek": {
+          "title": "DeepSeek R1 GPU需求",
+          "description": "DeepSeek R1（671B参数）需要大量GPU显存。使用FP8精度，您需要大约8-10块NVIDIA H100 GPU或同等的高显存配置来获得最佳推理性能。"
+        },
+        "llama70b": {
+          "title": "Llama 3.1 70B GPU需求",
+          "description": "Llama 3.1 70B更容易部署。使用FP16精度，您需要2块NVIDIA A100（80GB）或H100。对于消费级硬件，需要7块RTX 4090显卡（每块24GB）。"
+        },
+        "llama405b": {
+          "title": "Llama 3.1 405B GPU需求",
+          "description": "Llama 3.1 405B需要高端基础设施。使用FP8精度需要6块H100 GPU。使用FP16精度需要11块A100 GPU进行部署。"
+        },
+        "footer": "使用这个计算器来获得您特定用例的精确显存需求和预算规划。"
+      }
+    },
+    "structured": {
+      "tokenCountingModels": "多种AI模型的Token计数",
+      "visualBreakdown": "可视化Token分解",
+      "modelSupport": "支持GPT、Claude、Gemini、DeepSeek、Llama模型",
+      "realtimeAnalysis": "实时Token分析",
+      "aiTokenCounter": "AI Token 计数器"
+    }
+  },
+  "home": {
+    "title": "专业AI开发工具集",
+    "description": "精选实用的AI开发与分析工具，助力您的AI项目",
+    "metadata": {
+      "title": "专业AI开发工具集 | Token计数器 | GPU计算器 | 免费在线工具",
+      "description": "免费的专业AI开发工具集，包含智能Token计数器、大模型GPU计算器、AI生成速度体验器等实用工具。助力AI开发者提升效率，优化项目成本。"
+    }
+  },
+  "nav": {
+    "aiTools": "AI工具",
+    "homePage": "AI工具主页",
+    "goToHomePage": "返回AI工具主页",
+    "gpuCalculator": "GPU计算器"
+  },
+  "tools": {
+    "tokenSpeedVisualizer": {
+      "title": "AI Token 生成速度体验器",
+      "description": "直观体验不同速度的 AI 文本生成效果，感受真实的对话体验",
+      "metadata": {
+        "title": "AI Token 生成速度体验器 | 模拟真实AI对话体验",
+        "description": "通过这个交互式可视化工具，直观体验不同 token 生成速度对 AI 对话体验的影响，帮助开发者优化用户体验设计。",
+        "keywords": "AI token生成速度, AI生成速度, token生成模拟器, AI响应时间, AI性能测试"
+      }
+    },
+    "llmGpuCalculator": {
+      "title": "AI大模型显卡需求计算器",
+      "description": "精确计算部署AI大模型需要多少张显卡，支持NVIDIA/AMD/华为昇腾/Mac M系列全平台",
+      "calculatorTitle": "{model} 显存与GPU计算器",
+      "calculatorDescription": "计算{model}部署所需的显存和GPU数量，支持NVIDIA、AMD、苹果、华为等各厂商显卡",
+      "metadata": {
+        "title": "AI大模型推理显卡需求计算器 | 精确计算GPU数量与显存 | 支持最新大模型",
+        "description": "精确计算部署Qwen3-235B、DeepSeek-R1、Llama 3.1等大模型需要多少张显卡。支持NVIDIA H100/A100、AMD、华为昇腾910B、Mac M系列全平台。",
+        "keywords": "AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,大模型部署计算器,AI硬件配置,显卡选择工具"
+      }
+    },
+    "tokenCounter": {
+      "title": "AI Token计数器和分词器",
+      "description": "支持GPT-4o、Claude 4、Gemini 1.5 Pro、Llama 4、DeepSeek-R1、Qwen3等主流模型",
+      "metadata": {
+        "title": "Token计数器和计算器：ChatGPT、GPT、Claude、Llama、DeepSeek分词器",
+        "description": "免费在线token计数器和计算器，支持ChatGPT、GPT-4o、Claude 4、Llama等AI模型。实时token计算、成本估算、API优化工具。",
+        "keywords": "token计数器,AI分词器,token计算器,分词工具,GPT token计数器,ChatGPT token计数器"
+      }
+    }
+  },
+  "calculator": {
+    "title": "AI大模型显卡需求计算器",
+    "parameters": {
+      "label": "模型参数量（单位：十亿）",
+      "tooltip": "模型的参数量，例如：671B (DeepSeek R1)、70B (Llama 3.1 70B)、405B (Llama 3.1 405B)、7B、13B",
+      "selectPlaceholder": "选择预设模型"
+    },
+    "precision": {
+      "label": "计算精度",
+      "tooltip": "不同的计算精度会影响显存使用量，FP32最高，FP8最低"
+    },
+    "gpu": {
+      "label": "GPU型号",
+      "searchPlaceholder": "搜索GPU型号...",
+      "notFound": "未找到匹配的GPU型号"
+    },
+    "results": {
+      "modelMemory": "模型显存占用",
+      "inferenceMemory": "推理额外显存",
+      "totalMemory": "总显存需求",
+      "requiredGPUs": "所需GPU数量",
+      "unit": "块"
+    },
+    "footer": {
+      "supportText": "如果这个工具对你有帮助，欢迎请我喝杯咖啡 ☕"
+    },
+    "quickStart": {
+      "title": "快速开始示例：",
+      "description": "点击这些示例快速配置热门模型部署方案！"
+    }
+  },
+  "models": {
+    "llama": {
+      "seoTitle": "Llama推理GPU需求计算器 | Llama 3/4 显存需求配置",
+      "seoDescription": "计算Llama 3.1(405B/70B/8B)和Llama 4推理部署所需显存和GPU数量。支持NVIDIA、AMD、苹果、华为等各厂商显卡，专业MoE架构部署方案。",
+      "keywords": "llama,llamaGPU需求,llama部署,AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,大模型部署计算器,AI硬件配置,显卡选择工具,llama本地部署",
+      "specialFeatures": [
+        "支持Llama 3.1全系列",
+        "最新Llama 4系列",
+        "MoE混合专家架构",
+        "多模态AI能力"
+      ]
+    },
+    "deepseek": {
+      "seoTitle": "DeepSeek推理GPU需求计算器 | DeepSeek V3/R1 显存需求配置",
+      "seoDescription": "计算DeepSeek V3/R1 (671B)推理部署所需显存和GPU数量。支持NVIDIA、AMD、苹果、华为等各厂商显卡，超大模型专业部署方案。",
+      "keywords": "deepseek,deepseekGPU需求,deepseek部署,AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,大模型部署计算器,AI硬件配置,显卡选择工具,deepseek本地部署",
+      "specialFeatures": [
+        "671B超大参数规模",
+        "业界领先的推理能力",
+        "支持FP8精度优化",
+        "适合企业级部署"
+      ]
+    },
+    "qwen": {
+      "seoTitle": "Qwen推理GPU需求计算器 | Qwen3 显存需求配置",
+      "seoDescription": "计算Qwen3-235B-A22B MoE模型推理部署所需显存和GPU数量。支持NVIDIA、AMD、苹果、华为等各厂商显卡，高效MoE架构部署方案。",
+      "keywords": "qwen,qwenGPU需求,qwen部署,AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,大模型部署计算器,AI硬件配置,显卡选择工具,qwen本地部署",
+      "specialFeatures": [
+        "混合专家(MoE)架构",
+        "235B总参数，22B激活",
+        "显存效率极高",
+        "多语言支持优秀"
+      ]
+    }
+  },
+  "tokenCounterModels": {
+    "openai-gpt": {
+      "description": "OpenAI token计数器，采用原生tokenizer支持GPT模型。最精确的OpenAI token计数工具。",
+      "seoTitle": "ChatGPT Token计数器和计算器：免费GPT Token估算器",
+      "seoDescription": "免费ChatGPT token计数器和计算器，支持GPT-4o、GPT-4、GPT-3.5。原生tokenizer精度，实时成本估算。",
+      "representativeModels": "GPT-4o, GPT-4, GPT-4 Turbo, GPT-3.5 Turbo",
+      "keywords": "token计数器,AI分词器,token计算器,分词工具,openai token计数器"
+    },
+    "anthropic-claude": {
+      "description": "Anthropic Claude token计数器和tokenizer工具。使用先进估算算法为Claude模型提供近似token计数。",
+      "seoTitle": "Claude Token计数器和计算器：免费Claude Token估算器",
+      "seoDescription": "免费Claude token计数器和计算器，支持Claude 4、Claude 3.5。在线token估算器，成本计算。",
+      "representativeModels": "Claude 4 Opus, Claude 4 Sonnet, Claude 3.5 Sonnet, Claude 3.5 Haiku",
+      "keywords": "token计数器,AI分词器,token计算器,分词工具,claude token计数器"
+    },
+    "google-gemini": {
+      "description": "Google Gemini token计数器和tokenizer工具。使用先进估算算法为Gemini模型提供近似token计数。",
+      "seoTitle": "Gemini Token计数器和计算器：免费Google Gemini Token估算器",
+      "seoDescription": "免费Gemini token计数器和计算器，支持Gemini 1.5 Pro、Flash。在线token估算器，实时计数。",
+      "representativeModels": "Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini Pro",
+      "keywords": "token计数器,AI分词器,token计算器,分词工具,gemini token计数器"
+    },
+    "meta-llama": {
+      "description": "Meta Llama token计数器和tokenizer工具。使用先进估算算法为Llama模型提供近似token计数。",
+      "seoTitle": "Llama Token计数器和计算器：免费Meta Llama Token估算器",
+      "seoDescription": "免费Llama token计数器和计算器，支持Llama 4、Llama 3。开源LLM token估算器。",
+      "representativeModels": "Llama 3.1 405B, Llama 3.1 70B, Llama 3.1 8B, Llama 2 70B",
+      "keywords": "token计数器,AI分词器,token计算器,分词工具,llama token计数器"
+    },
+    "deepseek": {
+      "description": "DeepSeek token计数器和tokenizer工具。使用先进估算算法为DeepSeek模型提供近似token计数。",
+      "seoTitle": "DeepSeek Token计数器和计算器：免费DeepSeek Token估算器",
+      "seoDescription": "免费DeepSeek token计数器和计算器，支持DeepSeek R1、V3。在线token估算器，成本优化。",
+      "representativeModels": "DeepSeek-R1, DeepSeek-V3 Chat",
+      "keywords": "token计数器,AI分词器,token计算器,分词工具,deepseek token计数器"
+    },
+    "alibaba-qwen": {
+      "description": "阿里巴巴Qwen token计数器和tokenizer工具。使用先进估算算法为Qwen模型提供近似token计数。",
+      "seoTitle": "Qwen Token计数器和计算器：免费阿里巴巴Qwen Token估算器",
+      "seoDescription": "免费Qwen token计数器和计算器，支持Qwen3、Qwen2.5。多语言在线token估算器，成本优化。",
+      "representativeModels": "Qwen3-Chat, Qwen2.5-Coder",
+      "keywords": "token计数器,AI分词器,token计算器,分词工具,qwen token计数器"
+    }
+  }
+}

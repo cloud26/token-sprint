@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { type Language } from '@/config/languages'
 import { encodingForModel } from "js-tiktoken"
+import { useTranslations } from 'next-intl'
 
 // 使用 Hugging Face Transformers.js 进行本地 tokenization
 // 支持多种模型的社区 tokenizer
@@ -97,6 +98,7 @@ const models: ModelInfo[] = [
 ]
 
 export default function TokenCounter({ language, defaultModel, preferredCompany }: TokenCounterProps) {
+    const t = useTranslations('common.ui')
     const [text, setText] = useState("")
     const [selectedModel, setSelectedModel] = useState(defaultModel || "gpt-4o")
     const [debouncedText, setDebouncedText] = useState("")
@@ -470,7 +472,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                             setShowTokenBreakdown(true)
                         }}
                     >
-                        {language === 'en' ? 'Generate Example' : '生成示例'}
+                        {t('generateExample')}
                     </button>
                 </div>
 
@@ -494,7 +496,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                 </p>
                                 {hfTokenizerError && (
                                     <p className="text-xs text-red-500 mt-1">
-                                        {language === 'en' ? 'Tokenizer Error: Using estimation' : 'Tokenizer错误：使用估算值'}
+                                        {t('tokenizerError')}
                                     </p>
                                 )}
                             </div>
@@ -510,8 +512,8 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                         {isCalculating && (
                             <p className="text-xs text-gray-500 mt-2 text-center">
                                 {currentModel.encoding === 'huggingface' ?
-                                    (language === 'en' ? 'Loading Hugging Face tokenizer...' : '正在加载Hugging Face tokenizer...') :
-                                    (language === 'en' ? 'Approximate count, precise calculation in progress...' : '近似计数，精确计算中...')
+                                    t('loadingTokenizer') :
+                                    t('approximateCount')
                                 }
                             </p>
                         )}
@@ -523,16 +525,13 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                     <div className="space-y-4">
                         <div className="flex items-center justify-between">
                             <Label className="text-lg font-semibold">
-                                {language === 'en' ? 'Token Breakdown' : 'Token 分解'}
+                                {t('tokenBreakdown')}
                             </Label>
                             <button
                                 onClick={() => setShowTokenBreakdown(!showTokenBreakdown)}
                                 className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
                             >
-                                {showTokenBreakdown ?
-                                    (language === 'en' ? 'Hide' : '隐藏') :
-                                    (language === 'en' ? 'Show' : '显示')
-                                }
+                                {showTokenBreakdown ? t('hide') : t('show')}
                             </button>
                         </div>
 
@@ -547,7 +546,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                             }`}
                                     >
-                                        {language === 'en' ? 'Text' : '文本'}
+                                        {t('text')}
                                     </button>
                                     <button
                                         onClick={() => setTokenDisplayMode('ids')}
@@ -556,17 +555,14 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                             }`}
                                     >
-                                        {language === 'en' ? 'Token IDs' : 'Token ID'}
+                                        {t('tokenIds')}
                                     </button>
                                 </div>
 
                                 {/* Token 显示区域 */}
                                 <div className="space-y-2">
                                     <div className="text-xs text-gray-600 mb-2">
-                                        {language === 'en' ?
-                                            `${tokenData.tokens.length} tokens found:` :
-                                            `发现 ${tokenData.tokens.length} 个 tokens：`
-                                        }
+                                        {t('tokensFound', { count: tokenData.tokens.length })}
                                     </div>
                                     <div className="flex flex-wrap gap-1">
                                         {tokenData.tokens.map((token: string, index: number) => {
@@ -584,7 +580,11 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                                 <span
                                                     key={index}
                                                     className={`inline-block px-2 py-1 ${colorClass} rounded text-sm font-mono border transition-colors cursor-default`}
-                                                    title={`Token ${index + 1}: "${token}" (ID: ${tokenData.tokenIds[index]})`}
+                                                    title={t('tokenTooltip', { 
+                                                        index: index + 1, 
+                                                        token: token, 
+                                                        id: tokenData.tokenIds[index] 
+                                                    })}
                                                 >
                                                     {tokenDisplayMode === 'text' ? (
                                                         token.replace(/\s/g, '⎵')
@@ -597,21 +597,12 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                     </div>
 
                                     <div className="text-xs text-gray-500 mt-3">
-                                        {language === 'en' ? (
-                                            <div>
-                                                <p>• Each colored block represents one token</p>
-                                                <p>• Hover over tokens to see their IDs</p>
-                                                <p>• ⎵ represents spaces</p>
-                                                <p>• 🤗 models use Hugging Face community tokenizers</p>
-                                            </div>
-                                        ) : (
-                                            <div>
-                                                <p>• 每个彩色块代表一个 token</p>
-                                                <p>• 悬停在 token 上查看其 ID</p>
-                                                <p>• ⎵ 代表空格</p>
-                                                <p>• 🤗 模型使用 Hugging Face 社区 tokenizer</p>
-                                            </div>
-                                        )}
+                                        <div>
+                                            <p>• {t('tokenGuide.colorBlocks')}</p>
+                                            <p>• {t('tokenGuide.hover')}</p>
+                                            <p>• {t('tokenGuide.spaces')}</p>
+                                            <p>• {t('tokenGuide.hfModels')}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -623,33 +614,18 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                 {currentModel.encoding === 'huggingface' && (
                     <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
                         <div className="text-sm text-purple-800 space-y-2">
-                            {language === 'en' ? (
-                                <div>
-                                    <p className="font-medium flex items-center gap-2">
-                                        <span>🤗</span> Hugging Face Community Tokenizer
-                                    </p>
-                                    <ul className="list-disc pl-5 space-y-1 mt-2">
-                                        <li><strong>Local processing</strong> - No API calls required</li>
-                                        <li><strong>Community tokenizers</strong> - Maintained by the open source community</li>
-                                        <li><strong>Token breakdown</strong> - Full tokenization details available</li>
-                                        <li><strong>Hub model:</strong> {currentModel.hub}</li>
-                                        <li>First load may take time to download the tokenizer</li>
-                                    </ul>
-                                </div>
-                            ) : (
-                                <div>
-                                    <p className="font-medium flex items-center gap-2">
-                                        <span>🤗</span> Hugging Face 社区 Tokenizer
-                                    </p>
-                                    <ul className="list-disc pl-5 space-y-1 mt-2">
-                                        <li><strong>本地处理</strong> - 无需API调用</li>
-                                        <li><strong>社区维护</strong> - 开源社区维护的tokenizer</li>
-                                        <li><strong>完整分解</strong> - 提供详细的token分解信息</li>
-                                        <li><strong>Hub模型:</strong> {currentModel.hub}</li>
-                                        <li>首次加载可能需要下载tokenizer，请耐心等待</li>
-                                    </ul>
-                                </div>
-                            )}
+                            <div>
+                                <p className="font-medium flex items-center gap-2">
+                                    <span>🤗</span> {t('hfSection.title')}
+                                </p>
+                                <ul className="list-disc pl-5 space-y-1 mt-2">
+                                    <li><strong>{t('hfSection.localProcessing.title')}</strong> - {t('hfSection.localProcessing.description')}</li>
+                                    <li><strong>{t('hfSection.communityTokenizers.title')}</strong> - {t('hfSection.communityTokenizers.description')}</li>
+                                    <li><strong>{t('hfSection.tokenBreakdown.title')}</strong> - {t('hfSection.tokenBreakdown.description')}</li>
+                                    <li><strong>{t('hfSection.hubModel')}:</strong> {currentModel.hub}</li>
+                                    <li>{t('hfSection.firstLoad')}</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 )}
@@ -657,29 +633,16 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                 {/* 使用提示 */}
                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
                     <div className="text-sm text-blue-800 space-y-2">
-                        {language === 'en' ? (
-                            <div>
-                                <p className="font-medium">Tokenizer Types:</p>
-                                <ul className="list-disc pl-5 space-y-1 mt-2">
-                                    <li><strong>OpenAI models</strong> - Native js-tiktoken (most accurate)</li>
-                                    <li><strong>🤗 models</strong> - Hugging Face community tokenizers (very good approximation)</li>
-                                    <li><strong>⚠️ models</strong> - GPT-4 tokenizer estimation</li>
-                                    <li>Community tokenizers are reverse-engineered but quite accurate</li>
-                                    <li>All tokenizers now run locally in your browser!</li>
-                                </ul>
-                            </div>
-                        ) : (
-                            <div>
-                                <p className="font-medium">Tokenizer 类型说明：</p>
-                                <ul className="list-disc pl-5 space-y-1 mt-2">
-                                    <li><strong>OpenAI模型</strong> - 原生 js-tiktoken（最准确）</li>
-                                    <li><strong>🤗 模型</strong> - Hugging Face 社区 tokenizer（很好的近似）</li>
-                                    <li><strong>⚠️ 模型</strong> - GPT-4 tokenizer 估算</li>
-                                    <li>社区 tokenizer 是逆向工程的，但相当准确</li>
-                                    <li>所有 tokenizer 现在都在您的浏览器中本地运行！</li>
-                                </ul>
-                            </div>
-                        )}
+                        <div>
+                            <p className="font-medium">{t('usageTips.title')}</p>
+                            <ul className="list-disc pl-5 space-y-1 mt-2">
+                                <li><strong>{t('usageTips.openaiModels')}</strong> - {t('usageTips.nativeJs')}</li>
+                                <li><strong>{t('usageTips.hfModels')}</strong> - {t('usageTips.communityTokenizers')}</li>
+                                <li><strong>{t('usageTips.warningModels')}</strong> - {t('usageTips.gpt4Estimation')}</li>
+                                <li>{t('usageTips.communityAccuracy')}</li>
+                                <li>{t('usageTips.localRun')}</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 

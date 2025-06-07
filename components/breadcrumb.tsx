@@ -1,6 +1,8 @@
+"use client"
+
 import Link from "next/link"
 import { ChevronRight, Home } from "lucide-react"
-import { type Language } from "@/config/languages"
+import { useLocale, useTranslations } from 'next-intl'
 
 interface BreadcrumbItem {
     label: string
@@ -10,16 +12,17 @@ interface BreadcrumbItem {
 
 interface BreadcrumbProps {
     items: BreadcrumbItem[]
-    language: Language
 }
 
-export function Breadcrumb({ items, language }: BreadcrumbProps) {
-    const homeLabel = language === 'en' ? 'Home' : '首页'
+export function Breadcrumb({ items }: BreadcrumbProps) {
+    const locale = useLocale()
+    const t = useTranslations('common')
+    const homeLabel = t('navigation.home')
     
     return (
         <nav className="flex items-center space-x-1 text-sm text-muted-foreground mb-4" aria-label="Breadcrumb">
             <Link 
-                href={`/${language}`}
+                href={`/${locale}`}
                 className="flex items-center hover:text-foreground transition-colors"
                 title={homeLabel}
             >

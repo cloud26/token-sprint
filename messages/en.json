@@ -1,0 +1,329 @@
+{
+  "common": {
+    "backToHome": "Back to Home",
+    "languageLabels": {
+      "en": "English",
+      "zh": "Chinese"
+    },
+    "navigation": {
+      "home": "Home"
+    },
+    "ui": {
+      "generateExample": "Generate Example",
+      "tokenizerError": "Tokenizer Error: Using estimation",
+      "loadingTokenizer": "Loading Hugging Face tokenizer...",
+      "approximateCount": "Approximate count, precise calculation in progress...",
+      "tokenBreakdown": "Token Breakdown",
+      "hide": "Hide",
+      "show": "Show",
+      "text": "Text",
+      "tokenIds": "Token IDs",
+      "tokensFound": "{count} tokens found:",
+      "tokenTooltip": "Token {index}: \"{token}\" (ID: {id})",
+      "businessGuide": "Business Guide: Token Optimization & Cost Control",
+      "whySpeedMatters": "Why Token Generation Speed Matters",
+      "deploymentTips": "Deployment Tips",
+      "optimizationRecommendations": "💡 Optimization Recommendations:",
+      "precisionRecommendation": "Precision: {precision} recommended for optimal performance/memory balance",
+      "parametersInfo": "Parameters: ~{parameters}B parameters require careful memory planning",
+      "deploymentInfo": "Deployment: Consider using model parallelism for large models",
+      "optimizationTipsFor": "Optimization Tips for {model}",
+      "tokenEfficiency": "Token Efficiency: Use precise, concise prompts to minimize token usage and costs.",
+      "modelSelection": "Model Selection: Choose the right {company} model for your specific use case and budget.",
+      "batchProcessing": "Batch Processing: Combine multiple requests when possible to reduce API overhead.",
+      "contextManagement": "Context Management: Monitor conversation length to stay within model limits.",
+      "costPlanning": "Cost Planning: Use this counter to estimate costs before implementing in production.",
+      "optimizationTips": "Optimization Tips",
+      "speedGuideContent": {
+        "intro": "Token generation speed directly impacts user experience in AI applications. Research shows delays over 3 seconds significantly increase user abandonment rates.",
+        "speedBenchmarks": {
+          "title": "📊 Speed Benchmarks",
+          "chatgpt": "ChatGPT-4: ~20-40 tokens/sec",
+          "claude": "Claude 3.5: ~25-50 tokens/sec",
+          "local": "Local models: 5-200+ tokens/sec"
+        },
+        "optimizationTips": {
+          "title": "⚡ Optimization Tips",
+          "streaming": "Use streaming for perceived speed",
+          "progress": "Show progress indicators",
+          "optimize": "Optimize for your use case"
+        },
+        "useTool": {
+          "title": "Use this tool to:",
+          "description": "Test optimal speeds for chatbots (15-30 tokens/sec), content tools (40+ tokens/sec), or educational platforms (5-15 tokens/sec). Find the sweet spot between performance and user experience."
+        }
+      },
+      "tokenGuide": {
+        "colorBlocks": "Each colored block represents one token",
+        "hover": "Hover over tokens to see their IDs",
+        "spaces": "⎵ represents spaces",
+        "hfModels": "🤗 models use Hugging Face community tokenizers"
+      },
+      "hfSection": {
+        "title": "Hugging Face Community Tokenizer",
+        "localProcessing": {
+          "title": "Local processing",
+          "description": "No API calls required"
+        },
+        "communityTokenizers": {
+          "title": "Community tokenizers",
+          "description": "Maintained by the open source community"
+        },
+        "tokenBreakdown": {
+          "title": "Token breakdown",
+          "description": "Full tokenization details available"
+        },
+        "hubModel": "Hub model",
+        "firstLoad": "First load may take time to download the tokenizer"
+      },
+      "usageTips": {
+        "title": "Tokenizer Types:",
+        "openaiModels": "OpenAI models",
+        "nativeJs": "Native js-tiktoken (most accurate)",
+        "hfModels": "🤗 models",
+        "communityTokenizers": "Hugging Face community tokenizers (very good approximation)",
+        "warningModels": "⚠️ models",
+        "gpt4Estimation": "GPT-4 tokenizer estimation",
+        "communityAccuracy": "Community tokenizers are reverse-engineered but quite accurate",
+        "localRun": "All tokenizers now run locally in your browser!"
+      },
+      "businessGuideContent": {
+        "costEstimation": {
+          "title": "💰 API Cost Estimation",
+          "description": "Understanding token counts is crucial for cost management. For example:",
+          "examples": {
+            "gpt4o": "GPT-4o: $15/1M input tokens - A 1000-token prompt costs ~$0.015",
+            "claude": "Claude 3.5 Sonnet: $3/1M tokens - Same prompt costs ~$0.003",
+            "gemini": "Gemini 1.5 Pro: $1.25/1M tokens - Same prompt costs ~$0.00125"
+          },
+          "tip": "Use our calculator to estimate costs before scaling your application."
+        },
+        "businessScenarios": {
+          "title": "🎯 Business Scenarios",
+          "contentGeneration": "Content Generation: Pre-calculate token limits for blog posts, marketing copy",
+          "customerSupport": "Customer Support: Optimize chatbot responses to stay within context windows",
+          "documentAnalysis": "Document Analysis: Chunk large documents efficiently for processing",
+          "apiIntegration": "API Integration: Validate input size before expensive API calls"
+        },
+        "optimizationStrategies": {
+          "title": "⚡ Optimization Strategies",
+          "modelSelection": "Model Selection: Use cheaper models for simple tasks, premium for complex ones",
+          "promptEngineering": "Prompt Engineering: Shorter, more specific prompts often yield better results",
+          "contextManagement": "Context Management: Monitor conversation length to avoid hitting limits",
+          "batchProcessing": "Batch Processing: Combine multiple requests to reduce overhead"
+        },
+        "proTip": {
+          "title": "💡 Pro Tip:",
+          "content": "Different tokenizers can produce 20-40% variation in token counts for the same text. Test with your target model's tokenizer for accurate cost estimation."
+        }
+      }
+    },
+    "gpu": {
+      "selectionGuide": "GPU Selection Guide for LLM Deployment",
+      "popularModels": "Popular AI Models GPU Requirements",
+      "guide": {
+        "budgetOptions": {
+          "title": "💰 Budget-Friendly Options (Under $10k)",
+          "rtx4090": "RTX 4090 (24GB): Best for 7B-13B models, single card setup",
+          "rtx3090": "RTX 3090 (24GB): Good value for smaller models and experimentation",
+          "rtx4060ti": "Multiple RTX 4060 Ti (16GB): Cost-effective for distributed inference"
+        },
+        "enterpriseSolutions": {
+          "title": "🏢 Enterprise Solutions ($50k+)",
+          "h100": "NVIDIA H100 (80GB): Industry standard for production LLM deployment",
+          "a100": "NVIDIA A100 (80GB): Proven reliability, good for 70B+ models",
+          "mi300x": "AMD MI300X (192GB): Highest memory capacity, excellent for largest models"
+        },
+        "proTips": {
+          "title": "⚡ Pro Tips for Optimization",
+          "fp8": "Use FP8/INT8: Reduce memory usage by 50-75% with minimal quality loss",
+          "moe": "Consider MoE Models: Qwen3-235B-A22B offers flagship performance with 4x H100 (vs 10x for DeepSeek-R1)",
+          "parallel": "Model Parallelism: Split large models across multiple GPUs",
+          "precision": "Mixed Precision: Combine FP16 inference with FP32 gradients for training",
+          "mapping": "Memory Mapping: Use CPU RAM for model storage, GPU for active layers"
+        }
+      },
+      "models": {
+        "qwen": {
+          "title": "🆕 Qwen2.5 & Qwen3 GPU Requirements",
+          "description": "Qwen2.5-72B & Qwen3-235B-A22B are the latest flagship models. Qwen2.5-72B needs 2x H100 with FP8, while Qwen3-235B-A22B (MoE) needs 4x H100. The Qwen2.5 series offers excellent multilingual capabilities with efficient deployment."
+        },
+        "deepseek": {
+          "title": "DeepSeek R1 GPU Requirements",
+          "description": "DeepSeek R1 (671B parameters) requires substantial GPU memory. With FP8 precision, you'll need approximately 10x NVIDIA H100 GPUs or equivalent high-memory configurations for optimal inference performance."
+        },
+        "llama70b": {
+          "title": "Llama 3.1 70B GPU Requirements",
+          "description": "Llama 3.1 70B is more accessible. With FP16 precision, you'll need 2x NVIDIA A100 (80GB) or H100. For consumer hardware, you'll need 7x RTX 4090 cards (24GB each)."
+        },
+        "llama405b": {
+          "title": "Llama 3.1 405B GPU Requirements",
+          "description": "Llama 3.1 405B requires high-end infrastructure. With FP8 precision, you'll need 6x H100 GPUs. With FP16 precision, you'll need 11x A100 GPUs for deployment."
+        },
+        "footer": "Use this calculator to get precise memory requirements for your specific use case and budget planning."
+      }
+    },
+    "structured": {
+      "tokenCountingModels": "Token counting for multiple AI models",
+      "visualBreakdown": "Visual token breakdown",
+      "modelSupport": "Support for GPT, Claude, Gemini, DeepSeek, Llama models",
+      "realtimeAnalysis": "Real-time token analysis",
+      "aiTokenCounter": "AI Token Counter"
+    }
+  },
+  "home": {
+    "title": "Professional AI Development Tools",
+    "description": "Curated collection of practical AI development and analysis tools for your projects",
+    "metadata": {
+      "title": "AI Development Tools | Token Counter | GPU Calculator",
+      "description": "Free professional AI development tools including smart token counter, LLM GPU calculator, and AI generation speed simulator. Essential tools for AI developers to optimize efficiency and project costs."
+    }
+  },
+  "nav": {
+    "aiTools": "AI Tools",
+    "homePage": "AI Tools Homepage",
+    "goToHomePage": "Go to AI Tools Homepage",
+    "gpuCalculator": "GPU Calculator"
+  },
+  "tools": {
+    "tokenSpeedVisualizer": {
+      "title": "AI Token Generation Speed Simulator",
+      "description": "Experience realistic AI text generation at different speeds and understand the impact on user experience",
+      "metadata": {
+        "title": "AI Token Speed Simulator | Real AI Chat Experience",
+        "description": "Interactive AI text generation speed simulator. Experience how different token generation speeds affect user experience in AI conversations. Perfect for developers optimizing AI chat interfaces.",
+        "keywords": "ai token speed, ai generation speed, token generation, ai response time, ai performance"
+      }
+    },
+    "llmGpuCalculator": {
+      "title": "LLM GPU Requirement Calculator: Estimate GPU Count & VRAM",
+      "description": "Accurately calculate how many GPUs you need to deploy LLMs. Supports NVIDIA, AMD, Huawei Ascend, Mac M-series. Get instant hardware requirements.",
+      "calculatorTitle": "{model} VRAM & GPU Calculator",
+      "calculatorDescription": "Calculate VRAM requirements and GPU count for {model} deployment. Support for NVIDIA, AMD, Apple, and Huawei",
+      "metadata": {
+        "title": "LLM Inference GPU Requirement Calculator: Estimate VRAM & Hardware Requirements",
+        "description": "Calculate exact GPU count for Qwen3-235B, DeepSeek-R1, Llama 3.1 deployment. Supports NVIDIA H100/A100/RTX 4090, AMD, Huawei Ascend 910B, Mac M1/M2/M3/M4.",
+        "keywords": "llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool"
+      }
+    },
+    "tokenCounter": {
+      "title": "AI Token Counter & Tokenizer",
+      "description": "Support for GPT-4o, Claude 4, Gemini 1.5 Pro, Llama 4, DeepSeek-R1, Qwen3 and other leading models",
+      "metadata": {
+        "title": "Token Counter & Calculator: ChatGPT, GPT, Claude, Llama Token Estimator",
+        "description": "Free online token counter & calculator for ChatGPT, GPT-4o, Claude 4, Llama models. Real-time token counting, cost estimation, LLM token calculator.",
+        "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,gpt token counter,chatgpt token counter"
+      }
+    }
+  },
+  "calculator": {
+    "title": "LLM GPU Calculator: Estimate GPU Count & VRAM",
+    "parameters": {
+      "label": "Model Parameters (Billions)",
+      "tooltip": "Model size in billions of parameters, e.g., 671B (DeepSeek R1), 70B (Llama 3.1 70B), 405B (Llama 3.1 405B), 7B, 13B",
+      "selectPlaceholder": "Select a model"
+    },
+    "precision": {
+      "label": "Precision",
+      "tooltip": "Different precisions affect memory usage, FP32 highest, FP8 lowest"
+    },
+    "gpu": {
+      "label": "GPU Model",
+      "searchPlaceholder": "Search GPU models...",
+      "notFound": "No GPU model found"
+    },
+    "results": {
+      "modelMemory": "Model Memory",
+      "inferenceMemory": "Inference Memory",
+      "totalMemory": "Total Memory Required",
+      "requiredGPUs": "Required GPUs",
+      "unit": "x"
+    },
+    "footer": {
+      "supportText": "If you find this tool helpful, consider buying me a coffee ☕"
+    },
+    "quickStart": {
+      "title": "Quick Start Examples:",
+      "description": "Click these examples to quickly configure popular model deployment scenarios!"
+    }
+  },
+  "models": {
+    "llama": {
+      "seoTitle": "Llama Inference GPU Requirement Calculator | Llama 3/4 VRAM Requirements",
+      "seoDescription": "Calculate VRAM and GPU count for Llama 3.1 (405B/70B/8B) and Llama 4 inference deployment. Support for NVIDIA, AMD, Apple, and Huawei GPUs with MoE architecture.",
+      "keywords": "llama,llama gpu requirements,llama deployment,llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,llama local deployment",
+      "specialFeatures": [
+        "Llama 3.1 full series support",
+        "Latest Llama 4 series",
+        "Mixture-of-Experts (MoE) architecture",
+        "Multimodal AI capabilities"
+      ]
+    },
+    "deepseek": {
+      "seoTitle": "DeepSeek Inference GPU Requirement Calculator | DeepSeek V3/R1 VRAM Requirements",
+      "seoDescription": "Calculate VRAM and GPU count for DeepSeek V3/R1 (671B) inference deployment. Support for NVIDIA, AMD, Apple, and Huawei GPUs with enterprise-grade solutions.",
+      "keywords": "deepseek,deepseek gpu requirements,deepseek deployment,llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,deepseek local deployment",
+      "specialFeatures": [
+        "Massive 671B parameter scale",
+        "Industry-leading reasoning capabilities",
+        "Supports FP8 precision optimization",
+        "Suitable for enterprise deployment"
+      ]
+    },
+    "qwen": {
+      "seoTitle": "Qwen Inference GPU Requirement Calculator | Qwen3 VRAM Requirements",
+      "seoDescription": "Calculate VRAM and GPU count for Qwen3-235B-A22B MoE inference deployment. Support for NVIDIA, AMD, Apple, and Huawei GPUs with efficient MoE architecture.",
+      "keywords": "qwen,qwen gpu requirements,qwen deployment,llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,qwen local deployment",
+      "specialFeatures": [
+        "Mixture-of-Experts (MoE) architecture",
+        "235B total, 22B active parameters",
+        "Extremely memory efficient",
+        "Excellent multilingual support"
+      ]
+    }
+  },
+  "tokenCounterModels": {
+    "openai-gpt": {
+      "description": "OpenAI token counter with native tokenizer for GPT models. The most accurate OpenAI token counting tool.",
+      "seoTitle": "ChatGPT Token Counter & Calculator: Free GPT Token Estimator Online",
+      "seoDescription": "Free ChatGPT token counter & calculator for GPT-4o, GPT-4, GPT-3.5. Native tokenizer accuracy, real-time cost estimation, online token calculator.",
+      "representativeModels": "GPT-4o, GPT-4, GPT-4 Turbo, GPT-3.5 Turbo",
+      "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,openai token counter"
+    },
+    "anthropic-claude": {
+      "description": "Anthropic Claude token counter and tokenizer tool. Approximate token counting for Claude models using advanced estimation.",
+      "seoTitle": "Claude Token Counter & Calculator: Free Claude Token Estimator Online",
+      "seoDescription": "Free Claude token counter & calculator for Claude 4, Claude 3.5. Online token estimator with cost calculation, Hugging Face tokenizer.",
+      "representativeModels": "Claude 4 Opus, Claude 4 Sonnet, Claude 3.5 Sonnet, Claude 3.5 Haiku",
+      "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,claude token counter"
+    },
+    "google-gemini": {
+      "description": "Google Gemini token counter and tokenizer tool. Approximate token counting for Gemini models using advanced estimation.",
+      "seoTitle": "Gemini Token Counter & Calculator: Free Google Gemini Token Estimator",
+      "seoDescription": "Free Gemini token counter & calculator for Gemini 1.5 Pro, Flash. Online token estimator with real-time counting and cost estimation.",
+      "representativeModels": "Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini Pro",
+      "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,gemini token counter"
+    },
+    "meta-llama": {
+      "description": "Meta Llama token counter and tokenizer tool. Approximate token counting for Llama models using advanced estimation.",
+      "seoTitle": "Llama Token Counter & Calculator: Free Meta Llama Token Estimator",
+      "seoDescription": "Free Llama token counter & calculator for Llama 4, Llama 3. Online LLM token estimator with Hugging Face tokenizer, open source models.",
+      "representativeModels": "Llama 3.1 405B, Llama 3.1 70B, Llama 3.1 8B, Llama 2 70B",
+      "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,llama token counter"
+    },
+    "deepseek": {
+      "description": "DeepSeek token counter and tokenizer tool. Approximate token counting for DeepSeek models using advanced estimation.",
+      "seoTitle": "DeepSeek Token Counter & Calculator: Free DeepSeek Token Estimator",
+      "seoDescription": "Free DeepSeek token counter & calculator for DeepSeek R1, V3. Online token estimator with cost calculation and optimization.",
+      "representativeModels": "DeepSeek-R1, DeepSeek-V3 Chat",
+      "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,deepseek token counter"
+    },
+    "alibaba-qwen": {
+      "description": "Alibaba Qwen token counter and tokenizer tool. Approximate token counting for Qwen models using advanced estimation.",
+      "seoTitle": "Qwen Token Counter & Calculator: Free Alibaba Qwen Token Estimator",
+      "seoDescription": "Free Qwen token counter & calculator for Qwen3, Qwen2.5. Online token estimator with multilingual support and cost optimization.",
+      "representativeModels": "Qwen3-Chat, Qwen2.5-Coder",
+      "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,qwen token counter"
+    }
+  }
+}

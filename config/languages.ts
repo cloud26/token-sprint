@@ -2,75 +2,13 @@ export type Language = "en" | "zh"
 
 export const tools = {
     tokenSpeedVisualizer: {
-        path: "token-generation-speed-visualizer",
-        title: {
-            zh: "AI Token 生成速度体验器",
-            en: "AI Token Generation Speed Simulator"
-        },
-        description: {
-            zh: "直观体验不同速度的 AI 文本生成效果，感受真实的对话体验",
-            en: "Experience realistic AI text generation at different speeds and understand the impact on user experience"
-        },
-        metadata: {
-            title: {
-                zh: "AI Token 生成速度体验器 | 模拟真实AI对话体验",
-                en: "AI Token Speed Simulator | Real AI Chat Experience"
-            },
-            description: {
-                zh: "通过这个交互式可视化工具，直观体验不同 token 生成速度对 AI 对话体验的影响，帮助开发者优化用户体验设计。",
-                en: "Interactive AI text generation speed simulator. Experience how different token generation speeds affect user experience in AI conversations. Perfect for developers optimizing AI chat interfaces."
-            }
-        }
+        path: "token-generation-speed-visualizer"
     },
     llmGpuCalculator: {
-        path: "llm-gpu-memory-calculator",
-        title: {
-            zh: "AI大模型显卡需求计算器",
-            en: "LLM GPU Requirement Calculator: Estimate GPU Count & VRAM"
-        },
-        description: {
-            zh: "精确计算部署AI大模型需要多少张显卡，支持NVIDIA/AMD/华为昇腾/Mac M系列全平台",
-            en: "Accurately calculate how many GPUs you need to deploy LLMs. Supports NVIDIA, AMD, Huawei Ascend, Mac M-series. Get instant hardware requirements."
-        },
-        metadata: {
-            title: {
-                zh: "AI大模型推理显卡需求计算器 | 精确计算GPU数量与显存 | 支持最新大模型",
-                en: "LLM Inference GPU Requirement Calculator: Estimate VRAM & Hardware Requirements"
-            },
-            description: {
-                zh: "精确计算部署Qwen3-235B、DeepSeek-R1、Llama 3.1等大模型需要多少张显卡。支持NVIDIA H100/A100、AMD、华为昇腾910B、Mac M系列全平台。",
-                en: "Calculate exact GPU count for Qwen3-235B, DeepSeek-R1, Llama 3.1 deployment. Supports NVIDIA H100/A100/RTX 4090, AMD, Huawei Ascend 910B, Mac M1/M2/M3/M4."
-            },
-            keywords: {
-                zh: "AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,大模型部署计算器,AI硬件配置,显卡选择工具",
-                en: "llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool"
-            }
-        }
+        path: "llm-gpu-memory-calculator"
     },
     tokenCounter: {
-        path: "token-counter-visualizer",
-        title: {
-            zh: "AI Token计数器和分词器",
-            en: "AI Token Counter & Tokenizer"
-        },
-        description: {
-            zh: "支持GPT-4o、Claude 4、Gemini 1.5 Pro、Llama 4、DeepSeek-R1、Qwen3等主流模型",
-            en: "Support for GPT-4o, Claude 4, Gemini 1.5 Pro, Llama 4, DeepSeek-R1, Qwen3 and other leading models"
-        },
-        metadata: {
-            title: {
-                zh: "Token计数器和计算器：ChatGPT、GPT、Claude、Llama、DeepSeek分词器",
-                en: "Token Counter & Calculator: ChatGPT, GPT, Claude, Llama Token Estimator"
-            },
-            description: {
-                zh: "免费在线token计数器和计算器，支持ChatGPT、GPT-4o、Claude 4、Llama等AI模型。实时token计算、成本估算、API优化工具。",
-                en: "Free online token counter & calculator for ChatGPT, GPT-4o, Claude 4, Llama models. Real-time token counting, cost estimation, LLM token calculator."
-            },
-            keywords: {
-                zh: "token计数器,AI分词器,token计算器,分词工具,GPT token计数器,ChatGPT token计数器",
-                en: "token counter,tokenizers ai,token calculator,tokenization tools,gpt token counter,chatgpt token counter"
-            }
-        }
+        path: "token-counter-visualizer"
     }
 }
 
