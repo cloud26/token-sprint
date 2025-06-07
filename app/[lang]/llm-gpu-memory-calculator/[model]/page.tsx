@@ -40,14 +40,25 @@ export async function generateMetadata({
     }
 
     const t = await getTranslations({ locale: lang, namespace: 'models' })
+    
+    // 使用插值模板
+    const modelData = t.raw(`${modelSlug}`)
+    const interpolationData = {
+        ...modelData,
+        modelLower: modelSlug.toLowerCase()
+    }
+    const seoTitle = t('seoTitle', interpolationData)
+    const seoDescription = t('seoDescription', interpolationData)
+    const keywords = t('keywords', interpolationData)
+    
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
         (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://app.linpp2009.com')
     const path = `llm-gpu-memory-calculator/${modelSlug}`
 
     return {
-        title: t(`${modelSlug}.seoTitle`),
-        description: t(`${modelSlug}.seoDescription`),
-        keywords: t(`${modelSlug}.keywords`),
+        title: seoTitle,
+        description: seoDescription,
+        keywords: keywords,
         alternates: {
             canonical: `${baseUrl}/${lang}/${path}`,
             languages: {
@@ -141,12 +152,20 @@ function PageContent({ model }: { model: any }) {
 function StructuredData({ language, model, modelSlug }: { language: Language, model: any, modelSlug: string }) {
     const t = useTranslations('models')
     
+    // 使用插值模板
+    const modelData = t.raw(`${modelSlug}`)
+    const interpolationData = {
+        ...modelData,
+        modelLower: modelSlug.toLowerCase()
+    }
+    const seoDescription = t('seoDescription', interpolationData)
+    
     // 结构化数据
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": `${model.name} GPU Calculator`,
-        "description": t(`${modelSlug}.seoDescription`),
+        "description": seoDescription,
         "url": `${process.env.NEXT_PUBLIC_BASE_URL || 'https://app.linpp2009.com'}/${language}/llm-gpu-memory-calculator/${modelSlug}`,
         "applicationCategory": "UtilityApplication",
         "operatingSystem": "Any",

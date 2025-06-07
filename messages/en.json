@@ -3,7 +3,7 @@
     "backToHome": "Back to Home",
     "languageLabels": {
       "en": "English",
-      "zh": "Chinese"
+      "zh": "中文"
     },
     "navigation": {
       "home": "Home"
@@ -217,7 +217,6 @@
     }
   },
   "calculator": {
-    "title": "LLM GPU Calculator: Estimate GPU Count & VRAM",
     "parameters": {
       "label": "Model Parameters (Billions)",
       "tooltip": "Model size in billions of parameters, e.g., 671B (DeepSeek R1), 70B (Llama 3.1 70B), 405B (Llama 3.1 405B), 7B, 13B",
@@ -239,19 +238,20 @@
       "requiredGPUs": "Required GPUs",
       "unit": "x"
     },
-    "footer": {
-      "supportText": "If you find this tool helpful, consider buying me a coffee ☕"
-    },
+
     "quickStart": {
       "title": "Quick Start Examples:",
       "description": "Click these examples to quickly configure popular model deployment scenarios!"
     }
   },
   "models": {
+    "seoTitle": "{modelName} Inference GPU Requirement Calculator | {modelVersions} VRAM Requirements",
+    "seoDescription": "Calculate VRAM and GPU count for {modelVersions} inference deployment. Support for NVIDIA, AMD, Apple, and Huawei GPUs with {features}.",
+    "keywords": "{modelLower},{modelLower} gpu requirements,{modelLower} deployment,llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,{modelLower} local deployment",
     "llama": {
-      "seoTitle": "Llama Inference GPU Requirement Calculator | Llama 3/4 VRAM Requirements",
-      "seoDescription": "Calculate VRAM and GPU count for Llama 3.1 (405B/70B/8B) and Llama 4 inference deployment. Support for NVIDIA, AMD, Apple, and Huawei GPUs with MoE architecture.",
-      "keywords": "llama,llama gpu requirements,llama deployment,llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,llama local deployment",
+      "modelName": "Llama",
+      "modelVersions": "Llama 3/4",
+      "features": "MoE architecture",
       "specialFeatures": [
         "Llama 3.1 full series support",
         "Latest Llama 4 series",
@@ -260,9 +260,9 @@
       ]
     },
     "deepseek": {
-      "seoTitle": "DeepSeek Inference GPU Requirement Calculator | DeepSeek V3/R1 VRAM Requirements",
-      "seoDescription": "Calculate VRAM and GPU count for DeepSeek V3/R1 (671B) inference deployment. Support for NVIDIA, AMD, Apple, and Huawei GPUs with enterprise-grade solutions.",
-      "keywords": "deepseek,deepseek gpu requirements,deepseek deployment,llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,deepseek local deployment",
+      "modelName": "DeepSeek",
+      "modelVersions": "DeepSeek V3/R1",
+      "features": "enterprise-grade solutions",
       "specialFeatures": [
         "Massive 671B parameter scale",
         "Industry-leading reasoning capabilities",
@@ -271,9 +271,9 @@
       ]
     },
     "qwen": {
-      "seoTitle": "Qwen Inference GPU Requirement Calculator | Qwen3 VRAM Requirements",
-      "seoDescription": "Calculate VRAM and GPU count for Qwen3-235B-A22B MoE inference deployment. Support for NVIDIA, AMD, Apple, and Huawei GPUs with efficient MoE architecture.",
-      "keywords": "qwen,qwen gpu requirements,qwen deployment,llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,qwen local deployment",
+      "modelName": "Qwen",
+      "modelVersions": "Qwen3",
+      "features": "efficient MoE architecture",
       "specialFeatures": [
         "Mixture-of-Experts (MoE) architecture",
         "235B total, 22B active parameters",
@@ -283,47 +283,69 @@
     }
   },
   "tokenCounterModels": {
+    "description": "{company} token counter and tokenizer tool. {accuracyNote}",
+    "seoTitle": "{displayName} Token Counter & Calculator: Free {displayName} Token Estimator {titleSuffix}",
+    "seoDescription": "Free {displayName} token counter & calculator for {versions}. {features}",
+    "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,{keywordName} token counter",
     "openai-gpt": {
-      "description": "OpenAI token counter with native tokenizer for GPT models. The most accurate OpenAI token counting tool.",
-      "seoTitle": "ChatGPT Token Counter & Calculator: Free GPT Token Estimator Online",
-      "seoDescription": "Free ChatGPT token counter & calculator for GPT-4o, GPT-4, GPT-3.5. Native tokenizer accuracy, real-time cost estimation, online token calculator.",
-      "representativeModels": "GPT-4o, GPT-4, GPT-4 Turbo, GPT-3.5 Turbo",
-      "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,openai token counter"
+      "company": "OpenAI",
+      "displayName": "ChatGPT",
+      "keywordName": "openai",
+      "titleSuffix": "Online",
+      "accuracyNote": "The most accurate OpenAI token counting tool.",
+      "versions": "GPT-4o, GPT-4, GPT-3.5",
+      "features": "Native tokenizer accuracy, real-time cost estimation, online token calculator.",
+      "representativeModels": "GPT-4o, GPT-4, GPT-4 Turbo, GPT-3.5 Turbo"
     },
     "anthropic-claude": {
-      "description": "Anthropic Claude token counter and tokenizer tool. Approximate token counting for Claude models using advanced estimation.",
-      "seoTitle": "Claude Token Counter & Calculator: Free Claude Token Estimator Online",
-      "seoDescription": "Free Claude token counter & calculator for Claude 4, Claude 3.5. Online token estimator with cost calculation, Hugging Face tokenizer.",
-      "representativeModels": "Claude 4 Opus, Claude 4 Sonnet, Claude 3.5 Sonnet, Claude 3.5 Haiku",
-      "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,claude token counter"
+      "company": "Anthropic Claude",
+      "displayName": "Claude",
+      "keywordName": "claude",
+      "titleSuffix": "Online",
+      "accuracyNote": "Approximate token counting for Claude models using advanced estimation.",
+      "versions": "Claude 4, Claude 3.5",
+      "features": "Online token estimator with cost calculation, Hugging Face tokenizer.",
+      "representativeModels": "Claude 4 Opus, Claude 4 Sonnet, Claude 3.5 Sonnet, Claude 3.5 Haiku"
     },
     "google-gemini": {
-      "description": "Google Gemini token counter and tokenizer tool. Approximate token counting for Gemini models using advanced estimation.",
-      "seoTitle": "Gemini Token Counter & Calculator: Free Google Gemini Token Estimator",
-      "seoDescription": "Free Gemini token counter & calculator for Gemini 1.5 Pro, Flash. Online token estimator with real-time counting and cost estimation.",
-      "representativeModels": "Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini Pro",
-      "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,gemini token counter"
+      "company": "Google Gemini",
+      "displayName": "Gemini",
+      "keywordName": "gemini",
+      "titleSuffix": "",
+      "accuracyNote": "Approximate token counting for Gemini models using advanced estimation.",
+      "versions": "Gemini 1.5 Pro, Flash",
+      "features": "Online token estimator with real-time counting and cost estimation.",
+      "representativeModels": "Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini Pro"
     },
     "meta-llama": {
-      "description": "Meta Llama token counter and tokenizer tool. Approximate token counting for Llama models using advanced estimation.",
-      "seoTitle": "Llama Token Counter & Calculator: Free Meta Llama Token Estimator",
-      "seoDescription": "Free Llama token counter & calculator for Llama 4, Llama 3. Online LLM token estimator with Hugging Face tokenizer, open source models.",
-      "representativeModels": "Llama 3.1 405B, Llama 3.1 70B, Llama 3.1 8B, Llama 2 70B",
-      "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,llama token counter"
+      "company": "Meta Llama",
+      "displayName": "Llama",
+      "keywordName": "llama",
+      "titleSuffix": "",
+      "accuracyNote": "Approximate token counting for Llama models using advanced estimation.",
+      "versions": "Llama 4, Llama 3",
+      "features": "Online LLM token estimator with Hugging Face tokenizer, open source models.",
+      "representativeModels": "Llama 3.1 405B, Llama 3.1 70B, Llama 3.1 8B, Llama 2 70B"
     },
     "deepseek": {
-      "description": "DeepSeek token counter and tokenizer tool. Approximate token counting for DeepSeek models using advanced estimation.",
-      "seoTitle": "DeepSeek Token Counter & Calculator: Free DeepSeek Token Estimator",
-      "seoDescription": "Free DeepSeek token counter & calculator for DeepSeek R1, V3. Online token estimator with cost calculation and optimization.",
-      "representativeModels": "DeepSeek-R1, DeepSeek-V3 Chat",
-      "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,deepseek token counter"
+      "company": "DeepSeek",
+      "displayName": "DeepSeek",
+      "keywordName": "deepseek",
+      "titleSuffix": "",
+      "accuracyNote": "Approximate token counting for DeepSeek models using advanced estimation.",
+      "versions": "DeepSeek R1, V3",
+      "features": "Online token estimator with cost calculation and optimization.",
+      "representativeModels": "DeepSeek-R1, DeepSeek-V3 Chat"
     },
     "alibaba-qwen": {
-      "description": "Alibaba Qwen token counter and tokenizer tool. Approximate token counting for Qwen models using advanced estimation.",
-      "seoTitle": "Qwen Token Counter & Calculator: Free Alibaba Qwen Token Estimator",
-      "seoDescription": "Free Qwen token counter & calculator for Qwen3, Qwen2.5. Online token estimator with multilingual support and cost optimization.",
-      "representativeModels": "Qwen3-Chat, Qwen2.5-Coder",
-      "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,qwen token counter"
+      "company": "Alibaba Qwen",
+      "displayName": "Qwen",
+      "keywordName": "qwen",
+      "titleSuffix": "",
+      "accuracyNote": "Approximate token counting for Qwen models using advanced estimation.",
+      "versions": "Qwen3, Qwen2.5",
+      "features": "Online token estimator with multilingual support and cost optimization.",
+      "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
     }
   }
 }

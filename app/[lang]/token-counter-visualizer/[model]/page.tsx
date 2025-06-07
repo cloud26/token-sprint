@@ -32,15 +32,21 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
     }
 
     const t = await getTranslations({ locale: lang, namespace: 'tokenCounterModels' })
-    
+
+    // 使用插值模板
+    const modelData = t.raw(`${companySlug}`)
+    const seoTitle = t('seoTitle', modelData)
+    const seoDescription = t('seoDescription', modelData)
+    const keywords = t('keywords', modelData)
+
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
         (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://app.linpp2009.com')
     const path = `token-counter-visualizer/${companySlug}`
 
     return {
-        title: t(`${companySlug}.seoTitle`),
-        description: t(`${companySlug}.seoDescription`),
-        keywords: t(`${companySlug}.keywords`),
+        title: seoTitle,
+        description: seoDescription,
+        keywords: keywords,
         alternates: {
             canonical: `${baseUrl}/${lang}/${path}`,
             languages: {
@@ -100,7 +106,7 @@ function PageContent({ model }: { model: any }) {
     const t = useTranslations('tools.tokenCounter')
     const tn = useTranslations('nav')
     const tm = useTranslations('tokenCounterModels')
-    
+
     // 面包屑导航项
     const breadcrumbItems = [
         {
@@ -117,15 +123,20 @@ function PageContent({ model }: { model: any }) {
         }
     ]
 
+    // 使用插值模板
+    const modelData = tm.raw(`${model.slug}`)
+    const pageTitle = tm('seoTitle', modelData)
+    const pageDescription = tm('description', modelData)
+
     return (
         <>
             <Breadcrumb items={breadcrumbItems} />
             <header className="flex flex-col items-center gap-1 mt-8">
                 <h1 className="text-2xl font-bold text-center">
-                    {tm(`${model.slug}.seoTitle`)}
+                    {pageTitle}
                 </h1>
                 <p className="text-center text-muted-foreground text-sm">
-                    {tm(`${model.slug}.description`)}
+                    {pageDescription}
                 </p>
             </header>
         </>
@@ -134,13 +145,18 @@ function PageContent({ model }: { model: any }) {
 
 function StructuredData({ language, model, companySlug }: { language: Language, model: any, companySlug: string }) {
     const tm = useTranslations('tokenCounterModels')
-    
+
+    // 使用插值模板
+    const modelData = tm.raw(`${companySlug}`)
+    const seoDescription = tm('seoDescription', modelData)
+    const representativeModels = tm(`${companySlug}.representativeModels`)
+
     // 结构化数据
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": `${model.name} Token Counter`,
-        "description": tm(`${companySlug}.seoDescription`),
+        "description": seoDescription,
         "url": `${process.env.NEXT_PUBLIC_BASE_URL || 'https://app.linpp2009.com'}/${language}/token-counter-visualizer/${companySlug}`,
         "applicationCategory": "UtilityApplication",
         "operatingSystem": "Any",
@@ -158,7 +174,7 @@ function StructuredData({ language, model, companySlug }: { language: Language, 
             "name": model.name,
             "provider": model.company
         },
-        "supportedModels": tm(`${companySlug}.representativeModels`),
+        "supportedModels": representativeModels,
         "author": {
             "@type": "Organization",
             "name": "linpp2009.com",
@@ -169,12 +185,12 @@ function StructuredData({ language, model, companySlug }: { language: Language, 
     }
 
     return (
-        <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-                __html: JSON.stringify(structuredData)
-            }}
-        />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(structuredData)
+                }}
+            />
     )
 }
 
@@ -183,17 +199,17 @@ function OptimizationTipsSection({ model }: { model: any }) {
     const t = useTranslations('common.ui')
     
     return (
-        <section className="mt-6 bg-gray-50 p-4 rounded-lg">
-            <h3 className="font-semibold text-gray-700 mb-2">
+                    <section className="mt-6 bg-gray-50 p-4 rounded-lg">
+                        <h3 className="font-semibold text-gray-700 mb-2">
                 {t('optimizationTipsFor', { model: model.name })}
-            </h3>
-            <div className="text-sm text-gray-600 space-y-2">
+                        </h3>
+                            <div className="text-sm text-gray-600 space-y-2">
                 <p>• <strong>{t('tokenEfficiency')}</strong></p>
                 <p>• <strong>{t('modelSelection', { company: model.company })}</strong></p>
                 <p>• <strong>{t('batchProcessing')}</strong></p>
                 <p>• <strong>{t('contextManagement')}</strong></p>
                 <p>• <strong>{t('costPlanning')}</strong></p>
-            </div>
-        </section>
+                            </div>
+                    </section>
     )
 } 
