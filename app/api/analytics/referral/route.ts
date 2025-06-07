@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
             path,
             timestamp,
             userAgent: request.headers.get('user-agent'),
-            ip: request.ip // 注意：在生产环境中要考虑隐私政策
+            ip: request.headers.get('x-forwarded-for')?.split(',')[0] || request.headers.get('x-real-ip') || 'unknown' // 注意：在生产环境中要考虑隐私政策
         })
 
         return NextResponse.json({ success: true })
