@@ -195,6 +195,7 @@ export const modelExamples = [
   { name: "Qwen2.5-Math-72B", parameters: "72B", value: "qwen2.5-math-72b" },
   { name: "Qwen2.5-72B", parameters: "72B", value: "qwen2.5-72b" },
   { name: "Qwen2-72B", parameters: "72B", value: "qwen2-72b" },
+  { name: "Qwen QwQ-32B", parameters: "32B", value: "qwen-qwq-32b" },
   { name: "Qwen3-32B", parameters: "32B", value: "qwen3-32b" },
   { name: "Qwen2.5-32B", parameters: "32B", value: "qwen2.5-32b" },
   { name: "Qwen2-32B", parameters: "32B", value: "qwen2-32b" },

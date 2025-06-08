@@ -24,11 +24,7 @@
       "tokenTooltip": "Token {index}: \"{token}\" (ID: {id})",
       "businessGuide": "业务指南：Token优化与成本控制",
       "whySpeedMatters": "为什么Token生成速度很重要",
-      "deploymentTips": "部署建议",
-      "optimizationRecommendations": "💡 优化建议：",
-      "precisionRecommendation": "精度: 推荐使用{precision}以获得最佳性能/内存平衡",
-      "parametersInfo": "参数量: 约{parameters}B参数需要仔细规划内存",
-      "deploymentInfo": "部署: 大模型建议使用模型并行化",
+
       "optimizationTipsFor": "{model} 优化建议",
       "tokenEfficiency": "Token效率: 使用精确、简洁的提示词来最小化token使用量和成本。",
       "modelSelection": "模型选择: 根据您的具体用例和预算选择合适的{company}模型。",
@@ -203,7 +199,7 @@
       "models": {
         "seoTitle": "{modelName}推理GPU需求计算器 | {modelVersions} 显存需求配置",
         "seoDescription": "计算{modelVersions}推理部署所需显存和GPU数量。支持NVIDIA、AMD、苹果、华为等各厂商显卡，{features}。",
-        "keywords": "{modelLower},{modelLower}GPU需求,{modelLower}部署,AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,大模型部署计算器,AI硬件配置,显卡选择工具,{modelLower}本地部署",
+        "keywords": "{modelLower},{modelLower} GPU需求,{modelLower}部署,{modelLower}本地,{modelLower} ollama,AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,大模型部署计算器,AI硬件配置,显卡选择工具",
         "llama": {
           "modelName": "Llama",
           "modelVersions": "Llama 3.1(405B/70B/8B)和Llama 4",
@@ -228,7 +224,7 @@
         },
         "qwen": {
           "modelName": "Qwen",
-          "modelVersions": "Qwen3-235B-A22B MoE模型",
+          "modelVersions": "Qwen3/QwQ-32B",
           "features": "高效MoE架构部署方案",
           "specialFeatures": [
             "混合专家(MoE)架构",

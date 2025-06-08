@@ -24,11 +24,7 @@
       "tokenTooltip": "Токен {index}: \"{token}\" (ID: {id})",
       "businessGuide": "Бизнес-руководство: Оптимизация токенов и контроль затрат",
       "whySpeedMatters": "Почему важна скорость генерации токенов",
-      "deploymentTips": "Советы по развёртыванию",
-      "optimizationRecommendations": "💡 Рекомендации по оптимизации:",
-      "precisionRecommendation": "Точность: рекомендуется {precision} для оптимального баланса производительности/памяти",
-      "parametersInfo": "Параметры: ~{parameters}B параметров требуют тщательного планирования памяти",
-      "deploymentInfo": "Развёртывание: Рассмотрите использование модельного параллелизма для больших моделей",
+
       "optimizationTipsFor": "Советы по оптимизации для {model}",
       "tokenEfficiency": "Эффективность токенов: Используйте точные, краткие запросы для минимизации использования токенов и затрат.",
       "modelSelection": "Выбор модели: Выберите подходящую модель {company} для вашего конкретного случая использования и бюджета.",
@@ -203,7 +199,7 @@
       "models": {
         "seoTitle": "{modelName} Калькулятор требований к GPU для вывода | {modelVersions} Требования к VRAM",
         "seoDescription": "Рассчитайте VRAM и количество GPU для развёртывания вывода {modelVersions}. Поддержка NVIDIA, AMD, Apple и Huawei GPU с {features}.",
-        "keywords": "{modelLower},{modelLower} требования gpu,{modelLower} развёртывание,llm vram калькулятор,vram калькулятор,llm калькулятор оборудования для вывода,ai gpu калькулятор,llm калькулятор развёртывания,ai требования к оборудованию,инструмент выбора gpu,{modelLower} локальное развёртывание",
+        "keywords": "{modelLower},{modelLower} требования gpu,{modelLower} развёртывание,{modelLower} локальный,{modelLower} ollama,llm vram калькулятор,vram калькулятор,llm калькулятор оборудования для вывода,ai gpu калькулятор,llm калькулятор развёртывания,ai требования к оборудованию,инструмент выбора gpu,{modelLower} локальное развёртывание",
         "llama": {
           "modelName": "Llama",
           "modelVersions": "Llama 3/4",

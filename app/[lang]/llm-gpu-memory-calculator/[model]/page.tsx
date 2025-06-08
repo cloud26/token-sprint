@@ -10,7 +10,7 @@ import { Breadcrumb } from "@/components/breadcrumb"
 import { getModelBySlug, getAllModelSlugs } from "@/config/models"
 import { notFound } from "next/navigation"
 import { getTranslations } from 'next-intl/server'
-import { useTranslations, useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 export async function generateStaticParams() {
     const modelSlugs = getAllModelSlugs()
@@ -102,7 +102,7 @@ export default function ModelSpecificCalculatorPage({
                         <GPUSelectionGuide />
                     </div>
 
-                    <DeploymentTipsSection model={model} />
+
                 </div>
                 <Footer />
             </main>
@@ -113,7 +113,6 @@ export default function ModelSpecificCalculatorPage({
 function PageContent({ model }: { model: any }) {
     const t = useTranslations('tools.llmGpuCalculator')
     const tn = useTranslations('nav')
-    const locale = useLocale()
     
     // 面包屑导航项
     const breadcrumbItems = [
@@ -189,25 +188,4 @@ function StructuredData({ language, model, modelSlug }: { language: Language, mo
     )
 }
 
-function DeploymentTipsSection({ model }: { model: any }) {
-    const locale = useLocale()
-    const t = useTranslations('common.ui')
-    
-    return (
-        <section className="mt-8 space-y-4">
-            <h2 className="text-lg font-semibold">
-                {`${model.name} ${t('deploymentTips')}`}
-            </h2>
-            <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-                <div className="text-sm text-yellow-800">
-                    <p className="font-medium mb-2">{t('optimizationRecommendations')}</p>
-                    <ul className="space-y-1">
-                        <li>• <strong>{t('precisionRecommendation', { precision: model.recommendedPrecision })}</strong></li>
-                        <li>• <strong>{t('parametersInfo', { parameters: model.parameters })}</strong></li>
-                        <li>• <strong>{t('deploymentInfo')}</strong></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    )
-} 
+ 

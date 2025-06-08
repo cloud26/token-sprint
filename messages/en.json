@@ -24,11 +24,7 @@
       "tokenTooltip": "Token {index}: \"{token}\" (ID: {id})",
       "businessGuide": "Business Guide: Token Optimization & Cost Control",
       "whySpeedMatters": "Why Token Generation Speed Matters",
-      "deploymentTips": "Deployment Tips",
-      "optimizationRecommendations": "💡 Optimization Recommendations:",
-      "precisionRecommendation": "Precision: {precision} recommended for optimal performance/memory balance",
-      "parametersInfo": "Parameters: ~{parameters}B parameters require careful memory planning",
-      "deploymentInfo": "Deployment: Consider using model parallelism for large models",
+
       "optimizationTipsFor": "Optimization Tips for {model}",
       "tokenEfficiency": "Token Efficiency: Use precise, concise prompts to minimize token usage and costs.",
       "modelSelection": "Model Selection: Choose the right {company} model for your specific use case and budget.",
@@ -198,12 +194,12 @@
       "metadata": {
         "title": "LLM Inference GPU Requirement Calculator: Estimate VRAM & Hardware Requirements",
         "description": "Calculate exact GPU count for Qwen3-235B, DeepSeek-R1, Llama 3.1 deployment. Supports NVIDIA H100/A100/RTX 4090, AMD, Huawei Ascend 910B, Mac M1/M2/M3/M4.",
-        "keywords": "llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool"
+        "keywords": "llm vram calculator,vram calculator,llm inference hardware calculator,llm deployment calculator,ai hardware requirements"
       },
       "models": {
         "seoTitle": "{modelName} Inference GPU Requirement Calculator | {modelVersions} VRAM Requirements",
         "seoDescription": "Calculate VRAM and GPU count for {modelVersions} inference deployment. Support for NVIDIA, AMD, Apple, and Huawei GPUs with {features}.",
-        "keywords": "{modelLower},{modelLower} gpu requirements,{modelLower} deployment,llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,{modelLower} local deployment",
+        "keywords": "{modelLower},{modelLower} gpu requirements,{modelLower} deployment,{modelLower} local,{modelLower} ollama,llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,{modelLower} local deployment",
         "llama": {
           "modelName": "Llama",
           "modelVersions": "Llama 3/4",
