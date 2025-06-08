@@ -1,11 +1,12 @@
 import { MetadataRoute } from 'next'
 import { getAllModelSlugs, getAllTokenCounterModelSlugs } from '@/config/models'
+import { getAllLanguages } from '@/config/languages'
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
         (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://app.linpp2009.com')
 
-    const languages = ['en', 'zh']
+    const languages = getAllLanguages()
     const routes = [
         '',
         '/token-counter-visualizer',

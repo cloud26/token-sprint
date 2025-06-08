@@ -43,6 +43,12 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
                     <DropdownMenuItem onClick={() => handleLanguageChange("zh")}>
                         {t('languageLabels.zh')}
                     </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleLanguageChange("ru")}>
+                        {t('languageLabels.ru')}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleLanguageChange("ja")}>
+                        {t('languageLabels.ja')}
+                    </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>

@@ -8,6 +8,7 @@ import LanguageSwitcher from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
 import { GPUSelectionGuide } from "@/components/gpu-selection-guide"
 import { Breadcrumb } from "@/components/breadcrumb"
+import { getCanonicalUrl, generateLanguageAlternates, getLocaleForLanguage, type Language } from "@/config/languages"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
     const { lang } = await params
@@ -19,19 +20,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         title: t('home.metadata.title'),
         description: t('home.metadata.description'), 
         alternates: {
-            canonical: lang === 'en' ? baseUrl : `${baseUrl}/${lang}`,
-            languages: {
-                'en': `${baseUrl}/en`,
-                'zh': `${baseUrl}/zh`,
-                'x-default': `${baseUrl}/en`,
-            },
+            canonical: getCanonicalUrl(baseUrl, lang as Language),
+            languages: generateLanguageAlternates(baseUrl, lang as Language),
         },
         openGraph: {
             title: t('home.metadata.title'),
             description: t('home.metadata.description'),
             url: `${baseUrl}/${lang}`,
             siteName: 'AI Tools Collection',
-            locale: lang === 'en' ? 'en_US' : 'zh_CN',
+            locale: getLocaleForLanguage(lang as Language),
             type: 'website',
         },
     }

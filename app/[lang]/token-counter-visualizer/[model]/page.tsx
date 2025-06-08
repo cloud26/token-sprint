@@ -2,7 +2,7 @@ import TokenCounter from "@/components/token-counter"
 import LanguageSwitcher from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
 import { use, Suspense } from "react"
-import { type Language } from "@/config/languages"
+import { type Language, getAllLanguages, getCanonicalUrl, generateLanguageAlternates } from "@/config/languages"
 import { Metadata } from "next"
 import { SideNav } from "@/components/side-nav"
 import { Breadcrumb } from "@/components/breadcrumb"
@@ -13,7 +13,7 @@ import { useTranslations, useLocale } from 'next-intl'
 
 export async function generateStaticParams() {
     const modelSlugs = getAllTokenCounterModelSlugs()
-    const languages: Language[] = ['en', 'zh']
+    const languages = getAllLanguages()
 
     return languages.flatMap(lang =>
         modelSlugs.map(model => ({
@@ -48,11 +48,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
         description: seoDescription,
         keywords: keywords,
         alternates: {
-            canonical: `${baseUrl}/${lang}/${path}`,
-            languages: {
-                'en': `${baseUrl}/en/${path}`,
-                'zh': `${baseUrl}/zh/${path}`,
-            },
+            canonical: getCanonicalUrl(`${baseUrl}/${path}`, lang),
+            languages: generateLanguageAlternates(`${baseUrl}/${path}`, lang),
         },
         other: {
             'application-name': `${model.name} Token Counter`
