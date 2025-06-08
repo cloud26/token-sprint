@@ -39,7 +39,7 @@ export async function generateMetadata({
         }
     }
 
-    const t = await getTranslations({ locale: lang, namespace: 'models' })
+    const t = await getTranslations({ locale: lang, namespace: 'tools.llmGpuCalculator.models' })
     
     // 使用插值模板
     const modelData = t.raw(`${modelSlug}`)
@@ -150,7 +150,7 @@ function PageContent({ model }: { model: any }) {
 }
 
 function StructuredData({ language, model, modelSlug }: { language: Language, model: any, modelSlug: string }) {
-    const t = useTranslations('models')
+    const t = useTranslations('tools.llmGpuCalculator.models')
     
     // 使用插值模板
     const modelData = t.raw(`${modelSlug}`)

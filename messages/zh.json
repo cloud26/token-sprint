@@ -16,7 +16,7 @@
       "tokenBreakdown": "Token 分解",
       "hide": "隐藏",
       "show": "显示",
-      "text": "文本",
+      "text": "Token",
       "tokenIds": "Token ID",
       "tokensFound": "发现 {count} 个 tokens：",
       "tokenTooltip": "Token {index}: \"{token}\" (ID: {id})",
@@ -162,13 +162,6 @@
         },
         "footer": "使用这个计算器来获得您特定用例的精确显存需求和预算规划。"
       }
-    },
-    "structured": {
-      "tokenCountingModels": "多种AI模型的Token计数",
-      "visualBreakdown": "可视化Token分解",
-      "modelSupport": "支持GPT、Claude、Gemini、DeepSeek、Llama模型",
-      "realtimeAnalysis": "实时Token分析",
-      "aiTokenCounter": "AI Token 计数器"
     }
   },
   "home": {
@@ -198,12 +191,50 @@
     "llmGpuCalculator": {
       "title": "AI大模型显卡需求计算器",
       "description": "精确计算部署AI大模型需要多少张显卡，支持NVIDIA/AMD/华为昇腾/Mac M系列全平台",
-      "calculatorTitle": "{model} 显存与GPU计算器",
+      "calculatorTitle": "{model} 显存与GPU需求计算器",
       "calculatorDescription": "计算{model}部署所需的显存和GPU数量，支持NVIDIA、AMD、苹果、华为等各厂商显卡",
       "metadata": {
         "title": "AI大模型推理显卡需求计算器 | 精确计算GPU数量与显存 | 支持最新大模型",
         "description": "精确计算部署Qwen3-235B、DeepSeek-R1、Llama 3.1等大模型需要多少张显卡。支持NVIDIA H100/A100、AMD、华为昇腾910B、Mac M系列全平台。",
         "keywords": "AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,大模型部署计算器,AI硬件配置,显卡选择工具"
+      },
+      "models": {
+        "seoTitle": "{modelName}推理GPU需求计算器 | {modelVersions} 显存需求配置",
+        "seoDescription": "计算{modelVersions}推理部署所需显存和GPU数量。支持NVIDIA、AMD、苹果、华为等各厂商显卡，{features}。",
+        "keywords": "{modelLower},{modelLower}GPU需求,{modelLower}部署,AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,大模型部署计算器,AI硬件配置,显卡选择工具,{modelLower}本地部署",
+        "llama": {
+          "modelName": "Llama",
+          "modelVersions": "Llama 3.1(405B/70B/8B)和Llama 4",
+          "features": "专业MoE架构部署方案",
+          "specialFeatures": [
+            "支持Llama 3.1全系列",
+            "最新Llama 4系列",
+            "MoE混合专家架构",
+            "多模态AI能力"
+          ]
+        },
+        "deepseek": {
+          "modelName": "DeepSeek",
+          "modelVersions": "DeepSeek V3/R1 (671B)",
+          "features": "超大模型专业部署方案",
+          "specialFeatures": [
+            "671B超大参数规模",
+            "业界领先的推理能力",
+            "支持FP8精度优化",
+            "适合企业级部署"
+          ]
+        },
+        "qwen": {
+          "modelName": "Qwen",
+          "modelVersions": "Qwen3-235B-A22B MoE模型",
+          "features": "高效MoE架构部署方案",
+          "specialFeatures": [
+            "混合专家(MoE)架构",
+            "235B总参数，22B激活",
+            "显存效率极高",
+            "多语言支持优秀"
+          ]
+        }
       }
     },
     "tokenCounter": {
@@ -213,6 +244,73 @@
         "title": "Token计数器和计算器：ChatGPT、GPT、Claude、Llama、DeepSeek分词器",
         "description": "免费在线token计数器和计算器，支持ChatGPT、GPT-4o、Claude 4、Llama等AI模型。实时token计算、成本估算、API优化工具。",
         "keywords": "token计数器,AI分词器,token计算器,分词工具,GPT token计数器,ChatGPT token计数器"
+      },
+      "structured": {
+        "tokenCountingModels": "多种AI模型的Token计数",
+        "visualBreakdown": "可视化Token分解",
+        "modelSupport": "支持GPT、Claude、Gemini、DeepSeek、Llama模型",
+        "realtimeAnalysis": "实时Token分析",
+        "aiTokenCounter": "AI Token 计数器"
+      },
+      "models": {
+        "description": "{company}token计数器和tokenizer工具。{accuracyNote}",
+        "seoTitle": "{displayName} Token计数器和计算器：免费{displayName} Token估算器",
+        "seoDescription": "免费{displayName} token计数器和计算器，支持{versions}。{features}",
+        "keywords": "token计数器,AI分词器,token计算器,分词工具,{keywordName} token计数器",
+        "openai-gpt": {
+          "company": "OpenAI ",
+          "displayName": "ChatGPT",
+          "keywordName": "openai",
+          "accuracyNote": "采用原生tokenizer支持GPT模型。最精确的OpenAI token计数工具。",
+          "versions": "GPT-4o、GPT-4、GPT-3.5",
+          "features": "原生tokenizer精度，实时成本估算。",
+          "representativeModels": "GPT-4o, GPT-4, GPT-4 Turbo, GPT-3.5 Turbo"
+        },
+        "anthropic-claude": {
+          "company": "Anthropic Claude ",
+          "displayName": "Claude",
+          "keywordName": "claude",
+          "accuracyNote": "使用先进估算算法为Claude模型提供近似token计数。",
+          "versions": "Claude 4、Claude 3.5",
+          "features": "在线token估算器，成本计算。",
+          "representativeModels": "Claude 4 Opus, Claude 4 Sonnet, Claude 3.5 Sonnet, Claude 3.5 Haiku"
+        },
+        "google-gemini": {
+          "company": "Google Gemini ",
+          "displayName": "Gemini",
+          "keywordName": "gemini",
+          "accuracyNote": "使用先进估算算法为Gemini模型提供近似token计数。",
+          "versions": "Gemini 1.5 Pro、Flash",
+          "features": "在线token估算器，实时计数。",
+          "representativeModels": "Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini Pro"
+        },
+        "meta-llama": {
+          "company": "Meta Llama ",
+          "displayName": "Llama",
+          "keywordName": "llama",
+          "accuracyNote": "使用先进估算算法为Llama模型提供近似token计数。",
+          "versions": "Llama 4、Llama 3",
+          "features": "开源LLM token估算器。",
+          "representativeModels": "Llama 3.1 405B, Llama 3.1 70B, Llama 3.1 8B, Llama 2 70B"
+        },
+        "deepseek": {
+          "company": "DeepSeek ",
+          "displayName": "DeepSeek",
+          "keywordName": "deepseek",
+          "accuracyNote": "使用先进估算算法为DeepSeek模型提供近似token计数。",
+          "versions": "DeepSeek R1、V3",
+          "features": "在线token估算器，成本优化。",
+          "representativeModels": "DeepSeek-R1, DeepSeek-V3 Chat"
+        },
+        "alibaba-qwen": {
+          "company": "阿里巴巴Qwen ",
+          "displayName": "Qwen",
+          "keywordName": "qwen",
+          "accuracyNote": "使用先进估算算法为Qwen模型提供近似token计数。",
+          "versions": "Qwen3、Qwen2.5",
+          "features": "多语言在线token估算器，成本优化。",
+          "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        }
       }
     }
   },
@@ -242,104 +340,6 @@
     "quickStart": {
       "title": "快速开始示例：",
       "description": "点击这些示例快速配置热门模型部署方案！"
-    }
-  },
-  "models": {
-    "seoTitle": "{modelName}推理GPU需求计算器 | {modelVersions} 显存需求配置",
-    "seoDescription": "计算{modelVersions}推理部署所需显存和GPU数量。支持NVIDIA、AMD、苹果、华为等各厂商显卡，{features}。",
-    "keywords": "{modelLower},{modelLower}GPU需求,{modelLower}部署,AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,大模型部署计算器,AI硬件配置,显卡选择工具,{modelLower}本地部署",
-    "llama": {
-      "modelName": "Llama",
-      "modelVersions": "Llama 3.1(405B/70B/8B)和Llama 4",
-      "features": "专业MoE架构部署方案",
-      "specialFeatures": [
-        "支持Llama 3.1全系列",
-        "最新Llama 4系列",
-        "MoE混合专家架构",
-        "多模态AI能力"
-      ]
-    },
-    "deepseek": {
-      "modelName": "DeepSeek",
-      "modelVersions": "DeepSeek V3/R1 (671B)",
-      "features": "超大模型专业部署方案",
-      "specialFeatures": [
-        "671B超大参数规模",
-        "业界领先的推理能力",
-        "支持FP8精度优化",
-        "适合企业级部署"
-      ]
-    },
-    "qwen": {
-      "modelName": "Qwen",
-      "modelVersions": "Qwen3-235B-A22B MoE模型",
-      "features": "高效MoE架构部署方案",
-      "specialFeatures": [
-        "混合专家(MoE)架构",
-        "235B总参数，22B激活",
-        "显存效率极高",
-        "多语言支持优秀"
-      ]
-    }
-  },
-  "tokenCounterModels": {
-    "description": "{company}token计数器和tokenizer工具。{accuracyNote}",
-    "seoTitle": "{displayName} Token计数器和计算器：免费{displayName} Token估算器",
-    "seoDescription": "免费{displayName} token计数器和计算器，支持{versions}。{features}",
-    "keywords": "token计数器,AI分词器,token计算器,分词工具,{keywordName} token计数器",
-    "openai-gpt": {
-      "company": "OpenAI ",
-      "displayName": "ChatGPT",
-      "keywordName": "openai",
-      "accuracyNote": "采用原生tokenizer支持GPT模型。最精确的OpenAI token计数工具。",
-      "versions": "GPT-4o、GPT-4、GPT-3.5",
-      "features": "原生tokenizer精度，实时成本估算。",
-      "representativeModels": "GPT-4o, GPT-4, GPT-4 Turbo, GPT-3.5 Turbo"
-    },
-    "anthropic-claude": {
-      "company": "Anthropic Claude ",
-      "displayName": "Claude",
-      "keywordName": "claude",
-      "accuracyNote": "使用先进估算算法为Claude模型提供近似token计数。",
-      "versions": "Claude 4、Claude 3.5",
-      "features": "在线token估算器，成本计算。",
-      "representativeModels": "Claude 4 Opus, Claude 4 Sonnet, Claude 3.5 Sonnet, Claude 3.5 Haiku"
-    },
-    "google-gemini": {
-      "company": "Google Gemini ",
-      "displayName": "Gemini",
-      "keywordName": "gemini",
-      "accuracyNote": "使用先进估算算法为Gemini模型提供近似token计数。",
-      "versions": "Gemini 1.5 Pro、Flash",
-      "features": "在线token估算器，实时计数。",
-      "representativeModels": "Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini Pro"
-    },
-    "meta-llama": {
-      "company": "Meta Llama ",
-      "displayName": "Llama",
-      "keywordName": "llama",
-      "accuracyNote": "使用先进估算算法为Llama模型提供近似token计数。",
-      "versions": "Llama 4、Llama 3",
-      "features": "开源LLM token估算器。",
-      "representativeModels": "Llama 3.1 405B, Llama 3.1 70B, Llama 3.1 8B, Llama 2 70B"
-    },
-    "deepseek": {
-      "company": "DeepSeek ",
-      "displayName": "DeepSeek",
-      "keywordName": "deepseek",
-      "accuracyNote": "使用先进估算算法为DeepSeek模型提供近似token计数。",
-      "versions": "DeepSeek R1、V3",
-      "features": "在线token估算器，成本优化。",
-      "representativeModels": "DeepSeek-R1, DeepSeek-V3 Chat"
-    },
-    "alibaba-qwen": {
-      "company": "阿里巴巴Qwen ",
-      "displayName": "Qwen",
-      "keywordName": "qwen",
-      "accuracyNote": "使用先进估算算法为Qwen模型提供近似token计数。",
-      "versions": "Qwen3、Qwen2.5",
-      "features": "多语言在线token估算器，成本优化。",
-      "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
     }
   }
 }

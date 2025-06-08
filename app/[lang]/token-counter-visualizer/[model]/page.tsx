@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
         notFound()
     }
 
-    const t = await getTranslations({ locale: lang, namespace: 'tokenCounterModels' })
+    const t = await getTranslations({ locale: lang, namespace: 'tools.tokenCounter.models' })
 
     // 使用插值模板
     const modelData = t.raw(`${companySlug}`)
@@ -105,7 +105,7 @@ export default function TokenCounterModelPage({
 function PageContent({ model }: { model: any }) {
     const t = useTranslations('tools.tokenCounter')
     const tn = useTranslations('nav')
-    const tm = useTranslations('tokenCounterModels')
+    const tm = useTranslations('tools.tokenCounter.models')
 
     // 面包屑导航项
     const breadcrumbItems = [
@@ -144,7 +144,7 @@ function PageContent({ model }: { model: any }) {
 }
 
 function StructuredData({ language, model, companySlug }: { language: Language, model: any, companySlug: string }) {
-    const tm = useTranslations('tokenCounterModels')
+    const tm = useTranslations('tools.tokenCounter.models')
 
     // 使用插值模板
     const modelData = tm.raw(`${companySlug}`)
