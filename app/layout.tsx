@@ -30,6 +30,7 @@ export const metadata: Metadata = {
   },
   other: {
     'google-adsense-account': 'ca-pub-8472112646404075',
+    'yandex-verification': '5220b08fa4e50648',
   },
 }
 
