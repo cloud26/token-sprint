@@ -118,7 +118,7 @@
     },
     "gpu": {
       "selectionGuide": "GPU Selection Guide for LLM Deployment",
-      "popularModels": "Popular AI Models GPU Requirements",
+      "popularModels": "Popular AI Models GPU Requirements for Local Deployment",
       "guide": {
         "budgetOptions": {
           "title": "💰 Budget-Friendly Options (Under $10k)",
@@ -143,20 +143,20 @@
       },
       "models": {
         "qwen": {
-          "title": "🆕 Qwen2.5 & Qwen3 GPU Requirements",
-          "description": "Qwen2.5-72B & Qwen3-235B-A22B are the latest flagship models. Qwen2.5-72B needs 2x H100 with FP8, while Qwen3-235B-A22B (MoE) needs 4x H100. The Qwen2.5 series offers excellent multilingual capabilities with efficient deployment."
+          "title": "🆕 Qwen2.5 & Qwen3 Local Deployment GPU Requirements",
+          "description": "Qwen2.5-72B & Qwen3-235B-A22B are the latest flagship models. Qwen2.5-72B needs 2x H100 with FP8, while Qwen3-235B-A22B (MoE) needs 4x H100. The Qwen2.5 series offers excellent multilingual capabilities with efficient local deployment."
         },
         "deepseek": {
-          "title": "DeepSeek R1 GPU Requirements",
-          "description": "DeepSeek R1 (671B parameters) requires substantial GPU memory. With FP8 precision, you'll need approximately 10x NVIDIA H100 GPUs or equivalent high-memory configurations for optimal inference performance."
+          "title": "DeepSeek R1 Local Deployment GPU Requirements",
+          "description": "DeepSeek R1 (671B parameters) requires substantial GPU memory for local deployment. With FP8 precision, you'll need approximately 10x NVIDIA H100 GPUs or equivalent high-memory configurations for optimal local inference performance."
         },
         "llama70b": {
-          "title": "Llama 3.1 70B GPU Requirements",
-          "description": "Llama 3.1 70B is more accessible. With FP16 precision, you'll need 2x NVIDIA A100 (80GB) or H100. For consumer hardware, you'll need 7x RTX 4090 cards (24GB each)."
+          "title": "Llama 3.1 70B Local Deployment GPU Requirements",
+          "description": "Llama 3.1 70B is more accessible for local deployment. With FP16 precision, you'll need 2x NVIDIA A100 (80GB) or H100. For consumer hardware, you'll need 7x RTX 4090 cards (24GB each)."
         },
         "llama405b": {
-          "title": "Llama 3.1 405B GPU Requirements",
-          "description": "Llama 3.1 405B requires high-end infrastructure. With FP8 precision, you'll need 6x H100 GPUs. With FP16 precision, you'll need 11x A100 GPUs for deployment."
+          "title": "Llama 3.1 405B Local Deployment GPU Requirements",
+          "description": "Llama 3.1 405B requires high-end infrastructure for local deployment. With FP8 precision, you'll need 6x H100 GPUs. With FP16 precision, you'll need 11x A100 GPUs for local deployment."
         },
         "footer": "Use this calculator to get precise memory requirements for your specific use case and budget planning."
       }
@@ -197,7 +197,7 @@
         "keywords": "llm vram calculator,vram calculator,llm inference hardware calculator,llm deployment calculator,ai hardware requirements"
       },
       "models": {
-        "seoTitle": "{modelName} Inference GPU Requirement Calculator | {modelVersions} VRAM Requirements",
+        "seoTitle": "{modelName} Inference GPU/VRAM Requirement Calculator",
         "seoDescription": "Calculate VRAM and GPU count for {modelVersions} inference deployment. Support for NVIDIA, AMD, Apple, and Huawei GPUs with {features}.",
         "keywords": "{modelLower},{modelLower} gpu requirements,{modelLower} deployment,{modelLower} local,{modelLower} ollama,llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,{modelLower} local deployment",
         "llama": {

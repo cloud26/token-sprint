@@ -118,7 +118,7 @@
     },
     "gpu": {
       "selectionGuide": "LLMデプロイメント用GPU選択ガイド",
-      "popularModels": "人気AIモデルのGPU要件",
+      "popularModels": "人気AIモデルのローカルデプロイメントGPU要件",
       "guide": {
         "budgetOptions": {
           "title": "💰 予算に優しい選択肢（1万ドル未満）",
@@ -143,20 +143,20 @@
       },
       "models": {
         "qwen": {
-          "title": "🆕 Qwen2.5 & Qwen3 GPU要件",
-          "description": "Qwen2.5-72B & Qwen3-235B-A22Bは最新のフラッグシップモデルです。Qwen2.5-72BはFP8で2x H100が必要、Qwen3-235B-A22B（MoE）は4x H100が必要。Qwen2.5シリーズは効率的なデプロイメントで優れた多言語機能を提供します。"
+          "title": "🆕 Qwen2.5 & Qwen3 ローカルデプロイメントGPU要件",
+          "description": "Qwen2.5-72B & Qwen3-235B-A22Bは最新のフラッグシップモデルです。Qwen2.5-72BはFP8で2x H100が必要、Qwen3-235B-A22B（MoE）は4x H100が必要。Qwen2.5シリーズは効率的なローカルデプロイメントで優れた多言語機能を提供します。"
         },
         "deepseek": {
-          "title": "DeepSeek R1 GPU要件",
-          "description": "DeepSeek R1（671Bパラメータ）は大幅なGPUメモリが必要です。FP8精度では、最適な推論性能のために約10x NVIDIA H100 GPUまたは同等の高メモリ構成が必要です。"
+          "title": "DeepSeek R1 ローカルデプロイメントGPU要件",
+          "description": "DeepSeek R1（671Bパラメータ）のローカルデプロイメントは大幅なGPUメモリが必要です。FP8精度では、最適なローカル推論性能のために約10x NVIDIA H100 GPUまたは同等の高メモリ構成が必要です。"
         },
         "llama70b": {
-          "title": "Llama 3.1 70B GPU要件",
-          "description": "Llama 3.1 70Bはより利用しやすいです。FP16精度では、2x NVIDIA A100 (80GB)またはH100が必要。コンシューマーハードウェアでは、7x RTX 4090カード（各24GB）が必要です。"
+          "title": "Llama 3.1 70B ローカルデプロイメントGPU要件",
+          "description": "Llama 3.1 70Bはローカルデプロイメントがより利用しやすいです。FP16精度では、2x NVIDIA A100 (80GB)またはH100が必要。コンシューマーハードウェアでは、7x RTX 4090カード（各24GB）が必要です。"
         },
         "llama405b": {
-          "title": "Llama 3.1 405B GPU要件",
-          "description": "Llama 3.1 405Bはハイエンドインフラが必要です。FP8精度では6x H100 GPUが必要。FP16精度では、デプロイメントに11x A100 GPUが必要です。"
+          "title": "Llama 3.1 405B ローカルデプロイメントGPU要件",
+          "description": "Llama 3.1 405Bのローカルデプロイメントはハイエンドインフラが必要です。FP8精度では6x H100 GPUが必要。FP16精度では、ローカルデプロイメントに11x A100 GPUが必要です。"
         },
         "footer": "特定の用途と予算計画のために正確なメモリ要件を取得するには、このカリキュレーターをご使用ください。"
       }
@@ -197,7 +197,7 @@
         "keywords": "llm vramカリキュレーター,vramカリキュレーター,llm推論ハードウェアカリキュレーター,ai gpuカリキュレーター,llmデプロイメントカリキュレーター,aiハードウェア要件,gpu選択ツール"
       },
       "models": {
-        "seoTitle": "{modelName}推論GPU要件カリキュレーター | {modelVersions} VRAM要件",
+        "seoTitle": "{modelName}推論GPU/VRAM要件カリキュレーター",
         "seoDescription": "{modelVersions}推論デプロイメントのVRAMとGPU数を計算。{features}を備えたNVIDIA、AMD、Apple、HuaweiのGPUをサポート。",
         "keywords": "{modelLower},{modelLower} gpu要件,{modelLower}デプロイメント,{modelLower}ローカル,{modelLower} ollama,llm vramカリキュレーター,vramカリキュレーター,llm推論ハードウェアカリキュレーター,ai gpuカリキュレーター,llmデプロイメントカリキュレーター,aiハードウェア要件,gpu選択ツール,{modelLower}ローカルデプロイメント",
         "llama": {
