@@ -32,6 +32,7 @@ interface TokenCounterProps {
     language: Language
     defaultModel?: string
     preferredCompany?: string
+    restrictToCompany?: boolean // 新增：是否只显示特定公司的模型
 }
 
 interface ModelInfo {
@@ -88,6 +89,7 @@ const models: ModelInfo[] = [
     { value: "qwen3-235b", label: "Qwen3-235B ⚠️", encoding: "gpt-4" },
     { value: "qwen2.5-72b", label: "Qwen2.5-72B ⚠️", encoding: "gpt-4" },
     { value: "qwen2.5-32b", label: "Qwen2.5-32B ⚠️", encoding: "gpt-4" },
+    { value: "qwq-32b", label: "QwQ-32B ⚠️", encoding: "gpt-4" },
     { value: "qwen2.5-14b", label: "Qwen2.5-14B ⚠️", encoding: "gpt-4" },
     { value: "qwen2.5-7b", label: "Qwen2.5-7B ⚠️", encoding: "gpt-4" },
     { value: "qwen2-72b", label: "Qwen2-72B ⚠️", encoding: "gpt-4" },
@@ -97,7 +99,7 @@ const models: ModelInfo[] = [
     { value: "qwen-max", label: "Qwen-Max ⚠️", encoding: "gpt-4" },
 ]
 
-export default function TokenCounter({ language, defaultModel, preferredCompany }: TokenCounterProps) {
+export default function TokenCounter({ language, defaultModel, preferredCompany, restrictToCompany }: TokenCounterProps) {
     const t = useTranslations('common.ui')
     const [text, setText] = useState("")
     const [selectedModel, setSelectedModel] = useState(defaultModel || "gpt-4o")
@@ -109,7 +111,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
     const [tokenizerCache, setTokenizerCache] = useState<Map<string, any>>(new Map())
     const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-    // 根据优先公司重新排序模型列表
+    // 根据优先公司重新排序模型列表，或者只显示特定公司的模型
     const sortedModels = useMemo(() => {
         if (!preferredCompany) return models
 
@@ -131,7 +133,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                 isPreferred = true
             } else if (company === 'deepseek' && modelValue.startsWith('deepseek')) {
                 isPreferred = true
-            } else if (company === 'alibaba' && (modelValue.startsWith('qwen'))) {
+            } else if (company === 'alibaba' && (modelValue.startsWith('qwen') || modelValue.startsWith('qwq'))) {
                 isPreferred = true
             } else if (company === 'mistral' && (modelValue.startsWith('mistral') || modelValue.startsWith('codestral'))) {
                 isPreferred = true
@@ -144,10 +146,22 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
             }
         })
 
+        // 如果 restrictToCompany 为 true，只返回该公司的模型
+        if (restrictToCompany) {
+            return preferred
+        }
+
         return [...preferred, ...others]
-    }, [preferredCompany])
+    }, [preferredCompany, restrictToCompany])
 
     const currentModel = sortedModels.find(m => m.value === selectedModel) || sortedModels[0]
+
+    // 确保选中的模型在过滤后的列表中，如果不在就选择第一个
+    useEffect(() => {
+        if (sortedModels.length > 0 && !sortedModels.find(m => m.value === selectedModel)) {
+            setSelectedModel(sortedModels[0].value)
+        }
+    }, [sortedModels, selectedModel])
 
     // 当模型选择改变时直接更新状态
     const handleModelChange = (newModel: string) => {
@@ -365,89 +379,65 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="max-h-80 overflow-y-auto">
-                            {/* OpenAI GPT 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-blue-50">
-                                OpenAI GPT 系列 (原生)
-                            </div>
-                            {sortedModels.filter(m => m.value.startsWith('gpt-') || m.value.startsWith('text-')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
-                                    </div>
-                                </SelectItem>
-                            ))}
+                            {(() => {
+                                const modelGroups = [
+                                    {
+                                        name: 'OpenAI GPT 系列 (原生)',
+                                        bgColor: 'bg-blue-50',
+                                        filter: (m: ModelInfo) => m.value.startsWith('gpt-') || m.value.startsWith('text-')
+                                    },
+                                    {
+                                        name: 'Anthropic Claude 系列 (🤗)',
+                                        bgColor: 'bg-purple-50',
+                                        filter: (m: ModelInfo) => m.value.startsWith('claude')
+                                    },
+                                    {
+                                        name: 'Meta Llama 系列 (🤗)',
+                                        bgColor: 'bg-orange-50',
+                                        filter: (m: ModelInfo) => m.value.startsWith('llama') || m.value.startsWith('code-llama')
+                                    },
+                                    {
+                                        name: 'DeepSeek 系列 (🤗)',
+                                        bgColor: 'bg-gray-50',
+                                        filter: (m: ModelInfo) => m.value.startsWith('deepseek')
+                                    },
+                                    {
+                                        name: 'Mistral 系列 (🤗)',
+                                        bgColor: 'bg-indigo-50',
+                                        filter: (m: ModelInfo) => m.value.startsWith('mistral') || m.value.startsWith('codestral')
+                                    },
+                                    {
+                                        name: 'Google Gemini 系列 (估算)',
+                                        bgColor: 'bg-green-50',
+                                        filter: (m: ModelInfo) => m.value.startsWith('gemini')
+                                    },
+                                    {
+                                        name: 'Qwen 系列 (估算)',
+                                        bgColor: 'bg-yellow-50',
+                                        filter: (m: ModelInfo) => m.value.startsWith('qwen')
+                                    }
+                                ];
 
-                            {/* Claude 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-purple-50 mt-1">
-                                Anthropic Claude 系列 (🤗)
-                            </div>
-                            {sortedModels.filter(m => m.value.startsWith('claude')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
-                                    </div>
-                                </SelectItem>
-                            ))}
+                                return modelGroups.map((group, groupIndex) => {
+                                    const groupModels = sortedModels.filter(group.filter);
+                                    if (groupModels.length === 0) return null; // 不显示空分组
 
-                            {/* Meta Llama 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-orange-50 mt-1">
-                                Meta Llama 系列 (🤗)
-                            </div>
-                            {sortedModels.filter(m => m.value.startsWith('llama') || m.value.startsWith('code-llama')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
-                                    </div>
-                                </SelectItem>
-                            ))}
-
-                            {/* DeepSeek 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50 mt-1">
-                                DeepSeek 系列 (🤗)
-                            </div>
-                            {sortedModels.filter(m => m.value.startsWith('deepseek')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
-                                    </div>
-                                </SelectItem>
-                            ))}
-
-                            {/* Mistral 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-indigo-50 mt-1">
-                                Mistral 系列 (🤗)
-                            </div>
-                            {sortedModels.filter(m => m.value.startsWith('mistral') || m.value.startsWith('codestral')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
-                                    </div>
-                                </SelectItem>
-                            ))}
-
-                            {/* Google Gemini 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-green-50 mt-1">
-                                Google Gemini 系列 (估算)
-                            </div>
-                            {sortedModels.filter(m => m.value.startsWith('gemini')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
-                                    </div>
-                                </SelectItem>
-                            ))}
-
-                            {/* Qwen 系列 */}
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-yellow-50 mt-1">
-                                Qwen 系列 (估算)
-                            </div>
-                            {sortedModels.filter(m => m.value.startsWith('qwen')).map((model) => (
-                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="font-medium text-sm">{model.label}</div>
-                                    </div>
-                                </SelectItem>
-                            ))}
+                                    return (
+                                        <div key={group.name}>
+                                            <div className={`px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide ${group.bgColor}${groupIndex > 0 ? ' mt-1' : ''}`}>
+                                                {group.name}
+                                            </div>
+                                            {groupModels.map((model) => (
+                                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
+                                                    <div className="flex items-center justify-between w-full">
+                                                        <div className="font-medium text-sm">{model.label}</div>
+                                                    </div>
+                                                </SelectItem>
+                                            ))}
+                                        </div>
+                                    );
+                                }).filter(Boolean); // 过滤掉 null 值
+                            })()}
                         </SelectContent>
                     </Select>
                 </div>
@@ -580,10 +570,10 @@ export default function TokenCounter({ language, defaultModel, preferredCompany 
                                                 <span
                                                     key={index}
                                                     className={`inline-block px-2 py-1 ${colorClass} rounded text-sm font-mono border transition-colors cursor-default`}
-                                                    title={t('tokenTooltip', { 
-                                                        index: index + 1, 
-                                                        token: token, 
-                                                        id: tokenData.tokenIds[index] 
+                                                    title={t('tokenTooltip', {
+                                                        index: index + 1,
+                                                        token: token,
+                                                        id: tokenData.tokenIds[index]
                                                     })}
                                                 >
                                                     {tokenDisplayMode === 'text' ? (

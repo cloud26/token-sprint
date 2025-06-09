@@ -88,6 +88,7 @@ export default function TokenCounterModelPage({
                             language={language}
                             defaultModel={defaultModelValue}
                             preferredCompany={model.company}
+                            restrictToCompany={true}
                         />
                     </Suspense>
 
@@ -182,31 +183,31 @@ function StructuredData({ language, model, companySlug }: { language: Language, 
     }
 
     return (
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(structuredData)
-                }}
-            />
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+                __html: JSON.stringify(structuredData)
+            }}
+        />
     )
 }
 
 function OptimizationTipsSection({ model }: { model: any }) {
     const locale = useLocale()
     const t = useTranslations('common.ui')
-    
+
     return (
-                    <section className="mt-6 bg-gray-50 p-4 rounded-lg">
-                        <h3 className="font-semibold text-gray-700 mb-2">
+        <section className="mt-6 bg-gray-50 p-4 rounded-lg">
+            <h3 className="font-semibold text-gray-700 mb-2">
                 {t('optimizationTipsFor', { model: model.name })}
-                        </h3>
-                            <div className="text-sm text-gray-600 space-y-2">
+            </h3>
+            <div className="text-sm text-gray-600 space-y-2">
                 <p>• <strong>{t('tokenEfficiency')}</strong></p>
                 <p>• <strong>{t('modelSelection', { company: model.company })}</strong></p>
                 <p>• <strong>{t('batchProcessing')}</strong></p>
                 <p>• <strong>{t('contextManagement')}</strong></p>
                 <p>• <strong>{t('costPlanning')}</strong></p>
-                            </div>
-                    </section>
+            </div>
+        </section>
     )
 } 
