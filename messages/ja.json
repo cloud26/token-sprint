@@ -199,7 +199,7 @@
       "models": {
         "seoTitle": "{modelName}推論GPU/VRAM要件カリキュレーター",
         "seoDescription": "{modelVersions}推論デプロイメントのVRAMとGPU数を計算。{features}を備えたNVIDIA、AMD、Apple、HuaweiのGPUをサポート。",
-        "keywords": "{modelLower},{modelLower} gpu要件,{modelLower}デプロイメント,{modelLower}ローカル,{modelLower} ollama,llm vramカリキュレーター,vramカリキュレーター,{modelLower}ローカルデプロイメント",
+        "keywords": "{modelLower},{modelLower} gpu要件,{modelLower}デプロイメント,{modelLower}ローカル,{modelLower} ollama,{modelLower} vramカリキュレーター,vramカリキュレーター,{modelLower}ローカルデプロイメント",
         "llama": {
           "modelName": "Llama",
           "modelVersions": "Llama 3/4",

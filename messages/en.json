@@ -199,7 +199,7 @@
       "models": {
         "seoTitle": "{modelName} Inference GPU/VRAM Requirement Calculator",
         "seoDescription": "Calculate VRAM and GPU count for {modelVersions} inference deployment. Support for NVIDIA, AMD, Apple, and Huawei GPUs with {features}.",
-        "keywords": "{modelLower},{modelLower} gpu requirements,{modelLower} deployment,{modelLower} local,{modelLower} ollama,llm vram calculator,vram calculator,{modelLower} local deployment",
+        "keywords": "{modelLower},{modelLower} gpu requirements,{modelLower} deployment,{modelLower} local,{modelLower} ollama,{modelLower} vram calculator,vram calculator,{modelLower} local deployment",
         "llama": {
           "modelName": "Llama",
           "modelVersions": "Llama 3/4",

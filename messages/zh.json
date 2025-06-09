@@ -199,10 +199,10 @@
       "models": {
         "seoTitle": "{modelName}推理GPU/显存需求计算器",
         "seoDescription": "计算{modelVersions}推理部署所需显存和GPU数量。支持NVIDIA、AMD、苹果、华为等各厂商显卡，{features}。",
-        "keywords": "{modelLower},{modelLower} GPU需求,{modelLower}部署,{modelLower}本地,{modelLower} ollama,AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,大模型部署计算器,AI硬件配置,显卡选择工具",
+        "keywords": "{modelLower},{modelLower} GPU需求,{modelLower}部署,{modelLower}本地,{modelLower} ollama,AI显卡计算器,显存计算器,LLM硬件需求,AI推理硬件计算器,{modelLower}部署计算器",
         "llama": {
           "modelName": "Llama",
-          "modelVersions": "Llama 3.1(405B/70B/8B)和Llama 4",
+          "modelVersions": "Llama 3/4",
           "features": "专业MoE架构部署方案",
           "specialFeatures": [
             "支持Llama 3.1全系列",

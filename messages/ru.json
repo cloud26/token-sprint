@@ -199,7 +199,7 @@
       "models": {
         "seoTitle": "{modelName} Калькулятор требований к GPU/VRAM для вывода",
         "seoDescription": "Рассчитайте VRAM и количество GPU для развёртывания вывода {modelVersions}. Поддержка NVIDIA, AMD, Apple и Huawei GPU с {features}.",
-        "keywords": "{modelLower},{modelLower} требования gpu,{modelLower} развёртывание,{modelLower} локальный,{modelLower} ollama,llm vram калькулятор,vram калькулятор,{modelLower} локальное развёртывание",
+        "keywords": "{modelLower},{modelLower} требования gpu,{modelLower} развёртывание,{modelLower} локальный,{modelLower} ollama,{modelLower} vram калькулятор,vram калькулятор,{modelLower} локальное развёртывание",
         "llama": {
           "modelName": "Llama",
           "modelVersions": "Llama 3/4",
