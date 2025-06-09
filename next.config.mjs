@@ -19,6 +19,10 @@ const nextConfig = {
   },
   // 压缩配置 - 核心优化
   compress: true,
+  // Cloudflare Workers 配置
+  output: 'export',
+  distDir: '.next',
+  trailingSlash: true,
 }
 
 export default withNextIntl(nextConfig);
