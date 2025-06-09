@@ -194,12 +194,12 @@
       "metadata": {
         "title": "LLM推論GPU要件カリキュレーター：VRAMとハードウェア要件の見積もり",
         "description": "Qwen3-235B、DeepSeek-R1、Llama 3.1デプロイメントの正確なGPU数を計算。NVIDIA H100/A100/RTX 4090、AMD、Huawei Ascend 910B、Mac M1/M2/M3/M4をサポート。",
-        "keywords": "llm vramカリキュレーター,vramカリキュレーター,llm推論ハードウェアカリキュレーター,ai gpuカリキュレーター,llmデプロイメントカリキュレーター,aiハードウェア要件,gpu選択ツール"
+        "keywords": "llm vramカリキュレーター,vramカリキュレーター,llm推論ハードウェアカリキュレーター,llmデプロイメントカリキュレーター"
       },
       "models": {
         "seoTitle": "{modelName}推論GPU/VRAM要件カリキュレーター",
         "seoDescription": "{modelVersions}推論デプロイメントのVRAMとGPU数を計算。{features}を備えたNVIDIA、AMD、Apple、HuaweiのGPUをサポート。",
-        "keywords": "{modelLower},{modelLower} gpu要件,{modelLower}デプロイメント,{modelLower}ローカル,{modelLower} ollama,llm vramカリキュレーター,vramカリキュレーター,llm推論ハードウェアカリキュレーター,ai gpuカリキュレーター,llmデプロイメントカリキュレーター,aiハードウェア要件,gpu選択ツール,{modelLower}ローカルデプロイメント",
+        "keywords": "{modelLower},{modelLower} gpu要件,{modelLower}デプロイメント,{modelLower}ローカル,{modelLower} ollama,llm vramカリキュレーター,vramカリキュレーター,{modelLower}ローカルデプロイメント",
         "llama": {
           "modelName": "Llama",
           "modelVersions": "Llama 3/4",

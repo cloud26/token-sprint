@@ -194,12 +194,12 @@
       "metadata": {
         "title": "Калькулятор требований к GPU для LLM вывода: Оценка VRAM и требований к оборудованию",
         "description": "Рассчитайте точное количество GPU для развёртывания Qwen3-235B, DeepSeek-R1, Llama 3.1. Поддерживает NVIDIA H100/A100/RTX 4090, AMD, Huawei Ascend 910B, Mac M1/M2/M3/M4.",
-        "keywords": "llm vram калькулятор,vram калькулятор,llm калькулятор оборудования для вывода,ai gpu калькулятор,llm калькулятор развёртывания,ai требования к оборудованию,инструмент выбора gpu"
+        "keywords": "llm vram калькулятор,vram калькулятор,llm калькулятор оборудования для вывода,llm калькулятор развёртывания"
       },
       "models": {
         "seoTitle": "{modelName} Калькулятор требований к GPU/VRAM для вывода",
         "seoDescription": "Рассчитайте VRAM и количество GPU для развёртывания вывода {modelVersions}. Поддержка NVIDIA, AMD, Apple и Huawei GPU с {features}.",
-        "keywords": "{modelLower},{modelLower} требования gpu,{modelLower} развёртывание,{modelLower} локальный,{modelLower} ollama,llm vram калькулятор,vram калькулятор,llm калькулятор оборудования для вывода,ai gpu калькулятор,llm калькулятор развёртывания,ai требования к оборудованию,инструмент выбора gpu,{modelLower} локальное развёртывание",
+        "keywords": "{modelLower},{modelLower} требования gpu,{modelLower} развёртывание,{modelLower} локальный,{modelLower} ollama,llm vram калькулятор,vram калькулятор,{modelLower} локальное развёртывание",
         "llama": {
           "modelName": "Llama",
           "modelVersions": "Llama 3/4",

@@ -194,12 +194,12 @@
       "metadata": {
         "title": "LLM Inference GPU Requirement Calculator: Estimate VRAM & Hardware Requirements",
         "description": "Calculate exact GPU count for Qwen3-235B, DeepSeek-R1, Llama 3.1 deployment. Supports NVIDIA H100/A100/RTX 4090, AMD, Huawei Ascend 910B, Mac M1/M2/M3/M4.",
-        "keywords": "llm vram calculator,vram calculator,llm inference hardware calculator,llm deployment calculator,ai hardware requirements"
+        "keywords": "llm vram calculator,vram calculator,llm inference hardware calculator,llm deployment calculator"
       },
       "models": {
         "seoTitle": "{modelName} Inference GPU/VRAM Requirement Calculator",
         "seoDescription": "Calculate VRAM and GPU count for {modelVersions} inference deployment. Support for NVIDIA, AMD, Apple, and Huawei GPUs with {features}.",
-        "keywords": "{modelLower},{modelLower} gpu requirements,{modelLower} deployment,{modelLower} local,{modelLower} ollama,llm vram calculator,vram calculator,llm inference hardware calculator,ai gpu calculator,llm deployment calculator,ai hardware requirements,gpu selection tool,{modelLower} local deployment",
+        "keywords": "{modelLower},{modelLower} gpu requirements,{modelLower} deployment,{modelLower} local,{modelLower} ollama,llm vram calculator,vram calculator,{modelLower} local deployment",
         "llama": {
           "modelName": "Llama",
           "modelVersions": "Llama 3/4",
