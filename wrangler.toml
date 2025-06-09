@@ -1,0 +1,3 @@
+name = "token-sprint"
+compatibility_date = "2025-06-10"
+pages_build_output_dir = ".vercel/output/static"
