@@ -24,6 +24,13 @@
       "tokenTooltip": "Token {index}: \"{token}\" (ID: {id})",
       "businessGuide": "业务指南：Token优化与成本控制",
       "whySpeedMatters": "为什么Token生成速度很重要",
+      "loadingStates": {
+        "preparing": "准备加载分词器...",
+        "downloading": "正在下载分词器文件...",
+        "initializing": "正在初始化分词器...",
+        "ready": "分词器已就绪！",
+        "error": "分词器加载失败"
+      },
 
       "optimizationTipsFor": "{model} 优化建议",
       "tokenEfficiency": "Token效率: 使用精确、简洁的提示词来最小化token使用量和成本。",
@@ -114,6 +121,13 @@
           "title": "💡 专业提示：",
           "content": "不同的分词器对相同文本的token计数可能有20-40%的差异。使用目标模型的分词器进行测试以获得准确的成本估算。"
         }
+      },
+      "loadingStates": {
+        "preparing": "准备加载分词器...",
+        "downloading": "正在下载分词器文件...",
+        "initializing": "正在初始化分词器...",
+        "ready": "分词器已就绪！",
+        "error": "分词器加载失败"
       }
     },
     "gpu": {

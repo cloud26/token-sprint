@@ -24,7 +24,13 @@
       "tokenTooltip": "Token {index}: \"{token}\" (ID: {id})",
       "businessGuide": "Business Guide: Token Optimization & Cost Control",
       "whySpeedMatters": "Why Token Generation Speed Matters",
-
+      "loadingStates": {
+        "preparing": "Preparing to load tokenizer...",
+        "downloading": "Downloading tokenizer files...",
+        "initializing": "Initializing tokenizer...",
+        "ready": "Tokenizer ready!",
+        "error": "Error loading tokenizer"
+      },
       "optimizationTipsFor": "Optimization Tips for {model}",
       "tokenEfficiency": "Token Efficiency: Use precise, concise prompts to minimize token usage and costs.",
       "modelSelection": "Model Selection: Choose the right {company} model for your specific use case and budget.",
@@ -340,7 +346,6 @@
       "requiredGPUs": "Required GPUs",
       "unit": "x"
     },
-
     "quickStart": {
       "title": "Quick Start Examples:",
       "description": "Click these examples to quickly configure popular model deployment scenarios!"

@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { type Language } from '@/config/languages'
 import { encodingForModel } from "js-tiktoken"
 import { useTranslations } from 'next-intl'
+import { Loader2 } from "lucide-react"
 
 // 使用 Hugging Face Transformers.js 进行本地 tokenization
 // 支持多种模型的社区 tokenizer
@@ -110,6 +111,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
     const [hfTokenizerError, setHfTokenizerError] = useState<string | null>(null)
     const [tokenizerCache, setTokenizerCache] = useState<Map<string, any>>(new Map())
     const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
+    const [loadingState, setLoadingState] = useState<'preparing' | 'downloading' | 'initializing' | 'ready' | 'error'>('preparing')
 
     // 根据优先公司重新排序模型列表，或者只显示特定公司的模型
     const sortedModels = useMemo(() => {
@@ -187,13 +189,15 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
     }, [text])
 
     // 加载 Hugging Face tokenizer
-    const loadHuggingFaceTokenizer = async (hubPath: string) => {
+    const loadHfTokenizer = async (hubPath: string) => {
         try {
             setIsLoadingHFTokenizer(true)
             setHfTokenizerError(null)
+            setLoadingState('preparing')
 
-            // 检查缓存
+            // Check cache
             if (tokenizerCache.has(hubPath)) {
+                setLoadingState('ready')
                 return tokenizerCache.get(hubPath)
             }
 
@@ -202,16 +206,21 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
                 throw new Error('Failed to load Hugging Face Transformers')
             }
 
+            setLoadingState('downloading')
             console.log(`Loading tokenizer: ${hubPath}`)
+            
+            setLoadingState('initializing')
             const tokenizer = await HFTokenizer.from_pretrained(hubPath)
 
-            // 缓存 tokenizer
+            // Cache tokenizer
             setTokenizerCache(prev => new Map(prev).set(hubPath, tokenizer))
+            setLoadingState('ready')
             return tokenizer
 
         } catch (error: any) {
             console.error('Failed to load HF tokenizer:', error)
             setHfTokenizerError(`Failed to load ${hubPath}: ${error.message}`)
+            setLoadingState('error')
             return null
         } finally {
             setIsLoadingHFTokenizer(false)
@@ -279,7 +288,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
             }
 
             // 触发异步加载
-            loadHuggingFaceTokenizer(currentModel.hub)
+            loadHfTokenizer(currentModel.hub)
 
             return {
                 count: Math.ceil(debouncedText.length / 4), // 估算
@@ -635,6 +644,13 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
                         </div>
                     </div>
                 </div>
+
+                {isLoadingHFTokenizer && (
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                                        <Loader2 className="h-4 w-4 animate-spin" />
+                <span>{t(`loadingStates.${loadingState}`)}</span>
+                    </div>
+                )}
 
             </CardContent>
         </Card>

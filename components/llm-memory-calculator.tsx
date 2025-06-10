@@ -276,77 +276,77 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                     {t('quickStart.title')}
                                 </p>
                                 <div className="space-y-2">
-                                    <div className="flex gap-2 flex-wrap">
-                                        <button 
-                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                            onClick={() => {
-                                                setSelectedModel("Qwen3-235B-A22B")
-                                                setParameters("235")
-                                                setPrecision("FP8")
-                                                setGpuModel("NVIDIA H100 (80GB)")
-                                            }}
-                                        >
-                                            🆕 Qwen3-235B + H100
-                                        </button>
-                                        <button 
-                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                            onClick={() => {
-                                                setSelectedModel("DeepSeek-R1")
-                                                setParameters("671")
-                                                setPrecision("FP8")
-                                                setGpuModel("NVIDIA H100 (80GB)")
-                                            }}
-                                        >
-                                            DeepSeek R1 + H100
-                                        </button>
-                                        <button 
-                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                            onClick={() => {
-                                                setSelectedModel("Llama 3.1 70B")
-                                                setParameters("70")
-                                                setPrecision("FP16")
-                                                setGpuModel("NVIDIA A100 (80GB)")
-                                            }}
-                                        >
-                                            Llama 3.1 70B + A100
-                                        </button>
-                                        <button 
-                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                            onClick={() => {
-                                                setSelectedModel("Llama 3.1 8B")
-                                                setParameters("8")
-                                                setPrecision("FP16")
-                                                setGpuModel("NVIDIA RTX 4090 (24GB)")
-                                            }}
-                                        >
-                                            Llama 3.1 8B + RTX 4090
-                                        </button>
-                                        <button 
-                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                            onClick={() => {
-                                                setSelectedModel("Qwen2.5-72B")
-                                                setParameters("72")
-                                                setPrecision("FP8")
-                                                setGpuModel("NVIDIA H100 (80GB)")
-                                            }}
-                                        >
-                                            🔥 Qwen2.5-72B + H100
-                                        </button>
-                                        <button 
-                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                            onClick={() => {
+                                            <div className="flex gap-2 flex-wrap">
+                                                <button 
+                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                                    onClick={() => {
+                                                        setSelectedModel("Qwen3-235B-A22B")
+                                                        setParameters("235")
+                                                        setPrecision("FP8")
+                                                        setGpuModel("NVIDIA H100 (80GB)")
+                                                    }}
+                                                >
+                                                    🆕 Qwen3-235B + H100
+                                                </button>
+                                                <button 
+                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                                    onClick={() => {
+                                                        setSelectedModel("DeepSeek-R1")
+                                                        setParameters("671")
+                                                        setPrecision("FP8")
+                                                        setGpuModel("NVIDIA H100 (80GB)")
+                                                    }}
+                                                >
+                                                    DeepSeek R1 + H100
+                                                </button>
+                                                <button 
+                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                                    onClick={() => {
+                                                        setSelectedModel("Llama 3.1 70B")
+                                                        setParameters("70")
+                                                        setPrecision("FP16")
+                                                        setGpuModel("NVIDIA A100 (80GB)")
+                                                    }}
+                                                >
+                                                    Llama 3.1 70B + A100
+                                                </button>
+                                                <button 
+                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                                    onClick={() => {
+                                                        setSelectedModel("Llama 3.1 8B")
+                                                        setParameters("8")
+                                                        setPrecision("FP16")
+                                                        setGpuModel("NVIDIA RTX 4090 (24GB)")
+                                                    }}
+                                                >
+                                                    Llama 3.1 8B + RTX 4090
+                                                </button>
+                                                <button 
+                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                                    onClick={() => {
+                                                        setSelectedModel("Qwen2.5-72B")
+                                                        setParameters("72")
+                                                        setPrecision("FP8")
+                                                        setGpuModel("NVIDIA H100 (80GB)")
+                                                    }}
+                                                >
+                                                    🔥 Qwen2.5-72B + H100
+                                                </button>
+                                                <button 
+                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                                    onClick={() => {
                                                 setSelectedModel("Qwen QwQ-32B")
                                                 setParameters("32")
                                                 setPrecision("INT4")
-                                                setGpuModel("NVIDIA RTX 4090 (24GB)")
-                                            }}
-                                        >
+                                                        setGpuModel("NVIDIA RTX 4090 (24GB)")
+                                                    }}
+                                                >
                                             Qwen QwQ-32B + RTX 4090
-                                        </button>
-                                    </div>
-                                    <p className="text-xs italic">
-                                        {t('quickStart.description')}
-                                    </p>
+                                                </button>
+                                            </div>
+                                            <p className="text-xs italic">
+                                                {t('quickStart.description')}
+                                            </p>
                                 </div>
                             </div>
                         </div>
