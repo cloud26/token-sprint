@@ -86,18 +86,18 @@ const models: ModelInfo[] = [
     { value: "gemini-1.5-flash", label: "Gemini 1.5 Flash ⚠️", encoding: "gpt-4" },
     { value: "gemini-pro", label: "Gemini Pro ⚠️", encoding: "gpt-4" },
 
-    // Qwen 系列 - 暂时使用估算，等待社区 tokenizer
-    { value: "qwen3-235b", label: "Qwen3-235B ⚠️", encoding: "gpt-4" },
-    { value: "qwen2.5-72b", label: "Qwen2.5-72B ⚠️", encoding: "gpt-4" },
-    { value: "qwen2.5-32b", label: "Qwen2.5-32B ⚠️", encoding: "gpt-4" },
-    { value: "qwq-32b", label: "QwQ-32B ⚠️", encoding: "gpt-4" },
-    { value: "qwen2.5-14b", label: "Qwen2.5-14B ⚠️", encoding: "gpt-4" },
-    { value: "qwen2.5-7b", label: "Qwen2.5-7B ⚠️", encoding: "gpt-4" },
-    { value: "qwen2-72b", label: "Qwen2-72B ⚠️", encoding: "gpt-4" },
-    { value: "qwen2-7b", label: "Qwen2-7B ⚠️", encoding: "gpt-4" },
-    { value: "qwen-plus", label: "Qwen-Plus ⚠️", encoding: "gpt-4" },
-    { value: "qwen-turbo", label: "Qwen-Turbo ⚠️", encoding: "gpt-4" },
-    { value: "qwen-max", label: "Qwen-Max ⚠️", encoding: "gpt-4" },
+    // Qwen 系列 - 使用官方 tokenizer
+    { value: "qwen3-235b", label: "Qwen3-235B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen2.5-72b", label: "Qwen2.5-72B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen2.5-32b", label: "Qwen2.5-32B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwq-32b", label: "QwQ-32B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen2.5-14b", label: "Qwen2.5-14B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen2.5-7b", label: "Qwen2.5-7B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen2-72b", label: "Qwen2-72B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen2-7b", label: "Qwen2-7B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen-plus", label: "Qwen-Plus 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen-turbo", label: "Qwen-Turbo 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen-max", label: "Qwen-Max 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
 ]
 
 export default function TokenCounter({ language, defaultModel, preferredCompany, restrictToCompany }: TokenCounterProps) {
