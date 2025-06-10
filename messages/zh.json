@@ -187,12 +187,12 @@
       }
     },
     "llmGpuCalculator": {
-      "title": "AI大模型显卡需求计算器",
+      "title": "LLM推理显存与GPU需求计算器",
       "description": "精确计算部署AI大模型需要多少张显卡，支持NVIDIA/AMD/华为昇腾/Mac M系列全平台",
-      "calculatorTitle": "{model} 显存与GPU需求计算器",
+      "calculatorTitle": "{model}显存与GPU需求计算器",
       "calculatorDescription": "计算{model}部署所需的显存和GPU数量，支持NVIDIA、AMD、苹果、华为等各厂商显卡",
       "metadata": {
-        "title": "AI大模型推理显卡需求计算器 | 精确计算GPU数量与显存 | 支持最新大模型",
+        "title": "LLM推理显存与GPU需求计算器",
         "description": "精确计算部署Qwen3-235B、DeepSeek-R1、Llama 3.1等大模型需要多少张显卡。支持NVIDIA H100/A100、AMD、华为昇腾910B、Mac M系列全平台。",
         "keywords": "AI显卡计算器,显存计算器,LLM硬件需求,大模型部署计算器"
       },
@@ -236,12 +236,12 @@
       }
     },
     "tokenCounter": {
-      "title": "AI Token计数器和分词器",
+      "title": "AI Token计数器与分词器",
       "description": "支持GPT-4o、Claude 4、Gemini 1.5 Pro、Llama 4、DeepSeek-R1、Qwen3等主流模型",
       "metadata": {
-        "title": "Token计数器和计算器：ChatGPT、GPT、Claude、Llama、DeepSeek分词器",
-        "description": "免费在线token计数器和计算器，支持ChatGPT、GPT-4o、Claude 4、Llama等AI模型。实时token计算、成本估算、API优化工具。",
-        "keywords": "token计数器,AI分词器,token计算器,分词工具,GPT token计数器,ChatGPT token计数器"
+        "title": "Token计数器与计算器：ChatGPT、GPT、Claude、Llama分词器",
+        "description": "免费在线Token计数器与计算器，支持ChatGPT、GPT-4o、Claude 4、Llama等模型。实时Token计数、成本估算、LLM Token计算器。",
+        "keywords": "token计数器,AI分词器,token计算器,分词工具,gpt token计数器,chatgpt token计数器"
       },
       "structured": {
         "tokenCountingModels": "多种AI模型的Token计数",

@@ -187,13 +187,13 @@
       }
     },
     "llmGpuCalculator": {
-      "title": "LLM GPU Requirement Calculator: Estimate GPU Count & VRAM",
+      "title": "LLM Inference VRAM & GPU Requirement Calculator",
       "description": "Accurately calculate how many GPUs you need to deploy LLMs. Supports NVIDIA, AMD, Huawei Ascend, Mac M-series. Get instant hardware requirements.",
       "calculatorTitle": "{model} VRAM & GPU Requirement Calculator",
       "calculatorDescription": "Calculate VRAM requirements and GPU count for {model} deployment. Support for NVIDIA, AMD, Apple, and Huawei",
       "metadata": {
-        "title": "LLM Inference GPU Requirement Calculator: Estimate VRAM & Hardware Requirements",
-        "description": "Calculate exact GPU count for Qwen3-235B, DeepSeek-R1, Llama 3.1 deployment. Supports NVIDIA H100/A100/RTX 4090, AMD, Huawei Ascend 910B, Mac M1/M2/M3/M4.",
+        "title": "LLM Inference VRAM & GPU Requirement Calculator",
+        "description": "Calculate exact VRAM and GPU count for local LLM deployment. Supports NVIDIA H100/A100/RTX 4090, AMD, Huawei Ascend 910B, Mac M1/M2/M3/M4.",
         "keywords": "llm vram calculator,vram calculator,llm inference hardware calculator,llm deployment calculator"
       },
       "models": {

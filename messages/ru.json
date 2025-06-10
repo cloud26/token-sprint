@@ -187,52 +187,14 @@
       }
     },
     "llmGpuCalculator": {
-      "title": "Калькулятор требований к GPU для LLM: Оценка количества GPU и VRAM",
+      "title": "Калькулятор требований к VRAM и GPU для LLM",
       "description": "Точно рассчитайте, сколько GPU вам нужно для развёртывания LLM. Поддерживает NVIDIA, AMD, Huawei Ascend, Mac M-серии. Получите мгновенные требования к оборудованию.",
-      "calculatorTitle": "{model} VRAM & GPU требования калькулятор",
+      "calculatorTitle": "Калькулятор требований к VRAM и GPU для {model}",
       "calculatorDescription": "Рассчитайте требования к VRAM и количество GPU для развёртывания {model}. Поддержка NVIDIA, AMD, Apple и Huawei",
       "metadata": {
-        "title": "Калькулятор требований к GPU для LLM вывода: Оценка VRAM и требований к оборудованию",
+        "title": "Калькулятор требований к VRAM и GPU для LLM",
         "description": "Рассчитайте точное количество GPU для развёртывания Qwen3-235B, DeepSeek-R1, Llama 3.1. Поддерживает NVIDIA H100/A100/RTX 4090, AMD, Huawei Ascend 910B, Mac M1/M2/M3/M4.",
         "keywords": "llm vram калькулятор,vram калькулятор,llm калькулятор оборудования для вывода,llm калькулятор развёртывания"
-      },
-      "models": {
-        "seoTitle": "{modelName} Калькулятор требований к GPU/VRAM для вывода",
-        "seoDescription": "Рассчитайте VRAM и количество GPU для развёртывания вывода {modelVersions}. Поддержка NVIDIA, AMD, Apple и Huawei GPU с {features}.",
-        "keywords": "{modelLower},{modelLower} требования gpu,{modelLower} развёртывание,{modelLower} локальный,{modelLower} ollama,{modelLower} vram калькулятор,vram калькулятор,{modelLower} локальное развёртывание",
-        "llama": {
-          "modelName": "Llama",
-          "modelVersions": "Llama 3/4",
-          "features": "архитектура MoE",
-          "specialFeatures": [
-            "Полная поддержка Llama 3.1",
-            "Последняя серия Llama 4",
-            "Архитектура смеси экспертов (MoE)",
-            "Мультимодальные AI возможности"
-          ]
-        },
-        "deepseek": {
-          "modelName": "DeepSeek",
-          "modelVersions": "DeepSeek V3/R1",
-          "features": "корпоративные решения",
-          "specialFeatures": [
-            "Масштаб в 671B параметров",
-            "Ведущие в отрасли возможности рассуждений",
-            "Поддержка оптимизации точности FP8",
-            "Подходит для корпоративного развёртывания"
-          ]
-        },
-        "qwen": {
-          "modelName": "Qwen",
-          "modelVersions": "Qwen3",
-          "features": "эффективная архитектура MoE",
-          "specialFeatures": [
-            "Архитектура смеси экспертов (MoE)",
-            "235B общих, 22B активных параметров",
-            "Чрезвычайно эффективная память",
-            "Отличная многоязычная поддержка"
-          ]
-        }
       }
     },
     "tokenCounter": {

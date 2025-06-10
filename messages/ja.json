@@ -187,14 +187,14 @@
       }
     },
     "llmGpuCalculator": {
-      "title": "LLM GPU要件カリキュレーター：GPU数とVRAMの見積もり",
-      "description": "LLMの展開に必要なGPU数を正確に計算。NVIDIA、AMD、Huawei Ascend、Mac Mシリーズをサポート。即座にハードウェア要件を取得。",
+      "title": "LLM推論VRAM & GPU要件カリキュレーター",
+      "description": "LLMの展開に必要なGPUの数を正確に計算。NVIDIA、AMD、Huawei Ascend、Mac Mシリーズをサポート。即座にハードウェア要件を取得。",
       "calculatorTitle": "{model} VRAM & GPU要件カリキュレーター",
-      "calculatorDescription": "{model}展開のVRAM要件とGPU数を計算。NVIDIA、AMD、Apple、Huaweiをサポート",
+      "calculatorDescription": "{model}展開のためのVRAM要件とGPU数を計算。NVIDIA、AMD、Apple、Huaweiをサポート",
       "metadata": {
-        "title": "LLM推論GPU要件カリキュレーター：VRAMとハードウェア要件の見積もり",
-        "description": "Qwen3-235B、DeepSeek-R1、Llama 3.1デプロイメントの正確なGPU数を計算。NVIDIA H100/A100/RTX 4090、AMD、Huawei Ascend 910B、Mac M1/M2/M3/M4をサポート。",
-        "keywords": "llm vramカリキュレーター,vramカリキュレーター,llm推論ハードウェアカリキュレーター,llmデプロイメントカリキュレーター"
+        "title": "LLM推論VRAM & GPU要件カリキュレーター",
+        "description": "ローカルLLM展開のための正確なVRAMとGPU数を計算。NVIDIA H100/A100/RTX 4090、AMD、Huawei Ascend 910B、Mac M1/M2/M3/M4をサポート。",
+        "keywords": "llm vramカリキュレーター,vramカリキュレーター,llm推論ハードウェアカリキュレーター,llm展開カリキュレーター"
       },
       "models": {
         "seoTitle": "{modelName}推論GPU/VRAM要件カリキュレーター",
