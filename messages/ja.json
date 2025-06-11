@@ -122,6 +122,26 @@
           "content": "異なるトークナイザーは同じテキストに対して20-40%のトークン数の差を生じることがあります。正確なコスト見積もりのため、対象モデルのトークナイザーでテストしてください。"
         }
       },
+
+      "tokenCounter": {
+        "input": "入力テキスト",
+        "inputPlaceholder": "トークン数を計算するテキストを入力または貼り付けてください...",
+        "model": "モデル選択",
+        "results": "結果",
+        "tokens": "トークン数",
+        "characters": "文字数",
+        "words": "単語数",
+        "calculating": "計算中...",
+        "modelGroups": {
+          "openai": "OpenAI GPTシリーズ (ネイティブ)",
+          "claude": "Anthropic Claudeシリーズ (🤗)",
+          "llama": "Meta Llamaシリーズ (🤗)",
+          "deepseek": "DeepSeekシリーズ (🤗)",
+          "mistral": "Mistralシリーズ (🤗)",
+          "gemini": "Google Geminiシリーズ (推定)",
+          "qwen": "Qwenシリーズ (🤗)"
+        }
+      },
       "loadingStates": {
         "preparing": "トークナイザーの読み込み準備中...",
         "downloading": "トークナイザーファイルをダウンロード中...",

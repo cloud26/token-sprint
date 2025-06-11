@@ -102,6 +102,7 @@ const models: ModelInfo[] = [
 
 export default function TokenCounter({ language, defaultModel, preferredCompany, restrictToCompany }: TokenCounterProps) {
     const t = useTranslations('common.ui')
+    const tc = useTranslations('common.ui.tokenCounter')
     const [text, setText] = useState("")
     const [selectedModel, setSelectedModel] = useState(defaultModel || "gpt-4o")
     const [debouncedText, setDebouncedText] = useState("")
@@ -208,7 +209,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
 
             setLoadingState('downloading')
             console.log(`Loading tokenizer: ${hubPath}`)
-            
+
             setLoadingState('initializing')
             const tokenizer = await HFTokenizer.from_pretrained(hubPath)
 
@@ -338,40 +339,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
         }
     }, [debouncedText, selectedModel, tokenCount, characterCount, wordCount, language, tokenData.isLoading]);
 
-    const texts = {
-        input: {
-            zh: "输入文本",
-            en: "Input Text"
-        },
-        inputPlaceholder: {
-            zh: "在此输入或粘贴您要计算token数量的文本...",
-            en: "Enter or paste your text here to count tokens..."
-        },
-        model: {
-            zh: "选择模型",
-            en: "Select Model"
-        },
-        results: {
-            zh: "统计结果",
-            en: "Results"
-        },
-        tokens: {
-            zh: "Token 数量",
-            en: "Token Count"
-        },
-        characters: {
-            zh: "字符数",
-            en: "Characters"
-        },
-        words: {
-            zh: "单词数",
-            en: "Words"
-        },
-        calculating: {
-            zh: "计算中...",
-            en: "Calculating..."
-        }
-    }
+
 
     // 判断是否正在计算精确值
     const isCalculating = (text !== debouncedText && text.trim().length > 0) ||
@@ -382,7 +350,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
             <CardContent className="p-6 space-y-6">
                 {/* 模型选择 */}
                 <div className="space-y-2">
-                    <Label>{texts.model[language]}</Label>
+                    <Label>{tc('model')}</Label>
                     <Select value={selectedModel} onValueChange={handleModelChange}>
                         <SelectTrigger className="text-base">
                             <SelectValue />
@@ -391,37 +359,37 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
                             {(() => {
                                 const modelGroups = [
                                     {
-                                        name: 'OpenAI GPT 系列 (原生)',
+                                        name: tc('modelGroups.openai'),
                                         bgColor: 'bg-blue-50',
                                         filter: (m: ModelInfo) => m.value.startsWith('gpt-') || m.value.startsWith('text-')
                                     },
                                     {
-                                        name: 'Anthropic Claude 系列 (🤗)',
+                                        name: tc('modelGroups.claude'),
                                         bgColor: 'bg-purple-50',
                                         filter: (m: ModelInfo) => m.value.startsWith('claude')
                                     },
                                     {
-                                        name: 'Meta Llama 系列 (🤗)',
+                                        name: tc('modelGroups.llama'),
                                         bgColor: 'bg-orange-50',
                                         filter: (m: ModelInfo) => m.value.startsWith('llama') || m.value.startsWith('code-llama')
                                     },
                                     {
-                                        name: 'DeepSeek 系列 (🤗)',
+                                        name: tc('modelGroups.deepseek'),
                                         bgColor: 'bg-gray-50',
                                         filter: (m: ModelInfo) => m.value.startsWith('deepseek')
                                     },
                                     {
-                                        name: 'Mistral 系列 (🤗)',
+                                        name: tc('modelGroups.mistral'),
                                         bgColor: 'bg-indigo-50',
                                         filter: (m: ModelInfo) => m.value.startsWith('mistral') || m.value.startsWith('codestral')
                                     },
                                     {
-                                        name: 'Google Gemini 系列 (估算)',
+                                        name: tc('modelGroups.gemini'),
                                         bgColor: 'bg-green-50',
                                         filter: (m: ModelInfo) => m.value.startsWith('gemini')
                                     },
                                     {
-                                        name: 'Qwen 系列 (估算)',
+                                        name: tc('modelGroups.qwen'),
                                         bgColor: 'bg-yellow-50',
                                         filter: (m: ModelInfo) => m.value.startsWith('qwen')
                                     }
@@ -453,9 +421,9 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
 
                 {/* 文本输入 */}
                 <div className="space-y-2">
-                    <Label>{texts.input[language]}</Label>
+                    <Label>{tc('input')}</Label>
                     <Textarea
-                        placeholder={texts.inputPlaceholder[language]}
+                        placeholder={tc('inputPlaceholder')}
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         className="min-h-[120px] text-base"
@@ -478,17 +446,17 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
                 {/* 统计结果 */}
                 <div className="space-y-2">
                     <Label className="text-base font-semibold">
-                        {texts.results[language]}
+                        {tc('results')}
                         {isCalculating && (
                             <span className="text-xs text-gray-500 ml-2">
-                                ({texts.calculating[language]})
+                                ({tc('calculating')})
                             </span>
                         )}
                     </Label>
                     <div className="bg-slate-50 p-3 rounded-lg">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                             <div className="text-center">
-                                <Label className="text-gray-600 text-xs block mb-1">{texts.tokens[language]}</Label>
+                                <Label className="text-gray-600 text-xs block mb-1">{tc('tokens')}</Label>
                                 <p className={`text-lg font-bold ${isCalculating ? 'text-gray-400' : 'text-blue-600'}`}>
                                     {tokenCount.toLocaleString()}
                                     {isCalculating && <span className="text-xs">*</span>}
@@ -500,11 +468,11 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
                                 )}
                             </div>
                             <div className="text-center">
-                                <Label className="text-gray-600 text-xs block mb-1">{texts.characters[language]}</Label>
+                                <Label className="text-gray-600 text-xs block mb-1">{tc('characters')}</Label>
                                 <p className="text-lg font-semibold text-green-600">{characterCount.toLocaleString()}</p>
                             </div>
                             <div className="text-center">
-                                <Label className="text-gray-600 text-xs block mb-1">{texts.words[language]}</Label>
+                                <Label className="text-gray-600 text-xs block mb-1">{tc('words')}</Label>
                                 <p className="text-lg font-semibold text-purple-600">{wordCount.toLocaleString()}</p>
                             </div>
                         </div>
@@ -647,8 +615,8 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
 
                 {isLoadingHFTokenizer && (
                     <div className="flex items-center gap-2 text-muted-foreground">
-                                        <Loader2 className="h-4 w-4 animate-spin" />
-                <span>{t(`loadingStates.${loadingState}`)}</span>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <span>{t(`loadingStates.${loadingState}`)}</span>
                     </div>
                 )}
 

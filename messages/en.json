@@ -31,6 +31,26 @@
         "ready": "Tokenizer ready!",
         "error": "Error loading tokenizer"
       },
+
+      "tokenCounter": {
+        "input": "Input Text",
+        "inputPlaceholder": "Enter or paste your text here to count tokens...",
+        "model": "Select Model",
+        "results": "Results",
+        "tokens": "Token Count",
+        "characters": "Characters",
+        "words": "Words",
+        "calculating": "Calculating...",
+        "modelGroups": {
+          "openai": "OpenAI GPT Series (Native)",
+          "claude": "Anthropic Claude Series (🤗)",
+          "llama": "Meta Llama Series (🤗)",
+          "deepseek": "DeepSeek Series (🤗)",
+          "mistral": "Mistral Series (🤗)",
+          "gemini": "Google Gemini Series (Estimation)",
+          "qwen": "Qwen Series (🤗)"
+        }
+      },
       "optimizationTipsFor": "Optimization Tips for {model}",
       "tokenEfficiency": "Token Efficiency: Use precise, concise prompts to minimize token usage and costs.",
       "modelSelection": "Model Selection: Choose the right {company} model for your specific use case and budget.",

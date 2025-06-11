@@ -32,6 +32,26 @@
         "error": "Ошибка загрузки токенизатора"
       },
 
+      "tokenCounter": {
+        "input": "Входной текст",
+        "inputPlaceholder": "Введите или вставьте текст для подсчета токенов...",
+        "model": "Выберите модель",
+        "results": "Результаты",
+        "tokens": "Количество токенов",
+        "characters": "Символы",
+        "words": "Слова",
+        "calculating": "Вычисление...",
+        "modelGroups": {
+          "openai": "Серия OpenAI GPT (нативная)",
+          "claude": "Серия Anthropic Claude (🤗)",
+          "llama": "Серия Meta Llama (🤗)",
+          "deepseek": "Серия DeepSeek (🤗)",
+          "mistral": "Серия Mistral (🤗)",
+          "gemini": "Серия Google Gemini (оценка)",
+          "qwen": "Серия Qwen (🤗)"
+        }
+      },
+
       "optimizationTipsFor": "Советы по оптимизации для {model}",
       "tokenEfficiency": "Эффективность токенов: Используйте точные, краткие запросы для минимизации использования токенов и затрат.",
       "modelSelection": "Выбор модели: Выберите подходящую модель {company} для вашего конкретного случая использования и бюджета.",
@@ -209,6 +229,44 @@
         "title": "Калькулятор требований к VRAM и GPU для LLM",
         "description": "Рассчитайте точное количество GPU для развёртывания Qwen3-235B, DeepSeek-R1, Llama 3.1. Поддерживает NVIDIA H100/A100/RTX 4090, AMD, Huawei Ascend 910B, Mac M1/M2/M3/M4.",
         "keywords": "llm vram калькулятор,vram калькулятор,llm калькулятор оборудования для вывода,llm калькулятор развёртывания"
+      },
+      "models": {
+        "seoTitle": "Калькулятор требований к GPU/VRAM для {modelName}",
+        "seoDescription": "Рассчитайте VRAM и количество GPU для развёртывания {modelVersions}. Поддержка GPU NVIDIA, AMD, Apple и Huawei с {features}.",
+        "keywords": "{modelLower},{modelLower} требования к gpu,{modelLower} развёртывание,{modelLower} локально,{modelLower} ollama,{modelLower} vram калькулятор,vram калькулятор,{modelLower} локальное развёртывание",
+        "llama": {
+          "modelName": "Llama",
+          "modelVersions": "Llama 3/4",
+          "features": "архитектура MoE",
+          "specialFeatures": [
+            "Полная поддержка серии Llama 3.1",
+            "Новейшая серия Llama 4",
+            "Архитектура Mixture-of-Experts (MoE)",
+            "Возможности мультимодального AI"
+          ]
+        },
+        "deepseek": {
+          "modelName": "DeepSeek",
+          "modelVersions": "DeepSeek V3/R1",
+          "features": "корпоративные решения",
+          "specialFeatures": [
+            "Массивный масштаб 671B параметров",
+            "Ведущие в отрасли возможности рассуждения",
+            "Поддержка оптимизации точности FP8",
+            "Подходит для корпоративного развёртывания"
+          ]
+        },
+        "qwen": {
+          "modelName": "Qwen",
+          "modelVersions": "Qwen3",
+          "features": "эффективная архитектура MoE",
+          "specialFeatures": [
+            "Архитектура Mixture-of-Experts (MoE)",
+            "235B общих, 22B активных параметров",
+            "Чрезвычайно эффективное использование памяти",
+            "Отличная многоязычная поддержка"
+          ]
+        }
       }
     },
     "tokenCounter": {
