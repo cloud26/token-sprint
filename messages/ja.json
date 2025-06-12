@@ -124,22 +124,22 @@
       },
 
       "tokenCounter": {
-        "input": "入力テキスト",
-        "inputPlaceholder": "トークン数を計算するテキストを入力または貼り付けてください...",
         "model": "モデル選択",
+        "input": "テキスト入力",
+        "inputPlaceholder": "トークン数をカウントするテキストを入力または貼り付けてください...",
         "results": "結果",
         "tokens": "トークン数",
         "characters": "文字数",
         "words": "単語数",
         "calculating": "計算中...",
         "modelGroups": {
-          "openai": "OpenAI GPTシリーズ (ネイティブ)",
-          "claude": "Anthropic Claudeシリーズ (🤗)",
-          "llama": "Meta Llamaシリーズ (🤗)",
-          "deepseek": "DeepSeekシリーズ (🤗)",
-          "mistral": "Mistralシリーズ (🤗)",
-          "gemini": "Google Geminiシリーズ (推定)",
-          "qwen": "Qwenシリーズ (🤗)"
+          "openai": "OpenAI GPT シリーズ (ネイティブ)",
+          "claude": "Anthropic Claude シリーズ (🤗)",
+          "llama": "Meta Llama シリーズ (🤗)",
+          "deepseek": "DeepSeek シリーズ (🤗)",
+          "mistral": "Mistral シリーズ (🤗)",
+          "gemini": "Google Gemini シリーズ (推定)",
+          "qwen": "Qwen シリーズ (🤗)"
         }
       },
       "loadingStates": {
