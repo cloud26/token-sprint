@@ -10,7 +10,24 @@ import { encodingForModel } from "js-tiktoken"
 import { useTranslations } from 'next-intl'
 import { Loader2 } from "lucide-react"
 
-// 现在使用服务端 tokenization API，不再需要客户端 Transformers.js
+// 使用 Hugging Face Transformers.js 进行本地 tokenization
+// 支持多种模型的社区 tokenizer
+let AutoTokenizer: any = null
+
+// 动态导入 Transformers.js (仅在浏览器环境)
+const loadTransformers = async () => {
+    if (typeof window !== 'undefined' && !AutoTokenizer) {
+        try {
+            const transformers = await import('@huggingface/transformers')
+            AutoTokenizer = transformers.AutoTokenizer
+            return transformers.AutoTokenizer
+        } catch (error) {
+            console.warn('Failed to load @huggingface/transformers:', error)
+            return null
+        }
+    }
+    return AutoTokenizer
+}
 
 interface TokenCounterProps {
     language: Language
@@ -93,17 +110,9 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
     const [tokenDisplayMode, setTokenDisplayMode] = useState<'text' | 'ids'>('text')
     const [isLoadingHFTokenizer, setIsLoadingHFTokenizer] = useState(false)
     const [hfTokenizerError, setHfTokenizerError] = useState<string | null>(null)
+    const [tokenizerCache, setTokenizerCache] = useState<Map<string, any>>(new Map())
     const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
     const [loadingState, setLoadingState] = useState<'preparing' | 'downloading' | 'initializing' | 'ready' | 'error'>('preparing')
-    
-    // 服务端 tokenization 结果状态
-    const [serverTokenResult, setServerTokenResult] = useState<{
-        tokenCount: number
-        tokens: string[]
-        tokenIds: number[]
-        hubPath: string
-        text: string
-    } | null>(null)
 
     // 根据优先公司重新排序模型列表，或者只显示特定公司的模型
     const sortedModels = useMemo(() => {
@@ -180,52 +189,39 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
         }
     }, [text])
 
-    // 使用服务端 tokenization API
-    const callServerTokenizer = async (text: string, hubPath: string) => {
+    // 加载 Hugging Face tokenizer
+    const loadHfTokenizer = async (hubPath: string) => {
         try {
             setIsLoadingHFTokenizer(true)
             setHfTokenizerError(null)
             setLoadingState('preparing')
 
-            const response = await fetch('/api/tokenize', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    text,
-                    hubPath
-                })
-            })
-
-            if (!response.ok) {
-                const errorData = await response.json()
-                throw new Error(errorData.details || 'Server tokenization failed')
+            // Check cache
+            if (tokenizerCache.has(hubPath)) {
+                setLoadingState('ready')
+                return tokenizerCache.get(hubPath)
             }
 
-            const result = await response.json()
+            const HFTokenizer = await loadTransformers()
+            if (!HFTokenizer) {
+                throw new Error('Failed to load Hugging Face Transformers')
+            }
+
+            setLoadingState('downloading')
+            console.log(`Loading tokenizer: ${hubPath}`)
+
+            setLoadingState('initializing')
+            const tokenizer = await HFTokenizer.from_pretrained(hubPath)
+
+            // Cache tokenizer
+            setTokenizerCache(prev => new Map(prev).set(hubPath, tokenizer))
             setLoadingState('ready')
-            
-            // 设置服务端结果
-            setServerTokenResult({
-                tokenCount: result.tokenCount,
-                tokens: result.tokens,
-                tokenIds: result.tokenIds,
-                hubPath,
-                text
-            })
-
-            return {
-                tokenCount: result.tokenCount,
-                tokens: result.tokens,
-                tokenIds: result.tokenIds
-            }
+            return tokenizer
 
         } catch (error: any) {
-            console.error('Server tokenization error:', error)
-            setHfTokenizerError(`Server tokenization failed: ${error.message}`)
+            console.error('Failed to load HF tokenizer:', error)
+            setHfTokenizerError(`Failed to load ${hubPath}: ${error.message}`)
             setLoadingState('error')
-            setServerTokenResult(null)
             return null
         } finally {
             setIsLoadingHFTokenizer(false)
@@ -246,87 +242,71 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
         }
     }, [currentModel.encoding])
 
-    // 计算 token 数量的主要逻辑
+    // Token 计算逻辑
     const tokenData = useMemo(() => {
-        if (!debouncedText) {
+        if (!debouncedText.trim()) {
             return {
                 count: 0,
                 tokens: [],
                 tokenIds: [],
-                isLoading: false,
-                error: null
+                isLoading: false
             }
         }
 
-        const currentModel = sortedModels.find(m => m.value === selectedModel) || sortedModels[0]
-
-        if (currentModel.encoding === "huggingface" && currentModel.hub) {
-            // 检查是否有匹配的服务端结果
-            if (serverTokenResult && 
-                serverTokenResult.hubPath === currentModel.hub && 
-                serverTokenResult.text === debouncedText) {
+        // OpenAI 模型使用 js-tiktoken
+        if (currentModel.encoding !== 'huggingface' && jsTokenizerEncoding) {
+            try {
+                const tokenIds = jsTokenizerEncoding.encode(debouncedText)
+                const tokens = tokenIds.map(id => jsTokenizerEncoding.decode([id]))
                 return {
-                    count: serverTokenResult.tokenCount,
-                    tokens: serverTokenResult.tokens,
-                    tokenIds: serverTokenResult.tokenIds,
-                    isLoading: false,
-                    error: null
+                    count: tokenIds.length,
+                    tokens: tokens,
+                    tokenIds: tokenIds,
+                    isLoading: false
+                }
+            } catch (error) {
+                console.error("Error with js-tiktoken:", error)
+            }
+        }
+
+        // Hugging Face 模型需要异步加载
+        if (currentModel.encoding === 'huggingface' && currentModel.hub) {
+            // 检查缓存
+            if (tokenizerCache.has(currentModel.hub)) {
+                try {
+                    const tokenizer = tokenizerCache.get(currentModel.hub)
+                    const encoded = tokenizer.encode(debouncedText)
+                    const tokens = encoded.map((id: number) => tokenizer.decode([id]))
+                    return {
+                        count: encoded.length,
+                        tokens: tokens,
+                        tokenIds: encoded,
+                        isLoading: false
+                    }
+                } catch (error) {
+                    console.error("Error using cached HF tokenizer:", error)
                 }
             }
 
-            // 需要调用服务端 API
+            // 触发异步加载
+            loadHfTokenizer(currentModel.hub)
+
             return {
-                count: Math.ceil(debouncedText.length / 4), // 临时估算
+                count: Math.ceil(debouncedText.length / 4), // 估算
                 tokens: [],
                 tokenIds: [],
-                isLoading: true,
-                error: null,
-                needsServerCall: true,
-                hubPath: currentModel.hub
+                isLoading: true
             }
-        } else {
-            // 使用客户端 js-tiktoken
-            try {
-                const encoding = encodingForModel(currentModel.encoding as any)
-                const encoded = encoding.encode(debouncedText)
-                const tokens = encoded.map(id => encoding.decode([id]))
-                
-                return {
-                    count: encoded.length,
-                    tokens: tokens,
-                    tokenIds: Array.from(encoded),
-                    isLoading: false,
-                    error: null
-                }
-            } catch (error: any) {
-                console.error('Tokenization error:', error)
+        }
+
+        // 回退估算
         return {
-                    count: 0,
+            count: Math.ceil(debouncedText.length / 4),
             tokens: [],
             tokenIds: [],
-                    isLoading: false,
-                    error: error.message
-                }
-            }
+            isLoading: false
         }
-    }, [debouncedText, selectedModel, sortedModels, serverTokenResult])
-
-    // 处理服务端 tokenization
-    useEffect(() => {
-        if (tokenData.needsServerCall && tokenData.hubPath && debouncedText) {
-            callServerTokenizer(debouncedText, tokenData.hubPath)
-        }
-    }, [tokenData.needsServerCall, tokenData.hubPath, debouncedText])
-
-    // 清除服务端结果当模型或文本改变时
-    useEffect(() => {
-        const currentModel = sortedModels.find(m => m.value === selectedModel) || sortedModels[0]
-        if (serverTokenResult && 
-            (serverTokenResult.hubPath !== currentModel.hub || 
-             serverTokenResult.text !== debouncedText)) {
-            setServerTokenResult(null)
-        }
-    }, [selectedModel, debouncedText, serverTokenResult, sortedModels])
+    }, [debouncedText, currentModel, jsTokenizerEncoding, tokenizerCache])
 
     const tokenCount = tokenData.count
     const characterCount = text.length

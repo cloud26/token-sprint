@@ -33,9 +33,9 @@
       },
 
       "tokenCounter": {
-        "model": "Select Model",
         "input": "Input Text",
         "inputPlaceholder": "Enter or paste your text here to count tokens...",
+        "model": "Select Model",
         "results": "Results",
         "tokens": "Token Count",
         "characters": "Characters",
