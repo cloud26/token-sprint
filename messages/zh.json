@@ -41,6 +41,7 @@
         "characters": "字符数",
         "words": "单词数",
         "calculating": "计算中...",
+        "exampleText": "两个家族，同样高贵，在维罗纳这座美丽的城市，我们展开故事，从古老的仇恨引发新的冲突，让平民的鲜血玷污平民的双手。从这两个宿敌的致命血脉中，一对不幸的恋人献出了生命；他们悲惨的覆灭，用死亡埋葬了父母的纷争。",
         "modelGroups": {
           "openai": "OpenAI GPT 系列 (原生)",
           "claude": "Anthropic Claude 系列 (🤗)",

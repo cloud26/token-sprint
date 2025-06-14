@@ -435,7 +435,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
                     <button
                         className="px-4 py-2 bg-amber-200 hover:bg-amber-300 rounded text-sm transition-colors font-medium"
                         onClick={() => {
-                            setText(`Two households, both alike in dignity, In fair Verona, where we lay our scene, From ancient grudge break to new mutiny, Where civil blood makes civil hands unclean. From forth the fatal loins of these two foes A pair of star-cross'd lovers take their life; Whose misadventured piteous overthrows Do with their death bury their parents' strife.`)
+                            setText(tc('exampleText'))
                             setShowTokenBreakdown(true)
                         }}
                     >
