@@ -1,0 +1,368 @@
+{
+  "common": {
+    "backToHome": "Zurück zur Startseite",
+    "navigation": {
+      "home": "Startseite"
+    },
+    "ui": {
+      "generateExample": "Beispiel generieren",
+      "tokenizerError": "Tokenizer-Fehler: Schätzung verwenden",
+      "loadingTokenizer": "Hugging Face Tokenizer wird geladen...",
+      "approximateCount": "Ungefähre Anzahl, genaue Berechnung läuft...",
+      "tokenBreakdown": "Token-Aufschlüsselung",
+      "hide": "Verbergen",
+      "show": "Anzeigen",
+      "text": "Text",
+      "tokenIds": "Token-IDs",
+      "tokensFound": "{count} Token gefunden:",
+      "tokenTooltip": "Token {index}: \"{token}\" (ID: {id})",
+      "businessGuide": "Geschäftsleitfaden: Token-Optimierung & Kostenkontrolle",
+      "whySpeedMatters": "Warum die Token-Generierungsgeschwindigkeit wichtig ist",
+      "loadingStates": {
+        "preparing": "Tokenizer wird vorbereitet...",
+        "downloading": "Tokenizer-Dateien werden heruntergeladen...",
+        "initializing": "Tokenizer wird initialisiert...",
+        "ready": "Tokenizer bereit!",
+        "error": "Fehler beim Laden des Tokenizers"
+      },
+
+      "tokenCounter": {
+        "input": "Eingabetext",
+        "inputPlaceholder": "Geben Sie hier Ihren Text ein oder fügen Sie ihn ein, um Token zu zählen...",
+        "model": "Modell auswählen",
+        "results": "Ergebnisse",
+        "tokens": "Token-Anzahl",
+        "characters": "Zeichen",
+        "words": "Wörter",
+        "calculating": "Berechnung läuft...",
+        "modelGroups": {
+          "openai": "OpenAI GPT-Serie (Nativ)",
+          "claude": "Anthropic Claude-Serie (🤗)",
+          "llama": "Meta Llama-Serie (🤗)",
+          "deepseek": "DeepSeek-Serie (🤗)",
+          "mistral": "Mistral-Serie (🤗)",
+          "gemini": "Google Gemini-Serie (Schätzung)",
+          "qwen": "Qwen-Serie (🤗)"
+        }
+      },
+      "optimizationTipsFor": "Optimierungstipps für {model}",
+      "tokenEfficiency": "Token-Effizienz: Verwenden Sie präzise, prägnante Prompts, um die Token-Nutzung und Kosten zu minimieren.",
+      "modelSelection": "Modellauswahl: Wählen Sie das richtige {company}-Modell für Ihren spezifischen Anwendungsfall und Ihr Budget.",
+      "batchProcessing": "Stapelverarbeitung: Kombinieren Sie mehrere Anfragen, wenn möglich, um den API-Overhead zu reduzieren.",
+      "contextManagement": "Kontextverwaltung: Überwachen Sie die Gesprächslänge, um innerhalb der Modellgrenzen zu bleiben.",
+      "costPlanning": "Kostenplanung: Verwenden Sie diesen Zähler, um Kosten vor der Implementierung in der Produktion zu schätzen.",
+      "optimizationTips": "Optimierungstipps",
+      "speedGuideContent": {
+        "intro": "Die Token-Generierungsgeschwindigkeit wirkt sich direkt auf die Benutzererfahrung in KI-Anwendungen aus. Forschungen zeigen, dass Verzögerungen über 3 Sekunden die Abbruchrate von Benutzern erheblich erhöhen.",
+        "speedBenchmarks": {
+          "title": "📊 Geschwindigkeits-Benchmarks",
+          "chatgpt": "ChatGPT-4: ~20-40 Token/Sek",
+          "claude": "Claude 3.5: ~25-50 Token/Sek",
+          "local": "Lokale Modelle: 5-200+ Token/Sek"
+        },
+        "optimizationTips": {
+          "title": "⚡ Optimierungstipps",
+          "streaming": "Streaming für wahrgenommene Geschwindigkeit verwenden",
+          "progress": "Fortschrittsanzeigen anzeigen",
+          "optimize": "Für Ihren Anwendungsfall optimieren"
+        },
+        "useTool": {
+          "title": "Verwenden Sie dieses Tool für:",
+          "description": "Testen Sie optimale Geschwindigkeiten für Chatbots (15-30 Token/Sek), Content-Tools (40+ Token/Sek) oder Bildungsplattformen (5-15 Token/Sek). Finden Sie den Sweet Spot zwischen Leistung und Benutzererfahrung."
+        }
+      },
+      "tokenGuide": {
+        "colorBlocks": "Jeder farbige Block repräsentiert ein Token",
+        "hover": "Bewegen Sie die Maus über Token, um ihre IDs zu sehen",
+        "spaces": "⎵ repräsentiert Leerzeichen",
+        "hfModels": "🤗 Modelle verwenden Hugging Face Community-Tokenizer"
+      },
+      "hfSection": {
+        "title": "Hugging Face Community-Tokenizer",
+        "localProcessing": {
+          "title": "Lokale Verarbeitung",
+          "description": "Keine API-Aufrufe erforderlich"
+        },
+        "communityTokenizers": {
+          "title": "Community-Tokenizer",
+          "description": "Verwaltet von der Open-Source-Community"
+        },
+        "tokenBreakdown": {
+          "title": "Token-Aufschlüsselung",
+          "description": "Vollständige Tokenisierungsdetails verfügbar"
+        },
+        "hubModel": "Hub-Modell",
+        "firstLoad": "Erstes Laden kann Zeit zum Herunterladen des Tokenizers benötigen"
+      },
+      "usageTips": {
+        "title": "Tokenizer-Typen:",
+        "openaiModels": "OpenAI-Modelle",
+        "nativeJs": "Natives js-tiktoken (am genauesten)",
+        "hfModels": "🤗 Modelle",
+        "communityTokenizers": "Hugging Face Community-Tokenizer (sehr gute Näherung)",
+        "warningModels": "⚠️ Modelle",
+        "gpt4Estimation": "GPT-4 Tokenizer-Schätzung",
+        "communityAccuracy": "Community-Tokenizer sind reverse-engineered, aber ziemlich genau",
+        "localRun": "Alle Tokenizer laufen jetzt lokal in Ihrem Browser!"
+      },
+      "businessGuideContent": {
+        "costEstimation": {
+          "title": "💰 API-Kostenschätzung",
+          "description": "Das Verständnis von Token-Anzahlen ist entscheidend für das Kostenmanagement. Zum Beispiel:",
+          "examples": {
+            "gpt4o": "GPT-4o: 15$/1M Input-Token - Ein 1000-Token-Prompt kostet ~0,015$",
+            "claude": "Claude 3.5 Sonnet: 3$/1M Token - Derselbe Prompt kostet ~0,003$",
+            "gemini": "Gemini 1.5 Pro: 1,25$/1M Token - Derselbe Prompt kostet ~0,00125$"
+          },
+          "tip": "Verwenden Sie unseren Rechner, um Kosten vor der Skalierung Ihrer Anwendung zu schätzen."
+        },
+        "businessScenarios": {
+          "title": "🎯 Geschäftsszenarien",
+          "contentGeneration": "Inhaltsgenerierung: Token-Limits für Blog-Posts, Marketing-Texte vorab berechnen",
+          "customerSupport": "Kundensupport: Chatbot-Antworten optimieren, um in Kontextfenstern zu bleiben",
+          "documentAnalysis": "Dokumentenanalyse: Große Dokumente für die Verarbeitung effizient aufteilen",
+          "apiIntegration": "API-Integration: Eingabegröße vor teuren API-Aufrufen validieren"
+        },
+        "optimizationStrategies": {
+          "title": "⚡ Optimierungsstrategien",
+          "modelSelection": "Modellauswahl: Günstigere Modelle für einfache Aufgaben, Premium für komplexe verwenden",
+          "promptEngineering": "Prompt-Engineering: Kürzere, spezifischere Prompts liefern oft bessere Ergebnisse",
+          "contextManagement": "Kontextverwaltung: Gesprächslänge überwachen, um Limits zu vermeiden",
+          "batchProcessing": "Stapelverarbeitung: Mehrere Anfragen kombinieren, um Overhead zu reduzieren"
+        },
+        "proTip": {
+          "title": "💡 Profi-Tipp:",
+          "content": "Verschiedene Tokenizer können 20-40% Variation in Token-Anzahlen für denselben Text erzeugen. Testen Sie mit dem Tokenizer Ihres Zielmodells für genaue Kostenschätzung."
+        }
+      }
+    },
+    "gpu": {
+      "selectionGuide": "GPU-Auswahlführer für LLM-Bereitstellung",
+      "popularModels": "GPU-Anforderungen beliebter KI-Modelle für lokale Bereitstellung",
+      "guide": {
+        "budgetOptions": {
+          "title": "💰 Budgetfreundliche Optionen (Unter 10.000$)",
+          "rtx4090": "RTX 4090 (24GB): Beste für 7B-13B Modelle, Einzelkarten-Setup",
+          "rtx3090": "RTX 3090 (24GB): Gutes Preis-Leistungs-Verhältnis für kleinere Modelle und Experimente",
+          "rtx4060ti": "Mehrere RTX 4060 Ti (16GB): Kosteneffektiv für verteilte Inferenz"
+        },
+        "enterpriseSolutions": {
+          "title": "🏢 Unternehmenslösungen (50.000$+)",
+          "h100": "NVIDIA H100 (80GB): Industriestandard für LLM-Produktionsbereitstellung",
+          "a100": "NVIDIA A100 (80GB): Bewährte Zuverlässigkeit, gut für 70B+ Modelle",
+          "mi300x": "AMD MI300X (192GB): Höchste Speicherkapazität, ausgezeichnet für größte Modelle"
+        },
+        "proTips": {
+          "title": "⚡ Profi-Tipps zur Optimierung",
+          "fp8": "FP8/INT8 verwenden: Speicherverbrauch um 50-75% reduzieren bei minimalem Qualitätsverlust",
+          "moe": "MoE-Modelle berücksichtigen: Qwen3-235B-A22B bietet Flaggschiff-Leistung mit 4x H100 (vs 10x für DeepSeek-R1)",
+          "parallel": "Modell-Parallelismus: Große Modelle über mehrere GPUs aufteilen",
+          "precision": "Gemischte Präzision: FP16-Inferenz mit FP32-Gradienten für Training kombinieren",
+          "mapping": "Speicher-Mapping: CPU-RAM für Modellspeicherung, GPU für aktive Schichten verwenden"
+        }
+      },
+      "models": {
+        "qwen": {
+          "title": "🆕 Qwen2.5 & Qwen3 Lokale Bereitstellungs-GPU-Anforderungen",
+          "description": "Qwen2.5-72B & Qwen3-235B-A22B sind die neuesten Flaggschiff-Modelle. Qwen2.5-72B benötigt 2x H100 mit FP8, während Qwen3-235B-A22B (MoE) 4x H100 benötigt. Die Qwen2.5-Serie bietet ausgezeichnete mehrsprachige Fähigkeiten mit effizienter lokaler Bereitstellung."
+        },
+        "deepseek": {
+          "title": "DeepSeek R1 Lokale Bereitstellungs-GPU-Anforderungen",
+          "description": "DeepSeek R1 (671B Parameter) erfordert erheblichen GPU-Speicher für lokale Bereitstellung. Mit FP8-Präzision benötigen Sie etwa 10x NVIDIA H100 GPUs oder entsprechende High-Memory-Konfigurationen für optimale lokale Inferenz-Leistung."
+        },
+        "llama70b": {
+          "title": "Llama 3.1 70B Lokale Bereitstellungs-GPU-Anforderungen",
+          "description": "Llama 3.1 70B ist zugänglicher für lokale Bereitstellung. Mit FP16-Präzision benötigen Sie 2x NVIDIA A100 (80GB) oder H100. Für Verbraucher-Hardware benötigen Sie 7x RTX 4090-Karten (je 24GB)."
+        },
+        "llama405b": {
+          "title": "Llama 3.1 405B Lokale Bereitstellungs-GPU-Anforderungen",
+          "description": "Llama 3.1 405B erfordert High-End-Infrastruktur für lokale Bereitstellung. Mit FP8-Präzision benötigen Sie 6x H100 GPUs. Mit FP16-Präzision benötigen Sie 11x A100 GPUs für lokale Bereitstellung."
+        },
+        "footer": "Verwenden Sie diesen Rechner, um genaue Speicheranforderungen für Ihren spezifischen Anwendungsfall und Budgetplanung zu erhalten."
+      }
+    }
+  },
+  "home": {
+    "title": "Professionelle KI-Entwicklungstools",
+    "description": "Kuratierte Sammlung praktischer KI-Entwicklungs- und Analysetools für Ihre Projekte",
+    "metadata": {
+      "title": "KI-Entwicklungstools | Token-Zähler | GPU-Rechner",
+      "description": "Kostenlose professionelle KI-Entwicklungstools einschließlich intelligenter Token-Zähler, LLM-GPU-Rechner und KI-Generierungsgeschwindigkeits-Simulator. Wesentliche Tools für KI-Entwickler zur Optimierung von Effizienz und Projektkosten."
+    }
+  },
+  "nav": {
+    "aiTools": "KI-Tools",
+    "homePage": "KI-Tools-Startseite",
+    "goToHomePage": "Zur KI-Tools-Startseite gehen",
+    "gpuCalculator": "GPU-Rechner"
+  },
+  "tools": {
+    "tokenSpeedVisualizer": {
+      "title": "KI-Token-Generierungsgeschwindigkeits-Simulator",
+      "description": "Erleben Sie realistische KI-Textgenerierung bei verschiedenen Geschwindigkeiten und verstehen Sie die Auswirkungen auf die Benutzererfahrung",
+      "metadata": {
+        "title": "KI-Token-Geschwindigkeits-Simulator | Echte KI-Chat-Erfahrung",
+        "description": "Interaktiver KI-Textgenerierungsgeschwindigkeits-Simulator. Erleben Sie, wie verschiedene Token-Generierungsgeschwindigkeiten die Benutzererfahrung in KI-Gesprächen beeinflussen. Perfekt für Entwickler, die KI-Chat-Interfaces optimieren.",
+        "keywords": "ki token geschwindigkeit, ki generierungsgeschwindigkeit, token generierung, ki antwortzeit, ki leistung"
+      }
+    },
+    "llmGpuCalculator": {
+      "title": "LLM-Inferenz-VRAM- & GPU-Anforderungsrechner",
+      "description": "Berechnen Sie genau, wie viele GPUs Sie für die Bereitstellung von LLMs benötigen. Unterstützt NVIDIA, AMD, Huawei Ascend, Mac M-Serie. Erhalten Sie sofortige Hardware-Anforderungen.",
+      "calculatorTitle": "{model} VRAM- & GPU-Anforderungsrechner",
+      "calculatorDescription": "Berechnen Sie VRAM-Anforderungen und GPU-Anzahl für {model}-Bereitstellung. Unterstützung für NVIDIA, AMD, Apple und Huawei",
+      "metadata": {
+        "title": "LLM-Inferenz-VRAM- & GPU-Anforderungsrechner",
+        "description": "Berechnen Sie exakte VRAM- und GPU-Anzahl für lokale LLM-Bereitstellung. Unterstützt NVIDIA H100/A100/RTX 4090, AMD, Huawei Ascend 910B, Mac M1/M2/M3/M4.",
+        "keywords": "llm vram rechner,vram rechner,llm inferenz hardware rechner,llm bereitstellungsrechner"
+      },
+      "models": {
+        "seoTitle": "{modelName} Inferenz-GPU/VRAM-Anforderungsrechner",
+        "seoDescription": "Berechnen Sie VRAM- und GPU-Anzahl für {modelVersions}-Inferenz-Bereitstellung. Unterstützung für NVIDIA, AMD, Apple und Huawei GPUs mit {features}.",
+        "keywords": "{modelLower},{modelLower} gpu anforderungen,{modelLower} bereitstellung,{modelLower} lokal,{modelLower} ollama,{modelLower} vram rechner,vram rechner,{modelLower} lokale bereitstellung",
+        "llama": {
+          "modelName": "Llama",
+          "modelVersions": "Llama 3/4",
+          "features": "MoE-Architektur",
+          "specialFeatures": [
+            "Vollständige Llama 3.1-Serie-Unterstützung",
+            "Neueste Llama 4-Serie",
+            "Mixture-of-Experts (MoE) Architektur",
+            "Multimodale KI-Fähigkeiten"
+          ]
+        },
+        "deepseek": {
+          "modelName": "DeepSeek",
+          "modelVersions": "DeepSeek V3/R1",
+          "features": "Enterprise-Grade-Lösungen",
+          "specialFeatures": [
+            "Massive 671B-Parameter-Skala",
+            "Branchenführende Reasoning-Fähigkeiten",
+            "Unterstützt FP8-Präzisionsoptimierung",
+            "Geeignet für Unternehmensbereitstellung"
+          ]
+        },
+        "qwen": {
+          "modelName": "Qwen",
+          "modelVersions": "Qwen3",
+          "features": "effiziente MoE-Architektur",
+          "specialFeatures": [
+            "Mixture-of-Experts (MoE) Architektur",
+            "235B gesamt, 22B aktive Parameter",
+            "Extrem speichereffizient",
+            "Ausgezeichnete mehrsprachige Unterstützung"
+          ]
+        }
+      }
+    },
+    "tokenCounter": {
+      "title": "KI-Token-Zähler & Tokenizer",
+      "description": "Unterstützung für GPT-4o, Claude 4, Gemini 1.5 Pro, Llama 4, DeepSeek-R1, Qwen3 und andere führende Modelle",
+      "metadata": {
+        "title": "Token-Zähler & -Rechner: ChatGPT, GPT, Claude, Llama Tokenizer",
+        "description": "Kostenloser Online-Token-Zähler & -Rechner für ChatGPT, GPT-4o, Claude 4, Llama-Modelle. Echtzeitiges Token-Zählen, Kostenschätzung, LLM-Token-Rechner.",
+        "keywords": "token zähler,tokenizers ki,token rechner,tokenisierungstools,gpt token zähler,chatgpt token zähler"
+      },
+      "structured": {
+        "tokenCountingModels": "Token-Zählung für mehrere KI-Modelle",
+        "visualBreakdown": "Visuelle Token-Aufschlüsselung",
+        "modelSupport": "Unterstützung für GPT, Claude, Gemini, DeepSeek, Llama-Modelle",
+        "realtimeAnalysis": "Echtzeit-Token-Analyse",
+        "aiTokenCounter": "KI-Token-Zähler"
+      },
+      "models": {
+        "description": "{company} Token-Zähler und Tokenizer-Tool. {accuracyNote}",
+        "seoTitle": "{displayName} Token-Zähler & -Rechner: Kostenloser {displayName} Tokenizer {titleSuffix}",
+        "seoDescription": "Kostenloser {displayName} Token-Zähler & -Rechner für {versions}. {features}",
+        "keywords": "token zähler,tokenizers ki,token rechner,tokenisierungstools,{keywordName} token zähler",
+        "openai-gpt": {
+          "company": "OpenAI",
+          "displayName": "ChatGPT",
+          "keywordName": "openai",
+          "titleSuffix": "Online",
+          "accuracyNote": "Das genaueste OpenAI-Token-Zählungstool.",
+          "versions": "GPT-4o, GPT-4, GPT-3.5",
+          "features": "Native Tokenizer-Genauigkeit, Echtzeit-Kostenschätzung, Online-Token-Rechner.",
+          "representativeModels": "GPT-4o, GPT-4, GPT-4 Turbo, GPT-3.5 Turbo"
+        },
+        "anthropic-claude": {
+          "company": "Anthropic Claude",
+          "displayName": "Claude",
+          "keywordName": "claude",
+          "titleSuffix": "Online",
+          "accuracyNote": "Ungefähre Token-Zählung für Claude-Modelle mit fortgeschrittener Schätzung.",
+          "versions": "Claude 4, Claude 3.5",
+          "features": "Online-Token-Schätzer mit Kostenberechnung, Hugging Face Tokenizer.",
+          "representativeModels": "Claude 4 Opus, Claude 4 Sonnet, Claude 3.5 Sonnet, Claude 3.5 Haiku"
+        },
+        "google-gemini": {
+          "company": "Google Gemini",
+          "displayName": "Gemini",
+          "keywordName": "gemini",
+          "titleSuffix": "",
+          "accuracyNote": "Ungefähre Token-Zählung für Gemini-Modelle mit fortgeschrittener Schätzung.",
+          "versions": "Gemini 1.5 Pro, Flash",
+          "features": "Online-Token-Schätzer mit Echtzeitberechnung und Kostenschätzung.",
+          "representativeModels": "Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini Pro"
+        },
+        "meta-llama": {
+          "company": "Meta Llama",
+          "displayName": "Llama",
+          "keywordName": "llama",
+          "titleSuffix": "",
+          "accuracyNote": "Ungefähre Token-Zählung für Llama-Modelle mit fortgeschrittener Schätzung.",
+          "versions": "Llama 4, Llama 3",
+          "features": "Online-LLM-Token-Schätzer mit Hugging Face Tokenizer, Open-Source-Modelle.",
+          "representativeModels": "Llama 3.1 405B, Llama 3.1 70B, Llama 3.1 8B, Llama 2 70B"
+        },
+        "deepseek": {
+          "company": "DeepSeek",
+          "displayName": "DeepSeek",
+          "keywordName": "deepseek",
+          "titleSuffix": "",
+          "accuracyNote": "Ungefähre Token-Zählung für DeepSeek-Modelle mit fortgeschrittener Schätzung.",
+          "versions": "DeepSeek R1, V3",
+          "features": "Online-Token-Schätzer mit Kostenberechnung und Optimierung.",
+          "representativeModels": "DeepSeek-R1, DeepSeek-V3 Chat"
+        },
+        "alibaba-qwen": {
+          "company": "Alibaba Qwen",
+          "displayName": "Qwen",
+          "keywordName": "qwen",
+          "titleSuffix": "",
+          "accuracyNote": "Ungefähre Token-Zählung für Qwen-Modelle mit fortgeschrittener Schätzung.",
+          "versions": "Qwen3, Qwen2.5",
+          "features": "Online-Token-Schätzer mit mehrsprachiger Unterstützung und Kostenoptimierung.",
+          "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        }
+      }
+    }
+  },
+  "calculator": {
+    "parameters": {
+      "label": "Modellparameter (Milliarden)",
+      "tooltip": "Modellgröße in Milliarden von Parametern, z.B. 671B (DeepSeek R1), 70B (Llama 3.1 70B), 405B (Llama 3.1 405B), 7B, 13B",
+      "selectPlaceholder": "Modell auswählen"
+    },
+    "precision": {
+      "label": "Präzision",
+      "tooltip": "Verschiedene Präzisionen beeinflussen den Speicherverbrauch, FP32 am höchsten, FP8 am niedrigsten"
+    },
+    "gpu": {
+      "label": "GPU-Modell",
+      "searchPlaceholder": "GPU-Modelle suchen...",
+      "notFound": "Kein GPU-Modell gefunden"
+    },
+    "results": {
+      "modelMemory": "Modellspeicher",
+      "inferenceMemory": "Inferenzspeicher",
+      "totalMemory": "Erforderlicher Gesamtspeicher",
+      "requiredGPUs": "Erforderliche GPUs",
+      "unit": "x"
+    },
+    "quickStart": {
+      "title": "Schnellstart-Beispiele:",
+      "description": "Klicken Sie auf diese Beispiele, um schnell beliebte Modellbereitstellungsszenarien zu konfigurieren!"
+    }
+  }
+}
