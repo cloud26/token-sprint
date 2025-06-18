@@ -1,9 +1,9 @@
-export type Language = "en" | "zh" | "ru" | "ja"
+export type Language = "en" | "zh" | "ru" | "ja" | "de"
 
 // 中心化语言配置
 export const LANGUAGE_CONFIG = {
   // 支持的语言列表
-  SUPPORTED_LANGUAGES: ['en', 'zh', 'ru', 'ja'] as const,
+  SUPPORTED_LANGUAGES: ['en', 'zh', 'ru', 'ja', 'de'] as const,
   
   // 默认语言
   DEFAULT_LANGUAGE: 'en' as const,
@@ -13,7 +13,8 @@ export const LANGUAGE_CONFIG = {
     'en': 'en_US',
     'zh': 'zh_CN', 
     'ru': 'ru_RU',
-    'ja': 'ja_JP'
+    'ja': 'ja_JP',
+    'de': 'de_DE'
   } as const,
   
   // 语言标签（用于UI显示）
@@ -21,7 +22,8 @@ export const LANGUAGE_CONFIG = {
     'en': 'English',
     'zh': '中文',
     'ru': 'Русский', 
-    'ja': '日本語'
+    'ja': '日本語',
+    'de': 'Deutsch'
   } as const,
   
   // 语言代码到全名的映射
@@ -29,7 +31,8 @@ export const LANGUAGE_CONFIG = {
     'en': 'English',
     'zh': 'Chinese',
     'ru': 'Russian',
-    'ja': 'Japanese'
+    'ja': 'Japanese',
+    'de': 'German'
   } as const,
   
   // hreflang 映射
@@ -37,7 +40,8 @@ export const LANGUAGE_CONFIG = {
     'en': 'en',
     'zh': 'zh-CN',
     'ru': 'ru',
-    'ja': 'ja'
+    'ja': 'ja',
+    'de': 'de'
   } as const
 } as const
 
