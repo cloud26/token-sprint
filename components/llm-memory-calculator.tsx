@@ -129,7 +129,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     const [gpuModel, setGpuModel] = useState<string>("NVIDIA H100 (80GB)")
     const [selectedModel, setSelectedModel] = useState<string>(getDefaultModel())
     const [batchSize, setBatchSize] = useState<string>("1") // 并发量
-    const [contextLength, setContextLength] = useState<string>("4096") // 上下文长度
+    const [contextLength, setContextLength] = useState<string>("1024") // 上下文长度
     
     // Popover 开关状态
     const [modelPopoverOpen, setModelPopoverOpen] = useState(false)
