@@ -284,11 +284,11 @@ function calcThroughputInfo(
   // 每用户吞吐量
   const throughputPerUser = totalThroughput / batchSize
   
-  // 更准确的输出长度估算
-  const avgOutputTokens = getRealisticOutputTokens(contextLength, parameters, selectedModel)
+  // 使用标准化的输出长度进行性能计算，确保不同模型间的可比性
+  const avgOutputTokens = getAvgOutputTokens(contextLength)
   const estimatedLatency = (avgOutputTokens / throughputPerUser) * 1000
   
-  // QPS计算
+  // QPS计算 - 基于标准输出长度
   const maxQPSByThroughput = totalThroughput / avgOutputTokens
   const avgResponseTimeSeconds = avgOutputTokens / throughputPerUser
   const maxQPSByConcurrency = batchSize / avgResponseTimeSeconds
@@ -343,7 +343,7 @@ function getModelEfficiency(parameters: number, selectedModel?: string): number 
   }
 }
 
-// 更现实的输出长度估算 - 基于实际基准测试数据
+// 实际输出长度估算 - 基于实际基准测试数据（用于展示信息）
 function getRealisticOutputTokens(contextLength: number, parameters: number, selectedModel?: string): number {
   // 基于实际基准测试，大多数模型的输出长度远低于预期
   // 实际观察：Gemma输出很短(20-160)，DeepSeek输出较长(350-560)
