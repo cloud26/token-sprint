@@ -179,110 +179,178 @@ export interface ModelInfo {
   parameters: string; // 显示用的参数量字符串，如 "7B"
   parametersNum: number; // 用于计算的数值，如 7
   value: string; // 用于选择器的值
-  d_model: number;
-  n_layers: number;
+  d_model: number; // 模型维度，如4096、5120、8192等，影响模型的表达能力和计算量
+  n_layers: number; // 模型层数，如32、40、64等，影响模型的表达能力和计算量
   activeParams?: number; // MoE模型的激活参数数量
   isMoE?: boolean;
   source: string;
   verificationUrl?: string;
+  series: string; // 模型系列，如 "DeepSeek", "Llama 4", "Qwen 3"
+  category: string; // 模型类别，如 "原始模型", "蒸馏模型", "代码专用"
 }
 
 // 统一的模型数据 - 包含架构信息的完整模型列表
 export const MODELS: ModelInfo[] = [
-  // DeepSeek 系列
+  // DeepSeek 系列 (开源可私有化部署)
   {
     name: "DeepSeek-R1",
     parameters: "671B",
     parametersNum: 671,
     value: "deepseek-r1",
-    d_model: 18432,
-    n_layers: 144,
+    d_model: 7168,
+    n_layers: 61,
     activeParams: 37,
     isMoE: true,
-    source: 'DeepSeek-R1 technical report',
-    verificationUrl: 'https://github.com/deepseek-ai/DeepSeek-R1'
+    source: 'DeepSeek-R1 official configuration',
+    verificationUrl: 'https://huggingface.co/deepseek-ai/DeepSeek-R1/blob/main/configuration_deepseek.py',
+    series: "DeepSeek",
+    category: "原始模型"
   },
   {
     name: "DeepSeek-V3",
     parameters: "671B",
     parametersNum: 671,
     value: "deepseek-v3",
-    d_model: 18432,
-    n_layers: 144,
+    d_model: 7168,
+    n_layers: 61,
     activeParams: 37,
     isMoE: true,
     source: 'DeepSeek-V3 technical report',
-    verificationUrl: 'https://github.com/deepseek-ai/DeepSeek-V3'
+    verificationUrl: 'https://github.com/deepseek-ai/DeepSeek-V3',
+    series: "DeepSeek",
+    category: "原始模型"
   },
 
-  // Llama 4 系列
+  // DeepSeek-R1 蒸馏系列 (基于Qwen)
   {
-    name: "Llama 4 Maverick",
-    parameters: "400B",
-    parametersNum: 400,
-    value: "llama-4-maverick",
-    d_model: 16384,
-    n_layers: 120,
-    source: 'Llama-4-Maverick estimated architecture'
+    name: "DeepSeek-R1-Distill-Qwen-32B",
+    parameters: "32B",
+    parametersNum: 32,
+    value: "deepseek-r1-distill-qwen-32b",
+    d_model: 5120,
+    n_layers: 64,
+    source: 'DeepSeek-R1 distilled from Qwen2.5-32B',
+    verificationUrl: 'https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B',
+    series: "DeepSeek",
+    category: "蒸馏模型"
+  },
+  {
+    name: "DeepSeek-R1-Distill-Qwen-14B",
+    parameters: "14B",
+    parametersNum: 14,
+    value: "deepseek-r1-distill-qwen-14b",
+    d_model: 5120,
+    n_layers: 40,
+    source: 'DeepSeek-R1 distilled from Qwen2.5-14B',
+    verificationUrl: 'https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B',
+    series: "DeepSeek",
+    category: "蒸馏模型"
+  },
+  {
+    name: "DeepSeek-R1-Distill-Qwen-7B",
+    parameters: "7B",
+    parametersNum: 7,
+    value: "deepseek-r1-distill-qwen-7b",
+    d_model: 3584,
+    n_layers: 28,
+    source: 'DeepSeek-R1 distilled from Qwen2.5-Math-7B',
+    verificationUrl: 'https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B',
+    series: "DeepSeek",
+    category: "蒸馏模型"
+  },
+  {
+    name: "DeepSeek-R1-Distill-Qwen-1.5B",
+    parameters: "1.5B",
+    parametersNum: 1.5,
+    value: "deepseek-r1-distill-qwen-1.5b",
+    d_model: 1536,
+    n_layers: 28,
+    source: 'DeepSeek-R1 distilled from Qwen2.5-Math-1.5B',
+    verificationUrl: 'https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B',
+    series: "DeepSeek",
+    category: "蒸馏模型"
   },
 
-  // Llama 3 系列
+  // DeepSeek-R1 蒸馏系列 (基于Llama)
   {
-    name: "Llama 3.1 405B",
-    parameters: "405B",
-    parametersNum: 405,
-    value: "llama-3.1-405b",
-    d_model: 16384,
-    n_layers: 126,
-    source: 'Llama-3.1-405B official config',
-    verificationUrl: 'https://huggingface.co/meta-llama/Llama-3.1-405B/blob/main/config.json'
+    name: "DeepSeek-R1-Distill-Llama-70B",
+    parameters: "70B",
+    parametersNum: 70,
+    value: "deepseek-r1-distill-llama-70b",
+    d_model: 8192,
+    n_layers: 80,
+    source: 'DeepSeek-R1 distilled from Llama-3.3-70B-Instruct',
+    verificationUrl: 'https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B',
+    series: "DeepSeek",
+    category: "蒸馏模型"
   },
+  {
+    name: "DeepSeek-R1-Distill-Llama-8B",
+    parameters: "8B",
+    parametersNum: 8,
+    value: "deepseek-r1-distill-llama-8b",
+    d_model: 4096,
+    n_layers: 32,
+    source: 'DeepSeek-R1 distilled from Llama-3.1-8B',
+    verificationUrl: 'https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B',
+    series: "DeepSeek",
+    category: "蒸馏模型"
+  },
+
+  // Llama 4 系列 (已发布，可私有化部署)
   {
     name: "Llama 4 Scout",
     parameters: "109B",
     parametersNum: 109,
     value: "llama-4-scout",
-    d_model: 9216,
-    n_layers: 80,
-    source: 'Llama-4-Scout estimated architecture'
+    d_model: 4096,
+    n_layers: 32,
+    activeParams: 17,
+    isMoE: true,
+    source: 'Meta AI official release - available on HuggingFace',
+    verificationUrl: 'https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E-Instruct',
+    series: "Llama 4",
+    category: "原始模型"
   },
   {
-    name: "Llama 3.1 70B",
+    name: "Llama 4 Maverick",
+    parameters: "400B",
+    parametersNum: 400,
+    value: "llama-4-maverick",
+    d_model: 4096,
+    n_layers: 32,
+    activeParams: 17,
+    isMoE: true,
+    source: 'Meta AI official release - available on HuggingFace',
+    verificationUrl: 'https://huggingface.co/meta-llama/Llama-4-Maverick-17B-128E-Instruct',
+    series: "Llama 4",
+    category: "原始模型"
+  },
+
+  // Llama 3 系列 (开源可私有化部署)
+  {
+    name: "Llama 3 8B",
+    parameters: "8B",
+    parametersNum: 8,
+    value: "llama-3-8b",
+    d_model: 4096,
+    n_layers: 32,
+    source: 'Llama 3 technical specifications',
+    verificationUrl: 'https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md',
+    series: "Llama 3",
+    category: "原始模型"
+  },
+  {
+    name: "Llama 3 70B",
     parameters: "70B",
     parametersNum: 70,
-    value: "llama-3.1-70b",
+    value: "llama-3-70b",
     d_model: 8192,
     n_layers: 80,
-    source: 'Llama-2-70B official config',
-    verificationUrl: 'https://huggingface.co/meta-llama/Llama-2-70b-hf/blob/main/config.json'
-  },
-  {
-    name: "Llama-65B",
-    parameters: "65B",
-    parametersNum: 65,
-    value: "llama-65b",
-    d_model: 8192,
-    n_layers: 80,
-    source: 'Estimated based on 70B architecture'
-  },
-  {
-    name: "Llama-33B",
-    parameters: "33B",
-    parametersNum: 33,
-    value: "llama-33b",
-    d_model: 6656,
-    n_layers: 60,
-    source: 'Estimated based on scaling laws'
-  },
-  {
-    name: "Llama-13B",
-    parameters: "13B",
-    parametersNum: 13,
-    value: "llama-13b",
-    d_model: 5120,
-    n_layers: 40,
-    source: 'Llama-2-13B official config',
-    verificationUrl: 'https://huggingface.co/meta-llama/Llama-2-13b-hf/blob/main/config.json'
+    source: 'Llama 3 technical specifications',
+    verificationUrl: 'https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md',
+    series: "Llama 3",
+    category: "原始模型"
   },
   {
     name: "Llama 3.1 8B",
@@ -291,32 +359,98 @@ export const MODELS: ModelInfo[] = [
     value: "llama-3.1-8b",
     d_model: 4096,
     n_layers: 32,
-    source: 'Llama-3-8B official config',
-    verificationUrl: 'https://huggingface.co/meta-llama/Meta-Llama-3-8B/blob/main/config.json'
+    source: 'Llama 3.1 technical specifications',
+    verificationUrl: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md',
+    series: "Llama 3.1",
+    category: "原始模型"
   },
   {
-    name: "Llama-7B",
-    parameters: "7B",
-    parametersNum: 7,
-    value: "llama-7b",
+    name: "Llama 3.1 70B",
+    parameters: "70B",
+    parametersNum: 70,
+    value: "llama-3.1-70b",
+    d_model: 8192,
+    n_layers: 80,
+    source: 'Llama 3.1 official model card',
+    verificationUrl: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md',
+    series: "Llama 3.1",
+    category: "原始模型"
+  },
+  {
+    name: "Llama 3.1 405B",
+    parameters: "405B",
+    parametersNum: 405,
+    value: "llama-3.1-405b",
+    d_model: 16384,
+    n_layers: 126,
+    source: 'Llama 3.1 official model card',
+    verificationUrl: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md',
+    series: "Llama 3.1",
+    category: "原始模型"
+  },
+  {
+    name: "Llama 3.2 1B",
+    parameters: "1B",
+    parametersNum: 1,
+    value: "llama-3.2-1b",
+    d_model: 2048,
+    n_layers: 16,
+    source: 'Llama 3.2 official model card',
+    verificationUrl: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD.md',
+    series: "Llama 3.2",
+    category: "原始模型"
+  },
+  {
+    name: "Llama 3.2 3B",
+    parameters: "3B",
+    parametersNum: 3,
+    value: "llama-3.2-3b",
+    d_model: 3072,
+    n_layers: 28,
+    source: 'Llama 3.2 official model card',
+    verificationUrl: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD.md',
+    series: "Llama 3.2",
+    category: "原始模型"
+  },
+  {
+    name: "Llama 3.2 11B",
+    parameters: "11B",
+    parametersNum: 11,
+    value: "llama-3.2-11b",
     d_model: 4096,
     n_layers: 32,
-    source: 'Llama-2-7B official config',
-    verificationUrl: 'https://huggingface.co/meta-llama/Llama-2-7b-hf/blob/main/config.json'
+    source: 'Llama 3.2 official model card',
+    verificationUrl: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD.md',
+    series: "Llama 3.2",
+    category: "原始模型"
+  },
+  {
+    name: "Llama 3.2 90B",
+    parameters: "90B",
+    parametersNum: 90,
+    value: "llama-3.2-90b",
+    d_model: 8192,
+    n_layers: 80,
+    source: 'Llama 3.2 official model card',
+    verificationUrl: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD.md',
+    series: "Llama 3.2",
+    category: "原始模型"
   },
 
-  // Qwen 系列
+  // Qwen 系列 (开源可私有化部署)
   {
     name: "Qwen3-235B-A22B",
     parameters: "235B",
     parametersNum: 235,
     value: "qwen3-235b-a22b",
-    d_model: 14848,
-    n_layers: 80,
+    d_model: 6144,
+    n_layers: 94,
     activeParams: 22,
     isMoE: true,
-    source: 'Qwen3-235B-A22B technical report',
-    verificationUrl: 'https://qwenlm.github.io/blog/qwen3/'
+    source: 'Qwen3 technical report - flagship MoE model',
+    verificationUrl: 'https://huggingface.co/Qwen/Qwen3-235B-A22B',
+    series: "Qwen 3",
+    category: "原始模型"
   },
   {
     name: "Qwen2.5-Math-72B",
@@ -325,7 +459,10 @@ export const MODELS: ModelInfo[] = [
     value: "qwen2.5-math-72b",
     d_model: 8192,
     n_layers: 80,
-    source: 'Estimated based on 70B architecture'
+    source: 'Qwen2.5-72B official configuration',
+    verificationUrl: 'https://huggingface.co/Qwen/Qwen2.5-72B',
+    series: "Qwen 2.5",
+    category: "原始模型"
   },
   {
     name: "Qwen2.5-72B",
@@ -334,7 +471,10 @@ export const MODELS: ModelInfo[] = [
     value: "qwen2.5-72b",
     d_model: 8192,
     n_layers: 80,
-    source: 'Estimated based on 70B architecture'
+    source: 'Qwen2.5-72B HuggingFace model card',
+    verificationUrl: 'https://huggingface.co/Qwen/Qwen2.5-72B',
+    series: "Qwen 2.5",
+    category: "原始模型"
   },
   {
     name: "Qwen2-72B",
@@ -343,7 +483,9 @@ export const MODELS: ModelInfo[] = [
     value: "qwen2-72b",
     d_model: 8192,
     n_layers: 80,
-    source: 'Estimated based on 70B architecture'
+    source: 'Estimated based on 70B architecture',
+    series: "Qwen 2",
+    category: "原始模型"
   },
   {
     name: "Qwen QwQ-32B",
@@ -352,7 +494,9 @@ export const MODELS: ModelInfo[] = [
     value: "qwen-qwq-32b",
     d_model: 6656,
     n_layers: 60,
-    source: 'Estimated based on scaling laws'
+    source: 'Estimated based on scaling laws',
+    series: "Qwen QwQ",
+    category: "推理专用"
   },
   {
     name: "Qwen2.5-Coder-32B",
@@ -361,16 +505,21 @@ export const MODELS: ModelInfo[] = [
     value: "qwen2.5-coder-32b",
     d_model: 6656,
     n_layers: 60,
-    source: 'Estimated based on scaling laws'
+    source: 'Estimated based on scaling laws',
+    series: "Qwen 2.5",
+    category: "代码专用"
   },
   {
     name: "Qwen3-32B",
     parameters: "32B",
     parametersNum: 32,
     value: "qwen3-32b",
-    d_model: 6656,
-    n_layers: 60,
-    source: 'Estimated based on scaling laws'
+    d_model: 5120,
+    n_layers: 64,
+    source: 'Qwen3 technical report',
+    verificationUrl: 'https://qwenlm.github.io/blog/qwen3/',
+    series: "Qwen 3",
+    category: "原始模型"
   },
   {
     name: "Qwen2.5-32B",
@@ -379,7 +528,9 @@ export const MODELS: ModelInfo[] = [
     value: "qwen2.5-32b",
     d_model: 6656,
     n_layers: 60,
-    source: 'Estimated based on scaling laws'
+    source: 'Estimated based on scaling laws',
+    series: "Qwen 2.5",
+    category: "原始模型"
   },
   {
     name: "Qwen2-32B",
@@ -388,18 +539,23 @@ export const MODELS: ModelInfo[] = [
     value: "qwen2-32b",
     d_model: 6656,
     n_layers: 60,
-    source: 'Estimated based on scaling laws'
+    source: 'Estimated based on scaling laws',
+    series: "Qwen 2",
+    category: "原始模型"
   },
   {
     name: "Qwen3-30B-A3B",
     parameters: "30B",
     parametersNum: 30,
     value: "qwen3-30b-a3b",
-    d_model: 6656,
-    n_layers: 60,
+    d_model: 3072,
+    n_layers: 48,
     activeParams: 3,
     isMoE: true,
-    source: 'Estimated based on scaling laws'
+    source: 'Qwen3 technical report - MoE model',
+    verificationUrl: 'https://huggingface.co/Qwen/Qwen3-30B-A3B',
+    series: "Qwen 3",
+    category: "原始模型"
   },
   {
     name: "Qwen2.5-14B",
@@ -408,16 +564,21 @@ export const MODELS: ModelInfo[] = [
     value: "qwen2.5-14b",
     d_model: 5120,
     n_layers: 40,
-    source: 'Estimated based on 13B architecture'
+    source: 'Estimated based on 13B architecture',
+    series: "Qwen 2.5",
+    category: "原始模型"
   },
   {
     name: "Qwen3-14B",
     parameters: "14B",
     parametersNum: 14,
     value: "qwen3-14b",
-    d_model: 5120,
+    d_model: 4096,
     n_layers: 40,
-    source: 'Estimated based on 13B architecture'
+    source: 'Qwen3 technical report',
+    verificationUrl: 'https://qwenlm.github.io/blog/qwen3/',
+    series: "Qwen 3",
+    category: "原始模型"
   },
   {
     name: "Qwen2-14B",
@@ -426,16 +587,21 @@ export const MODELS: ModelInfo[] = [
     value: "qwen2-14b",
     d_model: 5120,
     n_layers: 40,
-    source: 'Estimated based on 13B architecture'
+    source: 'Estimated based on 13B architecture',
+    series: "Qwen 2",
+    category: "原始模型"
   },
   {
     name: "Qwen3-8B",
     parameters: "8B",
     parametersNum: 8,
     value: "qwen3-8b",
-    d_model: 4096,
-    n_layers: 32,
-    source: 'Estimated based on 8B architecture'
+    d_model: 3584,
+    n_layers: 36,
+    source: 'Qwen3 technical report',
+    verificationUrl: 'https://qwenlm.github.io/blog/qwen3/',
+    series: "Qwen 3",
+    category: "原始模型"
   },
   {
     name: "Qwen2.5-7B",
@@ -444,7 +610,9 @@ export const MODELS: ModelInfo[] = [
     value: "qwen2.5-7b",
     d_model: 4096,
     n_layers: 32,
-    source: 'Estimated based on 7B architecture'
+    source: 'Estimated based on 7B architecture',
+    series: "Qwen 2.5",
+    category: "原始模型"
   },
   {
     name: "Qwen2-7B",
@@ -453,7 +621,9 @@ export const MODELS: ModelInfo[] = [
     value: "qwen2-7b",
     d_model: 4096,
     n_layers: 32,
-    source: 'Estimated based on 7B architecture'
+    source: 'Estimated based on 7B architecture',
+    series: "Qwen 2",
+    category: "原始模型"
   },
   {
     name: "Qwen3-4B",
@@ -461,8 +631,11 @@ export const MODELS: ModelInfo[] = [
     parametersNum: 4,
     value: "qwen3-4b",
     d_model: 2560,
-    n_layers: 28,
-    source: 'Estimated for 4B model'
+    n_layers: 36,
+    source: 'Qwen3 technical report',
+    verificationUrl: 'https://qwenlm.github.io/blog/qwen3/',
+    series: "Qwen 3",
+    category: "原始模型"
   },
   {
     name: "Qwen2.5-3B",
@@ -471,7 +644,9 @@ export const MODELS: ModelInfo[] = [
     value: "qwen2.5-3b",
     d_model: 2048,
     n_layers: 28,
-    source: 'Estimated for 3B model'
+    source: 'Estimated for 3B model',
+    series: "Qwen 2.5",
+    category: "原始模型"
   },
   {
     name: "Qwen2.5-1.5B",
@@ -480,7 +655,9 @@ export const MODELS: ModelInfo[] = [
     value: "qwen2.5-1.5b",
     d_model: 1536,
     n_layers: 24,
-    source: 'Estimated for 1.5B model'
+    source: 'Estimated for 1.5B model',
+    series: "Qwen 2.5",
+    category: "原始模型"
   },
   {
     name: "Qwen2.5-0.5B",
@@ -489,37 +666,12 @@ export const MODELS: ModelInfo[] = [
     value: "qwen2.5-0.5b",
     d_model: 1024,
     n_layers: 16,
-    source: 'Estimated for 0.5B model'
+    source: 'Estimated for 0.5B model',
+    series: "Qwen 2.5",
+    category: "原始模型"
   },
 
-  // 其他热门模型
-  {
-    name: "Claude-3.5-Sonnet",
-    parameters: "200B",
-    parametersNum: 200,
-    value: "claude-3.5-sonnet",
-    d_model: 14848,
-    n_layers: 80,
-    source: 'Estimated based on scaling laws'
-  },
-  {
-    name: "GPT-4",
-    parameters: "180B",
-    parametersNum: 180,
-    value: "gpt-4",
-    d_model: 14848,
-    n_layers: 80,
-    source: 'Estimated based on scaling laws'
-  },
-  {
-    name: "GPT-3.5",
-    parameters: "175B",
-    parametersNum: 175,
-    value: "gpt-3.5",
-    d_model: 12288,
-    n_layers: 96,
-    source: 'Estimated based on scaling laws'
-  },
+  // 其他开源模型 (可私有化部署)
   {
     name: "ChatGLM-6B",
     parameters: "6B",
@@ -527,7 +679,9 @@ export const MODELS: ModelInfo[] = [
     value: "chatglm-6b",
     d_model: 4096,
     n_layers: 28,
-    source: 'Estimated for 6B model'
+    source: 'Estimated for 6B model',
+    series: "ChatGLM",
+    category: "原始模型"
   },
   {
     name: "Baichuan2-13B",
@@ -536,7 +690,9 @@ export const MODELS: ModelInfo[] = [
     value: "baichuan2-13b",
     d_model: 5120,
     n_layers: 40,
-    source: 'Estimated based on 13B architecture'
+    source: 'Estimated based on 13B architecture',
+    series: "Baichuan 2",
+    category: "原始模型"
   },
   {
     name: "Baichuan2-7B",
@@ -545,7 +701,253 @@ export const MODELS: ModelInfo[] = [
     value: "baichuan2-7b",
     d_model: 4096,
     n_layers: 32,
-    source: 'Estimated based on 7B architecture'
+    source: 'Estimated based on 7B architecture',
+    series: "Baichuan 2",
+    category: "原始模型"
+  },
+  {
+    name: "Qwen3-0.6B",
+    parameters: "0.6B",
+    parametersNum: 0.6,
+    value: "qwen3-0.6b",
+    d_model: 896,
+    n_layers: 28,
+    source: 'Qwen3 technical report',
+    verificationUrl: 'https://qwenlm.github.io/blog/qwen3/',
+    series: "Qwen 3",
+    category: "原始模型"
+  },
+  {
+    name: "Qwen3-1.7B",
+    parameters: "1.7B",
+    parametersNum: 1.7,
+    value: "qwen3-1.7b",
+    d_model: 1536,
+    n_layers: 28,
+    source: 'Qwen3 technical report',
+    verificationUrl: 'https://qwenlm.github.io/blog/qwen3/',
+    series: "Qwen 3",
+    category: "原始模型"
+  },
+
+  // Mistral 系列 (开源可私有化部署)
+  {
+    name: "Mistral-Large-Instruct-2407",
+    parameters: "123B",
+    parametersNum: 123,
+    value: "mistral-large-instruct-2407",
+    d_model: 6144,
+    n_layers: 88,
+    source: 'Mistral AI official release',
+    verificationUrl: 'https://huggingface.co/mistralai/Mistral-Large-Instruct-2407',
+    series: "Mistral",
+    category: "原始模型"
+  },
+  {
+    name: "Mistral-Nemo-12B",
+    parameters: "12B",
+    parametersNum: 12,
+    value: "mistral-nemo-12b",
+    d_model: 5120,
+    n_layers: 40,
+    source: 'NVIDIA & Mistral AI collaboration',
+    verificationUrl: 'https://huggingface.co/nvidia/Mistral-NeMo-12B-Base',
+    series: "Mistral",
+    category: "原始模型"
+  },
+  {
+    name: "Mistral-7B-v0.3",
+    parameters: "7B",
+    parametersNum: 7,
+    value: "mistral-7b-v0.3",
+    d_model: 4096,
+    n_layers: 32,
+    source: 'Mistral AI official release',
+    verificationUrl: 'https://huggingface.co/mistralai/Mistral-7B-v0.3',
+    series: "Mistral",
+    category: "原始模型"
+  },
+  {
+    name: "Mixtral-8x7B",
+    parameters: "46.7B",
+    parametersNum: 46.7,
+    value: "mixtral-8x7b",
+    d_model: 4096,
+    n_layers: 32,
+    activeParams: 12.9,
+    isMoE: true,
+    source: 'Mistral AI MoE model',
+    verificationUrl: 'https://huggingface.co/mistralai/Mixtral-8x7B-v0.1',
+    series: "Mixtral",
+    category: "原始模型"
+  },
+  {
+    name: "Mixtral-8x22B",
+    parameters: "141B",
+    parametersNum: 141,
+    value: "mixtral-8x22b",
+    d_model: 6144,
+    n_layers: 56,
+    activeParams: 39,
+    isMoE: true,
+    source: 'Mistral AI large MoE model',
+    verificationUrl: 'https://huggingface.co/mistralai/Mixtral-8x22B-v0.1',
+    series: "Mixtral",
+    category: "原始模型"
+  },
+
+  // Gemma 系列 (Google开源)
+  {
+    name: "Gemma-2-27B",
+    parameters: "27B",
+    parametersNum: 27,
+    value: "gemma-2-27b",
+    d_model: 4608,
+    n_layers: 46,
+    source: 'Google Gemma 2 series',
+    verificationUrl: 'https://huggingface.co/google/gemma-2-27b',
+    series: "Gemma",
+    category: "原始模型"
+  },
+  {
+    name: "Gemma-2-9B",
+    parameters: "9B",
+    parametersNum: 9,
+    value: "gemma-2-9b",
+    d_model: 3584,
+    n_layers: 42,
+    source: 'Google Gemma 2 series',
+    verificationUrl: 'https://huggingface.co/google/gemma-2-9b',
+    series: "Gemma",
+    category: "原始模型"
+  },
+  {
+    name: "Gemma-2-2B",
+    parameters: "2B",
+    parametersNum: 2,
+    value: "gemma-2-2b",
+    d_model: 2304,
+    n_layers: 26,
+    source: 'Google Gemma 2 series',
+    verificationUrl: 'https://huggingface.co/google/gemma-2-2b',
+    series: "Gemma",
+    category: "原始模型"
+  },
+
+  // Yi 系列 (01.AI开源)
+  {
+    name: "Yi-34B",
+    parameters: "34B",
+    parametersNum: 34,
+    value: "yi-34b",
+    d_model: 7168,
+    n_layers: 60,
+    source: '01.AI Yi series - bilingual model',
+    verificationUrl: 'https://huggingface.co/01-ai/Yi-34B',
+    series: "Yi",
+    category: "原始模型"
+  },
+  {
+    name: "Yi-6B",
+    parameters: "6B",
+    parametersNum: 6,
+    value: "yi-6b",
+    d_model: 4096,
+    n_layers: 32,
+    source: '01.AI Yi series - bilingual model',
+    verificationUrl: 'https://huggingface.co/01-ai/Yi-6B',
+    series: "Yi",
+    category: "原始模型"
+  },
+
+  // Phi 系列 (Microsoft开源)
+  {
+    name: "Phi-3.5-MoE",
+    parameters: "42B",
+    parametersNum: 42,
+    value: "phi-3.5-moe",
+    d_model: 3072,
+    n_layers: 32,
+    activeParams: 6.6,
+    isMoE: true,
+    source: 'Microsoft Phi-3.5 MoE model',
+    verificationUrl: 'https://huggingface.co/microsoft/Phi-3.5-MoE-instruct',
+    series: "Phi",
+    category: "原始模型"
+  },
+  {
+    name: "Phi-3-14B",
+    parameters: "14B",
+    parametersNum: 14,
+    value: "phi-3-14b",
+    d_model: 5120,
+    n_layers: 40,
+    source: 'Microsoft Phi-3 series',
+    verificationUrl: 'https://huggingface.co/microsoft/Phi-3-medium-14b',
+    series: "Phi",
+    category: "原始模型"
+  },
+  {
+    name: "Phi-3-7B",
+    parameters: "7B",
+    parametersNum: 7,
+    value: "phi-3-7b",
+    d_model: 4096,
+    n_layers: 32,
+    source: 'Microsoft Phi-3 series',
+    verificationUrl: 'https://huggingface.co/microsoft/Phi-3-small-7b',
+    series: "Phi",
+    category: "原始模型"
+  },
+  {
+    name: "Phi-3-3.8B",
+    parameters: "3.8B",
+    parametersNum: 3.8,
+    value: "phi-3-3.8b",
+    d_model: 3072,
+    n_layers: 32,
+    source: 'Microsoft Phi-3 mini series',
+    verificationUrl: 'https://huggingface.co/microsoft/Phi-3-mini-3.8b',
+    series: "Phi",
+    category: "原始模型"
+  },
+
+  // CodeLlama 系列 (Meta代码专用)
+  {
+    name: "CodeLlama-34B",
+    parameters: "34B",
+    parametersNum: 34,
+    value: "codellama-34b",
+    d_model: 8192,
+    n_layers: 48,
+    source: 'Meta CodeLlama for code generation',
+    verificationUrl: 'https://huggingface.co/codellama/CodeLlama-34b-hf',
+    series: "CodeLlama",
+    category: "代码专用"
+  },
+  {
+    name: "CodeLlama-13B",
+    parameters: "13B",
+    parametersNum: 13,
+    value: "codellama-13b",
+    d_model: 5120,
+    n_layers: 40,
+    source: 'Meta CodeLlama for code generation',
+    verificationUrl: 'https://huggingface.co/codellama/CodeLlama-13b-hf',
+    series: "CodeLlama",
+    category: "代码专用"
+  },
+  {
+    name: "CodeLlama-7B",
+    parameters: "7B",
+    parametersNum: 7,
+    value: "codellama-7b",
+    d_model: 4096,
+    n_layers: 32,
+    source: 'Meta CodeLlama for code generation',
+    verificationUrl: 'https://huggingface.co/codellama/CodeLlama-7b-hf',
+    series: "CodeLlama",
+    category: "代码专用"
   }
 ]
 
@@ -606,4 +1008,72 @@ export const PRECISION_BYTES: Record<string, number> = {
 export const GPU_PERFORMANCE: Record<string, number> = Object.fromEntries(
   gpuModels.map(gpu => [gpu.name, gpu.performance])
 )
+
+// 根据系列和类别对模型进行分组的辅助函数
+export const getModelsByGroup = () => {
+  const groups: Record<string, ModelInfo[]> = {};
+  
+  MODELS.forEach(model => {
+    const groupKey = model.series;
+    if (!groups[groupKey]) {
+      groups[groupKey] = [];
+    }
+    groups[groupKey].push(model);
+  });
+
+  // 按系列名称排序，优先显示热门系列
+  const seriesOrder = [
+    "DeepSeek",
+    "Llama 4", 
+    "Llama 3.2",
+    "Llama 3.1", 
+    "Llama 3",
+    "Qwen 3",
+    "Qwen 2.5",
+    "Qwen 2",
+    "Qwen QwQ",
+    "Mixtral",
+    "Mistral",
+    "Gemma",
+    "Yi",
+    "Phi",
+    "CodeLlama",
+    "ChatGLM",
+    "Baichuan 2"
+  ];
+
+  const sortedGroups: Record<string, ModelInfo[]> = {};
+  
+  // 按预定义顺序添加系列
+  seriesOrder.forEach(series => {
+    if (groups[series]) {
+      // 在每个系列内按参数大小排序（从大到小）
+      sortedGroups[series] = groups[series].sort((a, b) => b.parametersNum - a.parametersNum);
+    }
+  });
+
+  // 添加任何未在预定义顺序中的系列
+  Object.keys(groups).forEach(series => {
+    if (!seriesOrder.includes(series)) {
+      sortedGroups[series] = groups[series].sort((a, b) => b.parametersNum - a.parametersNum);
+    }
+  });
+
+  return sortedGroups;
+};
+
+// 根据类别获取模型
+export const getModelsByCategory = () => {
+  const categories: Record<string, ModelInfo[]> = {};
+  
+  MODELS.forEach(model => {
+    const categoryKey = model.category;
+    if (!categories[categoryKey]) {
+      categories[categoryKey] = [];
+    }
+    categories[categoryKey].push(model);
+  });
+
+  return categories;
+};
 

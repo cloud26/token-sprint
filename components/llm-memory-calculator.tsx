@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { calculateInferenceMemory } from "@/utils/calculations"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip"
-import { precisions, gpuModels, modelExamples, GPU_PERFORMANCE } from "@/utils/constants"
+import { precisions, gpuModels, MODELS, GPU_PERFORMANCE, getModelsByGroup } from "@/utils/constants"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
@@ -85,12 +85,12 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     
     // 根据优先模型类型重新排序模型列表
     const sortedModelExamples = React.useMemo(() => {
-        if (!preferredModelType) return modelExamples
+        if (!preferredModelType) return MODELS
         
-        const preferred: typeof modelExamples = []
-        const others: typeof modelExamples = []
+        const preferred: typeof MODELS = []
+        const others: typeof MODELS = []
         
-        modelExamples.forEach(model => {
+        MODELS.forEach(model => {
             const modelName = model.name.toLowerCase()
             if (
                 (preferredModelType === 'deepseek' && modelName.includes('deepseek')) ||
@@ -127,7 +127,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     const getDefaultParameters = () => {
         const defaultModel = getDefaultModel()
         const model = sortedModelExamples.find(m => m.name === defaultModel)
-        return model ? model.parameters.replace("B", "") : "671"
+        return model ? model.parametersNum.toString() : "671"
     }
 
     const [parameters, setParameters] = useState<string>(getDefaultParameters())
@@ -163,7 +163,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
         setSelectedModel(newModel)
         const model = sortedModelExamples.find(m => m.name === newModel)
         if (model) {
-            setParameters(model.parameters.replace("B", ""))
+            setParameters(model.parametersNum.toString())
         }
     }
 
@@ -247,34 +247,64 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                         <CommandInput placeholder={t('modelSelection.searchPlaceholder')} />
                                         <CommandList>
                                             <CommandEmpty>{t('modelSelection.notFound')}</CommandEmpty>
-                                            <CommandGroup>
-                                                {sortedModelExamples.map((model) => (
-                                                    <CommandItem
-                                                        key={model.name}
-                                                        value={model.name}
-                                                        onSelect={(currentValue) => {
-                                                            handleModelChange(currentValue === selectedModel ? "" : currentValue)
-                                                            setModelPopoverOpen(false)
-                                                        }}
-                                                        className="flex flex-col items-start py-2 px-3 hover:bg-slate-50"
-                                                    >
-                                                        <div className="flex items-center w-full">
-                                                            <Check
-                                                                className={cn(
-                                                                    "mr-2 h-3 w-3 flex-shrink-0",
-                                                                    selectedModel === model.name ? "opacity-100" : "opacity-0",
-                                                                )}
-                                                            />
-                                                            <div className="flex-1 min-w-0">
-                                                                <div className="flex items-center justify-between w-full">
-                                                                    <span className="font-medium text-sm truncate">{model.name}</span>
-                                                                    <span className="text-xs text-blue-600 ml-2 flex-shrink-0">{model.parameters}</span>
+                                            {/* 按系列分组显示模型 */}
+                                            {(() => {
+                                                // 使用配置中的分组信息，这已经包含了正确的排序
+                                                const allGroups = getModelsByGroup();
+                                                
+                                                // 如果有优先类型，调整系列的显示顺序
+                                                let seriesOrder = Object.keys(allGroups);
+                                                if (preferredModelType) {
+                                                    const preferredSeries: string[] = [];
+                                                    const otherSeries: string[] = [];
+                                                    
+                                                    seriesOrder.forEach(series => {
+                                                        const seriesLower = series.toLowerCase();
+                                                        if (
+                                                            (preferredModelType === 'deepseek' && seriesLower.includes('deepseek')) ||
+                                                            (preferredModelType === 'llama' && seriesLower.includes('llama')) ||
+                                                            (preferredModelType === 'qwen' && seriesLower.includes('qwen'))
+                                                        ) {
+                                                            preferredSeries.push(series);
+                                                        } else {
+                                                            otherSeries.push(series);
+                                                        }
+                                                    });
+                                                    
+                                                    seriesOrder = [...preferredSeries, ...otherSeries];
+                                                }
+
+                                                return seriesOrder.map(series => (
+                                                    <CommandGroup key={series} heading={series}>
+                                                        {allGroups[series].map((model) => (
+                                                            <CommandItem
+                                                                key={model.name}
+                                                                value={model.name}
+                                                                onSelect={(currentValue) => {
+                                                                    handleModelChange(currentValue === selectedModel ? "" : currentValue)
+                                                                    setModelPopoverOpen(false)
+                                                                }}
+                                                                className="flex flex-col items-start py-2 px-3 hover:bg-slate-50"
+                                                            >
+                                                                <div className="flex items-center w-full">
+                                                                    <Check
+                                                                        className={cn(
+                                                                            "mr-2 h-3 w-3 flex-shrink-0",
+                                                                            selectedModel === model.name ? "opacity-100" : "opacity-0",
+                                                                        )}
+                                                                    />
+                                                                    <div className="flex-1 min-w-0">
+                                                                        <div className="flex items-center justify-between w-full">
+                                                                            <span className="font-medium text-sm truncate">{model.name}</span>
+                                                                            <span className="text-xs text-blue-600 ml-2 flex-shrink-0">{model.parameters}</span>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </CommandItem>
-                                                ))}
-                                            </CommandGroup>
+                                                            </CommandItem>
+                                                        ))}
+                                                    </CommandGroup>
+                                                ));
+                                            })()}
                                         </CommandList>
                                     </Command>
                                 </PopoverContent>
@@ -306,7 +336,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                         </div>
                     </div>
 
-                    {/* 精度和并发用户数放在同一行 */}
+                    {/* 精度和上下文长度放在同一行 */}
                     <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1">
                         <div className="flex items-center gap-2">
@@ -334,42 +364,6 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                         </Select>
                     </div>
 
-                        <div className="space-y-1">
-                            <div className="flex items-center gap-2">
-                                <Label htmlFor="batchSize" className="text-sm">{t('concurrency.label')}</Label>
-                                <Tooltip>
-                                    <TooltipTrigger>
-                                        <InfoIcon className="h-3 w-3 text-muted-foreground" />
-                                    </TooltipTrigger>
-                                    <TooltipContent className="max-w-sm">
-                                        <div className="space-y-2 text-xs">
-                                            <p><strong>{t('concurrency.tooltip.title')}</strong></p>
-                                            {t.raw('concurrency.tooltip.scenarios').map((scenario: string, index: number) => (
-                                                <p key={index}>{scenario}</p>
-                                            ))}
-                                            <div className="border-t pt-2 mt-2">
-                                                <p><strong>{t('concurrency.tooltip.estimation.title')}</strong></p>
-                                                {t.raw('concurrency.tooltip.estimation.methods').map((method: string, index: number) => (
-                                                    <p key={index}>{method}</p>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </div>
-                            <Input
-                                id="batchSize"
-                                type="text"
-                                value={batchSize}
-                                onChange={(e) => handleBatchSizeChange(e.target.value)}
-                                className="text-sm"
-                                placeholder={t('concurrency.placeholder')}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Context Length 和 GPU Model 放在同一行 */}
-                    <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1">
                             <div className="flex items-center gap-2">
                                 <Label htmlFor="contextLength" className="text-sm">{t('contextLength.label')}</Label>
@@ -437,6 +431,42 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                     </Command>
                                 </PopoverContent>
                             </Popover>
+                        </div>
+                    </div>
+
+                    {/* 并发用户数和 GPU Model 放在同一行 */}
+                    <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                                <Label htmlFor="batchSize" className="text-sm">{t('concurrency.label')}</Label>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        <InfoIcon className="h-3 w-3 text-muted-foreground" />
+                                    </TooltipTrigger>
+                                    <TooltipContent className="max-w-sm">
+                                        <div className="space-y-2 text-xs">
+                                            <p><strong>{t('concurrency.tooltip.title')}</strong></p>
+                                            {t.raw('concurrency.tooltip.scenarios').map((scenario: string, index: number) => (
+                                                <p key={index}>{scenario}</p>
+                                            ))}
+                                            <div className="border-t pt-2 mt-2">
+                                                <p><strong>{t('concurrency.tooltip.estimation.title')}</strong></p>
+                                                {t.raw('concurrency.tooltip.estimation.methods').map((method: string, index: number) => (
+                                                    <p key={index}>{method}</p>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
+                            <Input
+                                id="batchSize"
+                                type="text"
+                                value={batchSize}
+                                onChange={(e) => handleBatchSizeChange(e.target.value)}
+                                className="text-sm"
+                                placeholder={t('concurrency.placeholder')}
+                            />
                         </div>
 
                         <div className="space-y-1">
@@ -535,11 +565,17 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                             {/* 模型信息 */}
                             <div className="text-center p-2 bg-amber-50 rounded text-xs border border-amber-200">
                                 <span className="text-gray-700">
-                                    {t('memoryBreakdown.modelInfo', { parameters })}
-                                    {(parameters === '671' || parameters === '235') && (
-                                        <span className="ml-2 text-amber-700">
-                                            {t('memoryBreakdown.moeInfo', { activeParams: parameters === '671' ? '37' : '22' })}
-                                        </span>
+                                    {memory.architectureInfo.isMoE ? (
+                                        <>
+                                            {t('memoryBreakdown.modelInfo', { parameters: memory.architectureInfo.activeParams })}
+                                            <span className="ml-2 text-amber-700">
+                                                {t('memoryBreakdown.moeInfo', { 
+                                                    activeParams: memory.architectureInfo.activeParams
+                                                })}
+                                            </span>
+                                        </>
+                                    ) : (
+                                        t('memoryBreakdown.modelInfo', { parameters })
                                     )}
                                 </span>
                             </div>
@@ -560,7 +596,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                     <Label className="text-gray-600 text-xs">{t('memoryBreakdown.components.activationMemory.label')}</Label>
                                     <p className="text-base font-semibold text-purple-600">{memory.activationMemory} GB</p>
                                     <p className="text-xs text-gray-500">
-                                        {(parameters === '671' || parameters === '235') 
+                                        {memory.architectureInfo.isMoE
                                             ? t('memoryBreakdown.components.activationMemory.descriptionMoE')
                                             : t('memoryBreakdown.components.activationMemory.descriptionNormal')
                                         }

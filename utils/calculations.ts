@@ -227,7 +227,7 @@ function getAvgOutputTokens(contextLength: number): number {
   }
 }
 
-// 计算吞吐量性能
+// 计算吞吐量性能 - 基于实际基准测试数据优化
 function calcThroughputInfo(
   parameters: number,
   activeParams: number,
@@ -235,90 +235,156 @@ function calcThroughputInfo(
   contextLength: number,
   gpuModel: string,
   precision: string,
-  requiredGPUs: number // 新增：需要的GPU数量
+  requiredGPUs: number,
+  selectedModel?: string // 新增：具体模型名称用于精确匹配
 ): {
   tokensPerSecond: number;
   tokensPerSecondPerUser: number;
   estimatedLatency: number;
   maxQPS: number;
-  avgOutputTokens: number; // 新增：返回使用的平均输出长度
+  avgOutputTokens: number;
 } {
-  // 获取GPU性能 - 从constants.ts导入
-  const basePerformance = GPU_PERFORMANCE[gpuModel] || 100 // 默认100 TFLOPS
+  // 获取GPU性能
+  const basePerformance = GPU_PERFORMANCE[gpuModel] || 100
   const adjustedPerformance = basePerformance * (PRECISION_MULTIPLIERS[precision] || 1.0)
   
   // 模型计算量估算 (FLOPS per token)
-  // 更准确的公式：考虑前向传播的完整计算
-  // 每个token大约需要 6 * activeParams FLOPS (包括矩阵乘法、注意力机制等)
-  const flopsPerToken = 6 * activeParams * 1e9 // activeParams是B为单位
+  const flopsPerToken = 6 * activeParams * 1e9
   
   // 理论峰值吞吐量 (tokens/s)
   const theoreticalThroughput = (adjustedPerformance * 1e12) / flopsPerToken
   
-  // 实际效率因子 (考虑内存带宽、并发效率等)
-  let efficiencyFactor = 0.2 // 基础效率20% (更现实的推理效率)
+  // 基于实际基准测试数据的效率因子
+  let efficiencyFactor = getModelEfficiency(parameters, selectedModel)
   
-  // 并发数对效率的影响
-  if (batchSize >= 8) {
-    efficiencyFactor *= 1.1 // 大批次提升效率
-  }
+  // 并发数对效率的影响 (基于实际测试数据调整)
   if (batchSize >= 32) {
-    efficiencyFactor *= 1.05 // 进一步提升
-  }
-  
-  // 模型大小对效率的影响
-  if (activeParams <= 10) {
-    efficiencyFactor *= 1.2 // 小模型效率更高
-  } else if (activeParams >= 100) {
-    efficiencyFactor *= 0.7 // 大模型效率降低
-  } else if (activeParams >= 30) {
-    efficiencyFactor *= 0.85 // 中大型模型效率中等降低
+    efficiencyFactor *= 1.15 // 高并发时效率提升更明显
+  } else if (batchSize >= 8) {
+    efficiencyFactor *= 1.1
   }
   
   // 上下文长度对效率的影响
   if (contextLength > 8192) {
-    efficiencyFactor *= 0.9 // 长上下文降低效率
+    efficiencyFactor *= 0.92 // 长上下文影响较小
   }
   
   // 单GPU实际吞吐量
   const singleGpuThroughput = theoreticalThroughput * Math.min(efficiencyFactor, 1.0)
   
-  // 多GPU并行效率 (考虑通信开销)
+  // 多GPU并行效率
   let parallelEfficiency = 1.0
   if (requiredGPUs > 1) {
-    // 多GPU会有通信开销，效率递减
-    parallelEfficiency = Math.max(0.7, 1.0 - (requiredGPUs - 1) * 0.05)
+    parallelEfficiency = Math.max(0.75, 1.0 - (requiredGPUs - 1) * 0.04)
   }
   
-  // 总吞吐量 = 单GPU吞吐量 × GPU数量 × 并行效率
+  // 总吞吐量
   const totalThroughput = singleGpuThroughput * requiredGPUs * parallelEfficiency
   
-  // 每用户吞吐量 = 总吞吐量 / 并发用户数
+  // 每用户吞吐量
   const throughputPerUser = totalThroughput / batchSize
   
-  // 根据context length动态计算平均输出长度
-  const avgOutputTokens = getAvgOutputTokens(contextLength)
-  const estimatedLatency = (avgOutputTokens / throughputPerUser) * 1000 // ms
+  // 更准确的输出长度估算
+  const avgOutputTokens = getRealisticOutputTokens(contextLength, parameters, selectedModel)
+  const estimatedLatency = (avgOutputTokens / throughputPerUser) * 1000
   
-  // 最大QPS计算：考虑并发用户数的限制
-  // 方法1：基于总吞吐量和平均输出长度
+  // QPS计算
   const maxQPSByThroughput = totalThroughput / avgOutputTokens
-  
-  // 方法2：基于并发用户数和平均响应时间
-  // 假设每个请求平均需要avgOutputTokens/throughputPerUser秒完成
   const avgResponseTimeSeconds = avgOutputTokens / throughputPerUser
   const maxQPSByConcurrency = batchSize / avgResponseTimeSeconds
-  
-  // 取两者的较小值，确保一致性
   const maxQPS = Math.min(maxQPSByThroughput, maxQPSByConcurrency)
   
   return {
     tokensPerSecond: Math.round(totalThroughput),
     tokensPerSecondPerUser: Math.round(throughputPerUser),
     estimatedLatency: Math.round(estimatedLatency),
-    maxQPS: Math.round(maxQPS * 10) / 10, // 保留1位小数
-    avgOutputTokens: avgOutputTokens, // 返回使用的平均输出长度
+    maxQPS: Math.round(maxQPS * 10) / 10,
+    avgOutputTokens: avgOutputTokens,
   }
+}
+
+// 基于实际基准测试数据的模型效率
+function getModelEfficiency(parameters: number, selectedModel?: string): number {
+  // 基于Database Mart A100 80GB基准测试的实际效率数据
+  // 来源: https://www.databasemart.com/blog/vllm-gpu-benchmark-a100-80gb
+  
+  // DeepSeek蒸馏模型效率明显更高
+  if (selectedModel && selectedModel.toLowerCase().includes('deepseek')) {
+    if (parameters <= 10) return 0.23 // DeepSeek 7-8B: ~23%
+    if (parameters <= 20) return 0.20 // DeepSeek 14B: ~20%
+    if (parameters <= 40) return 0.18 // DeepSeek 32B: ~18%
+    return 0.15
+  }
+  
+  // Gemma模型效率
+  if (selectedModel && selectedModel.toLowerCase().includes('gemma')) {
+    if (parameters <= 15) return 0.16 // Gemma 9B: ~16%
+    if (parameters <= 35) return 0.13 // Gemma 27B: ~13%
+    return 0.12
+  }
+  
+  // QwQ模型效率
+  if (selectedModel && selectedModel.toLowerCase().includes('qwq')) {
+    if (parameters <= 40) return 0.19 // QwQ 32B: ~19%
+    return 0.16
+  }
+  
+  // 通用模型效率（基于参数大小）
+  if (parameters <= 10) {
+    return 0.20 // 小模型: 20%
+  } else if (parameters <= 20) {
+    return 0.17 // 中型模型: 17%
+  } else if (parameters <= 40) {
+    return 0.15 // 大型模型: 15%
+  } else if (parameters <= 100) {
+    return 0.12 // 超大模型: 12%
+  } else {
+    return 0.08 // 极大模型: 8%
+  }
+}
+
+// 更现实的输出长度估算 - 基于实际基准测试数据
+function getRealisticOutputTokens(contextLength: number, parameters: number, selectedModel?: string): number {
+  // 基于实际基准测试，大多数模型的输出长度远低于预期
+  // 实际观察：Gemma输出很短(20-160)，DeepSeek输出较长(350-560)
+  
+  let baseOutputTokens: number
+  
+  // 根据模型类型调整基础输出长度
+  if (selectedModel && selectedModel.toLowerCase().includes('gemma')) {
+    // Gemma模型倾向于简洁回答
+    baseOutputTokens = parameters <= 15 ? 50 : 120
+  } else if (selectedModel && selectedModel.toLowerCase().includes('deepseek')) {
+    // DeepSeek蒸馏模型倾向于详细回答
+    baseOutputTokens = Math.min(400, 200 + parameters * 8)
+  } else if (selectedModel && selectedModel.toLowerCase().includes('qwq')) {
+    // QwQ推理模型输出较长
+    baseOutputTokens = 450
+  } else {
+    // 通用模型
+    baseOutputTokens = 150 + parameters * 3
+  }
+  
+  // 根据上下文长度调整（但增长幅度有限）
+  let contextMultiplier = 1.0
+  if (contextLength <= 2048) {
+    contextMultiplier = 0.8 // 短上下文，简短回答
+  } else if (contextLength <= 4096) {
+    contextMultiplier = 1.0 // 标准长度
+  } else if (contextLength <= 8192) {
+    contextMultiplier = 1.1 // 稍长
+  } else if (contextLength <= 16384) {
+    contextMultiplier = 1.3 // 中长
+  } else if (contextLength <= 32768) {
+    contextMultiplier = 1.5 // 长
+  } else {
+    contextMultiplier = 1.8 // 超长，但增长有限
+  }
+  
+  const adjustedTokens = baseOutputTokens * contextMultiplier
+  
+  // 确保在合理范围内
+  return Math.max(20, Math.min(800, Math.round(adjustedTokens)))
 }
 
 export function calculateInferenceMemory(
@@ -362,7 +428,7 @@ export function calculateInferenceMemory(
 
   // 5. 吞吐量信息
   const throughputInfo = calcThroughputInfo(
-    parameters, activeParams, batchSize, contextLength, gpuModel, precision, requiredGPUs
+    parameters, activeParams, batchSize, contextLength, gpuModel, precision, requiredGPUs, selectedModel
   )
 
   return {
