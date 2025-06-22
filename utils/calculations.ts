@@ -131,6 +131,13 @@ function calcKvCacheSizePerToken(n_layers: number, d_model: number): number {
   return (2 * 2 * n_layers * d_model) / BYTES_IN_GB
 }
 
+// 直接使用用户选择的上下文长度作为平均值
+// 现在界面上显示的是"Average Context Length"，所以用户选择的就是平均使用长度
+function getEffectiveContextLength(avgContextLength: number): number {
+  // 用户选择的就是平均上下文长度，直接返回
+  return avgContextLength
+}
+
 // 简化的KV Cache计算 - 基于参数数量的经验公式
 function calcSimplifiedKvCache(parameters: number, contextLength: number, batchSize: number): number {
   // 简化公式：每B参数大约需要 X MB 的KV Cache per token
@@ -406,9 +413,10 @@ export function calculateInferenceMemory(
   // 1. 模型权重内存 (GB) - 基于总参数
   const modelMemory = parameters * bytesPerParameter
 
-  // 2. KV Cache 内存 (GB) - 使用精确公式
+  // 2. KV Cache 内存 (GB) - 考虑实际使用率
   const kvCacheSizePerToken = calcKvCacheSizePerToken(n_layers, d_model)
-  const kvCacheMemory = kvCacheSizePerToken * contextLength * batchSize
+  const effectiveContextLength = getEffectiveContextLength(contextLength)
+  const kvCacheMemory = kvCacheSizePerToken * effectiveContextLength * batchSize
 
   // 3. 激活值内存 (GB) - 基于研究论文的科学公式
   const activationMemory = calcActivationMemory(

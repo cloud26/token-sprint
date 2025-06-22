@@ -34,52 +34,46 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     // Context Length 配置选项 - 从翻译文件获取
     const CONTEXT_LENGTH_OPTIONS: ContextLengthOption[] = t.raw('contextLength.options') || [
         {
-            value: '2048',
-            label: '2K tokens',
-            description: '简单问答、代码补全',
-            scenarios: '适合: ChatGPT式对话、代码助手、简单翻译'
+            value: '256',
+            label: '256 tokens',
+            description: '极短交互',
+            scenarios: '典型使用: 快速问答、简单指令、短代码片段'
         },
         {
-            value: '4096', 
+            value: '512',
+            label: '512 tokens',
+            description: '短对话',
+            scenarios: '典型使用: ChatGPT式对话、基础辅助、简短解释'
+        },
+        {
+            value: '1024',
+            label: '1K tokens',
+            description: '标准交互',
+            scenarios: '典型使用: 客服机器人、文档问答、代码辅助'
+        },
+        {
+            value: '2048',
+            label: '2K tokens',
+            description: '扩展对话',
+            scenarios: '典型使用: 技术讨论、详细分析、较长文档'
+        },
+        {
+            value: '4096',
             label: '4K tokens',
-            description: '标准对话、文档分析',
-            scenarios: '适合: 客服机器人、文档问答、邮件处理'
+            description: '复杂任务',
+            scenarios: '典型使用: 论文分析、代码审查、综合报告'
         },
         {
             value: '8192',
-            label: '8K tokens', 
-            description: '长文档、复杂推理',
-            scenarios: '适合: 论文分析、法律文档、技术文档'
+            label: '8K tokens',
+            description: '长篇内容',
+            scenarios: '典型使用: 书籍章节、大型代码库、研究文档'
         },
         {
             value: '16384',
             label: '16K tokens',
-            description: '书籍章节、深度分析',
-            scenarios: '适合: 学术研究、长篇内容创作、详细报告'
-        },
-        {
-            value: '32768',
-            label: '32K tokens',
-            description: '整本书籍、代码库',
-            scenarios: '适合: 代码库分析、完整书籍处理、大型项目文档'
-        },
-        {
-            value: '65536',
-            label: '64K tokens',
-            description: '超长上下文、多文档',
-            scenarios: '适合: 多文档对比、大型代码重构、企业知识库'
-        },
-        {
-            value: '131072',
-            label: '128K tokens',
-            description: '海量文档、全景分析',
-            scenarios: '适合: 研究综述、大型项目规划、企业级智能助手'
-        },
-        {
-            value: '262144',
-            label: '256K tokens',
-            description: '极限长度、专业场景',
-            scenarios: '适合: 法律案例库、医学文献、超大型项目'
+            description: '超长上下文',
+            scenarios: '典型使用: 多文档分析、大规模代码重构'
         }
     ]
     
@@ -677,7 +671,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                         setPrecision("FP8")
                                                         setGpuModel("NVIDIA H100 (80GB)")
                                                         setBatchSize("4")
-                                                        setContextLength("8192")
+                                                        setContextLength("4096")
                                                     }}
                                                 >
                                                     {t('quickStart.examples.flagship')}
@@ -690,7 +684,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                         setPrecision("FP8")
                                                         setGpuModel("NVIDIA H100 (80GB)")
                                                         setBatchSize("2")
-                                                        setContextLength("4096")
+                                                        setContextLength("2048")
                                                     }}
                                                 >
                                                     {t('quickStart.examples.ultraLarge')}
@@ -703,7 +697,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                         setPrecision("FP16")
                                                         setGpuModel("NVIDIA A100 (80GB)")
                                                         setBatchSize("8")
-                                                        setContextLength("4096")
+                                                        setContextLength("2048")
                                                     }}
                                                 >
                                                     {t('quickStart.examples.enterprise')}
@@ -716,7 +710,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                         setPrecision("FP8")
                                                         setGpuModel("NVIDIA H100 (80GB)")
                                                         setBatchSize("32")
-                                                        setContextLength("8192")
+                                                        setContextLength("4096")
                                                     }}
                                                 >
                                                     {t('quickStart.examples.highConcurrency')}
@@ -729,7 +723,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                         setPrecision("FP16")
                                                         setGpuModel("NVIDIA RTX 4090 (24GB)")
                                                         setBatchSize("4")
-                                                        setContextLength("2048")
+                                                        setContextLength("1024")
                                                     }}
                                                 >
                                                     {t('quickStart.examples.lightweight')}
@@ -742,7 +736,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                         setPrecision("FP16")
                                                         setGpuModel("NVIDIA RTX 4090 (24GB)")
                                                         setBatchSize("16")
-                                                        setContextLength("4096")
+                                                        setContextLength("2048")
                                                     }}
                                                 >
                                                     {t('quickStart.examples.mediumScale')}
@@ -755,7 +749,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                         setPrecision("FP8")
                                                         setGpuModel("NVIDIA H100 (80GB)")
                                                         setBatchSize("6")
-                                                        setContextLength("8192")
+                                                        setContextLength("4096")
                                                     }}
                                                 >
                                                     {t('quickStart.examples.popular')}
@@ -768,7 +762,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                 setPrecision("INT4")
                                                         setGpuModel("NVIDIA RTX 4090 (24GB)")
                                                         setBatchSize("8")
-                                                        setContextLength("4096")
+                                                        setContextLength("2048")
                                                     }}
                                                 >
                                             {t('quickStart.examples.reasoning')}

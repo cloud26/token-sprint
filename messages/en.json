@@ -385,66 +385,60 @@
       }
     },
     "contextLength": {
-      "label": "Context Length",
-      "placeholder": "Select Context Length...",
-      "searchPlaceholder": "Search Context Length...",
+      "label": "Average Context Length",
+      "placeholder": "Select Average Context Length...",
+      "searchPlaceholder": "Search Average Context Length...",
       "notFound": "No matching option found",
       "tooltip": {
-        "title": "Context length affects memory usage",
+        "title": "Average context length affects memory usage",
         "features": [
           "Mainly affects KV Cache memory size",
-          "Longer length allows processing longer documents",
+          "Based on typical usage patterns, not maximum capacity",
           "Choosing appropriate scenario optimizes costs"
         ]
       },
       "options": [
         {
+          "value": "256",
+          "label": "256 tokens",
+          "description": "Very short interactions",
+          "scenarios": "Typical usage: Quick Q&A, simple commands, short code snippets"
+        },
+        {
+          "value": "512",
+          "label": "512 tokens",
+          "description": "Short conversations",
+          "scenarios": "Typical usage: ChatGPT-style dialogue, basic assistance, brief explanations"
+        },
+        {
+          "value": "1024",
+          "label": "1K tokens",
+          "description": "Standard interactions",
+          "scenarios": "Typical usage: Customer service, document Q&A, code assistance"
+        },
+        {
           "value": "2048",
           "label": "2K tokens",
-          "description": "Simple Q&A, code completion",
-          "scenarios": "Suitable for: ChatGPT-style dialogue, code assistant, simple translation"
+          "description": "Extended conversations",
+          "scenarios": "Typical usage: Technical discussions, detailed analysis, longer documents"
         },
         {
           "value": "4096",
           "label": "4K tokens",
-          "description": "Standard dialogue, document analysis",
-          "scenarios": "Suitable for: Customer service bots, document Q&A, email processing"
+          "description": "Complex tasks",
+          "scenarios": "Typical usage: Paper analysis, code review, comprehensive reports"
         },
         {
           "value": "8192",
           "label": "8K tokens",
-          "description": "Long documents, complex reasoning",
-          "scenarios": "Suitable for: Paper analysis, legal documents, technical documentation"
+          "description": "Long-form content",
+          "scenarios": "Typical usage: Book chapters, large codebases, research documents"
         },
         {
           "value": "16384",
           "label": "16K tokens",
-          "description": "Book chapters, deep analysis",
-          "scenarios": "Suitable for: Academic research, long-form content creation, detailed reports"
-        },
-        {
-          "value": "32768",
-          "label": "32K tokens",
-          "description": "Entire books, codebases",
-          "scenarios": "Suitable for: Codebase analysis, complete book processing, large project documentation"
-        },
-        {
-          "value": "65536",
-          "label": "64K tokens",
-          "description": "Ultra-long context, multi-document",
-          "scenarios": "Suitable for: Multi-document comparison, large code refactoring, enterprise knowledge base"
-        },
-        {
-          "value": "131072",
-          "label": "128K tokens",
-          "description": "Massive documents, panoramic analysis",
-          "scenarios": "Suitable for: Research reviews, large project planning, enterprise-level AI assistants"
-        },
-        {
-          "value": "262144",
-          "label": "256K tokens",
-          "description": "Extreme length, professional scenarios",
-          "scenarios": "Suitable for: Legal case databases, medical literature, ultra-large projects"
+          "description": "Very long context",
+          "scenarios": "Typical usage: Multi-document analysis, extensive code refactoring"
         }
       ]
     },

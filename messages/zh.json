@@ -384,66 +384,60 @@
       }
     },
     "contextLength": {
-      "label": "上下文长度",
-      "placeholder": "选择 Context Length...",
-      "searchPlaceholder": "搜索 Context Length...",
+      "label": "平均上下文长度",
+      "placeholder": "选择平均上下文长度...",
+      "searchPlaceholder": "搜索平均上下文长度...",
       "notFound": "未找到匹配的选项",
       "tooltip": {
-        "title": "上下文长度影响内存占用",
+        "title": "平均上下文长度影响内存占用",
         "features": [
           "主要影响KV Cache内存大小",
-          "长度越大，能处理的文档越长",
+          "基于典型使用模式，而非最大容量",
           "选择合适场景可优化成本"
         ]
       },
       "options": [
         {
+          "value": "256",
+          "label": "256 tokens",
+          "description": "极短交互",
+          "scenarios": "典型使用: 快速问答、简单指令、短代码片段"
+        },
+        {
+          "value": "512",
+          "label": "512 tokens",
+          "description": "短对话",
+          "scenarios": "典型使用: ChatGPT式对话、基础辅助、简短解释"
+        },
+        {
+          "value": "1024",
+          "label": "1K tokens",
+          "description": "标准交互",
+          "scenarios": "典型使用: 客服机器人、文档问答、代码辅助"
+        },
+        {
           "value": "2048",
           "label": "2K tokens",
-          "description": "简单问答、代码补全",
-          "scenarios": "适合: ChatGPT式对话、代码助手、简单翻译"
+          "description": "扩展对话",
+          "scenarios": "典型使用: 技术讨论、详细分析、较长文档"
         },
         {
           "value": "4096",
           "label": "4K tokens",
-          "description": "标准对话、文档分析",
-          "scenarios": "适合: 客服机器人、文档问答、邮件处理"
+          "description": "复杂任务",
+          "scenarios": "典型使用: 论文分析、代码审查、综合报告"
         },
         {
           "value": "8192",
           "label": "8K tokens",
-          "description": "长文档、复杂推理",
-          "scenarios": "适合: 论文分析、法律文档、技术文档"
+          "description": "长篇内容",
+          "scenarios": "典型使用: 书籍章节、大型代码库、研究文档"
         },
         {
           "value": "16384",
           "label": "16K tokens",
-          "description": "书籍章节、深度分析",
-          "scenarios": "适合: 学术研究、长篇内容创作、详细报告"
-        },
-        {
-          "value": "32768",
-          "label": "32K tokens",
-          "description": "整本书籍、代码库",
-          "scenarios": "适合: 代码库分析、完整书籍处理、大型项目文档"
-        },
-        {
-          "value": "65536",
-          "label": "64K tokens",
-          "description": "超长上下文、多文档",
-          "scenarios": "适合: 多文档对比、大型代码重构、企业知识库"
-        },
-        {
-          "value": "131072",
-          "label": "128K tokens",
-          "description": "海量文档、全景分析",
-          "scenarios": "适合: 研究综述、大型项目规划、企业级智能助手"
-        },
-        {
-          "value": "262144",
-          "label": "256K tokens",
-          "description": "极限长度、专业场景",
-          "scenarios": "适合: 法律案例库、医学文献、超大型项目"
+          "description": "超长上下文",
+          "scenarios": "典型使用: 多文档分析、大规模代码重构"
         }
       ]
     },

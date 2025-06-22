@@ -385,48 +385,60 @@
       }
     },
     "contextLength": {
-      "label": "Kontextlänge",
-      "placeholder": "Kontextlänge auswählen...",
-      "searchPlaceholder": "Kontextlänge suchen...",
+      "label": "Durchschnittliche Kontextlänge",
+      "placeholder": "Durchschnittliche Kontextlänge auswählen...",
+      "searchPlaceholder": "Durchschnittliche Kontextlänge suchen...",
       "notFound": "Keine passende Option gefunden",
       "tooltip": {
-        "title": "Kontextlänge beeinflusst Speicherverbrauch",
+        "title": "Durchschnittliche Kontextlänge beeinflusst Speicherverbrauch",
         "features": [
           "Beeinflusst hauptsächlich KV-Cache-Speichergröße",
-          "Längere Länge ermöglicht Verarbeitung längerer Dokumente",
+          "Basiert auf typischen Nutzungsmustern, nicht maximaler Kapazität",
           "Auswahl geeigneter Szenarien optimiert Kosten"
         ]
       },
       "options": [
         {
+          "value": "256",
+          "label": "256 Token",
+          "description": "Sehr kurze Interaktionen",
+          "scenarios": "Typische Nutzung: Schnelle Q&A, einfache Befehle, kurze Code-Snippets"
+        },
+        {
+          "value": "512",
+          "label": "512 Token",
+          "description": "Kurze Gespräche",
+          "scenarios": "Typische Nutzung: ChatGPT-ähnliche Dialoge, grundlegende Unterstützung, kurze Erklärungen"
+        },
+        {
+          "value": "1024",
+          "label": "1K Token",
+          "description": "Standard-Interaktionen",
+          "scenarios": "Typische Nutzung: Kundenservice, Dokument-Q&A, Code-Unterstützung"
+        },
+        {
           "value": "2048",
           "label": "2K Token",
-          "description": "Einfache Fragen, Code-Vervollständigung",
-          "scenarios": "Geeignet für: ChatGPT-ähnliche Gespräche, Code-Assistenten, einfache Übersetzung"
+          "description": "Erweiterte Gespräche",
+          "scenarios": "Typische Nutzung: Technische Diskussionen, detaillierte Analysen, längere Dokumente"
         },
         {
           "value": "4096",
           "label": "4K Token",
-          "description": "Standard-Dialog, Dokumentenanalyse",
-          "scenarios": "Geeignet für: Kundenservice-Bots, Dokument-Q&A, E-Mail-Verarbeitung"
+          "description": "Komplexe Aufgaben",
+          "scenarios": "Typische Nutzung: Papieranalyse, Code-Review, umfassende Berichte"
         },
         {
           "value": "8192",
           "label": "8K Token",
-          "description": "Lange Dokumente, komplexe Argumentation",
-          "scenarios": "Geeignet für: Papieranalyse, juristische Dokumente, technische Dokumentation"
+          "description": "Lange Inhalte",
+          "scenarios": "Typische Nutzung: Buchkapitel, große Codebasen, Forschungsdokumente"
         },
         {
           "value": "16384",
           "label": "16K Token",
-          "description": "Buchkapitel, tiefe Analyse",
-          "scenarios": "Geeignet für: Akademische Forschung, lange Inhaltserstellung, detaillierte Berichte"
-        },
-        {
-          "value": "32768",
-          "label": "32K Token",
-          "description": "Ganze Bücher, Codebasen",
-          "scenarios": "Geeignet für: Codebase-Analyse, vollständige Buchverarbeitung, große Projektdokumentation"
+          "description": "Sehr langer Kontext",
+          "scenarios": "Typische Nutzung: Multi-Dokument-Analyse, umfangreiches Code-Refactoring"
         },
         {
           "value": "65536",
