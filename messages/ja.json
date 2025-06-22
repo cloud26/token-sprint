@@ -348,30 +348,189 @@
     }
   },
   "calculator": {
+    "modelSelection": {
+      "label": "モデル選択",
+      "placeholder": "モデルを選択...",
+      "searchPlaceholder": "モデルを検索...",
+      "notFound": "一致するモデルが見つかりません",
+      "tooltip": {
+        "title": "プリセットモデルを選択して素早く設定",
+        "features": [
+          "パラメータ数を自動設定",
+          "最新の主要モデルを含む",
+          "検索機能をサポート"
+        ]
+      }
+    },
     "parameters": {
       "label": "モデルパラメータ（十億単位）",
       "tooltip": "パラメータ数（十億単位）、例：671B (DeepSeek R1)、70B (Llama 3.1 70B)、405B (Llama 3.1 405B)、7B、13B",
-      "selectPlaceholder": "モデルを選択"
+      "placeholder": "モデルサイズを入力（例：7、13、70）"
     },
     "precision": {
       "label": "精度",
       "tooltip": "異なる精度はメモリ使用量に影響、FP32が最高、FP8が最低"
     },
+    "concurrency": {
+      "label": "同時ユーザー数",
+      "placeholder": "8",
+      "tooltip": {
+        "title": "💼 同時ユーザー数の計画：",
+        "scenarios": [
+          "• 1-4ユーザー：テスト環境、小規模試用",
+          "• 8-16ユーザー：部門内使用、小規模アプリケーション",
+          "• 32-64ユーザー：企業アプリケーション、中規模サービス",
+          "• 128+ユーザー：大規模本番環境、高同時実行サービス"
+        ],
+        "estimation": {
+          "title": "💡 同時実行数の見積もり方法：",
+          "methods": [
+            "• カスタマーサービスボット：予想される同時顧客問い合わせ数",
+            "• 内部ツール：同時に使用する可能性のあるチームメンバー数",
+            "• APIサービス：予想QPS × 平均応答時間（秒）",
+            "• チャットアプリケーション：DAU × オンライン率 × アクティビティ率"
+          ]
+        }
+      }
+    },
+    "contextLength": {
+      "label": "コンテキスト長",
+      "placeholder": "コンテキスト長を選択...",
+      "searchPlaceholder": "コンテキスト長を検索...",
+      "notFound": "一致するオプションが見つかりません",
+      "tooltip": {
+        "title": "コンテキスト長がメモリ使用量に影響",
+        "features": [
+          "主にKVキャッシュメモリサイズに影響",
+          "長いほど長いドキュメントを処理可能",
+          "適切なシナリオ選択でコスト最適化"
+        ]
+      },
+      "options": [
+        {
+          "value": "2048",
+          "label": "2Kトークン",
+          "description": "簡単なQ&A、コード補完",
+          "scenarios": "適用: ChatGPT式対話、コードアシスタント、簡単な翻訳"
+        },
+        {
+          "value": "4096",
+          "label": "4Kトークン",
+          "description": "標準対話、文書分析",
+          "scenarios": "適用: カスタマーサービスボット、文書Q&A、メール処理"
+        },
+        {
+          "value": "8192",
+          "label": "8Kトークン",
+          "description": "長文書、複雑推論",
+          "scenarios": "適用: 論文分析、法的文書、技術文書"
+        },
+        {
+          "value": "16384",
+          "label": "16Kトークン",
+          "description": "書籍章、深層分析",
+          "scenarios": "適用: 学術研究、長文コンテンツ作成、詳細レポート"
+        },
+        {
+          "value": "32768",
+          "label": "32Kトークン",
+          "description": "書籍全体、コードベース",
+          "scenarios": "適用: コードベース分析、完全書籍処理、大型プロジェクト文書"
+        },
+        {
+          "value": "65536",
+          "label": "64Kトークン",
+          "description": "超長コンテキスト、マルチ文書",
+          "scenarios": "適用: マルチ文書比較、大型コードリファクタリング、企業ナレッジベース"
+        },
+        {
+          "value": "131072",
+          "label": "128Kトークン",
+          "description": "大量文書、パノラマ分析",
+          "scenarios": "適用: 研究レビュー、大型プロジェクト計画、企業レベルAIアシスタント"
+        },
+        {
+          "value": "262144",
+          "label": "256Kトークン",
+          "description": "極限長、専門シナリオ",
+          "scenarios": "適用: 法的ケースデータベース、医学文献、超大型プロジェクト"
+        }
+      ]
+    },
     "gpu": {
       "label": "GPUモデル",
+      "placeholder": "GPUモデルを検索...",
       "searchPlaceholder": "GPUモデルを検索...",
       "notFound": "GPUモデルが見つかりません"
     },
     "results": {
-      "modelMemory": "モデルメモリ",
-      "inferenceMemory": "推論メモリ",
       "totalMemory": "必要総メモリ",
       "requiredGPUs": "必要GPU数",
       "unit": "台"
     },
+    "memoryBreakdown": {
+      "title": "メモリ内訳",
+      "modelInfo": "モデル：{parameters}Bパラメータ",
+      "moeInfo": "（MoE：{activeParams}Bアクティブ）",
+      "components": {
+        "modelMemory": {
+          "label": "モデルメモリ",
+          "description": "すべてのモデル重み"
+        },
+        "kvCache": {
+          "label": "KVキャッシュ",
+          "description": "会話履歴キャッシュ"
+        },
+        "activationMemory": {
+          "label": "アクティベーションメモリ",
+          "descriptionMoE": "エキスパートモデル最適化",
+          "descriptionNormal": "同時処理キャッシュ"
+        },
+        "computationCache": {
+          "label": "計算キャッシュ",
+          "description": "一時計算キャッシュ"
+        }
+      }
+    },
+    "performance": {
+      "title": "パフォーマンス指標",
+      "explanation": "パフォーマンス関係：最大QPS = 同時ユーザー数 ÷ 平均応答時間（{avgTokens}トークン出力ベース）",
+      "metrics": {
+        "totalThroughput": {
+          "label": "総スループット",
+          "description": "すべてのGPUの総計算能力",
+          "unit": "トークン/秒"
+        },
+        "throughputPerUser": {
+          "label": "ユーザーあたりスループット",
+          "description": "総スループット ÷ {users}ユーザー",
+          "unit": "トークン/秒/ユーザー"
+        },
+        "estimatedLatency": {
+          "label": "推定レイテンシ",
+          "description": "{avgTokens}トークン平均応答時間",
+          "unit": "ms"
+        },
+        "maxQPS": {
+          "label": "最大QPS",
+          "description": "{concurrency}同時実行 ÷ {latency}秒",
+          "unit": "クエリ/秒"
+        }
+      }
+    },
     "quickStart": {
-      "title": "クイックスタート例：",
-      "description": "これらの例をクリックして、人気のモデル展開シナリオを素早く設定！"
+      "title": "シナリオ例 (GPU + モデル + 並行性)：",
+      "description": "これらの例をクリックして、人気のモデル展開シナリオを素早く設定！",
+      "examples": {
+        "flagship": "🆕 フラッグシップモデル（Qwen3-235B + H100 + 4並行）",
+        "ultraLarge": "超大型モデル（DeepSeek-R1 + H100 + 2並行）",
+        "enterprise": "エンタープライズモデル（Llama3-70B + A100 + 8並行）",
+        "highConcurrency": "高並行サービス（Llama3-70B + H100 + 32並行）",
+        "lightweight": "軽量展開（Llama3-8B + RTX4090 + 4並行）",
+        "mediumScale": "中規模（Llama3-8B + RTX4090 + 16並行）",
+        "popular": "🔥 人気モデル（Qwen2.5-72B + H100 + 6並行）",
+        "reasoning": "推論モデル（QwQ-32B + RTX4090 + 8並行）"
+      }
     }
   }
 }

@@ -342,31 +342,185 @@
     }
   },
   "calculator": {
+    "modelSelection": {
+      "label": "模型选择",
+      "placeholder": "选择模型...",
+      "searchPlaceholder": "搜索模型...",
+      "notFound": "未找到匹配的模型",
+      "tooltip": {
+        "title": "选择预设模型快速配置",
+        "features": ["自动设置参数数量", "包含最新主流模型", "支持搜索功能"]
+      }
+    },
     "parameters": {
       "label": "模型参数量（单位：十亿）",
       "tooltip": "模型的参数量，例如：671B (DeepSeek R1)、70B (Llama 3.1 70B)、405B (Llama 3.1 405B)、7B、13B",
-      "selectPlaceholder": "选择预设模型"
+      "placeholder": "输入模型大小 (例如: 7, 13, 70)"
     },
     "precision": {
       "label": "计算精度",
       "tooltip": "不同的计算精度会影响显存使用量，FP32最高，FP8最低"
     },
+    "concurrency": {
+      "label": "并发用户数",
+      "placeholder": "8",
+      "tooltip": {
+        "title": "💼 并发用户数规划:",
+        "scenarios": [
+          "• 1-4用户: 测试环境、小规模试用",
+          "• 8-16用户: 部门内部使用、小型应用",
+          "• 32-64用户: 企业级应用、中等规模服务",
+          "• 128+用户: 大规模生产环境、高并发服务"
+        ],
+        "estimation": {
+          "title": "💡 如何估算并发数:",
+          "methods": [
+            "• 客服机器人: 预期同时咨询的客户数量",
+            "• 内部工具: 团队中可能同时使用的人数",
+            "• API服务: 预期的QPS × 平均响应时间(秒)",
+            "• 对话应用: DAU × 同时在线率 × 活跃度"
+          ]
+        }
+      }
+    },
+    "contextLength": {
+      "label": "上下文长度",
+      "placeholder": "选择 Context Length...",
+      "searchPlaceholder": "搜索 Context Length...",
+      "notFound": "未找到匹配的选项",
+      "tooltip": {
+        "title": "上下文长度影响内存占用",
+        "features": [
+          "主要影响KV Cache内存大小",
+          "长度越大，能处理的文档越长",
+          "选择合适场景可优化成本"
+        ]
+      },
+      "options": [
+        {
+          "value": "2048",
+          "label": "2K tokens",
+          "description": "简单问答、代码补全",
+          "scenarios": "适合: ChatGPT式对话、代码助手、简单翻译"
+        },
+        {
+          "value": "4096",
+          "label": "4K tokens",
+          "description": "标准对话、文档分析",
+          "scenarios": "适合: 客服机器人、文档问答、邮件处理"
+        },
+        {
+          "value": "8192",
+          "label": "8K tokens",
+          "description": "长文档、复杂推理",
+          "scenarios": "适合: 论文分析、法律文档、技术文档"
+        },
+        {
+          "value": "16384",
+          "label": "16K tokens",
+          "description": "书籍章节、深度分析",
+          "scenarios": "适合: 学术研究、长篇内容创作、详细报告"
+        },
+        {
+          "value": "32768",
+          "label": "32K tokens",
+          "description": "整本书籍、代码库",
+          "scenarios": "适合: 代码库分析、完整书籍处理、大型项目文档"
+        },
+        {
+          "value": "65536",
+          "label": "64K tokens",
+          "description": "超长上下文、多文档",
+          "scenarios": "适合: 多文档对比、大型代码重构、企业知识库"
+        },
+        {
+          "value": "131072",
+          "label": "128K tokens",
+          "description": "海量文档、全景分析",
+          "scenarios": "适合: 研究综述、大型项目规划、企业级智能助手"
+        },
+        {
+          "value": "262144",
+          "label": "256K tokens",
+          "description": "极限长度、专业场景",
+          "scenarios": "适合: 法律案例库、医学文献、超大型项目"
+        }
+      ]
+    },
     "gpu": {
       "label": "GPU型号",
+      "placeholder": "搜索GPU型号...",
       "searchPlaceholder": "搜索GPU型号...",
       "notFound": "未找到匹配的GPU型号"
     },
     "results": {
-      "modelMemory": "模型显存占用",
-      "inferenceMemory": "推理额外显存",
       "totalMemory": "总显存需求",
       "requiredGPUs": "所需GPU数量",
       "unit": "块"
     },
-
+    "memoryBreakdown": {
+      "title": "显存分解",
+      "modelInfo": "模型: {parameters}B 参数",
+      "moeInfo": "(MoE: {activeParams}B 激活)",
+      "components": {
+        "modelMemory": {
+          "label": "模型显存",
+          "description": "所有模型权重"
+        },
+        "kvCache": {
+          "label": "KV缓存",
+          "description": "对话历史缓存"
+        },
+        "activationMemory": {
+          "label": "激活显存",
+          "descriptionMoE": "专家模型优化",
+          "descriptionNormal": "并发处理缓存"
+        },
+        "computationCache": {
+          "label": "计算缓存",
+          "description": "临时计算缓存"
+        }
+      }
+    },
+    "performance": {
+      "title": "性能指标",
+      "explanation": "性能关系：最大QPS = 并发用户数 ÷ 平均响应时间 (基于{avgTokens} tokens输出)",
+      "metrics": {
+        "totalThroughput": {
+          "label": "总吞吐量",
+          "description": "所有GPU总计算能力",
+          "unit": "tokens/s"
+        },
+        "throughputPerUser": {
+          "label": "每用户吞吐量",
+          "description": "总吞吐量 ÷ {users}用户",
+          "unit": "tokens/s/user"
+        },
+        "estimatedLatency": {
+          "label": "预估延迟",
+          "description": "{avgTokens} tokens平均响应时间",
+          "unit": "ms"
+        },
+        "maxQPS": {
+          "label": "最大QPS",
+          "description": "{concurrency}并发 ÷ {latency}s",
+          "unit": "queries/s"
+        }
+      }
+    },
     "quickStart": {
-      "title": "快速开始示例：",
-      "description": "点击这些示例快速配置热门模型部署方案！"
+      "title": "场景示例 (显卡 + 模型 + 并发):",
+      "description": "点击这些示例快速配置热门模型部署方案！",
+      "examples": {
+        "flagship": "🆕 旗舰模型 (Qwen3-235B + H100 + 4并发)",
+        "ultraLarge": "超大模型 (DeepSeek-R1 + H100 + 2并发)",
+        "enterprise": "企业级模型 (Llama3-70B + A100 + 8并发)",
+        "highConcurrency": "高并发服务 (Llama3-70B + H100 + 32并发)",
+        "lightweight": "轻量级部署 (Llama3-8B + RTX4090 + 4并发)",
+        "mediumScale": "中等规模 (Llama3-8B + RTX4090 + 16并发)",
+        "popular": "🔥 热门模型 (Qwen2.5-72B + H100 + 6并发)",
+        "reasoning": "推理模型 (QwQ-32B + RTX4090 + 8并发)"
+      }
     }
   }
 }

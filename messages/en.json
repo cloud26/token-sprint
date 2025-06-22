@@ -339,30 +339,189 @@
     }
   },
   "calculator": {
+    "modelSelection": {
+      "label": "Model Selection",
+      "placeholder": "Select model...",
+      "searchPlaceholder": "Search models...",
+      "notFound": "No matching model found",
+      "tooltip": {
+        "title": "Select preset model for quick configuration",
+        "features": [
+          "Automatically set parameter count",
+          "Includes latest mainstream models",
+          "Search functionality supported"
+        ]
+      }
+    },
     "parameters": {
       "label": "Model Parameters (Billions)",
       "tooltip": "Model size in billions of parameters, e.g., 671B (DeepSeek R1), 70B (Llama 3.1 70B), 405B (Llama 3.1 405B), 7B, 13B",
-      "selectPlaceholder": "Select a model"
+      "placeholder": "Enter model size (e.g., 7, 13, 70)"
     },
     "precision": {
       "label": "Precision",
       "tooltip": "Different precisions affect memory usage, FP32 highest, FP8 lowest"
     },
+    "concurrency": {
+      "label": "Concurrent Users",
+      "placeholder": "8",
+      "tooltip": {
+        "title": "💼 Concurrent Users Planning:",
+        "scenarios": [
+          "• 1-4 users: Testing environment, small-scale trials",
+          "• 8-16 users: Internal department use, small applications",
+          "• 32-64 users: Enterprise applications, medium-scale services",
+          "• 128+ users: Large-scale production, high-concurrency services"
+        ],
+        "estimation": {
+          "title": "💡 How to estimate concurrency:",
+          "methods": [
+            "• Customer service bot: Expected simultaneous customer inquiries",
+            "• Internal tools: Team members who might use simultaneously",
+            "• API service: Expected QPS × Average response time (seconds)",
+            "• Chat application: DAU × Online rate × Activity rate"
+          ]
+        }
+      }
+    },
+    "contextLength": {
+      "label": "Context Length",
+      "placeholder": "Select Context Length...",
+      "searchPlaceholder": "Search Context Length...",
+      "notFound": "No matching option found",
+      "tooltip": {
+        "title": "Context length affects memory usage",
+        "features": [
+          "Mainly affects KV Cache memory size",
+          "Longer length allows processing longer documents",
+          "Choosing appropriate scenario optimizes costs"
+        ]
+      },
+      "options": [
+        {
+          "value": "2048",
+          "label": "2K tokens",
+          "description": "Simple Q&A, code completion",
+          "scenarios": "Suitable for: ChatGPT-style dialogue, code assistant, simple translation"
+        },
+        {
+          "value": "4096",
+          "label": "4K tokens",
+          "description": "Standard dialogue, document analysis",
+          "scenarios": "Suitable for: Customer service bots, document Q&A, email processing"
+        },
+        {
+          "value": "8192",
+          "label": "8K tokens",
+          "description": "Long documents, complex reasoning",
+          "scenarios": "Suitable for: Paper analysis, legal documents, technical documentation"
+        },
+        {
+          "value": "16384",
+          "label": "16K tokens",
+          "description": "Book chapters, deep analysis",
+          "scenarios": "Suitable for: Academic research, long-form content creation, detailed reports"
+        },
+        {
+          "value": "32768",
+          "label": "32K tokens",
+          "description": "Entire books, codebases",
+          "scenarios": "Suitable for: Codebase analysis, complete book processing, large project documentation"
+        },
+        {
+          "value": "65536",
+          "label": "64K tokens",
+          "description": "Ultra-long context, multi-document",
+          "scenarios": "Suitable for: Multi-document comparison, large code refactoring, enterprise knowledge base"
+        },
+        {
+          "value": "131072",
+          "label": "128K tokens",
+          "description": "Massive documents, panoramic analysis",
+          "scenarios": "Suitable for: Research reviews, large project planning, enterprise-level AI assistants"
+        },
+        {
+          "value": "262144",
+          "label": "256K tokens",
+          "description": "Extreme length, professional scenarios",
+          "scenarios": "Suitable for: Legal case databases, medical literature, ultra-large projects"
+        }
+      ]
+    },
     "gpu": {
       "label": "GPU Model",
+      "placeholder": "Search GPU models...",
       "searchPlaceholder": "Search GPU models...",
       "notFound": "No GPU model found"
     },
     "results": {
-      "modelMemory": "Model Memory",
-      "inferenceMemory": "Inference Memory",
       "totalMemory": "Total Memory Required",
       "requiredGPUs": "Required GPUs",
       "unit": "x"
     },
+    "memoryBreakdown": {
+      "title": "Memory Breakdown",
+      "modelInfo": "Model: {parameters}B parameters",
+      "moeInfo": "(MoE: {activeParams}B active)",
+      "components": {
+        "modelMemory": {
+          "label": "Model Memory",
+          "description": "All model weights"
+        },
+        "kvCache": {
+          "label": "KV Cache",
+          "description": "Conversation history cache"
+        },
+        "activationMemory": {
+          "label": "Activation Memory",
+          "descriptionMoE": "Expert model optimization",
+          "descriptionNormal": "Concurrent processing cache"
+        },
+        "computationCache": {
+          "label": "Computation Cache",
+          "description": "Temporary computation cache"
+        }
+      }
+    },
+    "performance": {
+      "title": "Performance Metrics",
+      "explanation": "Performance relationship: Max QPS = Concurrent Users ÷ Average Response Time (based on {avgTokens} tokens output)",
+      "metrics": {
+        "totalThroughput": {
+          "label": "Total Throughput",
+          "description": "Total computing power of all GPUs",
+          "unit": "tokens/s"
+        },
+        "throughputPerUser": {
+          "label": "Throughput Per User",
+          "description": "Total throughput ÷ {users} users",
+          "unit": "tokens/s/user"
+        },
+        "estimatedLatency": {
+          "label": "Estimated Latency",
+          "description": "{avgTokens} tokens average response time",
+          "unit": "ms"
+        },
+        "maxQPS": {
+          "label": "Max QPS",
+          "description": "{concurrency} concurrent ÷ {latency}s",
+          "unit": "queries/s"
+        }
+      }
+    },
     "quickStart": {
-      "title": "Quick Start Examples:",
-      "description": "Click these examples to quickly configure popular model deployment scenarios!"
+      "title": "Scenario Examples (GPU + Model + Concurrency):",
+      "description": "Click these examples to quickly configure popular model deployment scenarios!",
+      "examples": {
+        "flagship": "🆕 Flagship Model (Qwen3-235B + H100 + 4 concurrent)",
+        "ultraLarge": "Ultra-Large Model (DeepSeek-R1 + H100 + 2 concurrent)",
+        "enterprise": "Enterprise Model (Llama3-70B + A100 + 8 concurrent)",
+        "highConcurrency": "High Concurrency Service (Llama3-70B + H100 + 32 concurrent)",
+        "lightweight": "Lightweight Deployment (Llama3-8B + RTX4090 + 4 concurrent)",
+        "mediumScale": "Medium Scale (Llama3-8B + RTX4090 + 16 concurrent)",
+        "popular": "🔥 Popular Model (Qwen2.5-72B + H100 + 6 concurrent)",
+        "reasoning": "Reasoning Model (QwQ-32B + RTX4090 + 8 concurrent)"
+      }
     }
   }
 }

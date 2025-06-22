@@ -339,30 +339,189 @@
     }
   },
   "calculator": {
+    "modelSelection": {
+      "label": "Modellauswahl",
+      "placeholder": "Modell auswählen...",
+      "searchPlaceholder": "Modelle suchen...",
+      "notFound": "Kein passendes Modell gefunden",
+      "tooltip": {
+        "title": "Voreingestelltes Modell für schnelle Konfiguration auswählen",
+        "features": [
+          "Parameteranzahl automatisch setzen",
+          "Neueste Mainstream-Modelle enthalten",
+          "Suchfunktion unterstützt"
+        ]
+      }
+    },
     "parameters": {
       "label": "Modellparameter (Milliarden)",
       "tooltip": "Modellgröße in Milliarden von Parametern, z.B. 671B (DeepSeek R1), 70B (Llama 3.1 70B), 405B (Llama 3.1 405B), 7B, 13B",
-      "selectPlaceholder": "Modell auswählen"
+      "placeholder": "Modellgröße eingeben (z.B. 7, 13, 70)"
     },
     "precision": {
       "label": "Präzision",
       "tooltip": "Verschiedene Präzisionen beeinflussen den Speicherverbrauch, FP32 am höchsten, FP8 am niedrigsten"
     },
+    "concurrency": {
+      "label": "Gleichzeitige Benutzer",
+      "placeholder": "8",
+      "tooltip": {
+        "title": "💼 Planung gleichzeitiger Benutzer:",
+        "scenarios": [
+          "• 1-4 Benutzer: Testumgebung, kleine Versuche",
+          "• 8-16 Benutzer: Interne Abteilungsnutzung, kleine Anwendungen",
+          "• 32-64 Benutzer: Unternehmensanwendungen, mittelgroße Services",
+          "• 128+ Benutzer: Großskalige Produktion, hochkonkurrente Services"
+        ],
+        "estimation": {
+          "title": "💡 Wie man Nebenläufigkeit schätzt:",
+          "methods": [
+            "• Kundenservice-Bot: Erwartete gleichzeitige Kundenanfragen",
+            "• Interne Tools: Teammitglieder, die möglicherweise gleichzeitig nutzen",
+            "• API-Service: Erwartete QPS × Durchschnittliche Antwortzeit (Sekunden)",
+            "• Chat-Anwendung: DAU × Online-Rate × Aktivitätsrate"
+          ]
+        }
+      }
+    },
+    "contextLength": {
+      "label": "Kontextlänge",
+      "placeholder": "Kontextlänge auswählen...",
+      "searchPlaceholder": "Kontextlänge suchen...",
+      "notFound": "Keine passende Option gefunden",
+      "tooltip": {
+        "title": "Kontextlänge beeinflusst Speicherverbrauch",
+        "features": [
+          "Beeinflusst hauptsächlich KV-Cache-Speichergröße",
+          "Längere Länge ermöglicht Verarbeitung längerer Dokumente",
+          "Auswahl geeigneter Szenarien optimiert Kosten"
+        ]
+      },
+      "options": [
+        {
+          "value": "2048",
+          "label": "2K Token",
+          "description": "Einfache Fragen, Code-Vervollständigung",
+          "scenarios": "Geeignet für: ChatGPT-ähnliche Gespräche, Code-Assistenten, einfache Übersetzung"
+        },
+        {
+          "value": "4096",
+          "label": "4K Token",
+          "description": "Standard-Dialog, Dokumentenanalyse",
+          "scenarios": "Geeignet für: Kundenservice-Bots, Dokument-Q&A, E-Mail-Verarbeitung"
+        },
+        {
+          "value": "8192",
+          "label": "8K Token",
+          "description": "Lange Dokumente, komplexe Argumentation",
+          "scenarios": "Geeignet für: Papieranalyse, juristische Dokumente, technische Dokumentation"
+        },
+        {
+          "value": "16384",
+          "label": "16K Token",
+          "description": "Buchkapitel, tiefe Analyse",
+          "scenarios": "Geeignet für: Akademische Forschung, lange Inhaltserstellung, detaillierte Berichte"
+        },
+        {
+          "value": "32768",
+          "label": "32K Token",
+          "description": "Ganze Bücher, Codebasen",
+          "scenarios": "Geeignet für: Codebase-Analyse, vollständige Buchverarbeitung, große Projektdokumentation"
+        },
+        {
+          "value": "65536",
+          "label": "64K Token",
+          "description": "Ultra-langer Kontext, Multi-Dokumente",
+          "scenarios": "Geeignet für: Multi-Dokument-Vergleich, große Code-Refactoring, Unternehmens-Wissensdatenbanken"
+        },
+        {
+          "value": "131072",
+          "label": "128K Token",
+          "description": "Massive Dokumente, panoramische Analyse",
+          "scenarios": "Geeignet für: Forschungsübersichten, große Projektplanung, unternehmensweite KI-Assistenten"
+        },
+        {
+          "value": "262144",
+          "label": "256K Token",
+          "description": "Extreme Länge, professionelle Szenarien",
+          "scenarios": "Geeignet für: Juristische Falldatenbanken, medizinische Literatur, ultra-große Projekte"
+        }
+      ]
+    },
     "gpu": {
       "label": "GPU-Modell",
+      "placeholder": "GPU-Modelle suchen...",
       "searchPlaceholder": "GPU-Modelle suchen...",
       "notFound": "Kein GPU-Modell gefunden"
     },
     "results": {
-      "modelMemory": "Modellspeicher",
-      "inferenceMemory": "Inferenzspeicher",
       "totalMemory": "Erforderlicher Gesamtspeicher",
       "requiredGPUs": "Erforderliche GPUs",
       "unit": "x"
     },
+    "memoryBreakdown": {
+      "title": "Speicheraufschlüsselung",
+      "modelInfo": "Modell: {parameters}B Parameter",
+      "moeInfo": "(MoE: {activeParams}B aktiv)",
+      "components": {
+        "modelMemory": {
+          "label": "Modellspeicher",
+          "description": "Alle Modellgewichte"
+        },
+        "kvCache": {
+          "label": "KV-Cache",
+          "description": "Gesprächsverlauf-Cache"
+        },
+        "activationMemory": {
+          "label": "Aktivierungsspeicher",
+          "descriptionMoE": "Expertenmodell-Optimierung",
+          "descriptionNormal": "Nebenläufigkeits-Verarbeitungs-Cache"
+        },
+        "computationCache": {
+          "label": "Berechnungs-Cache",
+          "description": "Temporärer Berechnungs-Cache"
+        }
+      }
+    },
+    "performance": {
+      "title": "Leistungsmetriken",
+      "explanation": "Leistungsbeziehung: Max QPS = Gleichzeitige Benutzer ÷ Durchschnittliche Antwortzeit (basierend auf {avgTokens} Token-Ausgabe)",
+      "metrics": {
+        "totalThroughput": {
+          "label": "Gesamtdurchsatz",
+          "description": "Gesamte Rechenleistung aller GPUs",
+          "unit": "Token/s"
+        },
+        "throughputPerUser": {
+          "label": "Durchsatz pro Benutzer",
+          "description": "Gesamtdurchsatz ÷ {users} Benutzer",
+          "unit": "Token/s/Benutzer"
+        },
+        "estimatedLatency": {
+          "label": "Geschätzte Latenz",
+          "description": "{avgTokens} Token durchschnittliche Antwortzeit",
+          "unit": "ms"
+        },
+        "maxQPS": {
+          "label": "Max QPS",
+          "description": "{concurrency} nebenläufig ÷ {latency}s",
+          "unit": "Anfragen/s"
+        }
+      }
+    },
     "quickStart": {
-      "title": "Schnellstart-Beispiele:",
-      "description": "Klicken Sie auf diese Beispiele, um schnell beliebte Modellbereitstellungsszenarien zu konfigurieren!"
+      "title": "Szenario-Beispiele (GPU + Modell + Nebenläufigkeit):",
+      "description": "Klicken Sie auf diese Beispiele, um schnell beliebte Modellbereitstellungsszenarien zu konfigurieren!",
+      "examples": {
+        "flagship": "🆕 Flaggschiff-Modell (Qwen3-235B + H100 + 4 nebenläufig)",
+        "ultraLarge": "Ultra-Großes Modell (DeepSeek-R1 + H100 + 2 nebenläufig)",
+        "enterprise": "Unternehmensmodell (Llama3-70B + A100 + 8 nebenläufig)",
+        "highConcurrency": "Hochkonkurrenter Service (Llama3-70B + H100 + 32 nebenläufig)",
+        "lightweight": "Leichtgewichtige Bereitstellung (Llama3-8B + RTX4090 + 4 nebenläufig)",
+        "mediumScale": "Mittlerer Maßstab (Llama3-8B + RTX4090 + 16 nebenläufig)",
+        "popular": "🔥 Beliebtes Modell (Qwen2.5-72B + H100 + 6 nebenläufig)",
+        "reasoning": "Reasoning-Modell (QwQ-32B + RTX4090 + 8 nebenläufig)"
+      }
     }
   }
 }

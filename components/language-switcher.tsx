@@ -40,7 +40,7 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
                     {LANGUAGE_CONFIG.SUPPORTED_LANGUAGES.map((lang) => (
                         <DropdownMenuItem key={lang} onClick={() => handleLanguageChange(lang)}>
                             {LANGUAGE_CONFIG.LANGUAGE_LABELS[lang]}
-                        </DropdownMenuItem>
+                    </DropdownMenuItem>
                     ))}
                 </DropdownMenuContent>
             </DropdownMenu>
