@@ -214,6 +214,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                    // 基础配置
                     parameters: Number(parameters),
                     precision,
                     gpuModel,
@@ -222,9 +223,45 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                     contextLength: Number(contextLength),
                     expectedTokensPerSecond: Number(expectedTokensPerSecond),
                     manualGpuCount: Number(manualGpuCount) || null,
+                    selectedModel,
+                    locale,
+                    // 计算结果
                     totalMemory: memory.totalMemory,
                     requiredGPUs: memory.requiredGPUs,
-                    locale: locale
+                    // 详细性能指标
+                    throughputInfo: {
+                        tokensPerSecond: memory.throughputInfo.tokensPerSecond,
+                        tokensPerSecondPerUser: memory.throughputInfo.tokensPerSecondPerUser,
+                        estimatedLatency: memory.throughputInfo.estimatedLatency,
+                        maxQPS: memory.throughputInfo.maxQPS,
+                        avgOutputTokens: memory.throughputInfo.avgOutputTokens
+                    },
+                    // GPU分析
+                    gpuAnalysis: memory.gpuAnalysis ? {
+                        baseRequiredGPUs: memory.gpuAnalysis.baseRequiredGPUs,
+                        memoryWarning: memory.gpuAnalysis.memoryWarning || null
+                    } : null,
+                    // 性能分析
+                    performanceAnalysis: memory.performanceAnalysis ? {
+                        minRequiredGPUs: memory.performanceAnalysis.minRequiredGPUs,
+                        meetsExpectation: memory.performanceAnalysis.meetsExpectation,
+                        recommendedAction: memory.performanceAnalysis.recommendedAction
+                    } : null,
+                    // 内存分解
+                    memoryBreakdown: {
+                        modelMemory: memory.modelMemory,
+                        kvCacheMemory: memory.kvCacheMemory,
+                        activationMemory: memory.activationMemory,
+                        computationMemory: memory.computationMemory
+                    },
+                    // 架构信息
+                    architectureInfo: {
+                        d_model: memory.architectureInfo.d_model,
+                        n_layers: memory.architectureInfo.n_layers,
+                        activeParams: memory.architectureInfo.activeParams,
+                        isMoE: memory.architectureInfo.isMoE,
+                        source: memory.architectureInfo.source
+                    }
                 }),
             });
         } catch (error) {
