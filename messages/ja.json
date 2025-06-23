@@ -525,6 +525,51 @@
         "popular": "🔥 人気モデル（Qwen2.5-72B + H100 + 6並行）",
         "reasoning": "推論モデル（QwQ-32B + RTX4090 + 8並行）"
       }
+    },
+    "expectedTokensPerSecond": {
+      "label": "ユーザーあたり期待体験",
+      "placeholder": "1",
+      "unit": "トークン/秒",
+      "tooltip": {
+        "title": "ビジネスシナリオに基づく適切な生成速度の選択",
+        "levels": [
+          "• 80+ トークン/秒: 長文コンテンツ、研究文書 (8K+ トークンシナリオ)",
+          "• 50-80 トークン/秒: 技術的議論、論文分析 (2K-4K トークンシナリオ)",
+          "• 30-50 トークン/秒: カスタマーサービスボット、コード支援 (1K-2K トークンシナリオ)",
+          "• 15-30 トークン/秒: クイックQ&A、簡単な対話 (256-512 トークンシナリオ)",
+          "• <15 トークン/秒: 体験が悪い、ユーザーが諦める可能性"
+        ]
+      }
+    },
+    "gpuCount": {
+      "label": "GPU数",
+      "placeholder": "自動計算",
+      "unit": "台",
+      "autoLabel": "自動",
+      "tooltip": {
+        "title": "GPU数設定",
+        "features": [
+          "• 自動計算：並行数と期待体験に基づくインテリジェント推奨",
+          "• 手動変更：自動計算結果を上書き可能",
+          "• 両方を満たす：メモリ要件とパフォーマンス要件",
+          "• 赤い警告：メモリ不足、動作しない可能性"
+        ]
+      }
+    },
+    "memoryRequirement": {
+      "title": "メモリ要件",
+      "totalMemory": "メモリ要件 {totalMemory} GB",
+      "requiredGPUs": "**{count}** 台のGPUが必要（メモリ容量ベース）",
+      "memoryWarning": "⚠️ メモリ警告"
+    },
+    "throughputRequirement": {
+      "title": "スループット要件",
+      "totalThroughput": "スループット要件 {totalThroughput} トークン/秒",
+      "requiredGPUs": "**{count}** 台のGPUが必要（計算パフォーマンスベース）"
+    },
+    "performanceComparison": {
+      "meetExpectation": "✅ 期待値 {expected} トークン/秒を満たす",
+      "belowExpectation": "❌ 期待値 {expected} トークン/秒を下回る"
     }
   }
 }

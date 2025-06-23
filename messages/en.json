@@ -516,6 +516,51 @@
         "popular": "🔥 Popular Model (Qwen2.5-72B + H100 + 6 concurrent)",
         "reasoning": "Reasoning Model (QwQ-32B + RTX4090 + 8 concurrent)"
       }
+    },
+    "expectedTokensPerSecond": {
+      "label": "Expected Experience Per User",
+      "placeholder": "1",
+      "unit": "token/s",
+      "tooltip": {
+        "title": "Choose appropriate generation speed based on business scenarios",
+        "levels": [
+          "• 80+ token/s: Long-form content, research documents (8K+ tokens scenarios)",
+          "• 50-80 token/s: Technical discussions, paper analysis (2K-4K tokens scenarios)",
+          "• 30-50 token/s: Customer service bots, code assistance (1K-2K tokens scenarios)",
+          "• 15-30 token/s: Quick Q&A, simple dialogue (256-512 tokens scenarios)",
+          "• <15 token/s: Poor experience, users may abandon"
+        ]
+      }
+    },
+    "gpuCount": {
+      "label": "GPU Count",
+      "placeholder": "Auto-calculated",
+      "unit": "GPUs",
+      "autoLabel": "Auto",
+      "tooltip": {
+        "title": "GPU Count Configuration",
+        "features": [
+          "• Auto-calculation: Intelligently recommend based on concurrency and expected experience",
+          "• Manual modification: Can override auto-calculated results",
+          "• Satisfy both: Memory requirements and performance requirements",
+          "• Red warning: Insufficient memory, may not run"
+        ]
+      }
+    },
+    "memoryRequirement": {
+      "title": "Memory Requirements",
+      "totalMemory": "Memory Requirements {totalMemory} GB",
+      "requiredGPUs": "Requires **{count}** GPUs (based on memory capacity)",
+      "memoryWarning": "⚠️ Memory Warning"
+    },
+    "throughputRequirement": {
+      "title": "Throughput Requirements",
+      "totalThroughput": "Throughput Requirements {totalThroughput} tokens/s",
+      "requiredGPUs": "Requires **{count}** GPUs (based on computing performance)"
+    },
+    "performanceComparison": {
+      "meetExpectation": "✅ Meets expectation {expected} token/s",
+      "belowExpectation": "❌ Below expectation {expected} token/s"
     }
   }
 }

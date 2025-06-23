@@ -31,6 +31,12 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     const t = useTranslations('calculator')
     const locale = useLocale()
 
+    // 处理包含Markdown格式的翻译文本
+    const renderMarkdownText = (text: string) => {
+        // 简单处理 **text** 格式为加粗
+        return text.replace(/\*\*(.*?)\*\*/g, '<span class="text-lg font-bold">$1</span>')
+    }
+
     // Context Length 配置选项 - 从翻译文件获取
     const CONTEXT_LENGTH_OPTIONS: ContextLengthOption[] = t.raw('contextLength.options') || [
         {
@@ -130,6 +136,8 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     const [selectedModel, setSelectedModel] = useState<string>(getDefaultModel())
     const [batchSize, setBatchSize] = useState<string>("1") // 并发量
     const [contextLength, setContextLength] = useState<string>("1024") // 上下文长度
+    const [expectedTokensPerSecond, setExpectedTokensPerSecond] = useState<string>("1") // 每用户期望体验
+    const [manualGpuCount, setManualGpuCount] = useState<string>("") // 手动设置的GPU数量
 
     // Popover 开关状态
     const [modelPopoverOpen, setModelPopoverOpen] = useState(false)
@@ -142,15 +150,51 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     // 获取选中模型的value用于精确匹配
     const selectedModelValue = sortedModelExamples.find(m => m.name === selectedModel)?.value
 
-    const memory = calculateInferenceMemory(
-        Number(parameters),
-        precision,
-        gpuMemory,
-        Number(batchSize),
-        Number(contextLength),
-        gpuModel,
-        selectedModelValue // 传入具体的模型标识符
-    )
+    const memory = React.useMemo(() => {
+        return calculateInferenceMemory(
+            Number(parameters),
+            precision,
+            gpuMemory,
+            Number(batchSize),
+            Number(contextLength),
+            gpuModel,
+            selectedModelValue, // 传入具体的模型标识符
+            Number(expectedTokensPerSecond) || undefined, // 传入期望体验
+            Number(manualGpuCount) || undefined // 传入手动GPU数量
+        )
+    }, [parameters, precision, gpuMemory, batchSize, contextLength, gpuModel, selectedModelValue, expectedTokensPerSecond, manualGpuCount])
+
+    // 使用防抖来优化GPU数量自动计算
+    const [isUserTyping, setIsUserTyping] = React.useState(false)
+
+    // 防抖计算GPU数量
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsUserTyping(false)
+
+            // 当有期望体验要求时，自动计算推荐GPU数量
+            if (memory.performanceAnalysis && Number(expectedTokensPerSecond) > 1) {
+                const recommendedGpus = memory.performanceAnalysis.minRequiredGPUs
+                const memoryBasedGpus = memory.gpuAnalysis.baseRequiredGPUs
+
+                // 选择较大的值作为推荐GPU数量（满足内存和性能需求）
+                const finalRecommendedGpus = Math.max(recommendedGpus, memoryBasedGpus)
+
+                // 只有当计算结果与当前值不同时才更新
+                if (finalRecommendedGpus.toString() !== manualGpuCount) {
+                    setManualGpuCount(finalRecommendedGpus.toString())
+                }
+            } else if (Number(expectedTokensPerSecond) <= 1) {
+                // 如果期望体验很低，使用内存需求计算
+                const memoryBasedGpus = memory.gpuAnalysis.baseRequiredGPUs
+                if (memoryBasedGpus.toString() !== manualGpuCount) {
+                    setManualGpuCount(memoryBasedGpus.toString())
+                }
+            }
+        }, 500) // 500ms防抖延迟
+
+        return () => clearTimeout(timer)
+    }, [expectedTokensPerSecond, batchSize, selectedModel, parameters, precision, contextLength, gpuModel])
 
     // 当模型选择改变时更新参数
     const handleModelChange = (newModel: string) => {
@@ -176,6 +220,8 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                     gpuMemory,
                     batchSize: Number(batchSize),
                     contextLength: Number(contextLength),
+                    expectedTokensPerSecond: Number(expectedTokensPerSecond),
+                    manualGpuCount: Number(manualGpuCount) || null,
                     totalMemory: memory.totalMemory,
                     requiredGPUs: memory.requiredGPUs,
                     locale: locale
@@ -186,21 +232,38 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
         }
     };
 
-    // 在计算结果更新时记录日志
+    // 在计算结果更新时记录日志（防抖）
     useEffect(() => {
-        logCalculation();
-    }, [parameters, precision, gpuModel, batchSize, contextLength, memory]);
+        const timer = setTimeout(() => {
+            if (!isUserTyping) {
+                logCalculation();
+            }
+        }, 1000); // 1秒防抖延迟
+
+        return () => clearTimeout(timer);
+    }, [parameters, precision, gpuModel, batchSize, contextLength, expectedTokensPerSecond, manualGpuCount, memory, isUserTyping]);
 
     const handleParameterChange = (value: string) => {
         setParameters(value.replace(/[^0-9.]/g, ""))
     }
 
     const handleBatchSizeChange = (value: string) => {
+        setIsUserTyping(true)
         setBatchSize(value.replace(/[^0-9]/g, ""))
     }
 
     const handleContextLengthChange = (value: string) => {
         setContextLength(value.replace(/[^0-9]/g, ""))
+    }
+
+    const handleExpectedTokensPerSecondChange = (value: string) => {
+        setIsUserTyping(true)
+        setExpectedTokensPerSecond(value.replace(/[^0-9]/g, ""))
+    }
+
+    const handleManualGpuCountChange = (value: string) => {
+        setIsUserTyping(true)
+        setManualGpuCount(value.replace(/[^0-9]/g, ""))
     }
 
     return (
@@ -232,7 +295,23 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                             <Popover open={modelPopoverOpen} onOpenChange={setModelPopoverOpen}>
                                 <PopoverTrigger asChild>
                                     <Button variant="outline" role="combobox" className="w-full justify-between text-sm">
-                                        {selectedModel ? selectedModel : t('modelSelection.placeholder')}
+                                        <div className="flex items-center gap-2 min-w-0">
+                                            {selectedModel ? (
+                                                <>
+                                                    <span className="truncate">{selectedModel}</span>
+                                                    {(() => {
+                                                        const currentModel = MODELS.find(m => m.name === selectedModel);
+                                                        return currentModel?.isMoE && (
+                                                            <span className="px-1.5 py-0.5 text-xs bg-orange-100 text-orange-700 rounded-md font-medium flex-shrink-0">
+                                                                MoE
+                                                            </span>
+                                                        );
+                                                    })()}
+                                                </>
+                                            ) : (
+                                                <span>{t('modelSelection.placeholder')}</span>
+                                            )}
+                                        </div>
                                         <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
                                     </Button>
                                 </PopoverTrigger>
@@ -289,7 +368,14 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                                     />
                                                                     <div className="flex-1 min-w-0">
                                                                         <div className="flex items-center justify-between w-full">
-                                                                            <span className="font-medium text-sm truncate">{model.name}</span>
+                                                                            <div className="flex items-center gap-2 min-w-0">
+                                                                                <span className="font-medium text-sm truncate">{model.name}</span>
+                                                                                {model.isMoE && (
+                                                                                    <span className="px-1.5 py-0.5 text-xs bg-orange-100 text-orange-700 rounded-md font-medium flex-shrink-0">
+                                                                                        MoE
+                                                                                    </span>
+                                                                                )}
+                                                                            </div>
                                                                             <span className="text-xs text-blue-600 ml-2 flex-shrink-0">{model.parameters}</span>
                                                                         </div>
                                                                     </div>
@@ -428,76 +514,76 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                         </div>
                     </div>
 
-                    {/* GPU Model 和并发用户数放在同一行 */}
-                    <div className="grid grid-cols-2 gap-3">
-                        <div className="space-y-1">
-                            <Label className="text-sm">{t('gpu.label')}</Label>
-                            <Popover open={gpuPopoverOpen} onOpenChange={setGpuPopoverOpen}>
-                                <PopoverTrigger asChild>
-                                    <Button variant="outline" role="combobox" className="w-full justify-between text-sm">
-                                        <div className="flex items-center justify-between w-full mr-2">
-                                            {gpuModel ? (
-                                                <>
-                                                    <span className="truncate">{gpuModel.split(' (')[0]}</span>
-                                                    <span className="text-blue-600 font-semibold ml-2 flex-shrink-0">
-                                                        {gpuModel.match(/\((\d+)GB\)/)?.[1]}GB
-                                                    </span>
-                                                </>
-                                            ) : (
-                                                <span>{t('gpu.placeholder')}</span>
-                                            )}
-                                        </div>
-                                        <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
-                                    <Command>
-                                        <CommandInput placeholder={t('gpu.searchPlaceholder')} />
-                                        <CommandList>
-                                            <CommandEmpty>{t('gpu.notFound')}</CommandEmpty>
-                                            <CommandGroup>
-                                                {gpuModels.map((gpu) => (
-                                                    <CommandItem
-                                                        key={`${gpu.name} (${gpu.memory}GB)`}
-                                                        value={`${gpu.name} (${gpu.memory}GB)`}
-                                                        onSelect={(currentValue) => {
-                                                            setGpuModel(currentValue === gpuModel ? "" : currentValue)
-                                                            setGpuPopoverOpen(false)
-                                                        }}
-                                                        className="flex flex-col items-start py-2 px-3 hover:bg-slate-50"
-                                                    >
-                                                        <div className="flex items-center w-full">
-                                                            <Check
-                                                                className={cn(
-                                                                    "mr-2 h-3 w-3 flex-shrink-0",
-                                                                    gpuModel === `${gpu.name} (${gpu.memory}GB)` ? "opacity-100" : "opacity-0",
-                                                                )}
-                                                            />
-                                                            <div className="flex-1 min-w-0">
-                                                                <div className="flex items-center justify-between w-full">
-                                                                    <span className="font-medium text-xs truncate">{gpu.name}</span>
-                                                                    <div className="flex items-center space-x-2 ml-2 flex-shrink-0">
-                                                                        <span className="font-bold text-blue-600 text-sm">{gpu.memory}GB</span>
-
-                                                                    </div>
+                    {/* GPU型号 - 单独一行 */}
+                    <div className="space-y-1">
+                        <Label className="text-sm">{t('gpu.label')}</Label>
+                        <Popover open={gpuPopoverOpen} onOpenChange={setGpuPopoverOpen}>
+                            <PopoverTrigger asChild>
+                                <Button variant="outline" role="combobox" className="w-full justify-between text-sm">
+                                    <div className="flex items-center justify-between w-full mr-2">
+                                        {gpuModel ? (
+                                            <>
+                                                <span className="truncate">{gpuModel.split(' (')[0]}</span>
+                                                <span className="text-blue-600 font-semibold ml-2 flex-shrink-0">
+                                                    {gpuModel.match(/\((\d+)GB\)/)?.[1]}GB
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <span>{t('gpu.placeholder')}</span>
+                                        )}
+                                    </div>
+                                    <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
+                                <Command>
+                                    <CommandInput placeholder={t('gpu.searchPlaceholder')} />
+                                    <CommandList>
+                                        <CommandEmpty>{t('gpu.notFound')}</CommandEmpty>
+                                        <CommandGroup>
+                                            {gpuModels.map((gpu) => (
+                                                <CommandItem
+                                                    key={`${gpu.name} (${gpu.memory}GB)`}
+                                                    value={`${gpu.name} (${gpu.memory}GB)`}
+                                                    onSelect={(currentValue) => {
+                                                        setGpuModel(currentValue === gpuModel ? "" : currentValue)
+                                                        setGpuPopoverOpen(false)
+                                                    }}
+                                                    className="flex flex-col items-start py-2 px-3 hover:bg-slate-50"
+                                                >
+                                                    <div className="flex items-center w-full">
+                                                        <Check
+                                                            className={cn(
+                                                                "mr-2 h-3 w-3 flex-shrink-0",
+                                                                gpuModel === `${gpu.name} (${gpu.memory}GB)` ? "opacity-100" : "opacity-0",
+                                                            )}
+                                                        />
+                                                        <div className="flex-1 min-w-0">
+                                                            <div className="flex items-center justify-between w-full">
+                                                                <span className="font-medium text-xs truncate">{gpu.name}</span>
+                                                                <div className="flex items-center space-x-2 ml-2 flex-shrink-0">
+                                                                    <span className="font-bold text-blue-600 text-sm">{gpu.memory}GB</span>
                                                                 </div>
-                                                                <div className="flex items-center justify-between w-full mt-1">
-                                                                    <div className="flex items-center space-x-2 text-xs text-gray-600">
-                                                                        <span className="text-green-600">{gpu.performance} TFLOPS</span>
-                                                                        <span className="text-purple-600">{gpu.architecture}</span>
-                                                                    </div>
+                                                            </div>
+                                                            <div className="flex items-center justify-between w-full mt-1">
+                                                                <div className="flex items-center space-x-2 text-xs text-gray-600">
+                                                                    <span className="text-green-600">{gpu.performance} TFLOPS</span>
+                                                                    <span className="text-purple-600">{gpu.architecture}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </CommandItem>
-                                                ))}
-                                            </CommandGroup>
-                                        </CommandList>
-                                    </Command>
-                                </PopoverContent>
-                            </Popover>
-                        </div>
+                                                    </div>
+                                                </CommandItem>
+                                            ))}
+                                        </CommandGroup>
+                                    </CommandList>
+                                </Command>
+                            </PopoverContent>
+                        </Popover>
+                    </div>
 
+                    {/* 并发用户数 和每用户期望体验放在同一行 */}
+                    <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1">
                             <div className="flex items-center gap-2">
                                 <Label htmlFor="batchSize" className="text-sm">{t('concurrency.label')}</Label>
@@ -530,66 +616,126 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                 placeholder={t('concurrency.placeholder')}
                             />
                         </div>
-                    </div>
 
-                    {/* 总计和GPU需求 - 优先显示 */}
-                    <section>
-                        <div className="grid grid-cols-2 gap-4">
-                            {/* 总内存需求 */}
-                            <div className="text-center p-3 bg-blue-100 rounded border-2 border-blue-300">
-                                <Label className="text-gray-700 text-sm font-medium">{t('results.totalMemory')}</Label>
-                                <p className="text-xl font-bold text-blue-700">{memory.totalMemory} GB</p>
+                        <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                                <Label htmlFor="expectedTokensPerSecond" className="text-sm">{t('expectedTokensPerSecond.label')}</Label>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        <InfoIcon className="h-3 w-3 text-muted-foreground" />
+                                    </TooltipTrigger>
+                                    <TooltipContent className="max-w-sm">
+                                        <div className="space-y-2 text-xs">
+                                            <p><strong>{t('expectedTokensPerSecond.tooltip.title')}</strong></p>
+                                            {t.raw('expectedTokensPerSecond.tooltip.levels').map((level: string, index: number) => (
+                                                <p key={index}>{level}</p>
+                                            ))}
+                                        </div>
+                                    </TooltipContent>
+                                </Tooltip>
                             </div>
-
-                            {/* GPU需求 */}
-                            <div className="text-center p-3 bg-blue-100 rounded border-2 border-blue-300">
-                                <Label className="text-gray-700 text-sm font-medium">{t('results.requiredGPUs')}</Label>
-                                <p className="text-xl font-bold text-blue-700">
-                                    {memory.requiredGPUs} {t('results.unit')} {gpuModel.split(' (')[0]}
-                                </p>
+                            <div className="flex items-center space-x-2">
+                                <Input
+                                    id="expectedTokensPerSecond"
+                                    type="text"
+                                    value={expectedTokensPerSecond}
+                                    onChange={(e) => handleExpectedTokensPerSecondChange(e.target.value)}
+                                    className="text-sm flex-1"
+                                    placeholder={t('expectedTokensPerSecond.placeholder')}
+                                />
+                                <span className="text-sm text-gray-500 whitespace-nowrap">{t('expectedTokensPerSecond.unit')}</span>
                             </div>
                         </div>
-                    </section>
+                    </div>
 
-                    {/* 详细内存分解 */}
-                    <section>
-                        <div className="bg-slate-50 p-3 rounded-lg space-y-3">
-                            <h3 className="text-base font-semibold text-center mb-3">{t('memoryBreakdown.title')}</h3>
+                    {/* GPU数目 - 单独一行，突出显示 */}
+                    <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                            <Label className="text-base font-semibold">{t('gpuCount.label')}</Label>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <InfoIcon className="h-4 w-4 text-muted-foreground" />
+                                </TooltipTrigger>
+                                <TooltipContent className="max-w-sm">
+                                    <div className="space-y-2 text-xs">
+                                        <p><strong>{t('gpuCount.tooltip.title')}</strong></p>
+                                        {t.raw('gpuCount.tooltip.features').map((feature: string, index: number) => (
+                                            <p key={index}>{feature}</p>
+                                        ))}
+                                    </div>
+                                </TooltipContent>
+                            </Tooltip>
+                        </div>
+                        <div className="p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border-2 border-blue-200">
+                            <div className="flex items-center space-x-3">
+                                <div className="flex-1 relative">
+                                    <Input
+                                        type="text"
+                                        value={manualGpuCount}
+                                        onChange={(e) => handleManualGpuCountChange(e.target.value)}
+                                        className={`text-lg font-bold h-12 ${(() => {
+                                            const recommendedGpus = memory.performanceAnalysis && Number(expectedTokensPerSecond) > 1
+                                                ? Math.max(memory.performanceAnalysis.minRequiredGPUs, memory.gpuAnalysis.baseRequiredGPUs)
+                                                : memory.gpuAnalysis.baseRequiredGPUs;
+                                            const isAutoCalculated = !isUserTyping && manualGpuCount === recommendedGpus.toString();
+                                            return isAutoCalculated ? 'pr-14' : 'pr-3';
+                                        })()} ${memory.gpuAnalysis.memoryWarning ? 'border-red-500' : 'border-blue-300'}`}
+                                        placeholder={t('gpuCount.placeholder')}
+                                    />
+                                    {(() => {
+                                        // 判断当前GPU数量是否为自动计算的值
+                                        const recommendedGpus = memory.performanceAnalysis && Number(expectedTokensPerSecond) > 1
+                                            ? Math.max(memory.performanceAnalysis.minRequiredGPUs, memory.gpuAnalysis.baseRequiredGPUs)
+                                            : memory.gpuAnalysis.baseRequiredGPUs;
 
-                            {/* 模型信息 */}
-                            <div className="text-center p-2 bg-amber-50 rounded text-xs border border-amber-200">
-                                <span className="text-gray-700">
-                                    {memory.architectureInfo.isMoE ? (
-                                        <>
-                                            {t('memoryBreakdown.modelInfo', { parameters: memory.architectureInfo.activeParams })}
-                                            <span className="ml-2 text-amber-700">
-                                                {t('memoryBreakdown.moeInfo', {
-                                                    activeParams: memory.architectureInfo.activeParams
-                                                })}
+                                        const isAutoCalculated = !isUserTyping && manualGpuCount === recommendedGpus.toString();
+
+                                        return isAutoCalculated && (
+                                            <span className="absolute right-1 top-1/2 transform -translate-y-1/2 px-1.5 py-0.5 text-xs bg-green-100 text-green-700 rounded font-medium">
+                                                {t('gpuCount.autoLabel')}
                                             </span>
-                                        </>
-                                    ) : (
-                                        t('memoryBreakdown.modelInfo', { parameters })
-                                    )}
-                                </span>
+                                        );
+                                    })()}
+                                </div>
+                                <span className="text-lg font-semibold text-blue-700 whitespace-nowrap">{t('gpuCount.unit')}</span>
+                            </div>
+                            {memory.gpuAnalysis.memoryWarning && (
+                                <div className="text-xs text-red-600 bg-red-50 p-2 rounded border border-red-200 mt-2">
+                                    {memory.gpuAnalysis.memoryWarning}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* 显存需求分解 */}
+                    <section>
+                        <div className="bg-slate-50 p-4 rounded-lg space-y-4">
+                            {/* 显存需求概览 */}
+                            <div className="text-center p-3 bg-blue-100 rounded-lg border border-blue-300 mb-3">
+                                <p className="text-lg font-bold text-blue-700">{t('memoryRequirement.totalMemory', { totalMemory: memory.totalMemory })}</p>
+                                <p className="text-sm text-blue-600 mt-1" dangerouslySetInnerHTML={{
+                                    __html: renderMarkdownText(t('memoryRequirement.requiredGPUs', { count: memory.gpuAnalysis.baseRequiredGPUs }))
+                                }} />
                             </div>
 
-                            {/* 一行显示所有内存组件 */}
-                            <div className="grid grid-cols-4 gap-3">
+
+
+                            {/* 内存组件分解 - 4x1布局 */}
+                            <div className="grid grid-cols-4 gap-2">
                                 <div className="text-center p-2 bg-white rounded border">
-                                    <Label className="text-gray-600 text-xs">{t('memoryBreakdown.components.modelMemory.label')}</Label>
-                                    <p className="text-base font-semibold text-blue-600">{memory.modelMemory} GB</p>
-                                    <p className="text-xs text-gray-500">{t('memoryBreakdown.components.modelMemory.description')}</p>
+                                    <Label className="text-gray-600 text-xs font-medium">{t('memoryBreakdown.components.modelMemory.label')}</Label>
+                                    <p className="text-base font-semibold text-blue-600 mt-1">{memory.modelMemory} GB</p>
+                                    <p className="text-xs text-gray-500 mt-1">{t('memoryBreakdown.components.modelMemory.description')}</p>
                                 </div>
                                 <div className="text-center p-2 bg-white rounded border">
-                                    <Label className="text-gray-600 text-xs">{t('memoryBreakdown.components.kvCache.label')}</Label>
-                                    <p className="text-base font-semibold text-green-600">{memory.kvCacheMemory} GB</p>
-                                    <p className="text-xs text-gray-500">{t('memoryBreakdown.components.kvCache.description')}</p>
+                                    <Label className="text-gray-600 text-xs font-medium">{t('memoryBreakdown.components.kvCache.label')}</Label>
+                                    <p className="text-base font-semibold text-green-600 mt-1">{memory.kvCacheMemory} GB</p>
+                                    <p className="text-xs text-gray-500 mt-1">{t('memoryBreakdown.components.kvCache.description')}</p>
                                 </div>
                                 <div className="text-center p-2 bg-white rounded border">
-                                    <Label className="text-gray-600 text-xs">{t('memoryBreakdown.components.activationMemory.label')}</Label>
-                                    <p className="text-base font-semibold text-purple-600">{memory.activationMemory} GB</p>
-                                    <p className="text-xs text-gray-500">
+                                    <Label className="text-gray-600 text-xs font-medium">{t('memoryBreakdown.components.activationMemory.label')}</Label>
+                                    <p className="text-base font-semibold text-purple-600 mt-1">{memory.activationMemory} GB</p>
+                                    <p className="text-xs text-gray-500 mt-1">
                                         {memory.architectureInfo.isMoE
                                             ? t('memoryBreakdown.components.activationMemory.descriptionMoE')
                                             : t('memoryBreakdown.components.activationMemory.descriptionNormal')
@@ -597,58 +743,76 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                     </p>
                                 </div>
                                 <div className="text-center p-2 bg-white rounded border">
-                                    <Label className="text-gray-600 text-xs">{t('memoryBreakdown.components.computationCache.label')}</Label>
-                                    <p className="text-base font-semibold text-orange-600">{memory.computationMemory} GB</p>
-                                    <p className="text-xs text-gray-500">{t('memoryBreakdown.components.computationCache.description')}</p>
+                                    <Label className="text-gray-600 text-xs font-medium">{t('memoryBreakdown.components.computationCache.label')}</Label>
+                                    <p className="text-base font-semibold text-orange-600 mt-1">{memory.computationMemory} GB</p>
+                                    <p className="text-xs text-gray-500 mt-1">{t('memoryBreakdown.components.computationCache.description')}</p>
                                 </div>
                             </div>
+
+                            {/* GPU配置状态 */}
+                            {memory.gpuAnalysis.memoryWarning && (
+                                <div className="p-3 bg-red-50 rounded-lg border border-red-200">
+                                    <div className="text-sm font-medium text-red-800 mb-1">{t('memoryRequirement.memoryWarning')}</div>
+                                    <div className="text-xs text-red-600">{memory.gpuAnalysis.memoryWarning}</div>
+                                </div>
+                            )}
                         </div>
                     </section>
 
-                    {/* 新增：吞吐量性能信息 */}
+                    {/* 性能指标 */}
                     <section>
                         <div className="bg-green-50 p-4 rounded-lg space-y-4">
-                            <h3 className="text-lg font-semibold text-center mb-4 text-green-800">{t('performance.title')}</h3>
-
-                            {/* 性能指标说明 */}
-                            <div className="text-center p-2 bg-green-100 rounded text-xs border border-green-300">
-                                <span className="text-green-800">
-                                    <strong>{t('performance.explanation', { avgTokens: memory.throughputInfo.avgOutputTokens })}</strong>
-                                </span>
+                            {/* 吞吐需求概览 */}
+                            <div className="text-center p-3 bg-green-100 rounded-lg border border-green-300 mb-3">
+                                <p className="text-lg font-bold text-green-700">
+                                    {t('throughputRequirement.totalThroughput', { totalThroughput: (Number(batchSize) * Number(expectedTokensPerSecond)).toLocaleString() })}
+                                </p>
+                                {memory.performanceAnalysis && Number(expectedTokensPerSecond) > 1 && (
+                                    <p className="text-sm text-green-600 mt-1" dangerouslySetInnerHTML={{
+                                        __html: renderMarkdownText(t('throughputRequirement.requiredGPUs', { count: memory.performanceAnalysis.minRequiredGPUs }))
+                                    }} />
+                                )}
                             </div>
 
-                            {/* 2x2网格显示性能指标 */}
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="bg-white p-3 rounded border border-green-200 text-center">
-                                    <Label className="text-gray-600 text-sm font-medium">{t('performance.metrics.totalThroughput.label')}</Label>
-                                    <p className="text-lg font-bold text-green-600">
+
+
+                            {/* 3x1网格显示性能指标 */}
+                            <div className="grid grid-cols-3 gap-3">
+                                <div className="bg-white p-2 rounded border border-green-200 text-center">
+                                    <Label className="text-gray-600 text-xs font-medium">{t('performance.metrics.totalThroughput.label')}</Label>
+                                    <p className="text-base font-bold text-green-600 mt-1">
                                         {memory.throughputInfo.tokensPerSecond.toLocaleString()} {t('performance.metrics.totalThroughput.unit')}
                                     </p>
-                                    <p className="text-xs text-gray-500">{t('performance.metrics.totalThroughput.description')}</p>
+                                    <p className="text-xs text-gray-500 mt-1">{t('performance.metrics.totalThroughput.description')}</p>
                                 </div>
 
-                                <div className="bg-white p-3 rounded border border-green-200 text-center">
-                                    <Label className="text-gray-600 text-sm font-medium">{t('performance.metrics.throughputPerUser.label')}</Label>
-                                    <p className="text-lg font-bold text-green-600">
+                                <div className="bg-white p-2 rounded border border-green-200 text-center">
+                                    <Label className="text-gray-600 text-xs font-medium">{t('performance.metrics.throughputPerUser.label')}</Label>
+                                    <p className="text-base font-bold text-green-600 mt-1">
                                         {memory.throughputInfo.tokensPerSecondPerUser.toLocaleString()} tokens/s
                                     </p>
-                                    <p className="text-xs text-gray-500">{t('performance.metrics.throughputPerUser.description', { users: batchSize })}</p>
+                                    <div className="text-xs text-gray-500 space-y-1 mt-1">
+                                        <p>{t('performance.metrics.throughputPerUser.description', { users: batchSize })}</p>
+                                        {Number(expectedTokensPerSecond) > 0 && (
+                                            <div className={`px-2 py-1 rounded text-xs ${memory.throughputInfo.tokensPerSecondPerUser >= Number(expectedTokensPerSecond)
+                                                ? 'bg-green-100 text-green-700'
+                                                : 'bg-red-100 text-red-700'
+                                                }`}>
+                                                {memory.throughputInfo.tokensPerSecondPerUser >= Number(expectedTokensPerSecond)
+                                                    ? t('performanceComparison.meetExpectation', { expected: expectedTokensPerSecond })
+                                                    : t('performanceComparison.belowExpectation', { expected: expectedTokensPerSecond })
+                                                }
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
 
-                                <div className="bg-white p-3 rounded border border-green-200 text-center">
-                                    <Label className="text-gray-600 text-sm font-medium">{t('performance.metrics.estimatedLatency.label')}</Label>
-                                    <p className="text-lg font-bold text-green-600">
+                                <div className="bg-white p-2 rounded border border-green-200 text-center">
+                                    <Label className="text-gray-600 text-xs font-medium">{t('performance.metrics.estimatedLatency.label')}</Label>
+                                    <p className="text-base font-bold text-green-600 mt-1">
                                         {memory.throughputInfo.estimatedLatency.toLocaleString()} {t('performance.metrics.estimatedLatency.unit')}
                                     </p>
-                                    <p className="text-xs text-gray-500">{t('performance.metrics.estimatedLatency.description', { avgTokens: memory.throughputInfo.avgOutputTokens })}</p>
-                                </div>
-
-                                <div className="bg-white p-3 rounded border border-green-200 text-center">
-                                    <Label className="text-gray-600 text-sm font-medium">{t('performance.metrics.maxQPS.label')}</Label>
-                                    <p className="text-lg font-bold text-green-600">
-                                        {memory.throughputInfo.maxQPS} QPS
-                                    </p>
-                                    <p className="text-xs text-gray-500">{t('performance.metrics.maxQPS.description', { concurrency: batchSize, latency: (memory.throughputInfo.estimatedLatency / 1000).toFixed(1) })}</p>
+                                    <p className="text-xs text-gray-500 mt-1">{t('performance.metrics.estimatedLatency.description', { avgTokens: memory.throughputInfo.avgOutputTokens })}</p>
                                 </div>
                             </div>
                         </div>

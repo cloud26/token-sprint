@@ -515,6 +515,51 @@
         "popular": "🔥 热门模型 (Qwen2.5-72B + H100 + 6并发)",
         "reasoning": "推理模型 (QwQ-32B + RTX4090 + 8并发)"
       }
+    },
+    "expectedTokensPerSecond": {
+      "label": "每用户期望体验",
+      "placeholder": "1",
+      "unit": "token/s",
+      "tooltip": {
+        "title": "根据业务场景选择合适的生成速度",
+        "levels": [
+          "• 80+ token/s: 长篇内容、研究文档 (8K+ tokens场景)",
+          "• 50-80 token/s: 技术讨论、论文分析 (2K-4K tokens场景)", 
+          "• 30-50 token/s: 客服机器人、代码辅助 (1K-2K tokens场景)",
+          "• 15-30 token/s: 快速问答、简单对话 (256-512 tokens场景)",
+          "• <15 token/s: 体验较差，用户可能放弃"
+        ]
+      }
+    },
+    "gpuCount": {
+      "label": "GPU数量",
+      "placeholder": "自动计算",
+      "unit": "张卡",
+      "autoLabel": "自动",
+      "tooltip": {
+        "title": "GPU数量配置",
+        "features": [
+          "• 自动计算：根据并发数和期望体验智能推荐",
+          "• 手动修改：可以覆盖自动计算的结果",
+          "• 同时满足：内存需求和性能需求",
+          "• 红色警告：内存不足，可能无法运行"
+        ]
+      }
+    },
+    "memoryRequirement": {
+      "title": "显存需求",
+      "totalMemory": "显存需求 {totalMemory} GB",
+      "requiredGPUs": "需要 **{count}** 张显卡（基于内存容量）",
+      "memoryWarning": "⚠️ 内存警告"
+    },
+    "throughputRequirement": {
+      "title": "吞吐需求",
+      "totalThroughput": "吞吐需求 {totalThroughput} tokens/s",
+      "requiredGPUs": "需要 **{count}** 张显卡（基于算力性能）"
+    },
+    "performanceComparison": {
+      "meetExpectation": "✅ 满足期望 {expected} token/s",
+      "belowExpectation": "❌ 低于期望 {expected} token/s"
     }
   }
 }

@@ -534,6 +534,51 @@
         "popular": "🔥 Beliebtes Modell (Qwen2.5-72B + H100 + 6 nebenläufig)",
         "reasoning": "Reasoning-Modell (QwQ-32B + RTX4090 + 8 nebenläufig)"
       }
+    },
+    "expectedTokensPerSecond": {
+      "label": "Erwartete Erfahrung pro Benutzer",
+      "placeholder": "1",
+      "unit": "Token/s",
+      "tooltip": {
+        "title": "Wahl der angemessenen Generierungsgeschwindigkeit basierend auf Geschäftsszenarien",
+        "levels": [
+          "• 80+ Token/s: Lange Inhalte, Forschungsdokumente (8K+ Token-Szenarien) - Lange Wartezeiten vermeiden",
+          "• 50-80 Token/s: Technische Diskussionen, Papieranalyse (2K-4K Token-Szenarien) - Professionelle Effizienz beibehalten",
+          "• 30-50 Token/s: Kundenservice-Bots, Code-Unterstützung (1K-2K Token-Szenarien) - Qualität und Geschwindigkeit ausbalancieren",
+          "• 15-30 Token/s: Schnelle Q&A, einfache Dialoge (256-512 Token-Szenarien) - Grundlegende Nutzbarkeit",
+          "• <15 Token/s: Schlechte Erfahrung, Benutzer könnten aufgeben"
+        ]
+      }
+    },
+    "gpuCount": {
+      "label": "GPU-Anzahl",
+      "placeholder": "Automatische Berechnung",
+      "unit": "GPUs",
+      "autoLabel": "Auto",
+      "tooltip": {
+        "title": "GPU-Anzahl-Konfiguration",
+        "features": [
+          "• Automatische Berechnung: Intelligente Empfehlung basierend auf Nebenläufigkeit und erwarteter Erfahrung",
+          "• Manuelle Änderung: Kann automatisch berechnete Ergebnisse überschreiben",
+          "• Beide erfüllen: Speicheranforderungen und Leistungsanforderungen",
+          "• Rote Warnung: Unzureichender Speicher, funktioniert möglicherweise nicht"
+        ]
+      }
+    },
+    "memoryRequirement": {
+      "title": "Speicheranforderungen",
+      "totalMemory": "Speicheranforderungen {totalMemory} GB",
+      "requiredGPUs": "Benötigt **{count}** GPUs (basierend auf Speicherkapazität)",
+      "memoryWarning": "⚠️ Speicherwarnung"
+    },
+    "throughputRequirement": {
+      "title": "Durchsatzanforderungen",
+      "totalThroughput": "Durchsatzanforderungen {totalThroughput} Token/s",
+      "requiredGPUs": "Benötigt **{count}** GPUs (basierend auf Rechenleistung)"
+    },
+    "performanceComparison": {
+      "meetExpectation": "✅ Erfüllt Erwartung {expected} Token/s",
+      "belowExpectation": "❌ Unter Erwartung {expected} Token/s"
     }
   }
 }

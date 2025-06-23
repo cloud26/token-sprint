@@ -6,7 +6,7 @@ interface MemoryCalculationResult {
   activationMemory: number // 激活值 (与并发量相关)
   computationMemory: number // 临时计算缓存 (与并发量相关)
   totalMemory: number
-  requiredGPUs: number
+  requiredGPUs: number // 实际使用的GPU数量（可能是手动设置的）
   kvCacheSizePerToken: number // KV Cache每个token的大小
   architectureInfo: {
     d_model: number
@@ -23,17 +23,29 @@ interface MemoryCalculationResult {
     maxQPS: number // 最大QPS (queries/s)
     avgOutputTokens: number // 平均输出长度 (tokens)
   }
+  performanceAnalysis?: {
+    expectedTokensPerSecond: number // 期望的每用户体验
+    meetsExpectation: boolean // 是否满足期望
+    minRequiredGPUs: number // 满足期望体验的最少GPU数量
+    recommendedAction: string // 推荐操作
+  }
+  gpuAnalysis: {
+    baseRequiredGPUs: number // 基于内存需求的最少GPU数量
+    isManuallySet: boolean // 是否手动设置了GPU数量
+    isMemorySufficient: boolean // 内存是否充足
+    memoryWarning?: string // 内存警告信息
+  }
 }
 
 // 根据参数估算模型架构
-function estimateModelArchitecture(parameters: number): { 
-  d_model: number; 
-  n_layers: number; 
+function estimateModelArchitecture(parameters: number): {
+  d_model: number;
+  n_layers: number;
   activeParams: number;
   isMoE: boolean;
 } {
   const paramStr = parameters.toString()
-  
+
   // 首先尝试精确匹配
   if (MODEL_ARCHITECTURES[paramStr]) {
     const arch = MODEL_ARCHITECTURES[paramStr]
@@ -44,12 +56,12 @@ function estimateModelArchitecture(parameters: number): {
       isMoE: arch.isMoE || false
     }
   }
-  
+
   // 如果没有精确匹配，使用经验公式估算
   // 基于已知模型的线性插值和经验规律
   let n_layers: number
   let d_model: number
-  
+
   if (parameters <= 10) {
     // 小模型：基于7B-8B模型的比例缩放
     n_layers = 32
@@ -74,38 +86,38 @@ function estimateModelArchitecture(parameters: number): {
     n_layers = Math.min(144, Math.max(80, Math.round((parameters / 671) * 144)))
     d_model = Math.round((parameters / 671) * 18432)
   }
-  
-  return { 
-    d_model, 
-    n_layers, 
+
+  return {
+    d_model,
+    n_layers,
     activeParams: parameters, // 默认情况下激活参数等于总参数
-    isMoE: false 
+    isMoE: false
   }
 }
 
 // 简化的激活值内存计算
 function calcActivationMemory(
-  activeParams: number, 
-  batchSize: number, 
+  activeParams: number,
+  batchSize: number,
   contextLength: number
 ): number {
   // 简化公式：激活值内存主要取决于批次大小和模型大小
   // 经验数据：每B参数在推理时需要约 0.1-1GB 的激活内存
-  
+
   const baseMemory = activeParams * 0.2 // 每B参数基础激活内存 200MB
-  
+
   // 批次影响：线性增长，但考虑内存优化的递减效应
   // batch=1: 1x, batch=8: 6x, batch=32: 16x (而不是32x)
-  const batchMultiplier = batchSize <= 8 
-    ? batchSize 
+  const batchMultiplier = batchSize <= 8
+    ? batchSize
     : 8 + Math.sqrt(batchSize - 8) * 2 // 大批次时增长放缓
-  
+
   // 上下文影响：基本线性，但长上下文有优化空间
   // 4K: 1x, 16K: 3x, 64K: 8x, 128K: 12x (而不是32x)
   const contextFactor = contextLength <= 4096
     ? contextLength / 4096
     : 1 + Math.log2(contextLength / 4096) * 0.8 // 长上下文增长放缓
-  
+
   const totalActivationMemory = baseMemory * batchMultiplier * contextFactor
   return Math.max(0.5, Math.min(totalActivationMemory, 500)) // 提高上限到500GB
 }
@@ -120,7 +132,7 @@ function calcComputationMemory(
   // 经验数据：通常是激活内存的30-50%
   const activationMemory = calcActivationMemory(activeParams, batchSize, contextLength)
   const computationMemory = activationMemory * 0.4 // 40%的激活内存
-  
+
   return Math.max(0.2, Math.min(computationMemory, 200)) // 提高上限到200GB
 }
 
@@ -145,7 +157,7 @@ function calcSimplifiedKvCache(parameters: number, contextLength: number, batchS
   // - 7B模型: ~0.01 GB/token
   // - 70B模型: ~0.1 GB/token  
   // - 671B模型: ~0.7 GB/token
-  
+
   const kvCachePerTokenGB = parameters * 0.001 // 每B参数对应1MB/token的KV Cache
   return kvCachePerTokenGB * contextLength * batchSize
 }
@@ -162,12 +174,12 @@ function getModelArchitectureInfo(parameters: number, selectedModel?: string): {
   // 如果提供了具体的模型名称，优先根据模型名称查找
   if (selectedModel) {
     // 在MODELS中查找匹配的模型
-    const foundModel = MODELS.find(model => 
-      model.value === selectedModel || 
+    const foundModel = MODELS.find(model =>
+      model.value === selectedModel ||
       model.name.toLowerCase().includes(selectedModel.toLowerCase()) ||
       selectedModel.toLowerCase().includes(model.name.toLowerCase())
     );
-    
+
     if (foundModel) {
       return {
         d_model: foundModel.d_model,
@@ -179,7 +191,7 @@ function getModelArchitectureInfo(parameters: number, selectedModel?: string): {
       }
     }
   }
-  
+
   // 如果没有找到匹配的模型名称，回退到参数量查找
   const paramStr = parameters.toString()
   if (MODEL_ARCHITECTURES[paramStr]) {
@@ -193,7 +205,7 @@ function getModelArchitectureInfo(parameters: number, selectedModel?: string): {
       verificationUrl: model.verificationUrl
     }
   }
-  
+
   // 估算的架构（标注为估算）
   const estimated = estimateModelArchitecture(parameters)
   return {
@@ -206,7 +218,7 @@ function getModelArchitectureInfo(parameters: number, selectedModel?: string): {
 function getAvgOutputTokens(contextLength: number): number {
   // 基于实际使用场景的更合理估算
   // 原则：输出长度通常不会线性增长，而是对数增长
-  
+
   if (contextLength <= 2048) {
     // 2K: 简单问答、代码补全 - 短回答
     return 100
@@ -254,53 +266,50 @@ function calcThroughputInfo(
   // 获取GPU性能
   const basePerformance = GPU_PERFORMANCE[gpuModel] || 100
   const adjustedPerformance = basePerformance * (PRECISION_MULTIPLIERS[precision] || 1.0)
-  
+
   // 模型计算量估算 (FLOPS per token)
   const flopsPerToken = 6 * activeParams * 1e9
-  
+
   // 理论峰值吞吐量 (tokens/s)
   const theoreticalThroughput = (adjustedPerformance * 1e12) / flopsPerToken
-  
+
   // 基于实际基准测试数据的效率因子
   let efficiencyFactor = getModelEfficiency(parameters, selectedModel)
-  
+
   // 并发数对效率的影响 (基于实际测试数据调整)
   if (batchSize >= 32) {
     efficiencyFactor *= 1.15 // 高并发时效率提升更明显
   } else if (batchSize >= 8) {
     efficiencyFactor *= 1.1
   }
-  
+
   // 上下文长度对效率的影响
   if (contextLength > 8192) {
     efficiencyFactor *= 0.92 // 长上下文影响较小
   }
-  
+
   // 单GPU实际吞吐量
   const singleGpuThroughput = theoreticalThroughput * Math.min(efficiencyFactor, 1.0)
-  
-  // 多GPU并行效率
-  let parallelEfficiency = 1.0
-  if (requiredGPUs > 1) {
-    parallelEfficiency = Math.max(0.75, 1.0 - (requiredGPUs - 1) * 0.04)
-  }
-  
+
+  // 多GPU并行效率 - 基于现代推理框架的实际表现
+  const parallelEfficiency = calculateParallelEfficiency(requiredGPUs)
+
   // 总吞吐量
   const totalThroughput = singleGpuThroughput * requiredGPUs * parallelEfficiency
-  
+
   // 每用户吞吐量
   const throughputPerUser = totalThroughput / batchSize
-  
+
   // 使用标准化的输出长度进行性能计算，确保不同模型间的可比性
   const avgOutputTokens = getAvgOutputTokens(contextLength)
   const estimatedLatency = (avgOutputTokens / throughputPerUser) * 1000
-  
+
   // QPS计算 - 基于标准输出长度
   const maxQPSByThroughput = totalThroughput / avgOutputTokens
   const avgResponseTimeSeconds = avgOutputTokens / throughputPerUser
   const maxQPSByConcurrency = batchSize / avgResponseTimeSeconds
   const maxQPS = Math.min(maxQPSByThroughput, maxQPSByConcurrency)
-  
+
   return {
     tokensPerSecond: Math.round(totalThroughput),
     tokensPerSecondPerUser: Math.round(throughputPerUser),
@@ -314,28 +323,29 @@ function calcThroughputInfo(
 function getModelEfficiency(parameters: number, selectedModel?: string): number {
   // 基于Database Mart A100 80GB基准测试的实际效率数据
   // 来源: https://www.databasemart.com/blog/vllm-gpu-benchmark-a100-80gb
-  
+
   // DeepSeek蒸馏模型效率明显更高
   if (selectedModel && selectedModel.toLowerCase().includes('deepseek')) {
-    if (parameters <= 10) return 0.23 // DeepSeek 7-8B: ~23%
-    if (parameters <= 20) return 0.20 // DeepSeek 14B: ~20%
-    if (parameters <= 40) return 0.18 // DeepSeek 32B: ~18%
-    return 0.15
+    if (parameters <= 10) return 0.25 // DeepSeek 7-8B: ~25%
+    if (parameters <= 20) return 0.22 // DeepSeek 14B: ~22%
+    if (parameters <= 40) return 0.20 // DeepSeek 32B: ~20%
+    if (parameters <= 100) return 0.18 // DeepSeek 70B: ~18%
+    return 0.22 // DeepSeek-R1 671B: ~22% (MoE架构效率更高)
   }
-  
+
   // Gemma模型效率
   if (selectedModel && selectedModel.toLowerCase().includes('gemma')) {
     if (parameters <= 15) return 0.16 // Gemma 9B: ~16%
     if (parameters <= 35) return 0.13 // Gemma 27B: ~13%
     return 0.12
   }
-  
+
   // QwQ模型效率
   if (selectedModel && selectedModel.toLowerCase().includes('qwq')) {
     if (parameters <= 40) return 0.19 // QwQ 32B: ~19%
     return 0.16
   }
-  
+
   // 通用模型效率（基于参数大小）
   if (parameters <= 10) {
     return 0.20 // 小模型: 20%
@@ -350,13 +360,151 @@ function getModelEfficiency(parameters: number, selectedModel?: string): number 
   }
 }
 
+// 计算并行效率的通用函数
+function calculateParallelEfficiency(gpus: number): number {
+  let parallelEfficiency = 1.0
+  if (gpus > 1) {
+    if (gpus <= 8) {
+      parallelEfficiency = Math.max(0.85, 1.0 - (gpus - 1) * 0.02)
+    } else if (gpus <= 32) {
+      parallelEfficiency = Math.max(0.80, 0.85 - (gpus - 8) * 0.01)
+    } else {
+      parallelEfficiency = Math.max(0.80, 0.80 - (gpus - 32) * 0.003)
+    }
+  }
+  return parallelEfficiency
+}
+
+// 计算满足期望体验的最少GPU数量
+function calculateMinRequiredGPUs(
+  parameters: number,
+  activeParams: number,
+  batchSize: number,
+  contextLength: number,
+  gpuModel: string,
+  precision: string,
+  selectedModel: string | undefined,
+  expectedTokensPerSecond: number,
+  gpuMemory: number
+): { minGPUs: number; actualPerformance: number; recommendation: string } {
+  if (expectedTokensPerSecond <= 0) {
+    return { minGPUs: 1, actualPerformance: 0, recommendation: "请设置期望体验值" }
+  }
+
+  // 需要的总吞吐量
+  const requiredTotalThroughput = expectedTokensPerSecond * batchSize
+
+  // 获取GPU性能
+  const basePerformance = GPU_PERFORMANCE[gpuModel] || 100
+  const adjustedPerformance = basePerformance * (PRECISION_MULTIPLIERS[precision] || 1.0)
+
+  // 模型计算量估算 (FLOPS per token)
+  const flopsPerToken = 6 * activeParams * 1e9
+
+  // 理论峰值吞吐量 (tokens/s)
+  const theoreticalThroughput = (adjustedPerformance * 1e12) / flopsPerToken
+
+  // 基于实际基准测试数据的效率因子
+  let efficiencyFactor = getModelEfficiency(parameters, selectedModel)
+
+  // 并发数对效率的影响
+  if (batchSize >= 32) {
+    efficiencyFactor *= 1.15
+  } else if (batchSize >= 8) {
+    efficiencyFactor *= 1.1
+  }
+
+  // 上下文长度对效率的影响
+  if (contextLength > 8192) {
+    efficiencyFactor *= 0.92
+  }
+
+  // 单GPU实际吞吐量
+  const singleGpuThroughput = theoreticalThroughput * Math.min(efficiencyFactor, 1.0)
+
+  // 计算基于性能需求的GPU数量
+  let performanceBasedGPUs = Math.ceil(requiredTotalThroughput / singleGpuThroughput)
+
+  // 考虑多GPU并行效率损失，需要迭代计算
+  let actualGPUs = performanceBasedGPUs
+  let actualTotalThroughput = 0
+
+  // 扩大搜索范围，最多搜索到200张卡或者performanceBasedGPUs*2的较大值
+  const maxSearchGPUs = Math.min(200, Math.max(performanceBasedGPUs * 2, performanceBasedGPUs + 20))
+
+  for (let gpus = 1; gpus <= maxSearchGPUs; gpus++) {
+    // 使用统一的并行效率计算
+    const parallelEfficiency = calculateParallelEfficiency(gpus)
+    const totalThroughput = singleGpuThroughput * gpus * parallelEfficiency
+    const throughputPerUser = totalThroughput / batchSize
+
+    if (throughputPerUser >= expectedTokensPerSecond) {
+      actualGPUs = gpus
+      actualTotalThroughput = totalThroughput
+      break
+    }
+  }
+
+  // 检查内存是否足够（基于基础内存需求）
+  const bytesPerParameter = PRECISION_BYTES[precision] || 4
+  const modelMemory = parameters * bytesPerParameter
+  const architectureInfo = getModelArchitectureInfo(parameters, selectedModel)
+  const { d_model, n_layers } = architectureInfo
+  const kvCacheSizePerToken = calcKvCacheSizePerToken(n_layers, d_model)
+  const effectiveContextLength = getEffectiveContextLength(contextLength)
+  const kvCacheMemory = kvCacheSizePerToken * effectiveContextLength * batchSize
+  const activationMemory = calcActivationMemory(activeParams, batchSize, contextLength)
+  const computationMemory = calcComputationMemory(activeParams, batchSize, contextLength)
+  const totalMemory = modelMemory + kvCacheMemory + activationMemory + computationMemory
+
+  const memoryBasedGPUs = Math.ceil(totalMemory / gpuMemory)
+  const finalGPUs = Math.max(actualGPUs, memoryBasedGPUs)
+
+  // 计算最终性能
+  const finalParallelEfficiency = calculateParallelEfficiency(finalGPUs)
+  const finalTotalThroughput = singleGpuThroughput * finalGPUs * finalParallelEfficiency
+  const finalThroughputPerUser = finalTotalThroughput / batchSize
+
+  // 生成推荐
+  let recommendation = ""
+  if (finalGPUs === memoryBasedGPUs && finalGPUs > actualGPUs) {
+    recommendation = `受内存限制，需要${finalGPUs}张卡。实际体验将超出期望`
+  } else if (finalThroughputPerUser >= expectedTokensPerSecond) {
+    recommendation = `推荐配置：${finalGPUs}张${gpuModel.split(' (')[0]}`
+  } else {
+    // 如果还是不满足，继续搜索更多GPU
+    let foundSolution = false
+    for (let testGpus = finalGPUs + 1; testGpus <= 300; testGpus++) {
+      const testParallelEfficiency = calculateParallelEfficiency(testGpus)
+      const testTotalThroughput = singleGpuThroughput * testGpus * testParallelEfficiency
+      const testThroughputPerUser = testTotalThroughput / batchSize
+
+      if (testThroughputPerUser >= expectedTokensPerSecond) {
+        recommendation = `需要${testGpus}张${gpuModel.split(' (')[0]}才能满足期望体验`
+        foundSolution = true
+        break
+      }
+    }
+
+    if (!foundSolution) {
+      recommendation = `警告：即使使用大量GPU，可能仍难以满足${expectedTokensPerSecond} token/s的期望体验`
+    }
+  }
+
+  return {
+    minGPUs: finalGPUs,
+    actualPerformance: Math.round(finalThroughputPerUser),
+    recommendation
+  }
+}
+
 // 实际输出长度估算 - 基于实际基准测试数据（用于展示信息）
 function getRealisticOutputTokens(contextLength: number, parameters: number, selectedModel?: string): number {
   // 基于实际基准测试，大多数模型的输出长度远低于预期
   // 实际观察：Gemma输出很短(20-160)，DeepSeek输出较长(350-560)
-  
+
   let baseOutputTokens: number
-  
+
   // 根据模型类型调整基础输出长度
   if (selectedModel && selectedModel.toLowerCase().includes('gemma')) {
     // Gemma模型倾向于简洁回答
@@ -371,7 +519,7 @@ function getRealisticOutputTokens(contextLength: number, parameters: number, sel
     // 通用模型
     baseOutputTokens = 150 + parameters * 3
   }
-  
+
   // 根据上下文长度调整（但增长幅度有限）
   let contextMultiplier = 1.0
   if (contextLength <= 2048) {
@@ -387,9 +535,9 @@ function getRealisticOutputTokens(contextLength: number, parameters: number, sel
   } else {
     contextMultiplier = 1.8 // 超长，但增长有限
   }
-  
+
   const adjustedTokens = baseOutputTokens * contextMultiplier
-  
+
   // 确保在合理范围内
   return Math.max(20, Math.min(800, Math.round(adjustedTokens)))
 }
@@ -402,6 +550,8 @@ export function calculateInferenceMemory(
   contextLength: number = 4096, // 上下文长度
   gpuModel: string = "NVIDIA A100 (80GB)", // GPU型号
   selectedModel?: string, // 新增：选中的具体模型名称
+  expectedTokensPerSecond?: number, // 新增：期望的每用户体验
+  manualGpuCount?: number, // 新增：手动设置的GPU数量
 ): MemoryCalculationResult {
   // 计算每个参数占用的字节数 - 从constants.ts导入
   const bytesPerParameter = PRECISION_BYTES[precision] || 4 // 默认 FP32
@@ -409,7 +559,7 @@ export function calculateInferenceMemory(
   // 获取模型架构参数（包含验证信息）- 现在传入模型名称
   const architectureInfo = getModelArchitectureInfo(parameters, selectedModel)
   const { d_model, n_layers, activeParams, isMoE } = architectureInfo
-  
+
   // 1. 模型权重内存 (GB) - 基于总参数
   const modelMemory = parameters * bytesPerParameter
 
@@ -432,12 +582,42 @@ export function calculateInferenceMemory(
   const totalMemory = modelMemory + kvCacheMemory + activationMemory + computationMemory
 
   // 计算所需的 GPU 数量（向上取整）
-  const requiredGPUs = Math.ceil(totalMemory / gpuMemory)
+  const baseRequiredGPUs = Math.ceil(totalMemory / gpuMemory)
+
+  // 使用手动设置的GPU数量或计算出的数量
+  const actualGPUs = manualGpuCount && manualGpuCount > 0 ? manualGpuCount : baseRequiredGPUs
+
+  // 检查手动设置的GPU数量是否足够
+  const isManualGpuSufficient = !manualGpuCount || manualGpuCount >= baseRequiredGPUs
 
   // 5. 吞吐量信息
   const throughputInfo = calcThroughputInfo(
-    parameters, activeParams, batchSize, contextLength, gpuModel, precision, requiredGPUs, selectedModel
+    parameters, activeParams, batchSize, contextLength, gpuModel, precision, actualGPUs, selectedModel
   )
+
+  // 6. 性能分析（如果提供了期望体验）
+  let performanceAnalysis = undefined
+  if (expectedTokensPerSecond && expectedTokensPerSecond > 0) {
+    const minGPUAnalysis = calculateMinRequiredGPUs(
+      parameters, activeParams, batchSize, contextLength, gpuModel, precision,
+      selectedModel, expectedTokensPerSecond, gpuMemory
+    )
+
+    performanceAnalysis = {
+      expectedTokensPerSecond,
+      meetsExpectation: throughputInfo.tokensPerSecondPerUser >= expectedTokensPerSecond,
+      minRequiredGPUs: minGPUAnalysis.minGPUs,
+      recommendedAction: minGPUAnalysis.recommendation
+    }
+  }
+
+  // GPU分析信息
+  const gpuAnalysis = {
+    baseRequiredGPUs,
+    isManuallySet: !!(manualGpuCount && manualGpuCount > 0),
+    isMemorySufficient: isManualGpuSufficient,
+    memoryWarning: !isManualGpuSufficient ? `警告：设置的${actualGPUs}张GPU内存不足，至少需要${baseRequiredGPUs}张` : undefined
+  }
 
   return {
     modelMemory: Number(modelMemory.toFixed(2)),
@@ -445,10 +625,12 @@ export function calculateInferenceMemory(
     activationMemory: Number(activationMemory.toFixed(2)),
     computationMemory: Number(computationMemory.toFixed(2)),
     totalMemory: Number(totalMemory.toFixed(2)),
-    requiredGPUs: requiredGPUs,
+    requiredGPUs: actualGPUs,
     kvCacheSizePerToken: Number(kvCacheSizePerToken.toFixed(6)),
     architectureInfo: architectureInfo,
     throughputInfo: throughputInfo,
+    performanceAnalysis: performanceAnalysis,
+    gpuAnalysis: gpuAnalysis,
   }
 }
 
