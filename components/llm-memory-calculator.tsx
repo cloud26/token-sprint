@@ -76,14 +76,14 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
             scenarios: '典型使用: 多文档分析、大规模代码重构'
         }
     ]
-    
+
     // 根据优先模型类型重新排序模型列表
     const sortedModelExamples = React.useMemo(() => {
         if (!preferredModelType) return MODELS
-        
+
         const preferred: typeof MODELS = []
         const others: typeof MODELS = []
-        
+
         MODELS.forEach(model => {
             const modelName = model.name.toLowerCase()
             if (
@@ -98,14 +98,14 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                 others.push(model)
             }
         })
-        
+
         return [...preferred, ...others]
     }, [preferredModelType])
-    
+
     // 根据优先模型类型设置默认模型
     const getDefaultModel = () => {
         if (!preferredModelType) return "DeepSeek-R1"
-        
+
         const defaultModels: Record<string, string> = {
             'deepseek': 'DeepSeek-R1',
             'llama': 'Llama 4 Scout',
@@ -113,7 +113,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
             'claude': 'DeepSeek-R1', // Claude模型不在modelExamples中，使用默认
             'gemini': 'DeepSeek-R1'  // Gemini模型不在modelExamples中，使用默认
         }
-        
+
         return defaultModels[preferredModelType] || "DeepSeek-R1"
     }
 
@@ -130,7 +130,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     const [selectedModel, setSelectedModel] = useState<string>(getDefaultModel())
     const [batchSize, setBatchSize] = useState<string>("1") // 并发量
     const [contextLength, setContextLength] = useState<string>("1024") // 上下文长度
-    
+
     // Popover 开关状态
     const [modelPopoverOpen, setModelPopoverOpen] = useState(false)
     const [contextPopoverOpen, setContextPopoverOpen] = useState(false)
@@ -143,10 +143,10 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     const selectedModelValue = sortedModelExamples.find(m => m.name === selectedModel)?.value
 
     const memory = calculateInferenceMemory(
-        Number(parameters), 
-        precision, 
-        gpuMemory, 
-        Number(batchSize), 
+        Number(parameters),
+        precision,
+        gpuMemory,
+        Number(batchSize),
         Number(contextLength),
         gpuModel,
         selectedModelValue // 传入具体的模型标识符
@@ -205,8 +205,8 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
 
     return (
         <TooltipProvider delayDuration={100}>
-            <Card 
-                className="w-full" 
+            <Card
+                className="w-full"
                 role="main"
             >
                 <CardContent className="p-4 space-y-3">
@@ -220,7 +220,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                         <InfoIcon className="h-3 w-3 text-muted-foreground" />
                                     </TooltipTrigger>
                                     <TooltipContent className="max-w-xs">
-                    <div className="space-y-2">
+                                        <div className="space-y-2">
                                             <p className="font-medium">{t('modelSelection.tooltip.title')}</p>
                                             {t.raw('modelSelection.tooltip.features').map((feature: string, index: number) => (
                                                 <p key={index} className="text-xs">• {feature}</p>
@@ -236,7 +236,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                         <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
                                     </Button>
                                 </PopoverTrigger>
-                                <PopoverContent className="w-full p-0">
+                                <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
                                     <Command>
                                         <CommandInput placeholder={t('modelSelection.searchPlaceholder')} />
                                         <CommandList>
@@ -245,13 +245,13 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                             {(() => {
                                                 // 使用配置中的分组信息，这已经包含了正确的排序
                                                 const allGroups = getModelsByGroup();
-                                                
+
                                                 // 如果有优先类型，调整系列的显示顺序
                                                 let seriesOrder = Object.keys(allGroups);
                                                 if (preferredModelType) {
                                                     const preferredSeries: string[] = [];
                                                     const otherSeries: string[] = [];
-                                                    
+
                                                     seriesOrder.forEach(series => {
                                                         const seriesLower = series.toLowerCase();
                                                         if (
@@ -264,7 +264,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                             otherSeries.push(series);
                                                         }
                                                     });
-                                                    
+
                                                     seriesOrder = [...preferredSeries, ...otherSeries];
                                                 }
 
@@ -306,19 +306,19 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                         </div>
 
                         <div className="space-y-1">
-                        <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2">
                                 <Label htmlFor="parameters" className="text-sm">
                                     {t('parameters.label')}
-                            </Label>
-                            <Tooltip>
-                                <TooltipTrigger>
+                                </Label>
+                                <Tooltip>
+                                    <TooltipTrigger>
                                         <InfoIcon className="h-3 w-3 text-muted-foreground" />
-                                </TooltipTrigger>
-                                <TooltipContent>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
                                         <p>{t('parameters.tooltip')}</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </div>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
                             <Input
                                 id="parameters"
                                 type="text"
@@ -333,30 +333,30 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                     {/* 精度和上下文长度放在同一行 */}
                     <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1">
-                        <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2">
                                 <Label className="text-sm">{t('precision.label')}</Label>
-                            <Tooltip>
-                                <TooltipTrigger>
+                                <Tooltip>
+                                    <TooltipTrigger>
                                         <InfoIcon className="h-3 w-3 text-muted-foreground" />
-                                </TooltipTrigger>
-                                <TooltipContent>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
                                         <p>{t('precision.tooltip')}</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </div>
-                        <Select value={precision} onValueChange={setPrecision}>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
+                            <Select value={precision} onValueChange={setPrecision}>
                                 <SelectTrigger className="text-sm">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {precisions.map((p) => (
-                                    <SelectItem key={p.value} value={p.value}>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {precisions.map((p) => (
+                                        <SelectItem key={p.value} value={p.value}>
                                             {p.name}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                    </div>
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
 
                         <div className="space-y-1">
                             <div className="flex items-center gap-2">
@@ -366,7 +366,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                         <InfoIcon className="h-3 w-3 text-muted-foreground" />
                                     </TooltipTrigger>
                                     <TooltipContent className="max-w-xs">
-                    <div className="space-y-2">
+                                        <div className="space-y-2">
                                             <p className="font-medium">{t('contextLength.tooltip.title')}</p>
                                             {t.raw('contextLength.tooltip.features').map((feature: string, index: number) => (
                                                 <p key={index} className="text-xs">• {feature}</p>
@@ -378,14 +378,14 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                             <Popover open={contextPopoverOpen} onOpenChange={setContextPopoverOpen}>
                                 <PopoverTrigger asChild>
                                     <Button variant="outline" role="combobox" className="w-full justify-between text-sm">
-                                        {contextLength ? 
-                                            CONTEXT_LENGTH_OPTIONS.find(opt => opt.value === contextLength)?.label || contextLength 
+                                        {contextLength ?
+                                            CONTEXT_LENGTH_OPTIONS.find(opt => opt.value === contextLength)?.label || contextLength
                                             : t('contextLength.placeholder')
                                         }
                                         <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
                                     </Button>
                                 </PopoverTrigger>
-                                <PopoverContent className="w-full p-0">
+                                <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
                                     <Command>
                                         <CommandInput placeholder={t('contextLength.searchPlaceholder')} />
                                         <CommandList>
@@ -466,7 +466,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                         <div className="space-y-1">
                             <Label className="text-sm">{t('gpu.label')}</Label>
                             <Popover open={gpuPopoverOpen} onOpenChange={setGpuPopoverOpen}>
-                            <PopoverTrigger asChild>
+                                <PopoverTrigger asChild>
                                     <Button variant="outline" role="combobox" className="w-full justify-between text-sm">
                                         <div className="flex items-center justify-between w-full mr-2">
                                             {gpuModel ? (
@@ -481,37 +481,37 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                             )}
                                         </div>
                                         <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-full p-0">
-                                <Command>
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
+                                    <Command>
                                         <CommandInput placeholder={t('gpu.searchPlaceholder')} />
-                                    <CommandList>
+                                        <CommandList>
                                             <CommandEmpty>{t('gpu.notFound')}</CommandEmpty>
-                                        <CommandGroup>
-                                            {gpuModels.map((gpu) => (
-                                                <CommandItem
-                                                    key={`${gpu.name} (${gpu.memory}GB)`}
-                                                    value={`${gpu.name} (${gpu.memory}GB)`}
-                                                    onSelect={(currentValue) => {
-                                                        setGpuModel(currentValue === gpuModel ? "" : currentValue)
+                                            <CommandGroup>
+                                                {gpuModels.map((gpu) => (
+                                                    <CommandItem
+                                                        key={`${gpu.name} (${gpu.memory}GB)`}
+                                                        value={`${gpu.name} (${gpu.memory}GB)`}
+                                                        onSelect={(currentValue) => {
+                                                            setGpuModel(currentValue === gpuModel ? "" : currentValue)
                                                             setGpuPopoverOpen(false)
-                                                    }}
+                                                        }}
                                                         className="flex flex-col items-start py-2 px-3 hover:bg-slate-50"
-                                                >
+                                                    >
                                                         <div className="flex items-center w-full">
-                                                    <Check
-                                                        className={cn(
+                                                            <Check
+                                                                className={cn(
                                                                     "mr-2 h-3 w-3 flex-shrink-0",
-                                                            gpuModel === `${gpu.name} (${gpu.memory}GB)` ? "opacity-100" : "opacity-0",
-                                                        )}
-                                                    />
+                                                                    gpuModel === `${gpu.name} (${gpu.memory}GB)` ? "opacity-100" : "opacity-0",
+                                                                )}
+                                                            />
                                                             <div className="flex-1 min-w-0">
                                                                 <div className="flex items-center justify-between w-full">
                                                                     <span className="font-medium text-xs truncate">{gpu.name}</span>
                                                                     <div className="flex items-center space-x-2 ml-2 flex-shrink-0">
                                                                         <span className="font-bold text-blue-600 text-sm">{gpu.memory}GB</span>
-                                                                        
+
                                                                     </div>
                                                                 </div>
                                                                 <div className="flex items-center justify-between w-full mt-1">
@@ -522,13 +522,13 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                </CommandItem>
-                                            ))}
-                                        </CommandGroup>
-                                    </CommandList>
-                                </Command>
-                            </PopoverContent>
-                        </Popover>
+                                                    </CommandItem>
+                                                ))}
+                                            </CommandGroup>
+                                        </CommandList>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
                         </div>
                     </div>
 
@@ -539,7 +539,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                             <div className="text-center p-3 bg-blue-100 rounded border-2 border-blue-300">
                                 <Label className="text-gray-700 text-sm font-medium">{t('results.totalMemory')}</Label>
                                 <p className="text-xl font-bold text-blue-700">{memory.totalMemory} GB</p>
-                    </div>
+                            </div>
 
                             {/* GPU需求 */}
                             <div className="text-center p-3 bg-blue-100 rounded border-2 border-blue-300">
@@ -555,7 +555,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                     <section>
                         <div className="bg-slate-50 p-3 rounded-lg space-y-3">
                             <h3 className="text-base font-semibold text-center mb-3">{t('memoryBreakdown.title')}</h3>
-                            
+
                             {/* 模型信息 */}
                             <div className="text-center p-2 bg-amber-50 rounded text-xs border border-amber-200">
                                 <span className="text-gray-700">
@@ -563,7 +563,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                         <>
                                             {t('memoryBreakdown.modelInfo', { parameters: memory.architectureInfo.activeParams })}
                                             <span className="ml-2 text-amber-700">
-                                                {t('memoryBreakdown.moeInfo', { 
+                                                {t('memoryBreakdown.moeInfo', {
                                                     activeParams: memory.architectureInfo.activeParams
                                                 })}
                                             </span>
@@ -573,7 +573,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                     )}
                                 </span>
                             </div>
-                            
+
                             {/* 一行显示所有内存组件 */}
                             <div className="grid grid-cols-4 gap-3">
                                 <div className="text-center p-2 bg-white rounded border">
@@ -609,14 +609,14 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                     <section>
                         <div className="bg-green-50 p-4 rounded-lg space-y-4">
                             <h3 className="text-lg font-semibold text-center mb-4 text-green-800">{t('performance.title')}</h3>
-                            
+
                             {/* 性能指标说明 */}
                             <div className="text-center p-2 bg-green-100 rounded text-xs border border-green-300">
                                 <span className="text-green-800">
                                     <strong>{t('performance.explanation', { avgTokens: memory.throughputInfo.avgOutputTokens })}</strong>
                                 </span>
                             </div>
-                            
+
                             {/* 2x2网格显示性能指标 */}
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="bg-white p-3 rounded border border-green-200 text-center">
@@ -626,7 +626,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                     </p>
                                     <p className="text-xs text-gray-500">{t('performance.metrics.totalThroughput.description')}</p>
                                 </div>
-                                
+
                                 <div className="bg-white p-3 rounded border border-green-200 text-center">
                                     <Label className="text-gray-600 text-sm font-medium">{t('performance.metrics.throughputPerUser.label')}</Label>
                                     <p className="text-lg font-bold text-green-600">
@@ -634,7 +634,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                     </p>
                                     <p className="text-xs text-gray-500">{t('performance.metrics.throughputPerUser.description', { users: batchSize })}</p>
                                 </div>
-                                
+
                                 <div className="bg-white p-3 rounded border border-green-200 text-center">
                                     <Label className="text-gray-600 text-sm font-medium">{t('performance.metrics.estimatedLatency.label')}</Label>
                                     <p className="text-lg font-bold text-green-600">
@@ -642,13 +642,13 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                     </p>
                                     <p className="text-xs text-gray-500">{t('performance.metrics.estimatedLatency.description', { avgTokens: memory.throughputInfo.avgOutputTokens })}</p>
                                 </div>
-                                
+
                                 <div className="bg-white p-3 rounded border border-green-200 text-center">
                                     <Label className="text-gray-600 text-sm font-medium">{t('performance.metrics.maxQPS.label')}</Label>
                                     <p className="text-lg font-bold text-green-600">
                                         {memory.throughputInfo.maxQPS} {t('performance.metrics.maxQPS.unit')}
                                     </p>
-                                    <p className="text-xs text-gray-500">{t('performance.metrics.maxQPS.description', { concurrency: batchSize, latency: (memory.throughputInfo.estimatedLatency/1000).toFixed(1) })}</p>
+                                    <p className="text-xs text-gray-500">{t('performance.metrics.maxQPS.description', { concurrency: batchSize, latency: (memory.throughputInfo.estimatedLatency / 1000).toFixed(1) })}</p>
                                 </div>
                             </div>
                         </div>
@@ -662,115 +662,115 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                     {t('quickStart.title')}
                                 </p>
                                 <div className="space-y-2">
-                                            <div className="flex gap-2 flex-wrap">
-                                                <button 
-                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                                    onClick={() => {
-                                                        setSelectedModel("Qwen3-235B-A22B")
-                                                        setParameters("235")
-                                                        setPrecision("FP8")
-                                                        setGpuModel("NVIDIA H100 (80GB)")
-                                                        setBatchSize("4")
-                                                        setContextLength("4096")
-                                                    }}
-                                                >
-                                                    {t('quickStart.examples.flagship')}
-                                                </button>
-                                                <button 
-                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                                    onClick={() => {
-                                                        setSelectedModel("DeepSeek-R1")
-                                                        setParameters("671")
-                                                        setPrecision("FP8")
-                                                        setGpuModel("NVIDIA H100 (80GB)")
-                                                        setBatchSize("2")
-                                                        setContextLength("2048")
-                                                    }}
-                                                >
-                                                    {t('quickStart.examples.ultraLarge')}
-                                                </button>
-                                                <button 
-                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                                    onClick={() => {
-                                                        setSelectedModel("Llama 3.1 70B")
-                                                        setParameters("70")
-                                                        setPrecision("FP16")
-                                                        setGpuModel("NVIDIA A100 (80GB)")
-                                                        setBatchSize("8")
-                                                        setContextLength("2048")
-                                                    }}
-                                                >
-                                                    {t('quickStart.examples.enterprise')}
-                                                </button>
-                                                <button 
-                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                                    onClick={() => {
-                                                        setSelectedModel("Llama 3.1 70B")
-                                                        setParameters("70")
-                                                        setPrecision("FP8")
-                                                        setGpuModel("NVIDIA H100 (80GB)")
-                                                        setBatchSize("32")
-                                                        setContextLength("4096")
-                                                    }}
-                                                >
-                                                    {t('quickStart.examples.highConcurrency')}
-                                                </button>
-                                                <button 
-                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                                    onClick={() => {
-                                                        setSelectedModel("Llama 3.1 8B")
-                                                        setParameters("8")
-                                                        setPrecision("FP16")
-                                                        setGpuModel("NVIDIA RTX 4090 (24GB)")
-                                                        setBatchSize("4")
-                                                        setContextLength("1024")
-                                                    }}
-                                                >
-                                                    {t('quickStart.examples.lightweight')}
-                                                </button>
-                                                <button 
-                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                                    onClick={() => {
-                                                        setSelectedModel("Llama 3.1 8B")
-                                                        setParameters("8")
-                                                        setPrecision("FP16")
-                                                        setGpuModel("NVIDIA RTX 4090 (24GB)")
-                                                        setBatchSize("16")
-                                                        setContextLength("2048")
-                                                    }}
-                                                >
-                                                    {t('quickStart.examples.mediumScale')}
-                                                </button>
-                                                <button 
-                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                                    onClick={() => {
-                                                        setSelectedModel("Qwen2.5-72B")
-                                                        setParameters("72")
-                                                        setPrecision("FP8")
-                                                        setGpuModel("NVIDIA H100 (80GB)")
-                                                        setBatchSize("6")
-                                                        setContextLength("4096")
-                                                    }}
-                                                >
-                                                    {t('quickStart.examples.popular')}
-                                                </button>
-                                                <button 
-                                                    className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
-                                                    onClick={() => {
+                                    <div className="flex gap-2 flex-wrap">
+                                        <button
+                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                            onClick={() => {
+                                                setSelectedModel("Qwen3-235B-A22B")
+                                                setParameters("235")
+                                                setPrecision("FP8")
+                                                setGpuModel("NVIDIA H100 (80GB)")
+                                                setBatchSize("4")
+                                                setContextLength("4096")
+                                            }}
+                                        >
+                                            {t('quickStart.examples.flagship')}
+                                        </button>
+                                        <button
+                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                            onClick={() => {
+                                                setSelectedModel("DeepSeek-R1")
+                                                setParameters("671")
+                                                setPrecision("FP8")
+                                                setGpuModel("NVIDIA H100 (80GB)")
+                                                setBatchSize("2")
+                                                setContextLength("2048")
+                                            }}
+                                        >
+                                            {t('quickStart.examples.ultraLarge')}
+                                        </button>
+                                        <button
+                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                            onClick={() => {
+                                                setSelectedModel("Llama 3.1 70B")
+                                                setParameters("70")
+                                                setPrecision("FP16")
+                                                setGpuModel("NVIDIA A100 (80GB)")
+                                                setBatchSize("8")
+                                                setContextLength("2048")
+                                            }}
+                                        >
+                                            {t('quickStart.examples.enterprise')}
+                                        </button>
+                                        <button
+                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                            onClick={() => {
+                                                setSelectedModel("Llama 3.1 70B")
+                                                setParameters("70")
+                                                setPrecision("FP8")
+                                                setGpuModel("NVIDIA H100 (80GB)")
+                                                setBatchSize("32")
+                                                setContextLength("4096")
+                                            }}
+                                        >
+                                            {t('quickStart.examples.highConcurrency')}
+                                        </button>
+                                        <button
+                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                            onClick={() => {
+                                                setSelectedModel("Llama 3.1 8B")
+                                                setParameters("8")
+                                                setPrecision("FP16")
+                                                setGpuModel("NVIDIA RTX 4090 (24GB)")
+                                                setBatchSize("4")
+                                                setContextLength("1024")
+                                            }}
+                                        >
+                                            {t('quickStart.examples.lightweight')}
+                                        </button>
+                                        <button
+                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                            onClick={() => {
+                                                setSelectedModel("Llama 3.1 8B")
+                                                setParameters("8")
+                                                setPrecision("FP16")
+                                                setGpuModel("NVIDIA RTX 4090 (24GB)")
+                                                setBatchSize("16")
+                                                setContextLength("2048")
+                                            }}
+                                        >
+                                            {t('quickStart.examples.mediumScale')}
+                                        </button>
+                                        <button
+                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                            onClick={() => {
+                                                setSelectedModel("Qwen2.5-72B")
+                                                setParameters("72")
+                                                setPrecision("FP8")
+                                                setGpuModel("NVIDIA H100 (80GB)")
+                                                setBatchSize("6")
+                                                setContextLength("4096")
+                                            }}
+                                        >
+                                            {t('quickStart.examples.popular')}
+                                        </button>
+                                        <button
+                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                            onClick={() => {
                                                 setSelectedModel("Qwen QwQ-32B")
                                                 setParameters("32")
                                                 setPrecision("INT4")
-                                                        setGpuModel("NVIDIA RTX 4090 (24GB)")
-                                                        setBatchSize("8")
-                                                        setContextLength("2048")
-                                                    }}
-                                                >
+                                                setGpuModel("NVIDIA RTX 4090 (24GB)")
+                                                setBatchSize("8")
+                                                setContextLength("2048")
+                                            }}
+                                        >
                                             {t('quickStart.examples.reasoning')}
-                                                </button>
-                                            </div>
-                                            <p className="text-xs italic">
-                                                {t('quickStart.description')}
-                                            </p>
+                                        </button>
+                                    </div>
+                                    <p className="text-xs italic">
+                                        {t('quickStart.description')}
+                                    </p>
                                 </div>
                             </div>
                         </div>
