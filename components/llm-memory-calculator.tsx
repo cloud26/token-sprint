@@ -428,41 +428,8 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                         </div>
                     </div>
 
-                    {/* 并发用户数和 GPU Model 放在同一行 */}
+                    {/* GPU Model 和并发用户数放在同一行 */}
                     <div className="grid grid-cols-2 gap-3">
-                        <div className="space-y-1">
-                            <div className="flex items-center gap-2">
-                                <Label htmlFor="batchSize" className="text-sm">{t('concurrency.label')}</Label>
-                                <Tooltip>
-                                    <TooltipTrigger>
-                                        <InfoIcon className="h-3 w-3 text-muted-foreground" />
-                                    </TooltipTrigger>
-                                    <TooltipContent className="max-w-sm">
-                                        <div className="space-y-2 text-xs">
-                                            <p><strong>{t('concurrency.tooltip.title')}</strong></p>
-                                            {t.raw('concurrency.tooltip.scenarios').map((scenario: string, index: number) => (
-                                                <p key={index}>{scenario}</p>
-                                            ))}
-                                            <div className="border-t pt-2 mt-2">
-                                                <p><strong>{t('concurrency.tooltip.estimation.title')}</strong></p>
-                                                {t.raw('concurrency.tooltip.estimation.methods').map((method: string, index: number) => (
-                                                    <p key={index}>{method}</p>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </div>
-                            <Input
-                                id="batchSize"
-                                type="text"
-                                value={batchSize}
-                                onChange={(e) => handleBatchSizeChange(e.target.value)}
-                                className="text-sm"
-                                placeholder={t('concurrency.placeholder')}
-                            />
-                        </div>
-
                         <div className="space-y-1">
                             <Label className="text-sm">{t('gpu.label')}</Label>
                             <Popover open={gpuPopoverOpen} onOpenChange={setGpuPopoverOpen}>
@@ -529,6 +496,39 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                     </Command>
                                 </PopoverContent>
                             </Popover>
+                        </div>
+
+                        <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                                <Label htmlFor="batchSize" className="text-sm">{t('concurrency.label')}</Label>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        <InfoIcon className="h-3 w-3 text-muted-foreground" />
+                                    </TooltipTrigger>
+                                    <TooltipContent className="max-w-sm">
+                                        <div className="space-y-2 text-xs">
+                                            <p><strong>{t('concurrency.tooltip.title')}</strong></p>
+                                            {t.raw('concurrency.tooltip.scenarios').map((scenario: string, index: number) => (
+                                                <p key={index}>{scenario}</p>
+                                            ))}
+                                            <div className="border-t pt-2 mt-2">
+                                                <p><strong>{t('concurrency.tooltip.estimation.title')}</strong></p>
+                                                {t.raw('concurrency.tooltip.estimation.methods').map((method: string, index: number) => (
+                                                    <p key={index}>{method}</p>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
+                            <Input
+                                id="batchSize"
+                                type="text"
+                                value={batchSize}
+                                onChange={(e) => handleBatchSizeChange(e.target.value)}
+                                className="text-sm"
+                                placeholder={t('concurrency.placeholder')}
+                            />
                         </div>
                     </div>
 
@@ -630,7 +630,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                 <div className="bg-white p-3 rounded border border-green-200 text-center">
                                     <Label className="text-gray-600 text-sm font-medium">{t('performance.metrics.throughputPerUser.label')}</Label>
                                     <p className="text-lg font-bold text-green-600">
-                                        {memory.throughputInfo.tokensPerSecondPerUser.toLocaleString()} {t('performance.metrics.throughputPerUser.unit')}
+                                        {memory.throughputInfo.tokensPerSecondPerUser.toLocaleString()} tokens/s
                                     </p>
                                     <p className="text-xs text-gray-500">{t('performance.metrics.throughputPerUser.description', { users: batchSize })}</p>
                                 </div>
@@ -646,7 +646,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                 <div className="bg-white p-3 rounded border border-green-200 text-center">
                                     <Label className="text-gray-600 text-sm font-medium">{t('performance.metrics.maxQPS.label')}</Label>
                                     <p className="text-lg font-bold text-green-600">
-                                        {memory.throughputInfo.maxQPS} {t('performance.metrics.maxQPS.unit')}
+                                        {memory.throughputInfo.maxQPS} QPS
                                     </p>
                                     <p className="text-xs text-gray-500">{t('performance.metrics.maxQPS.description', { concurrency: batchSize, latency: (memory.throughputInfo.estimatedLatency / 1000).toFixed(1) })}</p>
                                 </div>
