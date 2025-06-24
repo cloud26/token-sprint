@@ -4,6 +4,9 @@
     "navigation": {
       "home": "Startseite"
     },
+    "feedback": {
+      "contactPrompt": "💡 Fragen oder Vorschläge? Kontaktieren Sie mich per E-Mail oder X"
+    },
     "ui": {
       "generateExample": "Beispiel generieren",
       "tokenizerError": "Tokenizer-Fehler: Schätzung verwenden",

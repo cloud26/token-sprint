@@ -1,5 +1,6 @@
 import { Coffee, Github, Twitter, Globe, Mail, Heart, ExternalLink } from "lucide-react"
 import { Button } from "./ui/button"
+import { useTranslations } from 'next-intl'
 
 interface ProjectLink {
     name: string
@@ -8,6 +9,8 @@ interface ProjectLink {
 }
 
 export function Footer() {
+    const t = useTranslations('common')
+
     // 你可以在这里添加你的项目链接
     const projectLinks: ProjectLink[] = [
         {
@@ -66,15 +69,31 @@ export function Footer() {
 
                 {/* Copyright Section */}
                 <div className="text-center space-y-2">
-                    <div className="flex items-center justify-center gap-2">
-                        <Mail className="w-4 h-4 text-muted-foreground" />
-                        <a
-                            href="mailto:linpp2009@gmail.com"
-                            className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
-                        >
-                            linpp2009@gmail.com
-                        </a>
+                    <div className="flex items-center justify-center gap-4">
+                        <div className="flex items-center gap-2">
+                            <Mail className="w-4 h-4 text-muted-foreground" />
+                            <a
+                                href="mailto:linpp2009@gmail.com"
+                                className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
+                            >
+                                linpp2009@gmail.com
+                            </a>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Twitter className="w-4 h-4 text-muted-foreground" />
+                            <a
+                                href="https://x.com/c_loud26"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
+                            >
+                                @c_loud26
+                            </a>
+                        </div>
                     </div>
+                    <p className="text-sm text-muted-foreground font-medium">
+                        {t('feedback.contactPrompt')}
+                    </p>
                     <p className="text-sm text-muted-foreground">
                         © {new Date().getFullYear()} Built with{" "}
                         <span className="text-red-500">♥</span> by{" "}

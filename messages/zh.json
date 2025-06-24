@@ -4,6 +4,9 @@
     "navigation": {
       "home": "首页"
     },
+    "feedback": {
+      "contactPrompt": "💡 有问题或建议？欢迎通过邮箱或 X 联系我"
+    },
     "ui": {
       "generateExample": "生成示例",
       "tokenizerError": "Tokenizer错误：使用估算值",

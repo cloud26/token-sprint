@@ -4,6 +4,9 @@
     "navigation": {
       "home": "Home"
     },
+    "feedback": {
+      "contactPrompt": "💡 Questions or suggestions? Contact me via email or X"
+    },
     "ui": {
       "generateExample": "Generate Example",
       "tokenizerError": "Tokenizer Error: Using estimation",

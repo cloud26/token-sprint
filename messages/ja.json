@@ -4,6 +4,9 @@
     "navigation": {
       "home": "ホーム"
     },
+    "feedback": {
+      "contactPrompt": "💡 ご質問やご提案がありますか？メールまたはXでお気軽にお問い合わせください"
+    },
     "ui": {
       "generateExample": "例を生成",
       "tokenizerError": "トークナイザーエラー：推定を使用",
