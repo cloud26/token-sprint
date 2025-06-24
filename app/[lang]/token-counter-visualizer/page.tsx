@@ -69,7 +69,7 @@ export default function TokenCounterPage({
 function PageContent() {
     const t = useTranslations('tools.tokenCounter')
     const tn = useTranslations('nav')
-    
+
     // 面包屑导航项
     const breadcrumbItems = [
         {
@@ -99,7 +99,7 @@ function PageContent() {
 
 function StructuredData({ language }: { language: Language }) {
     const t = useTranslations('tools.tokenCounter')
-    
+
     // 结构化数据
     const structuredData = {
         "@context": "https://schema.org",
@@ -130,7 +130,7 @@ function StructuredData({ language }: { language: Language }) {
         ],
         "author": {
             "@type": "Organization",
-            "name": "linpp2009.com",
+            "name": "LLM Tools Collection",
             "url": "https://app.linpp2009.com"
         },
         "datePublished": "2024-01-01",
@@ -150,7 +150,7 @@ function StructuredData({ language }: { language: Language }) {
 function BusinessGuideSection() {
     const locale = useLocale()
     const t = useTranslations('common.ui')
-    
+
     return (
         <section className="mt-8 space-y-4">
             <h2 className="text-lg font-semibold">

@@ -7,9 +7,9 @@ import { SidebarAds } from '@/components/sidebar-ads'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'AI Tools Collection | linpp2009.com',
-  description: 'A collection of useful AI-related tools, including token generation speed visualization and LLM GPU memory calculator.',
-  generator: 'linpp2009.com',
+  title: 'LLM Tools Collection',
+  description: 'A collection of useful LLM-related tools, including token generation speed visualization and LLM GPU memory calculator.',
+  generator: 'LLM Tools Collection',
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://app.linpp2009.com'),
   alternates: {
     canonical: '/en',
@@ -32,6 +32,8 @@ export const metadata: Metadata = {
     'google-adsense-account': 'ca-pub-8472112646404075',
     'yandex-verification': '5220b08fa4e50648',
   },
+  applicationName: 'LLM Tools Collection',
+  publisher: 'LLM Tools Collection',
 }
 
 export default function RootLayout({
@@ -61,6 +63,31 @@ export default function RootLayout({
             gtag('config', 'G-4Z7YE2WSXQ');
           `}
         </Script>
+        <Script
+          id="structured-data"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              "name": "LLM Tools Collection",
+              "url": process.env.NEXT_PUBLIC_BASE_URL || "https://app.linpp2009.com",
+              "description": "A collection of useful AI-related tools, including token generation speed visualization and LLM GPU memory calculator.",
+              "applicationCategory": "DeveloperApplication",
+              "operatingSystem": "Web Browser",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "LLM Tools Collection"
+              }
+            })
+          }}
+        />
       </head>
       <body>
         <ReferralTracker />

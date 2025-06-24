@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
     return {
         title: t('home.metadata.title'),
-        description: t('home.metadata.description'), 
+        description: t('home.metadata.description'),
         alternates: {
             canonical: getCanonicalUrl(baseUrl, lang as Language),
             languages: generateLanguageAlternates(baseUrl, lang as Language),
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             title: t('home.metadata.title'),
             description: t('home.metadata.description'),
             url: `${baseUrl}/${lang}`,
-            siteName: 'AI Tools Collection',
+            siteName: 'LLM Tools Collection',
             locale: getLocaleForLanguage(lang as Language),
             type: 'website',
         },
@@ -40,7 +40,7 @@ export default function Home({
     params: Promise<{ lang: string }>
 }) {
     const t = useTranslations()
-    
+
     return (
         <div className="min-h-screen flex flex-col">
             <LanguageSwitcher className="fixed top-4 right-4 z-50" />
@@ -50,7 +50,7 @@ export default function Home({
                 <div className="w-full max-w-2xl space-y-2 flex-1">
                     {/* 面包屑导航 */}
                     <Breadcrumb items={[{ label: t('nav.aiTools'), current: true }]} />
-                    
+
                     <div className="flex flex-col items-center gap-1 mt-8">
                         <h1 className="text-2xl font-bold text-center">
                             {t('tools.llmGpuCalculator.title')}
@@ -62,7 +62,7 @@ export default function Home({
                     <Suspense fallback={<div>Loading...</div>}>
                         <LLMMemoryCalculator />
                     </Suspense>
-                    
+
                     {/* GPU Selection Guide */}
                     <div className="mt-8">
                         <GPUSelectionGuide />

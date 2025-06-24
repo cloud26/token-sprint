@@ -68,7 +68,7 @@ export function Footer() {
                 <div className="text-center space-y-2">
                     <div className="flex items-center justify-center gap-2">
                         <Mail className="w-4 h-4 text-muted-foreground" />
-                        <a 
+                        <a
                             href="mailto:linpp2009@gmail.com"
                             className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
                         >
@@ -78,13 +78,13 @@ export function Footer() {
                     <p className="text-sm text-muted-foreground">
                         © {new Date().getFullYear()} Built with{" "}
                         <span className="text-red-500">♥</span> by{" "}
-                        <a 
-                            href="https://linpp2009.com" 
-                            target="_blank" 
+                        <a
+                            href="https://linpp2009.com"
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="hover:text-foreground transition-colors underline underline-offset-4"
                         >
-                            linpp2009.com
+                            LLM Tools Collection
                         </a>
                     </p>
                 </div>
