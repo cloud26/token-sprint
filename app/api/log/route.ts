@@ -3,17 +3,17 @@ import { NextResponse } from 'next/server'
 export async function POST(request: Request) {
     try {
         const data = await request.json()
-        const { 
-            parameters, 
-            precision, 
-            gpuModel, 
-            gpuMemory, 
+        const {
+            parameters,
+            precision,
+            gpuModel,
+            gpuMemory,
             batchSize,
             contextLength,
             expectedTokensPerSecond,
             manualGpuCount,
-            totalMemory, 
-            requiredGPUs, 
+            totalMemory,
+            requiredGPUs,
             locale,
             selectedModel,
             // 性能指标
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
         console.log(`[${locale}] 模型配置: ${selectedModel || '自定义模型'} (${parameters}B参数)`)
         console.log(`[${locale}] 运行配置: ${precision}精度, ${contextLength}平均上下文长度, ${batchSize}并发用户`)
         console.log(`[${locale}] 硬件配置: ${gpuModel} (${gpuMemory}GB显存)`)
-        
+
         // 用户期望与实际配置
         if (expectedTokensPerSecond && Number(expectedTokensPerSecond) > 1) {
             console.log(`[${locale}] 用户期望: 每用户${expectedTokensPerSecond} tokens/s`)
@@ -41,17 +41,17 @@ export async function POST(request: Request) {
         // 计算结果
         console.log(`[${locale}] === 计算结果 ===`)
         console.log(`[${locale}] 显存需求: ${totalMemory}GB (需要${requiredGPUs}个GPU)`)
-        
+
         // 内存分解详情
         if (data.memoryBreakdown) {
             const { modelMemory, kvCacheMemory, activationMemory, computationMemory } = data.memoryBreakdown
             console.log(`[${locale}] 内存分解:`)
             console.log(`[${locale}]   - 模型权重: ${modelMemory}GB`)
-            console.log(`[${locale}]   - KV缓存: ${kvCacheMemory}GB`)
+            console.log(`[${locale}]   - KV 缓存: ${kvCacheMemory}GB`)
             console.log(`[${locale}]   - 激活内存: ${activationMemory}GB`)
             console.log(`[${locale}]   - 计算缓存: ${computationMemory}GB`)
         }
-        
+
         // 架构信息
         if (data.architectureInfo) {
             const { d_model, n_layers, activeParams, isMoE, source } = data.architectureInfo
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
             console.log(`[${locale}]   - MoE模型: ${isMoE ? '是' : '否'}`)
             console.log(`[${locale}]   - 数据来源: ${source}`)
         }
-        
+
         // 性能指标
         if (throughputInfo) {
             console.log(`[${locale}] 性能指标:`)

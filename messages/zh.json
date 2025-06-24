@@ -462,7 +462,7 @@
           "description": "所有模型权重"
         },
         "kvCache": {
-          "label": "KV缓存",
+          "label": "KV 缓存",
           "description": "对话历史缓存"
         },
         "activationMemory": {
@@ -549,7 +549,7 @@
     "memoryRequirement": {
       "title": "显存需求",
       "totalMemory": "显存需求 {totalMemory} GB",
-      "requiredGPUs": "需要 **{count}** 张显卡（基于内存容量）",
+      "requiredGPUs": "需要 **{count}** 张显卡（基于显存容量）",
       "memoryWarning": "⚠️ 内存警告"
     },
     "throughputRequirement": {
