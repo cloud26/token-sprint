@@ -261,7 +261,7 @@
       "metadata": {
         "title": "Token Counter & Calculator: ChatGPT, GPT, Claude, Llama Tokenizer",
         "description": "Free online token counter & calculator for ChatGPT, GPT-4o, Claude 4, Llama models. Real-time token counting, cost estimation, LLM token calculator.",
-        "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,gpt token counter,chatgpt token counter"
+        "keywords": "tiktokenizer, token counter,tokenizers ai,token calculator,tokenization tools,gpt token counter,chatgpt token counter"
       },
       "structured": {
         "tokenCountingModels": "Token counting for multiple AI models",
@@ -274,7 +274,7 @@
         "description": "{company} token counter and tokenizer tool. {accuracyNote}",
         "seoTitle": "{displayName} Token Counter & Calculator: Free {displayName} Tokenizer {titleSuffix}",
         "seoDescription": "Free {displayName} token counter & calculator for {versions}. {features}",
-        "keywords": "token counter,tokenizers ai,token calculator,tokenization tools,{keywordName} token counter",
+        "keywords": "tiktokenizer, token counter,tokenizers ai,token calculator,tokenization tools,{keywordName} token counter",
         "openai-gpt": {
           "company": "OpenAI",
           "displayName": "ChatGPT",
