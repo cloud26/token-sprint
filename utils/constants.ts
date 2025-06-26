@@ -20,7 +20,7 @@ export interface GPUModel {
 // GPU完整规格信息 - 包含内存、性能和发布年份
 export const gpuModels: GPUModel[] = [
   // NVIDIA 最新架构 - Blackwell
-  { name: "NVIDIA GB200", memory: 192, fp16Tflops: 5000, architecture: "Grace Blackwell", category: "数据中心", releaseYear: 2024 }, // 2x B200 GPU
+  { name: "NVIDIA GB200", memory: 192, fp16Tflops: 9000, architecture: "Grace Blackwell", category: "数据中心", releaseYear: 2024 },
   { name: "NVIDIA HGX B200 8 GPU", memory: 1536, fp16Tflops: 36000, architecture: "Blackwell", category: "集群", releaseYear: 2024 }, // 8x B200 GPU
   { name: "NVIDIA HGX B200 4 GPU", memory: 768, fp16Tflops: 18000, architecture: "Blackwell", category: "集群", releaseYear: 2024 }, // 4x B200 GPU
   { name: "NVIDIA HGX B100 8 GPU", memory: 1536, fp16Tflops: 28000, architecture: "Blackwell", category: "集群", releaseYear: 2024 }, // 8x B100 GPU
@@ -49,8 +49,8 @@ export const gpuModels: GPUModel[] = [
   // NVIDIA RTX 5000系列 (Blackwell消费级)
   { name: "NVIDIA RTX 5090", memory: 32, fp16Tflops: 280, architecture: "Blackwell", category: "消费级", releaseYear: 2025 },
   { name: "NVIDIA RTX 5080", memory: 16, fp16Tflops: 180, architecture: "Blackwell", category: "消费级", releaseYear: 2025 },
-  { name: "NVIDIA RTX 5070 Ti", memory: 16, fp16Tflops: 140, architecture: "Blackwell", category: "消费级", releaseYear: 2025 },
-  { name: "NVIDIA RTX 5070", memory: 12, fp16Tflops: 120, architecture: "Blackwell", category: "消费级", releaseYear: 2025 },
+  { name: "NVIDIA RTX 5070 Ti", memory: 16, fp16Tflops: 130, architecture: "Blackwell", category: "消费级", releaseYear: 2025 },
+  { name: "NVIDIA RTX 5070", memory: 12, fp16Tflops: 105, architecture: "Blackwell", category: "消费级", releaseYear: 2025 },
 
   // NVIDIA RTX 4000系列
   { name: "NVIDIA RTX 4090", memory: 24, fp16Tflops: 330.3, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2022 }, // Dense Tensor performance
@@ -59,16 +59,17 @@ export const gpuModels: GPUModel[] = [
   { name: "NVIDIA RTX 4070 Ti Super", memory: 16, fp16Tflops: 44.1, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2024 }, // Dense Tensor performance
   { name: "NVIDIA RTX 4070 Ti", memory: 12, fp16Tflops: 40.09, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2023 }, // Dense Tensor performance
   { name: "NVIDIA RTX 4070", memory: 12, fp16Tflops: 29.15, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2023 }, // Dense Tensor performance
-  { name: "NVIDIA RTX 4060 Ti (16GB)", memory: 16, fp16Tflops: 70, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2023 },
-  { name: "NVIDIA RTX 4060 Ti (8GB)", memory: 8, fp16Tflops: 70, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2023 },
-  { name: "NVIDIA RTX 4060", memory: 8, fp16Tflops: 60, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2023 },
+  { name: "NVIDIA RTX 4060 Ti (16GB)", memory: 16, fp16Tflops: 38, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2023 },
+  { name: "NVIDIA RTX 4060 Ti (8GB)", memory: 8, fp16Tflops: 38, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2023 },
+  { name: "NVIDIA RTX 4060", memory: 8, fp16Tflops: 35, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2023 },
 
   // NVIDIA RTX 3000系列
-  { name: "NVIDIA RTX 3090 Ti", memory: 24, fp16Tflops: 80, architecture: "Ampere", category: "消费级", releaseYear: 2022 },
-  { name: "NVIDIA RTX 3090", memory: 24, fp16Tflops: 71, architecture: "Ampere", category: "消费级", releaseYear: 2020 },
-  { name: "NVIDIA RTX 3080 Ti", memory: 12, fp16Tflops: 65, architecture: "Ampere", category: "消费级", releaseYear: 2021 },
-  { name: "NVIDIA RTX 3080", memory: 10, fp16Tflops: 60, architecture: "Ampere", category: "消费级", releaseYear: 2020 },
-  { name: "NVIDIA RTX 3070 Ti", memory: 8, fp16Tflops: 50, architecture: "Ampere", category: "消费级", releaseYear: 2021 },
+  { name: "NVIDIA RTX 3090 Ti", memory: 24, fp16Tflops: 321, architecture: "Ampere", category: "消费级", releaseYear: 2022 },
+  { name: "NVIDIA RTX 3090", memory: 24, fp16Tflops: 285, architecture: "Ampere", category: "消费级", releaseYear: 2020 },
+  { name: "NVIDIA RTX 3080 Ti", memory: 12, fp16Tflops: 273, architecture: "Ampere", category: "消费级", releaseYear: 2021 },
+  { name: "NVIDIA RTX 3080", memory: 10, fp16Tflops: 238, architecture: "Ampere", category: "消费级", releaseYear: 2020 },
+  { name: "NVIDIA RTX 3070 Ti", memory: 8, fp16Tflops: 163, architecture: "Ampere", category: "消费级", releaseYear: 2021 },
+
 
   // NVIDIA Tesla/数据中心系列
   { name: "NVIDIA A100 (80GB)", memory: 80, fp16Tflops: 312, architecture: "Ampere", category: "数据中心", releaseYear: 2020 },
