@@ -1,4 +1,4 @@
-import { MODELS, MODEL_ARCHITECTURES, GPU_PERFORMANCE, PRECISION_MULTIPLIERS, PRECISION_BYTES } from './constants'
+import { MODELS, MODEL_ARCHITECTURES, GPU_FP16_TFLOPS, PRECISION_MULTIPLIERS, PRECISION_BYTES } from './constants'
 
 interface MemoryCalculationResult {
   modelMemory: number // 模型本身
@@ -264,11 +264,11 @@ function calcThroughputInfo(
   avgOutputTokens: number;
 } {
   // 获取GPU性能
-  const basePerformance = GPU_PERFORMANCE[gpuModel] || 100
+  const basePerformance = GPU_FP16_TFLOPS[gpuModel] || 100
   const adjustedPerformance = basePerformance * (PRECISION_MULTIPLIERS[precision] || 1.0)
 
-  // 模型计算量估算 (FLOPS per token)
-  const flopsPerToken = 6 * activeParams * 1e9
+  // 模型计算量估算 (FLOPS per token) - 推理只需要2倍参数量
+  const flopsPerToken = 2 * activeParams * 1e9
 
   // 理论峰值吞吐量 (tokens/s)
   const theoreticalThroughput = (adjustedPerformance * 1e12) / flopsPerToken
@@ -395,11 +395,11 @@ function calculateMinRequiredGPUs(
   const requiredTotalThroughput = expectedTokensPerSecond * batchSize
 
   // 获取GPU性能
-  const basePerformance = GPU_PERFORMANCE[gpuModel] || 100
+  const basePerformance = GPU_FP16_TFLOPS[gpuModel] || 100
   const adjustedPerformance = basePerformance * (PRECISION_MULTIPLIERS[precision] || 1.0)
 
-  // 模型计算量估算 (FLOPS per token)
-  const flopsPerToken = 6 * activeParams * 1e9
+  // 模型计算量估算 (FLOPS per token) - 推理只需要2倍参数量
+  const flopsPerToken = 2 * activeParams * 1e9
 
   // 理论峰值吞吐量 (tokens/s)
   const theoreticalThroughput = (adjustedPerformance * 1e12) / flopsPerToken

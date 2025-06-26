@@ -5,7 +5,7 @@ import { useTranslations, useLocale } from 'next-intl'
 export function GPUSelectionGuide() {
     const locale = useLocale()
     const t = useTranslations('common')
-    
+
     return (
         <div className="space-y-8">
             {/* GPU选择指南 - 更有价值的内容 */}
@@ -27,6 +27,9 @@ export function GPUSelectionGuide() {
                         <ul className="list-disc pl-5 space-y-1">
                             <li><strong>{t('gpu.guide.enterpriseSolutions.h100')}</strong></li>
                             <li><strong>{t('gpu.guide.enterpriseSolutions.a100')}</strong></li>
+                            <li><strong>{t('gpu.guide.enterpriseSolutions.mi355x')}</strong></li>
+                            <li><strong>{t('gpu.guide.enterpriseSolutions.mi350x')}</strong></li>
+                            <li><strong>{t('gpu.guide.enterpriseSolutions.mi325x')}</strong></li>
                             <li><strong>{t('gpu.guide.enterpriseSolutions.mi300x')}</strong></li>
                         </ul>
                     </div>

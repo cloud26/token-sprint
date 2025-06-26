@@ -153,7 +153,10 @@
           "title": "🏢 Unternehmenslösungen (50.000$+)",
           "h100": "NVIDIA H100 (80GB): Industriestandard für LLM-Produktionsbereitstellung",
           "a100": "NVIDIA A100 (80GB): Bewährte Zuverlässigkeit, gut für 70B+ Modelle",
-          "mi300x": "AMD MI300X (192GB): Höchste Speicherkapazität, ausgezeichnet für größte Modelle"
+          "mi355x": "AMD MI355X (288GB): Neueste CDNA 4, höchste Speicherkapazität für massive Modelle",
+          "mi350x": "AMD MI350X (288GB): CDNA 4 luftgekühlt, ausgezeichnetes Preis-Leistungs-Verhältnis",
+          "mi325x": "AMD MI325X (256GB): CDNA 3 mit HBM3E, großartig für große Modellbereitstellung",
+          "mi300x": "AMD MI300X (192GB): Bewährte CDNA 3, ausgezeichnet für 400B+ Modelle"
         },
         "proTips": {
           "title": "⚡ Profi-Tipps zur Optimierung",

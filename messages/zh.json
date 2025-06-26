@@ -162,7 +162,10 @@
           "title": "🏢 企业级解决方案（5万美元以上）",
           "h100": "NVIDIA H100 (80GB): 生产级LLM部署的行业标准",
           "a100": "NVIDIA A100 (80GB): 经过验证的可靠性，适合70B+模型",
-          "mi300x": "AMD MI300X (192GB): 最高显存容量，适合最大模型"
+          "mi355x": "AMD MI355X (288GB): 最新CDNA 4架构，最高显存容量",
+          "mi350x": "AMD MI350X (288GB): CDNA 4风冷版，优秀性价比",
+          "mi325x": "AMD MI325X (256GB): CDNA 3配HBM3E，适合大模型部署",
+          "mi300x": "AMD MI300X (192GB): 成熟CDNA 3，适合400B+模型"
         },
         "proTips": {
           "title": "⚡ 优化专业技巧",

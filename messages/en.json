@@ -153,7 +153,10 @@
           "title": "🏢 Enterprise Solutions ($50k+)",
           "h100": "NVIDIA H100 (80GB): Industry standard for production LLM deployment",
           "a100": "NVIDIA A100 (80GB): Proven reliability, good for 70B+ models",
-          "mi300x": "AMD MI300X (192GB): Highest memory capacity, excellent for largest models"
+          "mi355x": "AMD MI355X (288GB): Latest CDNA 4, highest memory capacity for massive models",
+          "mi350x": "AMD MI350X (288GB): CDNA 4 air-cooled, excellent price/performance",
+          "mi325x": "AMD MI325X (256GB): CDNA 3 with HBM3E, great for large model deployment",
+          "mi300x": "AMD MI300X (192GB): Proven CDNA 3, excellent for 400B+ models"
         },
         "proTips": {
           "title": "⚡ Pro Tips for Optimization",

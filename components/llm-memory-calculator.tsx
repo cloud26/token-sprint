@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { calculateInferenceMemory } from "@/utils/calculations"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip"
-import { precisions, gpuModels, MODELS, GPU_PERFORMANCE, getModelsByGroup } from "@/utils/constants"
+import { precisions, gpuModels, MODELS, GPU_FP16_TFLOPS, getModelsByGroup } from "@/utils/constants"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
@@ -604,7 +604,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                             </div>
                                                             <div className="flex items-center justify-between w-full mt-1">
                                                                 <div className="flex items-center space-x-2 text-xs text-gray-600">
-                                                                    <span className="text-green-600">{gpu.performance} TFLOPS</span>
+                                                                    <span className="text-green-600">{gpu.fp16Tflops} TFLOPS (FP16)</span>
                                                                     <span className="text-purple-600">{gpu.architecture}</span>
                                                                 </div>
                                                             </div>
