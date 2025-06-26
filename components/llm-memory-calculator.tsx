@@ -573,7 +573,25 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                 </Button>
                             </PopoverTrigger>
                             <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
-                                <Command>
+                                <Command
+                                    filter={(value, search) => {
+                                        // 自定义搜索逻辑：更精确的匹配
+                                        if (!search) return 1;
+                                        const searchLower = search.toLowerCase();
+                                        const valueLower = value.toLowerCase();
+                                        
+                                        // 完全匹配优先级最高
+                                        if (valueLower.includes(searchLower)) {
+                                            // 如果搜索词是连续的字符串，给予更高优先级
+                                            const gpuName = valueLower.split(' (')[0]; // 提取GPU名称部分
+                                            if (gpuName.includes(searchLower)) {
+                                                return 1;
+                                            }
+                                        }
+                                        
+                                        return 0;
+                                    }}
+                                >
                                     <CommandInput placeholder={t('gpu.searchPlaceholder')} />
                                     <CommandList>
                                         <CommandEmpty>{t('gpu.notFound')}</CommandEmpty>
