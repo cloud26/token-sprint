@@ -323,40 +323,59 @@ function calcThroughputInfo(
 function getModelEfficiency(parameters: number, selectedModel?: string): number {
   // 基于Database Mart A100 80GB基准测试的实际效率数据
   // 来源: https://www.databasemart.com/blog/vllm-gpu-benchmark-a100-80gb
+  // 测试条件: A100 80GB, 50并发, FP16精度
 
-  // DeepSeek蒸馏模型效率明显更高
+  // DeepSeek蒸馏模型效率（基于实际测试校准）
   if (selectedModel && selectedModel.toLowerCase().includes('deepseek')) {
-    if (parameters <= 10) return 0.25 // DeepSeek 7-8B: ~25%
-    if (parameters <= 20) return 0.22 // DeepSeek 14B: ~22%
-    if (parameters <= 40) return 0.20 // DeepSeek 32B: ~20%
-    if (parameters <= 100) return 0.18 // DeepSeek 70B: ~18%
-    return 0.22 // DeepSeek-R1 671B: ~22% (MoE架构效率更高)
+    if (parameters <= 10) return 0.12 // DeepSeek 7-8B: 实测约12% (2825 tokens/s)
+    if (parameters <= 20) return 0.20 // DeepSeek 14B: 实测约20% (2552 tokens/s)
+    if (parameters <= 40) return 0.08 // DeepSeek 32B: 实测约8% (472 tokens/s，受内存带宽限制)
+    if (parameters <= 100) return 0.12 // DeepSeek 70B: 估算12%
+    return 0.15 // DeepSeek-R1 671B: MoE架构效率更高
   }
 
-  // Gemma模型效率
+  // Gemma模型效率（基于实际测试校准）
   if (selectedModel && selectedModel.toLowerCase().includes('gemma')) {
-    if (parameters <= 15) return 0.16 // Gemma 9B: ~16%
-    if (parameters <= 35) return 0.13 // Gemma 27B: ~13%
-    return 0.12
+    if (parameters <= 15) return 0.018 // Gemma 9B: 实测约1.8% (328 tokens/s，效率极低)
+    if (parameters <= 35) return 0.025 // Gemma 27B: 估算2.5%
+    return 0.03
   }
 
   // QwQ模型效率
   if (selectedModel && selectedModel.toLowerCase().includes('qwq')) {
-    if (parameters <= 40) return 0.19 // QwQ 32B: ~19%
-    return 0.16
+    if (parameters <= 40) return 0.10 // QwQ 32B: 估算10%
+    return 0.12
   }
 
-  // 通用模型效率（基于参数大小）
+  // Qwen模型系列效率
+  if (selectedModel && selectedModel.toLowerCase().includes('qwen')) {
+    if (parameters <= 10) return 0.15 // Qwen 7-8B: 15%
+    if (parameters <= 20) return 0.13 // Qwen 14B: 13%
+    if (parameters <= 40) return 0.11 // Qwen 32B: 11%
+    if (parameters <= 100) return 0.09 // Qwen 72B: 9%
+    return 0.12 // Qwen 大模型: 12%
+  }
+
+  // Llama模型系列效率
+  if (selectedModel && selectedModel.toLowerCase().includes('llama')) {
+    if (parameters <= 10) return 0.14 // Llama 7-8B: 14%
+    if (parameters <= 20) return 0.12 // Llama 13B: 12%
+    if (parameters <= 40) return 0.10 // Llama 33B: 10%
+    if (parameters <= 100) return 0.08 // Llama 70B: 8%
+    return 0.10 // Llama 大模型: 10%
+  }
+
+  // 通用模型效率（基于参数大小，更保守的估算）
   if (parameters <= 10) {
-    return 0.20 // 小模型: 20%
+    return 0.12 // 小模型: 12% (基于实测数据调整)
   } else if (parameters <= 20) {
-    return 0.17 // 中型模型: 17%
+    return 0.10 // 中型模型: 10%
   } else if (parameters <= 40) {
-    return 0.15 // 大型模型: 15%
+    return 0.08 // 大型模型: 8%
   } else if (parameters <= 100) {
-    return 0.12 // 超大模型: 12%
+    return 0.06 // 超大模型: 6%
   } else {
-    return 0.08 // 极大模型: 8%
+    return 0.04 // 极大模型: 4%
   }
 }
 
