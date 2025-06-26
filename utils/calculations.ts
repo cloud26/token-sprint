@@ -386,10 +386,19 @@ function calculateSingleGpuThroughput(
   const adjustedPerformance = basePerformance * (PRECISION_MULTIPLIERS[precision] || 1.0)
 
   // 模型计算量估算 (FLOPS per token) - 推理只需要2倍参数量
-  const flopsPerToken = 2 * activeParams * 1e9
+  // 为避免数值溢出，重新组织计算顺序
+  const flopsPerTokenInBillions = 2 * activeParams // 以十亿为单位
 
   // 理论峰值吞吐量 (tokens/s)
-  const theoreticalThroughput = (adjustedPerformance * 1e12) / flopsPerToken
+  // 重新组织计算：(adjustedPerformance * 1e12) / (flopsPerTokenInBillions * 1e9)
+  // = (adjustedPerformance * 1e3) / flopsPerTokenInBillions
+  const theoreticalThroughput = (adjustedPerformance * 1000) / flopsPerTokenInBillions
+
+  // 数值安全检查：确保结果在合理范围内
+  if (!Number.isFinite(theoreticalThroughput) || theoreticalThroughput <= 0) {
+    console.warn(`计算异常: GPU=${gpuModel}, activeParams=${activeParams}, theoreticalThroughput=${theoreticalThroughput}`)
+    return 1 // 返回最小合理值
+  }
 
   // 基于实际基准测试数据的效率因子
   let efficiencyFactor = getModelEfficiency(parameters, selectedModel)
@@ -407,7 +416,8 @@ function calculateSingleGpuThroughput(
   }
 
   // 单GPU实际吞吐量
-  return theoreticalThroughput * Math.min(efficiencyFactor, 1.0)
+  return theoreticalThroughput * efficiencyFactor
+
 }
 
 // 计算满足期望体验的最少GPU数量
