@@ -40,7 +40,7 @@ export async function generateMetadata({
     }
 
     const t = await getTranslations({ locale: lang, namespace: 'tools.llmGpuCalculator.models' })
-    
+
     // 使用插值模板
     const modelData = t.raw(`${modelSlug}`)
     const interpolationData = {
@@ -50,7 +50,7 @@ export async function generateMetadata({
     const seoTitle = t('seoTitle', interpolationData)
     const seoDescription = t('seoDescription', interpolationData)
     const keywords = t('keywords', interpolationData)
-    
+
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
         (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://app.linpp2009.com')
     const path = `llm-gpu-memory-calculator/${modelSlug}`
@@ -60,7 +60,7 @@ export async function generateMetadata({
         description: seoDescription,
         keywords: keywords,
         alternates: {
-            canonical: getCanonicalUrl(`${baseUrl}/${path}`, lang),
+            canonical: `${baseUrl}/${lang}/${path}`,
             languages: generateLanguageAlternates(`${baseUrl}/${path}`, lang),
         },
         other: {
@@ -113,7 +113,7 @@ export default function ModelSpecificCalculatorPage({
 function PageContent({ model }: { model: any }) {
     const t = useTranslations('tools.llmGpuCalculator')
     const tn = useTranslations('nav')
-    
+
     // 面包屑导航项
     const breadcrumbItems = [
         {
@@ -147,7 +147,7 @@ function PageContent({ model }: { model: any }) {
 
 function StructuredData({ language, model, modelSlug }: { language: Language, model: any, modelSlug: string }) {
     const t = useTranslations('tools.llmGpuCalculator.models')
-    
+
     // 使用插值模板
     const modelData = t.raw(`${modelSlug}`)
     const interpolationData = {
@@ -155,7 +155,7 @@ function StructuredData({ language, model, modelSlug }: { language: Language, mo
         modelLower: modelSlug.toLowerCase()
     }
     const seoDescription = t('seoDescription', interpolationData)
-    
+
     // 结构化数据
     const structuredData = {
         "@context": "https://schema.org",
@@ -188,4 +188,3 @@ function StructuredData({ language, model, modelSlug }: { language: Language, mo
     )
 }
 
- 

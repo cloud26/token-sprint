@@ -7,183 +7,193 @@ export const precisions = [
   { name: "INT4", value: "INT4" },
 ]
 
-// GPU完整规格信息 - 包含内存和性能数据
-export const gpuModels = [
+// GPU数据结构接口
+export interface GPUModel {
+  name: string;
+  memory: number;
+  performance: number;
+  architecture: string;
+  category?: string;
+  releaseYear: number; // 发布年份
+}
+
+// GPU完整规格信息 - 包含内存、性能和发布年份
+export const gpuModels: GPUModel[] = [
   // NVIDIA 最新架构 - Blackwell
-  { name: "NVIDIA GB200", memory: 192, performance: 2500, architecture: "Grace Blackwell", category: "数据中心" },
-  { name: "NVIDIA HGX B200 8 GPU", memory: 1536, performance: 20000, architecture: "Blackwell", category: "集群" }, // 8x192GB
-  { name: "NVIDIA HGX B200 4 GPU", memory: 768, performance: 10000, architecture: "Blackwell", category: "集群" }, // 4x192GB
-  { name: "NVIDIA HGX B100 8 GPU", memory: 1536, performance: 16000, architecture: "Blackwell", category: "集群" }, // 8x192GB
-  { name: "NVIDIA HGX B100 4 GPU", memory: 768, performance: 8000, architecture: "Blackwell", category: "集群" }, // 4x192GB
-  { name: "NVIDIA B200", memory: 192, performance: 2500, architecture: "Blackwell", category: "数据中心" },
-  { name: "NVIDIA B100", memory: 192, performance: 2000, architecture: "Blackwell", category: "数据中心" },
+  { name: "NVIDIA GB200", memory: 192, performance: 2500, architecture: "Grace Blackwell", category: "数据中心", releaseYear: 2024 },
+  { name: "NVIDIA HGX B200 8 GPU", memory: 1536, performance: 20000, architecture: "Blackwell", category: "集群", releaseYear: 2024 }, // 8x192GB
+  { name: "NVIDIA HGX B200 4 GPU", memory: 768, performance: 10000, architecture: "Blackwell", category: "集群", releaseYear: 2024 }, // 4x192GB
+  { name: "NVIDIA HGX B100 8 GPU", memory: 1536, performance: 16000, architecture: "Blackwell", category: "集群", releaseYear: 2024 }, // 8x192GB
+  { name: "NVIDIA HGX B100 4 GPU", memory: 768, performance: 8000, architecture: "Blackwell", category: "集群", releaseYear: 2024 }, // 4x192GB
+  { name: "NVIDIA B200", memory: 192, performance: 2500, architecture: "Blackwell", category: "数据中心", releaseYear: 2024 },
+  { name: "NVIDIA B100", memory: 192, performance: 2000, architecture: "Blackwell", category: "数据中心", releaseYear: 2024 },
 
   // NVIDIA Hopper架构
-  { name: "NVIDIA HGX H200 8 GPU", memory: 1128, performance: 8000, architecture: "Hopper", category: "集群" }, // 8x141GB
-  { name: "NVIDIA HGX H200 4 GPU", memory: 564, performance: 4000, architecture: "Hopper", category: "集群" }, // 4x141GB
-  { name: "NVIDIA HGX H100 8 GPU", memory: 640, performance: 8000, architecture: "Hopper", category: "集群" }, // 8x80GB
-  { name: "NVIDIA HGX H100 4 GPU", memory: 320, performance: 4000, architecture: "Hopper", category: "集群" }, // 4x80GB
-  { name: "NVIDIA H200", memory: 141, performance: 1000, architecture: "Hopper", category: "数据中心" },
-  { name: "NVIDIA H100", memory: 80, performance: 1000, architecture: "Hopper", category: "数据中心" },
-  { name: "NVIDIA H20", memory: 96, performance: 296, architecture: "Hopper", category: "数据中心" }, // 中国特供版
+  { name: "NVIDIA HGX H200 8 GPU", memory: 1128, performance: 8000, architecture: "Hopper", category: "集群", releaseYear: 2023 }, // 8x141GB
+  { name: "NVIDIA HGX H200 4 GPU", memory: 564, performance: 4000, architecture: "Hopper", category: "集群", releaseYear: 2023 }, // 4x141GB
+  { name: "NVIDIA HGX H100 8 GPU", memory: 640, performance: 8000, architecture: "Hopper", category: "集群", releaseYear: 2022 }, // 8x80GB
+  { name: "NVIDIA HGX H100 4 GPU", memory: 320, performance: 4000, architecture: "Hopper", category: "集群", releaseYear: 2022 }, // 4x80GB
+  { name: "NVIDIA H200", memory: 141, performance: 1000, architecture: "Hopper", category: "数据中心", releaseYear: 2023 },
+  { name: "NVIDIA H100", memory: 80, performance: 1000, architecture: "Hopper", category: "数据中心", releaseYear: 2022 },
+  { name: "NVIDIA H20", memory: 96, performance: 296, architecture: "Hopper", category: "数据中心", releaseYear: 2024 }, // 中国特供版
 
   // NVIDIA Ada Lovelace架构
-  { name: "NVIDIA L40", memory: 48, performance: 362, architecture: "Ada Lovelace" },
-  { name: "NVIDIA L20", memory: 48, performance: 240, architecture: "Ada Lovelace" },
-  { name: "NVIDIA L2", memory: 24, performance: 120, architecture: "Ada Lovelace" },
-  { name: "NVIDIA RTX 6000 Ada", memory: 48, performance: 362, architecture: "Ada Lovelace" },
-  { name: "NVIDIA RTX 5000 Ada", memory: 32, performance: 240, architecture: "Ada Lovelace" },
-  { name: "NVIDIA RTX 4000 Ada", memory: 20, performance: 120, architecture: "Ada Lovelace" },
-  { name: "NVIDIA RTX 3000 Ada", memory: 12, performance: 80, architecture: "Ada Lovelace" },
+  { name: "NVIDIA L40", memory: 48, performance: 362, architecture: "Ada Lovelace", releaseYear: 2022 },
+  { name: "NVIDIA L20", memory: 48, performance: 240, architecture: "Ada Lovelace", releaseYear: 2023 },
+  { name: "NVIDIA L2", memory: 24, performance: 120, architecture: "Ada Lovelace", releaseYear: 2023 },
+  { name: "NVIDIA RTX 6000 Ada", memory: 48, performance: 362, architecture: "Ada Lovelace", releaseYear: 2022 },
+  { name: "NVIDIA RTX 5000 Ada", memory: 32, performance: 240, architecture: "Ada Lovelace", releaseYear: 2023 },
+  { name: "NVIDIA RTX 4000 Ada", memory: 20, performance: 120, architecture: "Ada Lovelace", releaseYear: 2023 },
+  { name: "NVIDIA RTX 3000 Ada", memory: 12, performance: 80, architecture: "Ada Lovelace", releaseYear: 2024 },
 
   // NVIDIA RTX 5000系列 (Blackwell消费级)
-  { name: "NVIDIA RTX 5090", memory: 32, performance: 280, architecture: "Blackwell", category: "消费级" },
-  { name: "NVIDIA RTX 5080", memory: 16, performance: 180, architecture: "Blackwell", category: "消费级" },
-  { name: "NVIDIA RTX 5070 Ti", memory: 16, performance: 140, architecture: "Blackwell", category: "消费级" },
-  { name: "NVIDIA RTX 5070", memory: 12, performance: 120, architecture: "Blackwell", category: "消费级" },
+  { name: "NVIDIA RTX 5090", memory: 32, performance: 280, architecture: "Blackwell", category: "消费级", releaseYear: 2025 },
+  { name: "NVIDIA RTX 5080", memory: 16, performance: 180, architecture: "Blackwell", category: "消费级", releaseYear: 2025 },
+  { name: "NVIDIA RTX 5070 Ti", memory: 16, performance: 140, architecture: "Blackwell", category: "消费级", releaseYear: 2025 },
+  { name: "NVIDIA RTX 5070", memory: 12, performance: 120, architecture: "Blackwell", category: "消费级", releaseYear: 2025 },
 
   // NVIDIA RTX 4000系列
-  { name: "NVIDIA RTX 4090", memory: 24, performance: 165, architecture: "Ada Lovelace", category: "消费级" },
-  { name: "NVIDIA RTX 4080 SUPER", memory: 16, performance: 130, architecture: "Ada Lovelace", category: "消费级" },
-  { name: "NVIDIA RTX 4080", memory: 16, performance: 125, architecture: "Ada Lovelace", category: "消费级" },
-  { name: "NVIDIA RTX 4070 Ti Super", memory: 16, performance: 110, architecture: "Ada Lovelace", category: "消费级" },
-  { name: "NVIDIA RTX 4070 Ti", memory: 12, performance: 100, architecture: "Ada Lovelace", category: "消费级" },
-  { name: "NVIDIA RTX 4070", memory: 12, performance: 90, architecture: "Ada Lovelace", category: "消费级" },
-  { name: "NVIDIA RTX 4060 Ti (16GB)", memory: 16, performance: 70, architecture: "Ada Lovelace", category: "消费级" },
-  { name: "NVIDIA RTX 4060 Ti (8GB)", memory: 8, performance: 70, architecture: "Ada Lovelace", category: "消费级" },
-  { name: "NVIDIA RTX 4060", memory: 8, performance: 60, architecture: "Ada Lovelace", category: "消费级" },
+  { name: "NVIDIA RTX 4090", memory: 24, performance: 165, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2022 },
+  { name: "NVIDIA RTX 4080 SUPER", memory: 16, performance: 130, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2024 },
+  { name: "NVIDIA RTX 4080", memory: 16, performance: 125, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2022 },
+  { name: "NVIDIA RTX 4070 Ti Super", memory: 16, performance: 110, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2024 },
+  { name: "NVIDIA RTX 4070 Ti", memory: 12, performance: 100, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2023 },
+  { name: "NVIDIA RTX 4070", memory: 12, performance: 90, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2023 },
+  { name: "NVIDIA RTX 4060 Ti (16GB)", memory: 16, performance: 70, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2023 },
+  { name: "NVIDIA RTX 4060 Ti (8GB)", memory: 8, performance: 70, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2023 },
+  { name: "NVIDIA RTX 4060", memory: 8, performance: 60, architecture: "Ada Lovelace", category: "消费级", releaseYear: 2023 },
 
   // NVIDIA RTX 3000系列
-  { name: "NVIDIA RTX 3090 Ti", memory: 24, performance: 80, architecture: "Ampere", category: "消费级" },
-  { name: "NVIDIA RTX 3090", memory: 24, performance: 71, architecture: "Ampere", category: "消费级" },
-  { name: "NVIDIA RTX 3080 Ti", memory: 12, performance: 65, architecture: "Ampere", category: "消费级" },
-  { name: "NVIDIA RTX 3080", memory: 10, performance: 60, architecture: "Ampere", category: "消费级" },
-  { name: "NVIDIA RTX 3070 Ti", memory: 8, performance: 50, architecture: "Ampere", category: "消费级" },
+  { name: "NVIDIA RTX 3090 Ti", memory: 24, performance: 80, architecture: "Ampere", category: "消费级", releaseYear: 2022 },
+  { name: "NVIDIA RTX 3090", memory: 24, performance: 71, architecture: "Ampere", category: "消费级", releaseYear: 2020 },
+  { name: "NVIDIA RTX 3080 Ti", memory: 12, performance: 65, architecture: "Ampere", category: "消费级", releaseYear: 2021 },
+  { name: "NVIDIA RTX 3080", memory: 10, performance: 60, architecture: "Ampere", category: "消费级", releaseYear: 2020 },
+  { name: "NVIDIA RTX 3070 Ti", memory: 8, performance: 50, architecture: "Ampere", category: "消费级", releaseYear: 2021 },
 
   // NVIDIA Tesla/数据中心系列
-  { name: "NVIDIA A100 (80GB)", memory: 80, performance: 312, architecture: "Ampere", category: "数据中心" },
-  { name: "NVIDIA A100 (40GB)", memory: 40, performance: 312, architecture: "Ampere", category: "数据中心" },
-  { name: "NVIDIA A40", memory: 48, performance: 150, architecture: "Ampere" },
-  { name: "NVIDIA A30", memory: 24, performance: 130, architecture: "Ampere", category: "数据中心" },
-  { name: "NVIDIA A10", memory: 24, performance: 125, architecture: "Ampere", category: "数据中心" },
-  { name: "NVIDIA V100S", memory: 32, performance: 130, architecture: "Volta", category: "数据中心" },
-  { name: "NVIDIA V100 (32GB)", memory: 32, performance: 125, architecture: "Volta", category: "数据中心" },
-  { name: "NVIDIA V100 (16GB)", memory: 16, performance: 125, architecture: "Volta", category: "数据中心" },
-  { name: "NVIDIA T4", memory: 16, performance: 65, architecture: "Turing", category: "推理专用" },
-  { name: "NVIDIA P100 (16GB)", memory: 16, performance: 21, architecture: "Pascal", category: "数据中心" },
-  { name: "NVIDIA P40", memory: 24, performance: 12, architecture: "Pascal", category: "数据中心" },
-  { name: "NVIDIA M60", memory: 16, performance: 9, architecture: "Maxwell", category: "数据中心" },
-  { name: "NVIDIA M40 (24GB)", memory: 24, performance: 7, architecture: "Maxwell", category: "数据中心" },
-  { name: "NVIDIA K80", memory: 24, performance: 5, architecture: "Kepler", category: "数据中心" },
+  { name: "NVIDIA A100 (80GB)", memory: 80, performance: 312, architecture: "Ampere", category: "数据中心", releaseYear: 2020 },
+  { name: "NVIDIA A100 (40GB)", memory: 40, performance: 312, architecture: "Ampere", category: "数据中心", releaseYear: 2020 },
+  { name: "NVIDIA A40", memory: 48, performance: 150, architecture: "Ampere", releaseYear: 2020 },
+  { name: "NVIDIA A30", memory: 24, performance: 130, architecture: "Ampere", category: "数据中心", releaseYear: 2021 },
+  { name: "NVIDIA A10", memory: 24, performance: 125, architecture: "Ampere", category: "数据中心", releaseYear: 2021 },
+  { name: "NVIDIA V100S", memory: 32, performance: 130, architecture: "Volta", category: "数据中心", releaseYear: 2018 },
+  { name: "NVIDIA V100 (32GB)", memory: 32, performance: 125, architecture: "Volta", category: "数据中心", releaseYear: 2017 },
+  { name: "NVIDIA V100 (16GB)", memory: 16, performance: 125, architecture: "Volta", category: "数据中心", releaseYear: 2017 },
+  { name: "NVIDIA T4", memory: 16, performance: 65, architecture: "Turing", category: "推理专用", releaseYear: 2018 },
+  { name: "NVIDIA P100 (16GB)", memory: 16, performance: 21, architecture: "Pascal", category: "数据中心", releaseYear: 2016 },
+  { name: "NVIDIA P40", memory: 24, performance: 12, architecture: "Pascal", category: "数据中心", releaseYear: 2016 },
+  { name: "NVIDIA M60", memory: 16, performance: 9, architecture: "Maxwell", category: "数据中心", releaseYear: 2015 },
+  { name: "NVIDIA M40 (24GB)", memory: 24, performance: 7, architecture: "Maxwell", category: "数据中心", releaseYear: 2015 },
+  { name: "NVIDIA K80", memory: 24, performance: 5, architecture: "Kepler", category: "数据中心", releaseYear: 2014 },
 
   // NVIDIA 经典显卡
-  { name: "NVIDIA TITAN V", memory: 12, performance: 110, architecture: "Volta", category: "消费级" },
-  { name: "NVIDIA GTX 1080 Ti", memory: 11, performance: 35, architecture: "Pascal", category: "消费级" },
-  { name: "NVIDIA TITAN RTX", memory: 24, performance: 130, architecture: "Turing", category: "消费级" },
+  { name: "NVIDIA TITAN V", memory: 12, performance: 110, architecture: "Volta", category: "消费级", releaseYear: 2017 },
+  { name: "NVIDIA GTX 1080 Ti", memory: 11, performance: 35, architecture: "Pascal", category: "消费级", releaseYear: 2017 },
+  { name: "NVIDIA TITAN RTX", memory: 24, performance: 130, architecture: "Turing", category: "消费级", releaseYear: 2018 },
 
   // AMD 数据中心/专业卡
-  { name: "AMD Instinct MI300X", memory: 192, performance: 1300, architecture: "CDNA 3", category: "数据中心" },
-  { name: "AMD Instinct MI300A", memory: 128, performance: 1000, architecture: "CDNA 3", category: "数据中心" },
-  { name: "AMD Instinct MI250X", memory: 128, performance: 380, architecture: "CDNA 2", category: "数据中心" },
-  { name: "AMD Instinct MI250", memory: 128, performance: 360, architecture: "CDNA 2", category: "数据中心" },
-  { name: "AMD Instinct MI210", memory: 64, performance: 180, architecture: "CDNA 2", category: "数据中心" },
-  { name: "AMD Instinct MI100", memory: 32, performance: 150, architecture: "CDNA 1", category: "数据中心" },
-  { name: "AMD Instinct MI60", memory: 32, performance: 120, architecture: "Vega", category: "数据中心" },
-  { name: "AMD Instinct MI50", memory: 32, performance: 100, architecture: "Vega", category: "数据中心" },
-  { name: "AMD Instinct MI25", memory: 16, performance: 50, architecture: "Vega", category: "数据中心" },
+  { name: "AMD Instinct MI300X", memory: 192, performance: 1300, architecture: "CDNA 3", category: "数据中心", releaseYear: 2023 },
+  { name: "AMD Instinct MI300A", memory: 128, performance: 1000, architecture: "CDNA 3", category: "数据中心", releaseYear: 2023 },
+  { name: "AMD Instinct MI250X", memory: 128, performance: 380, architecture: "CDNA 2", category: "数据中心", releaseYear: 2021 },
+  { name: "AMD Instinct MI250", memory: 128, performance: 360, architecture: "CDNA 2", category: "数据中心", releaseYear: 2021 },
+  { name: "AMD Instinct MI210", memory: 64, performance: 180, architecture: "CDNA 2", category: "数据中心", releaseYear: 2021 },
+  { name: "AMD Instinct MI100", memory: 32, performance: 150, architecture: "CDNA 1", category: "数据中心", releaseYear: 2020 },
+  { name: "AMD Instinct MI60", memory: 32, performance: 120, architecture: "Vega", category: "数据中心", releaseYear: 2018 },
+  { name: "AMD Instinct MI50", memory: 32, performance: 100, architecture: "Vega", category: "数据中心", releaseYear: 2018 },
+  { name: "AMD Instinct MI25", memory: 16, performance: 50, architecture: "Vega", category: "数据中心", releaseYear: 2017 },
 
   // AMD 专业卡
-  { name: "AMD Radeon PRO VII", memory: 16, performance: 60, architecture: "Vega" },
-  { name: "AMD Radeon PRO W7900", memory: 48, performance: 120, architecture: "RDNA 3" },
-  { name: "AMD Radeon PRO W7800", memory: 32, performance: 90, architecture: "RDNA 3" },
-  { name: "AMD Radeon PRO W6900X", memory: 32, performance: 80, architecture: "RDNA 2" },
-  { name: "AMD Radeon PRO W6800", memory: 32, performance: 70, architecture: "RDNA 2" },
-  { name: "AMD Radeon PRO W6600", memory: 8, performance: 50, architecture: "RDNA 2" },
-  { name: "AMD Radeon PRO W5700", memory: 8, performance: 45, architecture: "RDNA 1" },
-  { name: "AMD Radeon PRO W5500", memory: 8, performance: 40, architecture: "RDNA 1" },
+  { name: "AMD Radeon PRO VII", memory: 16, performance: 60, architecture: "Vega", releaseYear: 2019 },
+  { name: "AMD Radeon PRO W7900", memory: 48, performance: 120, architecture: "RDNA 3", releaseYear: 2023 },
+  { name: "AMD Radeon PRO W7800", memory: 32, performance: 90, architecture: "RDNA 3", releaseYear: 2023 },
+  { name: "AMD Radeon PRO W6900X", memory: 32, performance: 80, architecture: "RDNA 2", releaseYear: 2021 },
+  { name: "AMD Radeon PRO W6800", memory: 32, performance: 70, architecture: "RDNA 2", releaseYear: 2021 },
+  { name: "AMD Radeon PRO W6600", memory: 8, performance: 50, architecture: "RDNA 2", releaseYear: 2021 },
+  { name: "AMD Radeon PRO W5700", memory: 8, performance: 45, architecture: "RDNA 1", releaseYear: 2019 },
+  { name: "AMD Radeon PRO W5500", memory: 8, performance: 40, architecture: "RDNA 1", releaseYear: 2019 },
 
   // AMD RDNA 4架构消费级 (RX 9000系列)
-  { name: "AMD Radeon RX 9070 XT", memory: 16, performance: 95, architecture: "RDNA 4", category: "消费级" },
-  { name: "AMD Radeon RX 9070", memory: 16, performance: 85, architecture: "RDNA 4", category: "消费级" },
-  { name: "AMD Radeon RX 9060 XT (16GB)", memory: 16, performance: 65, architecture: "RDNA 4", category: "消费级" },
-  { name: "AMD Radeon RX 9060 XT (8GB)", memory: 8, performance: 65, architecture: "RDNA 4", category: "消费级" },
+  { name: "AMD Radeon RX 9070 XT", memory: 16, performance: 95, architecture: "RDNA 4", category: "消费级", releaseYear: 2025 },
+  { name: "AMD Radeon RX 9070", memory: 16, performance: 85, architecture: "RDNA 4", category: "消费级", releaseYear: 2025 },
+  { name: "AMD Radeon RX 9060 XT (16GB)", memory: 16, performance: 65, architecture: "RDNA 4", category: "消费级", releaseYear: 2025 },
+  { name: "AMD Radeon RX 9060 XT (8GB)", memory: 8, performance: 65, architecture: "RDNA 4", category: "消费级", releaseYear: 2025 },
 
   // AMD RDNA 3架构消费级
-  { name: "AMD Radeon RX 7900 XTX", memory: 24, performance: 100, architecture: "RDNA 3", category: "消费级" },
-  { name: "AMD Radeon RX 7900 XT", memory: 20, performance: 85, architecture: "RDNA 3", category: "消费级" },
-  { name: "AMD Radeon RX 7800 XT", memory: 16, performance: 70, architecture: "RDNA 3", category: "消费级" },
-  { name: "AMD Radeon RX 7700 XT", memory: 12, performance: 60, architecture: "RDNA 3", category: "消费级" },
-  { name: "AMD Radeon RX 7600 XT", memory: 16, performance: 50, architecture: "RDNA 3", category: "消费级" },
-  { name: "AMD Radeon RX 7600", memory: 8, performance: 45, architecture: "RDNA 3", category: "消费级" },
+  { name: "AMD Radeon RX 7900 XTX", memory: 24, performance: 100, architecture: "RDNA 3", category: "消费级", releaseYear: 2022 },
+  { name: "AMD Radeon RX 7900 XT", memory: 20, performance: 85, architecture: "RDNA 3", category: "消费级", releaseYear: 2022 },
+  { name: "AMD Radeon RX 7800 XT", memory: 16, performance: 70, architecture: "RDNA 3", category: "消费级", releaseYear: 2023 },
+  { name: "AMD Radeon RX 7700 XT", memory: 12, performance: 60, architecture: "RDNA 3", category: "消费级", releaseYear: 2023 },
+  { name: "AMD Radeon RX 7600 XT", memory: 16, performance: 50, architecture: "RDNA 3", category: "消费级", releaseYear: 2024 },
+  { name: "AMD Radeon RX 7600", memory: 8, performance: 45, architecture: "RDNA 3", category: "消费级", releaseYear: 2023 },
 
   // AMD RDNA 2架构消费级
-  { name: "AMD Radeon RX 6950 XT", memory: 16, performance: 50, architecture: "RDNA 2", category: "消费级" },
-  { name: "AMD Radeon RX 6900 XT", memory: 16, performance: 45, architecture: "RDNA 2", category: "消费级" },
-  { name: "AMD Radeon RX 6800 XT", memory: 16, performance: 40, architecture: "RDNA 2", category: "消费级" },
-  { name: "AMD Radeon RX 6800", memory: 16, performance: 38, architecture: "RDNA 2", category: "消费级" },
-  { name: "AMD Radeon RX 6750 XT", memory: 12, performance: 35, architecture: "RDNA 2", category: "消费级" },
-  { name: "AMD Radeon RX 6700 XT", memory: 12, performance: 32, architecture: "RDNA 2", category: "消费级" },
-  { name: "AMD Radeon RX 6650 XT", memory: 8, performance: 30, architecture: "RDNA 2", category: "消费级" },
-  { name: "AMD Radeon RX 6600 XT", memory: 8, performance: 28, architecture: "RDNA 2", category: "消费级" },
+  { name: "AMD Radeon RX 6950 XT", memory: 16, performance: 50, architecture: "RDNA 2", category: "消费级", releaseYear: 2022 },
+  { name: "AMD Radeon RX 6900 XT", memory: 16, performance: 45, architecture: "RDNA 2", category: "消费级", releaseYear: 2020 },
+  { name: "AMD Radeon RX 6800 XT", memory: 16, performance: 40, architecture: "RDNA 2", category: "消费级", releaseYear: 2020 },
+  { name: "AMD Radeon RX 6800", memory: 16, performance: 38, architecture: "RDNA 2", category: "消费级", releaseYear: 2020 },
+  { name: "AMD Radeon RX 6750 XT", memory: 12, performance: 35, architecture: "RDNA 2", category: "消费级", releaseYear: 2022 },
+  { name: "AMD Radeon RX 6700 XT", memory: 12, performance: 32, architecture: "RDNA 2", category: "消费级", releaseYear: 2021 },
+  { name: "AMD Radeon RX 6650 XT", memory: 8, performance: 30, architecture: "RDNA 2", category: "消费级", releaseYear: 2022 },
+  { name: "AMD Radeon RX 6600 XT", memory: 8, performance: 28, architecture: "RDNA 2", category: "消费级", releaseYear: 2021 },
 
   // AMD 经典显卡
-  { name: "AMD Radeon VII", memory: 16, performance: 25, architecture: "Vega", category: "消费级" },
-  { name: "AMD Radeon RX 5700 XT", memory: 8, performance: 20, architecture: "RDNA 1", category: "消费级" },
-  { name: "AMD Radeon RX 5700", memory: 8, performance: 18, architecture: "RDNA 1", category: "消费级" },
+  { name: "AMD Radeon VII", memory: 16, performance: 25, architecture: "Vega", category: "消费级", releaseYear: 2019 },
+  { name: "AMD Radeon RX 5700 XT", memory: 8, performance: 20, architecture: "RDNA 1", category: "消费级", releaseYear: 2019 },
+  { name: "AMD Radeon RX 5700", memory: 8, performance: 18, architecture: "RDNA 1", category: "消费级", releaseYear: 2019 },
 
   // Apple Silicon (统一内存架构)
-  { name: "Apple M4 Max (128GB)", memory: 128, performance: 150, architecture: "M4", category: "Apple Silicon" },
-  { name: "Apple M4 Max (64GB)", memory: 64, performance: 140, architecture: "M4", category: "Apple Silicon" },
-  { name: "Apple M4 Max (36GB)", memory: 36, performance: 130, architecture: "M4", category: "Apple Silicon" },
-  { name: "Apple M4 Pro (64GB)", memory: 64, performance: 100, architecture: "M4", category: "Apple Silicon" },
-  { name: "Apple M4 Pro (48GB)", memory: 48, performance: 90, architecture: "M4", category: "Apple Silicon" },
-  { name: "Apple M4 Pro (24GB)", memory: 24, performance: 80, architecture: "M4", category: "Apple Silicon" },
-  { name: "Apple M4 (32GB)", memory: 32, performance: 60, architecture: "M4", category: "Apple Silicon" },
-  { name: "Apple M4 (24GB)", memory: 24, performance: 55, architecture: "M4", category: "Apple Silicon" },
-  { name: "Apple M4 (16GB)", memory: 16, performance: 50, architecture: "M4", category: "Apple Silicon" },
+  { name: "Apple M4 Max (128GB)", memory: 128, performance: 150, architecture: "M4", category: "Apple Silicon", releaseYear: 2024 },
+  { name: "Apple M4 Max (64GB)", memory: 64, performance: 140, architecture: "M4", category: "Apple Silicon", releaseYear: 2024 },
+  { name: "Apple M4 Max (36GB)", memory: 36, performance: 130, architecture: "M4", category: "Apple Silicon", releaseYear: 2024 },
+  { name: "Apple M4 Pro (64GB)", memory: 64, performance: 100, architecture: "M4", category: "Apple Silicon", releaseYear: 2024 },
+  { name: "Apple M4 Pro (48GB)", memory: 48, performance: 90, architecture: "M4", category: "Apple Silicon", releaseYear: 2024 },
+  { name: "Apple M4 Pro (24GB)", memory: 24, performance: 80, architecture: "M4", category: "Apple Silicon", releaseYear: 2024 },
+  { name: "Apple M4 (32GB)", memory: 32, performance: 60, architecture: "M4", category: "Apple Silicon", releaseYear: 2024 },
+  { name: "Apple M4 (24GB)", memory: 24, performance: 55, architecture: "M4", category: "Apple Silicon", releaseYear: 2024 },
+  { name: "Apple M4 (16GB)", memory: 16, performance: 50, architecture: "M4", category: "Apple Silicon", releaseYear: 2024 },
 
-  { name: "Apple M3 Ultra (192GB)", memory: 192, performance: 140, architecture: "M3", category: "Apple Silicon" },
-  { name: "Apple M3 Ultra (128GB)", memory: 128, performance: 130, architecture: "M3", category: "Apple Silicon" },
-  { name: "Apple M3 Max (128GB)", memory: 128, performance: 120, architecture: "M3", category: "Apple Silicon" },
-  { name: "Apple M3 Max (96GB)", memory: 96, performance: 110, architecture: "M3", category: "Apple Silicon" },
-  { name: "Apple M3 Pro (36GB)", memory: 36, performance: 80, architecture: "M3", category: "Apple Silicon" },
-  { name: "Apple M3 Pro (18GB)", memory: 18, performance: 70, architecture: "M3", category: "Apple Silicon" },
-  { name: "Apple M3 (24GB)", memory: 24, performance: 50, architecture: "M3", category: "Apple Silicon" },
-  { name: "Apple M3 (16GB)", memory: 16, performance: 45, architecture: "M3", category: "Apple Silicon" },
-  { name: "Apple M3 (8GB)", memory: 8, performance: 40, architecture: "M3", category: "Apple Silicon" },
+  { name: "Apple M3 Ultra (192GB)", memory: 192, performance: 140, architecture: "M3", category: "Apple Silicon", releaseYear: 2024 },
+  { name: "Apple M3 Ultra (128GB)", memory: 128, performance: 130, architecture: "M3", category: "Apple Silicon", releaseYear: 2024 },
+  { name: "Apple M3 Max (128GB)", memory: 128, performance: 120, architecture: "M3", category: "Apple Silicon", releaseYear: 2023 },
+  { name: "Apple M3 Max (96GB)", memory: 96, performance: 110, architecture: "M3", category: "Apple Silicon", releaseYear: 2023 },
+  { name: "Apple M3 Pro (36GB)", memory: 36, performance: 80, architecture: "M3", category: "Apple Silicon", releaseYear: 2023 },
+  { name: "Apple M3 Pro (18GB)", memory: 18, performance: 70, architecture: "M3", category: "Apple Silicon", releaseYear: 2023 },
+  { name: "Apple M3 (24GB)", memory: 24, performance: 50, architecture: "M3", category: "Apple Silicon", releaseYear: 2023 },
+  { name: "Apple M3 (16GB)", memory: 16, performance: 45, architecture: "M3", category: "Apple Silicon", releaseYear: 2023 },
+  { name: "Apple M3 (8GB)", memory: 8, performance: 40, architecture: "M3", category: "Apple Silicon", releaseYear: 2023 },
 
-  { name: "Apple M2 Ultra (192GB)", memory: 192, performance: 120, architecture: "M2", category: "Apple Silicon" },
-  { name: "Apple M2 Ultra (128GB)", memory: 128, performance: 110, architecture: "M2", category: "Apple Silicon" },
-  { name: "Apple M2 Max (96GB)", memory: 96, performance: 100, architecture: "M2", category: "Apple Silicon" },
-  { name: "Apple M2 Max (64GB)", memory: 64, performance: 90, architecture: "M2", category: "Apple Silicon" },
-  { name: "Apple M2 Pro (32GB)", memory: 32, performance: 70, architecture: "M2", category: "Apple Silicon" },
-  { name: "Apple M2 Pro (16GB)", memory: 16, performance: 60, architecture: "M2", category: "Apple Silicon" },
-  { name: "Apple M2 (24GB)", memory: 24, performance: 45, architecture: "M2", category: "Apple Silicon" },
-  { name: "Apple M2 (16GB)", memory: 16, performance: 40, architecture: "M2", category: "Apple Silicon" },
-  { name: "Apple M2 (8GB)", memory: 8, performance: 35, architecture: "M2", category: "Apple Silicon" },
+  { name: "Apple M2 Ultra (192GB)", memory: 192, performance: 120, architecture: "M2", category: "Apple Silicon", releaseYear: 2023 },
+  { name: "Apple M2 Ultra (128GB)", memory: 128, performance: 110, architecture: "M2", category: "Apple Silicon", releaseYear: 2023 },
+  { name: "Apple M2 Max (96GB)", memory: 96, performance: 100, architecture: "M2", category: "Apple Silicon", releaseYear: 2023 },
+  { name: "Apple M2 Max (64GB)", memory: 64, performance: 90, architecture: "M2", category: "Apple Silicon", releaseYear: 2023 },
+  { name: "Apple M2 Pro (32GB)", memory: 32, performance: 70, architecture: "M2", category: "Apple Silicon", releaseYear: 2023 },
+  { name: "Apple M2 Pro (16GB)", memory: 16, performance: 60, architecture: "M2", category: "Apple Silicon", releaseYear: 2023 },
+  { name: "Apple M2 (24GB)", memory: 24, performance: 45, architecture: "M2", category: "Apple Silicon", releaseYear: 2022 },
+  { name: "Apple M2 (16GB)", memory: 16, performance: 40, architecture: "M2", category: "Apple Silicon", releaseYear: 2022 },
+  { name: "Apple M2 (8GB)", memory: 8, performance: 35, architecture: "M2", category: "Apple Silicon", releaseYear: 2022 },
 
-  { name: "Apple M1 Ultra (128GB)", memory: 128, performance: 90, architecture: "M1", category: "Apple Silicon" },
-  { name: "Apple M1 Max (64GB)", memory: 64, performance: 80, architecture: "M1", category: "Apple Silicon" },
-  { name: "Apple M1 Max (32GB)", memory: 32, performance: 70, architecture: "M1", category: "Apple Silicon" },
-  { name: "Apple M1 Pro (32GB)", memory: 32, performance: 50, architecture: "M1", category: "Apple Silicon" },
-  { name: "Apple M1 Pro (16GB)", memory: 16, performance: 45, architecture: "M1", category: "Apple Silicon" },
-  { name: "Apple M1 (16GB)", memory: 16, performance: 35, architecture: "M1", category: "Apple Silicon" },
-  { name: "Apple M1 (8GB)", memory: 8, performance: 30, architecture: "M1", category: "Apple Silicon" },
+  { name: "Apple M1 Ultra (128GB)", memory: 128, performance: 90, architecture: "M1", category: "Apple Silicon", releaseYear: 2022 },
+  { name: "Apple M1 Max (64GB)", memory: 64, performance: 80, architecture: "M1", category: "Apple Silicon", releaseYear: 2021 },
+  { name: "Apple M1 Max (32GB)", memory: 32, performance: 70, architecture: "M1", category: "Apple Silicon", releaseYear: 2021 },
+  { name: "Apple M1 Pro (32GB)", memory: 32, performance: 50, architecture: "M1", category: "Apple Silicon", releaseYear: 2021 },
+  { name: "Apple M1 Pro (16GB)", memory: 16, performance: 45, architecture: "M1", category: "Apple Silicon", releaseYear: 2021 },
+  { name: "Apple M1 (16GB)", memory: 16, performance: 35, architecture: "M1", category: "Apple Silicon", releaseYear: 2020 },
+  { name: "Apple M1 (8GB)", memory: 8, performance: 30, architecture: "M1", category: "Apple Silicon", releaseYear: 2020 },
 
   // Intel Arc系列
-  { name: "Intel Arc B580", memory: 12, performance: 55, architecture: "Battlemage", category: "消费级" },
-  { name: "Intel Arc B570", memory: 10, performance: 50, architecture: "Battlemage", category: "消费级" },
-  { name: "Intel Arc A770 (16GB)", memory: 16, performance: 45, architecture: "Alchemist", category: "消费级" },
-  { name: "Intel Arc A770 (8GB)", memory: 8, performance: 45, architecture: "Alchemist", category: "消费级" },
-  { name: "Intel Arc A750", memory: 8, performance: 40, architecture: "Alchemist", category: "消费级" },
+  { name: "Intel Arc B580", memory: 12, performance: 55, architecture: "Battlemage", category: "消费级", releaseYear: 2024 },
+  { name: "Intel Arc B570", memory: 10, performance: 50, architecture: "Battlemage", category: "消费级", releaseYear: 2024 },
+  { name: "Intel Arc A770 (16GB)", memory: 16, performance: 45, architecture: "Alchemist", category: "消费级", releaseYear: 2022 },
+  { name: "Intel Arc A770 (8GB)", memory: 8, performance: 45, architecture: "Alchemist", category: "消费级", releaseYear: 2022 },
+  { name: "Intel Arc A750", memory: 8, performance: 40, architecture: "Alchemist", category: "消费级", releaseYear: 2022 },
 
   // Huawei Ascend系列
-  { name: "Huawei Ascend 910B", memory: 64, performance: 320, architecture: "昇腾", category: "数据中心" },
-  { name: "Huawei Ascend 910A", memory: 32, performance: 280, architecture: "昇腾", category: "数据中心" },
-  { name: "Huawei Ascend 910", memory: 32, performance: 256, architecture: "昇腾", category: "数据中心" },
-  { name: "Huawei Ascend 710", memory: 32, performance: 128, architecture: "昇腾", category: "推理专用" },
-  { name: "Huawei Ascend 310P", memory: 16, performance: 64, architecture: "昇腾", category: "推理专用" },
-  { name: "Huawei Ascend 310", memory: 8, performance: 32, architecture: "昇腾", category: "推理专用" }
+  { name: "Huawei Ascend 910B", memory: 64, performance: 320, architecture: "昇腾", category: "数据中心", releaseYear: 2023 },
+  { name: "Huawei Ascend 910A", memory: 32, performance: 280, architecture: "昇腾", category: "数据中心", releaseYear: 2022 },
+  { name: "Huawei Ascend 910", memory: 32, performance: 256, architecture: "昇腾", category: "数据中心", releaseYear: 2019 },
+  { name: "Huawei Ascend 710", memory: 32, performance: 128, architecture: "昇腾", category: "推理专用", releaseYear: 2019 },
+  { name: "Huawei Ascend 310P", memory: 16, performance: 64, architecture: "昇腾", category: "推理专用", releaseYear: 2021 },
+  { name: "Huawei Ascend 310", memory: 8, performance: 32, architecture: "昇腾", category: "推理专用", releaseYear: 2018 }
 ].sort((a, b) => b.memory - a.memory) // 按显存大小排序
 
 // 统一的模型数据结构
