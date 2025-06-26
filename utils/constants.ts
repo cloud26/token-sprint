@@ -17,7 +17,7 @@ export const gpuModels = [
   { name: "NVIDIA HGX B100 4 GPU", memory: 768, performance: 8000, architecture: "Blackwell", category: "集群" }, // 4x192GB
   { name: "NVIDIA B200", memory: 192, performance: 2500, architecture: "Blackwell", category: "数据中心" },
   { name: "NVIDIA B100", memory: 192, performance: 2000, architecture: "Blackwell", category: "数据中心" },
-  
+
   // NVIDIA Hopper架构
   { name: "NVIDIA HGX H200 8 GPU", memory: 1128, performance: 8000, architecture: "Hopper", category: "集群" }, // 8x141GB
   { name: "NVIDIA HGX H200 4 GPU", memory: 564, performance: 4000, architecture: "Hopper", category: "集群" }, // 4x141GB
@@ -28,13 +28,13 @@ export const gpuModels = [
   { name: "NVIDIA H20", memory: 96, performance: 296, architecture: "Hopper", category: "数据中心" }, // 中国特供版
 
   // NVIDIA Ada Lovelace架构
-  { name: "NVIDIA L40", memory: 48, performance: 362, architecture: "Ada Lovelace"},
-  { name: "NVIDIA L20", memory: 48, performance: 240, architecture: "Ada Lovelace"},
-  { name: "NVIDIA L2", memory: 24, performance: 120, architecture: "Ada Lovelace"},
-  { name: "NVIDIA RTX 6000 Ada", memory: 48, performance: 362, architecture: "Ada Lovelace"},
-  { name: "NVIDIA RTX 5000 Ada", memory: 32, performance: 240, architecture: "Ada Lovelace"},
-  { name: "NVIDIA RTX 4000 Ada", memory: 20, performance: 120, architecture: "Ada Lovelace"},
-  { name: "NVIDIA RTX 3000 Ada", memory: 12, performance: 80, architecture: "Ada Lovelace"},
+  { name: "NVIDIA L40", memory: 48, performance: 362, architecture: "Ada Lovelace" },
+  { name: "NVIDIA L20", memory: 48, performance: 240, architecture: "Ada Lovelace" },
+  { name: "NVIDIA L2", memory: 24, performance: 120, architecture: "Ada Lovelace" },
+  { name: "NVIDIA RTX 6000 Ada", memory: 48, performance: 362, architecture: "Ada Lovelace" },
+  { name: "NVIDIA RTX 5000 Ada", memory: 32, performance: 240, architecture: "Ada Lovelace" },
+  { name: "NVIDIA RTX 4000 Ada", memory: 20, performance: 120, architecture: "Ada Lovelace" },
+  { name: "NVIDIA RTX 3000 Ada", memory: 12, performance: 80, architecture: "Ada Lovelace" },
 
   // NVIDIA RTX 5000系列 (Blackwell消费级)
   { name: "NVIDIA RTX 5090", memory: 32, performance: 280, architecture: "Blackwell", category: "消费级" },
@@ -63,7 +63,7 @@ export const gpuModels = [
   // NVIDIA Tesla/数据中心系列
   { name: "NVIDIA A100 (80GB)", memory: 80, performance: 312, architecture: "Ampere", category: "数据中心" },
   { name: "NVIDIA A100 (40GB)", memory: 40, performance: 312, architecture: "Ampere", category: "数据中心" },
-  { name: "NVIDIA A40", memory: 48, performance: 150, architecture: "Ampere"},
+  { name: "NVIDIA A40", memory: 48, performance: 150, architecture: "Ampere" },
   { name: "NVIDIA A30", memory: 24, performance: 130, architecture: "Ampere", category: "数据中心" },
   { name: "NVIDIA A10", memory: 24, performance: 125, architecture: "Ampere", category: "数据中心" },
   { name: "NVIDIA V100S", memory: 32, performance: 130, architecture: "Volta", category: "数据中心" },
@@ -93,14 +93,20 @@ export const gpuModels = [
   { name: "AMD Instinct MI25", memory: 16, performance: 50, architecture: "Vega", category: "数据中心" },
 
   // AMD 专业卡
-  { name: "AMD Radeon PRO VII", memory: 16, performance: 60, architecture: "Vega"},
-  { name: "AMD Radeon PRO W7900", memory: 48, performance: 120, architecture: "RDNA 3"},
-  { name: "AMD Radeon PRO W7800", memory: 32, performance: 90, architecture: "RDNA 3"},
-  { name: "AMD Radeon PRO W6900X", memory: 32, performance: 80, architecture: "RDNA 2"},
-  { name: "AMD Radeon PRO W6800", memory: 32, performance: 70, architecture: "RDNA 2"},
-  { name: "AMD Radeon PRO W6600", memory: 8, performance: 50, architecture: "RDNA 2"},
-  { name: "AMD Radeon PRO W5700", memory: 8, performance: 45, architecture: "RDNA 1"},
-  { name: "AMD Radeon PRO W5500", memory: 8, performance: 40, architecture: "RDNA 1"},
+  { name: "AMD Radeon PRO VII", memory: 16, performance: 60, architecture: "Vega" },
+  { name: "AMD Radeon PRO W7900", memory: 48, performance: 120, architecture: "RDNA 3" },
+  { name: "AMD Radeon PRO W7800", memory: 32, performance: 90, architecture: "RDNA 3" },
+  { name: "AMD Radeon PRO W6900X", memory: 32, performance: 80, architecture: "RDNA 2" },
+  { name: "AMD Radeon PRO W6800", memory: 32, performance: 70, architecture: "RDNA 2" },
+  { name: "AMD Radeon PRO W6600", memory: 8, performance: 50, architecture: "RDNA 2" },
+  { name: "AMD Radeon PRO W5700", memory: 8, performance: 45, architecture: "RDNA 1" },
+  { name: "AMD Radeon PRO W5500", memory: 8, performance: 40, architecture: "RDNA 1" },
+
+  // AMD RDNA 4架构消费级 (RX 9000系列)
+  { name: "AMD Radeon RX 9070 XT", memory: 16, performance: 95, architecture: "RDNA 4", category: "消费级" },
+  { name: "AMD Radeon RX 9070", memory: 16, performance: 85, architecture: "RDNA 4", category: "消费级" },
+  { name: "AMD Radeon RX 9060 XT (16GB)", memory: 16, performance: 65, architecture: "RDNA 4", category: "消费级" },
+  { name: "AMD Radeon RX 9060 XT (8GB)", memory: 8, performance: 65, architecture: "RDNA 4", category: "消费级" },
 
   // AMD RDNA 3架构消费级
   { name: "AMD Radeon RX 7900 XTX", memory: 24, performance: 100, architecture: "RDNA 3", category: "消费级" },
@@ -163,6 +169,13 @@ export const gpuModels = [
   { name: "Apple M1 Pro (16GB)", memory: 16, performance: 45, architecture: "M1", category: "Apple Silicon" },
   { name: "Apple M1 (16GB)", memory: 16, performance: 35, architecture: "M1", category: "Apple Silicon" },
   { name: "Apple M1 (8GB)", memory: 8, performance: 30, architecture: "M1", category: "Apple Silicon" },
+
+  // Intel Arc系列
+  { name: "Intel Arc B580", memory: 12, performance: 55, architecture: "Battlemage", category: "消费级" },
+  { name: "Intel Arc B570", memory: 10, performance: 50, architecture: "Battlemage", category: "消费级" },
+  { name: "Intel Arc A770 (16GB)", memory: 16, performance: 45, architecture: "Alchemist", category: "消费级" },
+  { name: "Intel Arc A770 (8GB)", memory: 8, performance: 45, architecture: "Alchemist", category: "消费级" },
+  { name: "Intel Arc A750", memory: 8, performance: 40, architecture: "Alchemist", category: "消费级" },
 
   // Huawei Ascend系列
   { name: "Huawei Ascend 910B", memory: 64, performance: 320, architecture: "昇腾", category: "数据中心" },
@@ -959,9 +972,9 @@ export const modelExamples = MODELS.map(model => ({
 }))
 
 // 为了向后兼容，保留 MODEL_ARCHITECTURES 导出
-export const MODEL_ARCHITECTURES: Record<string, { 
-  d_model: number; 
-  n_layers: number; 
+export const MODEL_ARCHITECTURES: Record<string, {
+  d_model: number;
+  n_layers: number;
   activeParams?: number;
   isMoE?: boolean;
   source: string;
@@ -1012,7 +1025,7 @@ export const GPU_PERFORMANCE: Record<string, number> = Object.fromEntries(
 // 根据系列和类别对模型进行分组的辅助函数
 export const getModelsByGroup = () => {
   const groups: Record<string, ModelInfo[]> = {};
-  
+
   MODELS.forEach(model => {
     const groupKey = model.series;
     if (!groups[groupKey]) {
@@ -1024,9 +1037,9 @@ export const getModelsByGroup = () => {
   // 按系列名称排序，优先显示热门系列
   const seriesOrder = [
     "DeepSeek",
-    "Llama 4", 
+    "Llama 4",
     "Llama 3.2",
-    "Llama 3.1", 
+    "Llama 3.1",
     "Llama 3",
     "Qwen 3",
     "Qwen 2.5",
@@ -1043,7 +1056,7 @@ export const getModelsByGroup = () => {
   ];
 
   const sortedGroups: Record<string, ModelInfo[]> = {};
-  
+
   // 按预定义顺序添加系列
   seriesOrder.forEach(series => {
     if (groups[series]) {
@@ -1065,7 +1078,7 @@ export const getModelsByGroup = () => {
 // 根据类别获取模型
 export const getModelsByCategory = () => {
   const categories: Record<string, ModelInfo[]> = {};
-  
+
   MODELS.forEach(model => {
     const categoryKey = model.category;
     if (!categories[categoryKey]) {
