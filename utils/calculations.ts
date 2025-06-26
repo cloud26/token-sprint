@@ -263,33 +263,10 @@ function calcThroughputInfo(
   maxQPS: number;
   avgOutputTokens: number;
 } {
-  // 获取GPU性能
-  const basePerformance = GPU_FP16_TFLOPS[gpuModel] || 100
-  const adjustedPerformance = basePerformance * (PRECISION_MULTIPLIERS[precision] || 1.0)
-
-  // 模型计算量估算 (FLOPS per token) - 推理只需要2倍参数量
-  const flopsPerToken = 2 * activeParams * 1e9
-
-  // 理论峰值吞吐量 (tokens/s)
-  const theoreticalThroughput = (adjustedPerformance * 1e12) / flopsPerToken
-
-  // 基于实际基准测试数据的效率因子
-  let efficiencyFactor = getModelEfficiency(parameters, selectedModel)
-
-  // 并发数对效率的影响 (基于实际测试数据调整)
-  if (batchSize >= 32) {
-    efficiencyFactor *= 1.15 // 高并发时效率提升更明显
-  } else if (batchSize >= 8) {
-    efficiencyFactor *= 1.1
-  }
-
-  // 上下文长度对效率的影响
-  if (contextLength > 8192) {
-    efficiencyFactor *= 0.92 // 长上下文影响较小
-  }
-
-  // 单GPU实际吞吐量
-  const singleGpuThroughput = theoreticalThroughput * Math.min(efficiencyFactor, 1.0)
+  // 使用共享函数计算单GPU吞吐量
+  const singleGpuThroughput = calculateSingleGpuThroughput(
+    parameters, activeParams, batchSize, contextLength, gpuModel, precision, selectedModel
+  )
 
   // 多GPU并行效率 - 基于现代推理框架的实际表现
   const parallelEfficiency = calculateParallelEfficiency(requiredGPUs)
@@ -394,25 +371,16 @@ function calculateParallelEfficiency(gpus: number): number {
   return parallelEfficiency
 }
 
-// 计算满足期望体验的最少GPU数量
-function calculateMinRequiredGPUs(
+// 计算单GPU实际吞吐量的通用函数 - 消除重复代码
+function calculateSingleGpuThroughput(
   parameters: number,
   activeParams: number,
   batchSize: number,
   contextLength: number,
   gpuModel: string,
   precision: string,
-  selectedModel: string | undefined,
-  expectedTokensPerSecond: number,
-  gpuMemory: number
-): { minGPUs: number; actualPerformance: number; recommendation: string } {
-  if (expectedTokensPerSecond <= 0) {
-    return { minGPUs: 1, actualPerformance: 0, recommendation: "请设置期望体验值" }
-  }
-
-  // 需要的总吞吐量
-  const requiredTotalThroughput = expectedTokensPerSecond * batchSize
-
+  selectedModel?: string
+): number {
   // 获取GPU性能
   const basePerformance = GPU_FP16_TFLOPS[gpuModel] || 100
   const adjustedPerformance = basePerformance * (PRECISION_MULTIPLIERS[precision] || 1.0)
@@ -439,7 +407,32 @@ function calculateMinRequiredGPUs(
   }
 
   // 单GPU实际吞吐量
-  const singleGpuThroughput = theoreticalThroughput * Math.min(efficiencyFactor, 1.0)
+  return theoreticalThroughput * Math.min(efficiencyFactor, 1.0)
+}
+
+// 计算满足期望体验的最少GPU数量
+function calculateMinRequiredGPUs(
+  parameters: number,
+  activeParams: number,
+  batchSize: number,
+  contextLength: number,
+  gpuModel: string,
+  precision: string,
+  selectedModel: string | undefined,
+  expectedTokensPerSecond: number,
+  gpuMemory: number
+): { minGPUs: number; actualPerformance: number; recommendation: string } {
+  if (expectedTokensPerSecond <= 0) {
+    return { minGPUs: 1, actualPerformance: 0, recommendation: "请设置期望体验值" }
+  }
+
+  // 需要的总吞吐量
+  const requiredTotalThroughput = expectedTokensPerSecond * batchSize
+
+  // 使用共享函数计算单GPU吞吐量
+  const singleGpuThroughput = calculateSingleGpuThroughput(
+    parameters, activeParams, batchSize, contextLength, gpuModel, precision, selectedModel
+  )
 
   // 计算基于性能需求的GPU数量
   let performanceBasedGPUs = Math.ceil(requiredTotalThroughput / singleGpuThroughput)
