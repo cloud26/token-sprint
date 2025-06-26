@@ -606,6 +606,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                                 <div className="flex items-center space-x-2 text-xs text-gray-600">
                                                                     <span className="text-green-600">{gpu.fp16Tflops} TFLOPS (FP16)</span>
                                                                     <span className="text-purple-600">{gpu.architecture}</span>
+                                                                    <span className="text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded font-medium">{gpu.releaseYear}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
