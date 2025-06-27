@@ -1,0 +1,158 @@
+# Cursor Rules for Token Sprint Project
+
+## Project Overview
+This is a Next.js 15 TypeScript project with shadcn/ui components, next-intl for internationalization, and Tailwind CSS for styling. It's an AI tools collection featuring token generation speed visualizer and LLM GPU memory calculator.
+
+## Package Management
+**CRITICAL: Always use `pnpm` instead of `npm` for all package management operations.**
+
+- Use `pnpm install` instead of `npm install`
+- Use `pnpm add <package>` instead of `npm install <package>`
+- Use `pnpm remove <package>` instead of `npm uninstall <package>`
+- Use `pnpm dev` instead of `npm run dev`
+- Use `pnpm build` instead of `npm run build`
+- Use `pnpm lint` instead of `npm run lint`
+
+## Tech Stack
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **Internationalization**: next-intl
+- **Package Manager**: pnpm (mandatory)
+- **UI Components**: Radix UI primitives via shadcn/ui
+- **Icons**: Lucide React
+- **Forms**: React Hook Form + Zod validation
+- **Charts**: Recharts
+- **Themes**: next-themes for dark/light mode
+
+## Code Style & Conventions
+
+### TypeScript
+- Use strict TypeScript with proper type definitions
+- Prefer interfaces over types for object definitions
+- Use proper generic constraints and utility types
+- Always define return types for functions
+- Use `const assertions` where appropriate
+
+### React/Next.js
+- Use React 19 features and patterns
+- Prefer Server Components by default, use Client Components only when necessary
+- Use `"use client"` directive only when absolutely needed
+- Implement proper error boundaries and loading states
+- Use Next.js 15 App Router patterns consistently
+- Leverage Next.js built-in optimizations (Image, Link, etc.)
+
+### File Structure
+- Follow the established App Router structure
+- Keep components in `/components` directory
+- Use `/app` for pages and layouts
+- Store utilities in `/utils` and `/lib`
+- Keep configuration in `/config`
+- Maintain `/messages` for i18n translations
+
+### Component Development
+- Use shadcn/ui components as the foundation
+- Follow the established component patterns in `/components/ui`
+- Implement proper accessibility (ARIA attributes)
+- Use Tailwind CSS classes consistently
+- Follow the design system established in the project
+
+### Internationalization
+- **Development Priority**: Always start with English as the base language
+- Use next-intl for all text content, but initially focus on English only
+- When implementing new features:
+  1. First, complete the feature with English text content only
+  2. Add translations to other language files in `/messages` ONLY when explicitly requested for internationalization
+- Use proper i18n routing patterns
+- Implement language switching functionality
+- Follow the established i18n patterns in the codebase
+- **Workflow**: English first → Feature completion → Internationalization on request
+
+### State Management
+- Use React's built-in state management (useState, useReducer)
+- Implement custom hooks for complex state logic
+- Use React Hook Form for form state management
+- Leverage Next.js built-in caching strategies
+
+### Performance
+- Optimize bundle size with dynamic imports
+- Use Next.js Image component for images
+- Implement proper loading states and skeleton components
+- Follow the established performance patterns in next.config.mjs
+
+### Error Handling
+- Implement proper error boundaries
+- Use try-catch blocks for async operations
+- Provide meaningful error messages
+- Handle loading and error states in UI components
+
+## File Naming Conventions
+- Use kebab-case for file and directory names
+- Use PascalCase for React components
+- Use camelCase for functions and variables
+- Use UPPER_SNAKE_CASE for constants
+
+## Git Workflow
+- Write clear, descriptive commit messages
+- Use conventional commits format when possible
+- Keep commits focused and atomic
+- Update documentation when making significant changes
+
+## Linear Integration
+- **IMPORTANT**: Do NOT automatically close Linear issues
+- When referencing Linear issues in commits, avoid using keywords like "fixes", "closes", "resolves"
+- Use descriptive references like "Related to", "Updates", "Progress on" instead
+- Manual issue closure is preferred to maintain better issue lifecycle control
+
+## Development Commands
+```bash
+# Development
+pnpm dev
+
+# Building
+pnpm build
+pnpm start
+
+# Linting
+pnpm lint
+
+# Package management
+pnpm add <package>
+pnpm add -D <dev-package>
+pnpm remove <package>
+```
+
+## AI/LLM Specific Guidelines
+- When working with tokenization, use js-tiktoken library
+- For GPU memory calculations, follow the patterns in `/utils/calculations.ts`
+- Maintain accuracy in AI-related computations and formulas
+- Keep model configurations in `/config/models.ts`
+- Document complex AI calculations with clear comments
+
+## Testing & Quality
+- Write meaningful variable and function names
+- Add JSDoc comments for complex functions
+- Ensure TypeScript strict mode compliance
+- Test components in different screen sizes
+- Verify internationalization works across all languages (only after internationalization is requested)
+
+## Dependencies
+- Prefer using existing dependencies over adding new ones
+- When adding new packages, use `pnpm add` command
+- Keep dependencies up to date but test thoroughly
+- Document any new dependencies and their purpose
+
+## Styling Guidelines
+- Use Tailwind CSS utility classes
+- Follow the established design system
+- Implement responsive design patterns
+- Use CSS variables for theming (defined in globals.css)
+- Maintain consistency with shadcn/ui component styling
+
+## Development Workflow
+1. **Feature Development**: Always start with English as the base language
+2. **Complete Implementation**: Finish the feature functionality with English text
+3. **Internationalization**: Add translations to other languages ONLY when explicitly requested
+4. **Testing**: Test English version first, then other languages after internationalization
+
+Remember: This project emphasizes performance, accessibility, and internationalization. Always consider these aspects when making changes or additions. However, prioritize English-first development and only internationalize when specifically requested. 
