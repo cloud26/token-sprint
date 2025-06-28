@@ -53,9 +53,9 @@ export default function LLMGPUMemoryCalculatorPage({
                     </Suspense>
 
                     {/* GPU Selection Guide */}
-                    <div className="mt-8">
+                    {/* <div className="mt-8">
                         <GPUSelectionGuide />
-                    </div>
+                    </div> */}
                 </div>
                 <Footer />
             </main>
@@ -66,7 +66,7 @@ export default function LLMGPUMemoryCalculatorPage({
 function PageContent() {
     const t = useTranslations('tools.llmGpuCalculator')
     const tn = useTranslations('nav')
-    
+
     // 面包屑导航项
     const breadcrumbItems = [
         {

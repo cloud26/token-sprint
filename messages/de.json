@@ -585,6 +585,51 @@
     "performanceComparison": {
       "meetExpectation": "✅ Erfüllt Erwartung {expected} Token/s",
       "belowExpectation": "❌ Unter Erwartung {expected} Token/s"
+    },
+    "faq": {
+      "title": "📋 Berechnungsformel FAQ",
+      "items": [
+        {
+          "question": "Wie wird der GPU-Durchsatz berechnet?",
+          "answer": "Wir verwenden einen dualen Beschränkungsansatz: **Berechnungsgebundener Durchsatz** = (GPU TFLOPS × Präzisionsmultiplikator × 1000) ÷ (2 × Aktive Parameter in Milliarden), und **Speicherbandbreitengebundener Durchsatz** = Speicherbandbreite (GB/s) ÷ Gesamter Speicherzugriff pro Token (GB). Der tatsächliche Durchsatz ist das Minimum dieser beiden Werte und repräsentiert den tatsächlichen Engpass."
+        },
+        {
+          "question": "Warum berücksichtigen wir Speicherbandbreitenbeschränkungen?",
+          "answer": "Basierend auf [A100 40GB Benchmark-Daten](https://www.databasemart.com/blog/ollama-gpu-benchmark-a100-40gb) wurden alle getesteten Modelle durch Speicherbandbreite und nicht durch Rechenleistung begrenzt. Dies validiert unseren speicherbandbreitenbasierten Berechnungsansatz, der genauer ist als reine berechnungsbasierte Schätzungen."
+        },
+        {
+          "question": "Wie werden MoE-Modelle anders behandelt?",
+          "answer": "Für MoE (Mixture of Experts) Modelle wie DeepSeek-R1 (671B gesamt, 37B aktiv) berücksichtigen wir nur die **aktiven Parameter** für Bandbreitenberechnungen. Das bedeutet, der Speicherzugriff pro Token basiert auf 37B Parametern, nicht auf den vollen 671B, was MoE-Modelle für Inferenz viel effizienter macht."
+        },
+        {
+          "question": "Was repräsentiert der Systemeffizienzfaktor?",
+          "answer": "Der Systemeffizienzfaktor (40% Basis) berücksichtigt reale Overheads einschließlich: Framework-Overhead (Ollama, vLLM), Speicherzugriffsmuster, Batch-Verarbeitungseffizienz und Hardware-Auslastung. Dieser Faktor wurde mit tatsächlichen A100 40GB Benchmark-Daten kalibriert mit einer beobachteten durchschnittlichen Effizienz von 37,2%."
+        },
+        {
+          "question": "Wie beeinflusst Präzision die Leistung?",
+          "answer": "Verschiedene Präzisionen beeinflussen sowohl Speichernutzung als auch Rechenleistung: **FP16** (Basislinie), **FP8** (2x Beschleunigung), **INT4** (4x Beschleunigung, 1,2x Systemeffizienz-Boost). Basierend auf Benchmark-Daten funktioniert INT4-Quantisierung tatsächlich besser als theoretische Erwartungen aufgrund reduzierter Speicherbelastung."
+        },
+        {
+          "question": "Warum unterscheiden sich meine Ergebnisse von anderen Rechnern?",
+          "answer": "Unser Rechner verwendet Speicherbandbreite als primäre Beschränkung und reale Benchmark-Daten zur Kalibrierung, während viele andere nur berechnungsbasierte Schätzungen verwenden. Wir behandeln auch MoE-Modelle ordnungsgemäß und schließen realistische Systemeffizienzfaktoren ein, was zu genaueren realen Vorhersagen führt."
+        },
+        {
+          "question": "Was sind die budgetfreundlichen GPU-Optionen für LLM-Bereitstellung?",
+          "answer": "**💰 Budgetfreundliche Optionen (Unter $10k)**: **RTX 4090 (24GB)** - Beste für 7B-13B Modelle, Single-Card-Setup; **RTX 3090 (24GB)** - Guter Wert für kleinere Modelle und Experimente; **Mehrere RTX 4060 Ti (16GB)** - Kostengünstige Lösung für verteilte Inferenz."
+        },
+        {
+          "question": "Was sind die Enterprise-Grade GPU-Lösungen?",
+          "answer": "**🏢 Enterprise-Lösungen ($50k+)**: **NVIDIA H100 (80GB)** - Industriestandard für Produktions-LLM-Bereitstellung; **NVIDIA A100 (80GB)** - Bewährte Zuverlässigkeit, gut für 70B+ Modelle; **AMD MI355X (288GB)** - Neueste CDNA 4, höchste Speicherkapazität für massive Modelle; **AMD MI350X (288GB)** - CDNA 4 luftgekühlt, ausgezeichnetes Preis-Leistungs-Verhältnis; **AMD MI325X (256GB)** - CDNA 3 mit HBM3E, großartig für große Modellbereitstellung; **AMD MI300X (192GB)** - Bewährte CDNA 3, ausgezeichnet für 400B+ Modelle."
+        },
+        {
+          "question": "Was sind die GPU-Anforderungen für beliebte AI-Modelle?",
+          "answer": "**🆕 Qwen2.5 & Qwen3**: Qwen2.5-72B benötigt 2x H100 mit FP8, während Qwen3-235B-A22B (MoE) 4x H100 benötigt. **DeepSeek R1**: 671B Parameter erfordern ~10x H100 mit FP8 für optimale Leistung. **Llama 3.1 70B**: 2x A100/H100 mit FP16, oder 7x RTX 4090 für Consumer-Hardware. **Llama 3.1 405B**: 6x H100 mit FP8, oder 11x A100 mit FP16."
+        },
+        {
+          "question": "Was sind die Profi-Tipps für GPU-Optimierung?",
+          "answer": "**⚡ Profi-Tipps**: **FP8/INT8 verwenden** - Reduziere Speicherverbrauch um 50-75% mit minimaler Qualitätsverlust; **MoE-Modelle berücksichtigen** - Qwen3-235B-A22B bietet Flaggschiff-Leistung mit 4x H100 (vs 10x für DeepSeek-R1); **Modell-Parallelismus** - Teile große Modelle auf mehrere GPUs auf; **Gemischte Präzision** - Kombiniere FP16-Inferenz mit FP32-Gradienten für Training; **Speicher-Mapping** - Verwende CPU-RAM für Modellspeicherung, GPU für aktive Schichten."
+        }
+      ]
     }
   }
 }

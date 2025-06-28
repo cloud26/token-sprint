@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Check, ChevronsUpDown, InfoIcon } from "lucide-react"
+import { Check, ChevronsUpDown, InfoIcon, ChevronDown, ChevronRight } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -143,6 +143,9 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     const [modelPopoverOpen, setModelPopoverOpen] = useState(false)
     const [contextPopoverOpen, setContextPopoverOpen] = useState(false)
     const [gpuPopoverOpen, setGpuPopoverOpen] = useState(false)
+
+    // FAQ 展开状态
+    const [expandedFaqItems, setExpandedFaqItems] = useState<Set<number>>(new Set())
 
     const selectedGpu = gpuModels.find((gpu) => `${gpu.name} (${gpu.memory}GB)` === gpuModel)
     const gpuMemory = selectedGpu ? selectedGpu.memory : 80 // 默认使用 80GB
@@ -301,6 +304,24 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     const handleManualGpuCountChange = (value: string) => {
         setIsUserTyping(true)
         setManualGpuCount(value.replace(/[^0-9]/g, ""))
+    }
+
+    // FAQ 展开/收起切换
+    const toggleFaqItem = (index: number) => {
+        const newExpanded = new Set(expandedFaqItems)
+        if (newExpanded.has(index)) {
+            newExpanded.delete(index)
+        } else {
+            newExpanded.add(index)
+        }
+        setExpandedFaqItems(newExpanded)
+    }
+
+    // 渲染带有Markdown格式的FAQ答案
+    const renderFaqAnswer = (answer: string) => {
+        return answer
+            .replace(/\*\*(.*?)\*\*/g, '<span class="font-semibold text-blue-700">$1</span>')
+            .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>')
     }
 
     return (
@@ -579,7 +600,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                         if (!search) return 1;
                                         const searchLower = search.toLowerCase();
                                         const valueLower = value.toLowerCase();
-                                        
+
                                         // 完全匹配优先级最高
                                         if (valueLower.includes(searchLower)) {
                                             // 如果搜索词是连续的字符串，给予更高优先级
@@ -588,7 +609,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                 return 1;
                                             }
                                         }
-                                        
+
                                         return 0;
                                     }}
                                 >
@@ -992,6 +1013,44 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                         {t('quickStart.description')}
                                     </p>
                                 </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* FAQ 部分 */}
+                    <section className="mt-6">
+                        <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <h3 className="text-lg font-semibold text-slate-800 mb-4">
+                                {t('faq.title')}
+                            </h3>
+                            <div className="space-y-3">
+                                {t.raw('faq.items').map((item: { question: string; answer: string }, index: number) => (
+                                    <div key={index} className="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                                        <button
+                                            onClick={() => toggleFaqItem(index)}
+                                            className="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-50 transition-colors"
+                                        >
+                                            <span className="font-medium text-slate-700 pr-2">
+                                                {item.question}
+                                            </span>
+                                            {expandedFaqItems.has(index) ? (
+                                                <ChevronDown className="h-4 w-4 text-slate-500 flex-shrink-0" />
+                                            ) : (
+                                                <ChevronRight className="h-4 w-4 text-slate-500 flex-shrink-0" />
+                                            )}
+                                        </button>
+                                        {expandedFaqItems.has(index) && (
+                                            <div className="px-4 pb-3 pt-1 border-t border-slate-100">
+                                                <div
+                                                    className="text-sm text-slate-600 leading-relaxed"
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: renderFaqAnswer(item.answer)
+                                                    }}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </section>

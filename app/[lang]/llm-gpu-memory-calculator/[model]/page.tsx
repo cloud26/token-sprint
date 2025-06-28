@@ -98,9 +98,9 @@ export default function ModelSpecificCalculatorPage({
                         <LLMMemoryCalculator preferredModelType={modelSlug} />
                     </Suspense>
 
-                    <div className="mt-8">
+                    {/* <div className="mt-8">
                         <GPUSelectionGuide />
-                    </div>
+                    </div> */}
 
 
                 </div>

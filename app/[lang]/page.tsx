@@ -64,9 +64,9 @@ export default function Home({
                     </Suspense>
 
                     {/* GPU Selection Guide */}
-                    <div className="mt-8">
+                    {/* <div className="mt-8">
                         <GPUSelectionGuide />
-                    </div>
+                    </div> */}
                 </div>
                 <Footer />
             </main>

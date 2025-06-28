@@ -567,6 +567,51 @@
     "performanceComparison": {
       "meetExpectation": "✅ Meets expectation {expected} token/s",
       "belowExpectation": "❌ Below expectation {expected} token/s"
+    },
+    "faq": {
+      "title": "📋 Calculation Formula FAQ",
+      "items": [
+        {
+          "question": "How is GPU throughput calculated?",
+          "answer": "We use a dual-constraint approach: **Compute-bound throughput** = (GPU TFLOPS × Precision multiplier × 1000) ÷ (2 × Active parameters in billions), and **Memory-bound throughput** = Memory bandwidth (GB/s) ÷ Total memory access per token (GB). The actual throughput is the minimum of these two values, representing the actual bottleneck."
+        },
+        {
+          "question": "Why do we consider memory bandwidth limitations?",
+          "answer": "Based on [A100 40GB benchmark data](https://www.databasemart.com/blog/ollama-gpu-benchmark-a100-40gb), all tested models were limited by memory bandwidth rather than compute power. This validates our memory bandwidth-based calculation approach, which is more accurate than pure compute-based estimates."
+        },
+        {
+          "question": "How are MoE models handled differently?",
+          "answer": "For MoE (Mixture of Experts) models like DeepSeek-R1 (671B total, 37B active), we only consider the **active parameters** for bandwidth calculations. This means the memory access per token is based on 37B parameters, not the full 671B, making MoE models much more efficient for inference."
+        },
+        {
+          "question": "What does the system efficiency factor represent?",
+          "answer": "The system efficiency factor (40% base) accounts for real-world overhead including: framework overhead (Ollama, vLLM), memory access patterns, batch processing efficiency, and hardware utilization. This factor was calibrated using actual A100 40GB benchmark data with an observed average efficiency of 37.2%."
+        },
+        {
+          "question": "How does precision affect performance?",
+          "answer": "Different precisions affect both memory usage and compute performance: **FP16** (baseline), **FP8** (2x speedup), **INT4** (4x speedup, 1.2x system efficiency boost). Based on benchmark data, INT4 quantization actually performs better than theoretical expectations due to reduced memory pressure."
+        },
+        {
+          "question": "Why might my results differ from other calculators?",
+          "answer": "Our calculator uses memory bandwidth as the primary constraint and real benchmark data for calibration, while many others use only compute-based estimates. We also properly handle MoE models and include realistic system efficiency factors, leading to more accurate real-world predictions."
+        },
+        {
+          "question": "What are the budget-friendly GPU options for LLM deployment?",
+          "answer": "**💰 Budget-Friendly Options (Under $10k)**: **RTX 4090 (24GB)** - Best for 7B-13B models, single card setup; **RTX 3090 (24GB)** - Good value for smaller models and experimentation; **Multiple RTX 4060 Ti (16GB)** - Cost-effective for distributed inference."
+        },
+        {
+          "question": "What are the enterprise-grade GPU solutions?",
+          "answer": "**🏢 Enterprise Solutions ($50k+)**: **NVIDIA H100 (80GB)** - Industry standard for production LLM deployment; **NVIDIA A100 (80GB)** - Proven reliability, good for 70B+ models; **AMD MI355X (288GB)** - Latest CDNA 4, highest memory capacity for massive models; **AMD MI350X (288GB)** - CDNA 4 air-cooled, excellent price/performance; **AMD MI325X (256GB)** - CDNA 3 with HBM3E, great for large model deployment; **AMD MI300X (192GB)** - Proven CDNA 3, excellent for 400B+ models."
+        },
+        {
+          "question": "What are the GPU requirements for popular AI models?",
+          "answer": "**🆕 Qwen2.5 & Qwen3**: Qwen2.5-72B needs 2x H100 with FP8, while Qwen3-235B-A22B (MoE) needs 4x H100. **DeepSeek R1**: 671B parameters require ~10x H100 with FP8 for optimal performance. **Llama 3.1 70B**: 2x A100/H100 with FP16, or 7x RTX 4090 for consumer hardware. **Llama 3.1 405B**: 6x H100 with FP8, or 11x A100 with FP16."
+        },
+        {
+          "question": "What are the pro tips for GPU optimization?",
+          "answer": "**⚡ Pro Tips**: **Use FP8/INT8** - Reduce memory usage by 50-75% with minimal quality loss; **Consider MoE Models** - Qwen3-235B-A22B offers flagship performance with 4x H100 (vs 10x for DeepSeek-R1); **Model Parallelism** - Split large models across multiple GPUs; **Mixed Precision** - Combine FP16 inference with FP32 gradients for training; **Memory Mapping** - Use CPU RAM for model storage, GPU for active layers."
+        }
+      ]
     }
   }
 }
