@@ -631,5 +631,11 @@
         }
       ]
     }
+  },
+  "updateNotification": {
+    "title": "Neue Features",
+    "feature1": "Genauere GPU-Berechnungen",
+    "feature2": "Umfassender FAQ-Leitfaden",
+    "dismiss": "Benachrichtigung schließen"
   }
 }

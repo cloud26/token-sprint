@@ -622,5 +622,11 @@
         }
       ]
     }
+  },
+  "updateNotification": {
+    "title": "新機能のご紹介",
+    "feature1": "より正確なGPU計算",
+    "feature2": "包括的なFAQガイド",
+    "dismiss": "通知を閉じる"
   }
 }

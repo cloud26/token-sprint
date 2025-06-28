@@ -613,5 +613,11 @@
         }
       ]
     }
+  },
+  "updateNotification": {
+    "title": "What's New",
+    "feature1": "More accurate GPU calculations",
+    "feature2": "Comprehensive FAQ guide",
+    "dismiss": "Dismiss notification"
   }
 }

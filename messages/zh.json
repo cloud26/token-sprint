@@ -612,5 +612,11 @@
         }
       ]
     }
+  },
+  "updateNotification": {
+    "title": "最新功能",
+    "feature1": "更准确的GPU计算",
+    "feature2": "全面的FAQ指南",
+    "dismiss": "关闭通知"
   }
 }

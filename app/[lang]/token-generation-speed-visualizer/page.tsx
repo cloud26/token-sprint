@@ -6,6 +6,7 @@ import { type Language } from "@/config/languages"
 import { Metadata } from "next"
 import { SideNav } from "@/components/side-nav"
 import { Breadcrumb } from "@/components/breadcrumb"
+import { UpdateNotification } from "@/components/update-notification"
 import { getTranslations } from 'next-intl/server'
 import { useTranslations, useLocale } from 'next-intl'
 
@@ -48,8 +49,11 @@ export default function TokenGenerationSpeedVisualizer({
 
             <main className="pt-20 md:pt-4 md:ml-48 flex-1 flex flex-col items-center p-4 md:p-8">
                 <div className="w-full max-w-2xl space-y-2 flex-1">
+                    {/* 更新通知 */}
+                    <UpdateNotification />
+
                     <PageContent />
-                    
+
                     <TokenSpeedDemo initialLanguage={language} />
 
                     <SpeedGuideSection />
@@ -63,7 +67,7 @@ export default function TokenGenerationSpeedVisualizer({
 function PageContent() {
     const t = useTranslations('tools.tokenSpeedVisualizer')
     const tn = useTranslations('nav')
-    
+
     // 面包屑导航项
     const breadcrumbItems = [
         {
@@ -94,7 +98,7 @@ function PageContent() {
 function SpeedGuideSection() {
     const locale = useLocale()
     const t = useTranslations('common.ui')
-    
+
     return (
         <section className="mt-8 space-y-4">
             <h2 className="text-lg font-semibold">

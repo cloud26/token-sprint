@@ -7,6 +7,7 @@ import LLMMemoryCalculator from "@/components/llm-memory-calculator"
 import { SideNav } from "@/components/side-nav"
 import { GPUSelectionGuide } from "@/components/gpu-selection-guide"
 import { Breadcrumb } from "@/components/breadcrumb"
+import { UpdateNotification } from "@/components/update-notification"
 import { getModelBySlug, getAllModelSlugs } from "@/config/models"
 import { notFound } from "next/navigation"
 import { getTranslations } from 'next-intl/server'
@@ -92,6 +93,9 @@ export default function ModelSpecificCalculatorPage({
 
             <main className="pt-20 md:pt-4 md:ml-48 flex-1 flex flex-col items-center p-4 md:p-8">
                 <div className="w-full max-w-2xl space-y-2 flex-1">
+                    {/* 更新通知 */}
+                    <UpdateNotification />
+
                     <PageContent model={model} />
 
                     <Suspense fallback={<div>Loading...</div>}>
