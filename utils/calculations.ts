@@ -293,163 +293,13 @@ function calcThroughputInfo(
 
 
 
-// 计算多GPU聚合吞吐量 - 考虑模型并行和数据并行的区别
-function calculateMultiGpuThroughput(
-  parameters: number,
-  activeParams: number,
+// 计算系统效率因子 - 统一的效率计算逻辑
+function calculateSystemEfficiency(
   batchSize: number,
   contextLength: number,
-  gpuModel: string,
-  precision: string,
-  requiredGPUs: number,
-  selectedModel?: string
+  precision: string
 ): number {
-  // 获取GPU基础性能参数
-  const computeTflops = GPU_FP16_TFLOPS[gpuModel] || 100
-  const memoryBandwidthGB = GPU_MEMORY_BANDWIDTH[gpuModel] || 1000 // GB/s
-  const precisionMultiplier = PRECISION_MULTIPLIERS[precision] || 1.0
-  const bytesPerParam = PRECISION_BYTES[precision] || 2
-  const effectiveParams = activeParams
-
-  // 1. 计算限制：多GPU情况下计算能力线性叠加
-  const flopsPerTokenInBillions = 2 * effectiveParams
-  const totalComputeTflops = computeTflops * requiredGPUs * precisionMultiplier
-  const computeBoundThroughput = (totalComputeTflops * 1000) / flopsPerTokenInBillions
-
-  // 2. 内存带宽限制：关键改进 - 考虑模型并行
-  // 在模型并行中，每个GPU只需要读取分配给它的那部分模型权重
-  const modelWeightBytesPerGpu = (effectiveParams * 1e9 * bytesPerParam) / requiredGPUs
-  const kvCacheBytesPerToken = calcKvCacheBytesPerToken(parameters, selectedModel)
-  
-  // 每个GPU的内存访问量：分片的模型权重 + 完整的KV Cache
-  // 注意：KV Cache通常需要在GPU间同步，所以每个GPU都需要处理
-  const memoryAccessPerGpuPerToken = modelWeightBytesPerGpu + kvCacheBytesPerToken * batchSize
-  const memoryAccessGBPerGpuPerToken = memoryAccessPerGpuPerToken / 1e9
-  
-  // 单GPU的内存带宽限制吞吐量
-  const singleGpuMemoryThroughput = memoryBandwidthGB / memoryAccessGBPerGpuPerToken
-  
-  // 多GPU的聚合内存带宽吞吐量（考虑GPU间通信开销）
-  const interGpuCommEfficiency = calculateInterGpuCommEfficiency(requiredGPUs)
-  const aggregateMemoryThroughput = singleGpuMemoryThroughput * requiredGPUs * interGpuCommEfficiency
-
-  // 3. 实际吞吐量受限于计算和内存带宽的较小值
-  const theoreticalThroughput = Math.min(computeBoundThroughput, aggregateMemoryThroughput)
-
-  // 数值安全检查
-  if (!Number.isFinite(theoreticalThroughput) || theoreticalThroughput <= 0) {
-    console.warn(`多GPU计算异常: GPUs=${requiredGPUs}, activeParams=${activeParams}, theoreticalThroughput=${theoreticalThroughput}`)
-    return requiredGPUs // 返回一个保守的默认值
-  }
-
-  // 4. 系统效率因子
-  let systemEfficiency = 0.4 // 基础系统效率40%
-
-  // 批次大小对效率的影响
-  if (batchSize >= 32) {
-    systemEfficiency *= 1.2
-  } else if (batchSize >= 8) {
-    systemEfficiency *= 1.1
-  }
-
-  // 上下文长度对效率的影响
-  if (contextLength > 32768) {
-    systemEfficiency *= 0.8
-  } else if (contextLength > 8192) {
-    systemEfficiency *= 0.9
-  }
-
-  // 精度对系统效率的影响
-  if (precision === 'INT4') {
-    systemEfficiency *= 1.2
-  } else if (precision === 'INT8') {
-    systemEfficiency *= 1.1
-  }
-
-  // 推理框架开销
-  systemEfficiency *= 0.85
-
-  return theoreticalThroughput * systemEfficiency
-}
-
-// 计算GPU间通信效率
-function calculateInterGpuCommEfficiency(gpus: number): number {
-  if (gpus === 1) return 1.0
-  
-  // 基于现代GPU互联技术（NVLink, InfiniBand等）的实际性能
-  if (gpus <= 2) {
-    return 0.95 // 2卡NVLink效率很高
-  } else if (gpus <= 4) {
-    return 0.90 // 4卡NVLink仍然很好
-  } else if (gpus <= 8) {
-    return 0.85 // 8卡需要更复杂的拓扑，效率下降
-  } else if (gpus <= 16) {
-    return 0.80 // 跨节点通信开始影响性能
-  } else if (gpus <= 32) {
-    return 0.75 // 大规模部署，通信开销显著
-  } else {
-    return Math.max(0.70, 0.75 - (gpus - 32) * 0.005) // 超大规模，效率进一步下降
-  }
-}
-
-// 保留原有的并行效率函数作为备用（兼容性）
-function calculateParallelEfficiency(gpus: number): number {
-  return calculateInterGpuCommEfficiency(gpus)
-}
-
-// 计算单GPU实际吞吐量的通用函数 - 基于内存带宽限制
-function calculateSingleGpuThroughput(
-  parameters: number,
-  activeParams: number,
-  batchSize: number,
-  contextLength: number,
-  gpuModel: string,
-  precision: string,
-  selectedModel?: string
-): number {
-  // 获取GPU计算性能和内存带宽
-  const computeTflops = GPU_FP16_TFLOPS[gpuModel] || 100
-  const memoryBandwidthGB = GPU_MEMORY_BANDWIDTH[gpuModel] || 1000 // GB/s
-  const precisionMultiplier = PRECISION_MULTIPLIERS[precision] || 1.0
-  const bytesPerParam = PRECISION_BYTES[precision] || 2
-
-  // 对于MoE模型，只考虑激活的参数部分
-  const effectiveParams = activeParams
-
-  // 1. 计算限制：基于FLOPS
-  const flopsPerTokenInBillions = 2 * effectiveParams // 推理需要2倍参数量的FLOPS
-  const adjustedComputeTflops = computeTflops * precisionMultiplier
-  const computeBoundThroughput = (adjustedComputeTflops * 1000) / flopsPerTokenInBillions
-
-  // 2. 内存带宽限制：每个token需要读取的数据量
-  // 注意：这里计算的是单GPU的吞吐量，假设模型已经分布在多GPU上
-  // 每个GPU只需要读取分配给它的那部分模型权重
-  const kvCacheBytesPerToken = calcKvCacheBytesPerToken(parameters, selectedModel) // KV Cache每token字节数
-  
-  // 对于单GPU计算，我们假设：
-  // - 如果是单GPU部署：需要读取完整模型权重
-  // - 如果是多GPU部署：每个GPU只读取分配给它的部分权重
-  // 但由于这是单GPU吞吐量函数，我们计算单GPU能达到的最大吞吐量
-  // 实际的多GPU性能会在上层函数中考虑并行效率
-  
-  // 单GPU情况下的内存访问：模型权重读取 + KV Cache读写
-  const modelWeightBytes = effectiveParams * 1e9 * bytesPerParam // 每个token需要读取的模型权重
-  
-  // 总的内存访问量（每token）
-  const totalMemoryAccessBytesPerToken = modelWeightBytes + kvCacheBytesPerToken * batchSize
-  const totalMemoryAccessGBPerToken = totalMemoryAccessBytesPerToken / 1e9
-  const memoryBoundThroughput = memoryBandwidthGB / totalMemoryAccessGBPerToken
-
-  // 3. 实际吞吐量受限于计算和内存带宽的较小值
-  const theoreticalThroughput = Math.min(computeBoundThroughput, memoryBoundThroughput)
-
-  // 数值安全检查
-  if (!Number.isFinite(theoreticalThroughput) || theoreticalThroughput <= 0) {
-    console.warn(`计算异常: GPU=${gpuModel}, activeParams=${activeParams}, theoreticalThroughput=${theoreticalThroughput}`)
-    return 1
-  }
-
-  // 4. 系统效率因子（基于实际基准测试数据校准）
+  // 基于实际基准测试数据校准
   // 参考: https://www.databasemart.com/blog/vllm-gpu-benchmark-dual-a100-40gb
   // vLLM在高并发下表现优异，移除过于保守的基础效率限制
   let systemEfficiency = 1.0 // 移除基础效率限制，从理论峰值开始计算
@@ -480,8 +330,93 @@ function calculateSingleGpuThroughput(
   // 推理框架开销（Ollama、vLLM等）
   systemEfficiency *= 0.85 // 推理框架有15%开销
 
+  return systemEfficiency
+}
+
+// 计算多GPU聚合吞吐量 - 考虑模型并行和数据并行的区别
+function calculateMultiGpuThroughput(
+  parameters: number,
+  activeParams: number,
+  batchSize: number,
+  contextLength: number,
+  gpuModel: string,
+  precision: string,
+  requiredGPUs: number,
+  selectedModel?: string
+): number {
+  // 获取GPU基础性能参数
+  const computeTflops = GPU_FP16_TFLOPS[gpuModel] || 100
+  const memoryBandwidthGB = GPU_MEMORY_BANDWIDTH[gpuModel] || 1000 // GB/s
+  const precisionMultiplier = PRECISION_MULTIPLIERS[precision] || 1.0
+  const bytesPerParam = PRECISION_BYTES[precision] || 2
+  const effectiveParams = activeParams
+
+  // 1. 计算限制：多GPU情况下计算能力线性叠加
+  const flopsPerTokenInBillions = 2 * effectiveParams
+  const totalComputeTflops = computeTflops * requiredGPUs * precisionMultiplier
+  const computeBoundThroughput = (totalComputeTflops * 1000) / flopsPerTokenInBillions
+
+  // 2. 内存带宽限制：关键改进 - 考虑模型并行和KV Cache分片
+  // 在tensor并行中，模型权重和KV Cache都应该分片到不同GPU上
+  const modelWeightBytesPerGpu = (effectiveParams * 1e9 * bytesPerParam) / requiredGPUs
+  const kvCacheBytesPerToken = calcKvCacheBytesPerToken(parameters, selectedModel)
+  
+  // KV Cache也应该按tensor并行分片：每个GPU只处理其分配的部分
+  // 现代推理框架（如vLLM）中，KV Cache按注意力头维度分片
+  const kvCacheBytesPerTokenPerGpu = kvCacheBytesPerToken / requiredGPUs
+  
+  // 每个GPU的内存访问量：分片的模型权重 + 分片的KV Cache
+  const memoryAccessPerGpuPerToken = modelWeightBytesPerGpu + kvCacheBytesPerTokenPerGpu * batchSize
+  const memoryAccessGBPerGpuPerToken = memoryAccessPerGpuPerToken / 1e9
+  
+  // 单GPU的内存带宽限制吞吐量
+  const singleGpuMemoryThroughput = memoryBandwidthGB / memoryAccessGBPerGpuPerToken
+  
+  // 多GPU的聚合内存带宽吞吐量（考虑GPU间通信开销）
+  const interGpuCommEfficiency = calculateInterGpuCommEfficiency(requiredGPUs)
+  const aggregateMemoryThroughput = singleGpuMemoryThroughput * requiredGPUs * interGpuCommEfficiency
+
+  // 3. 实际吞吐量受限于计算和内存带宽的较小值
+  const theoreticalThroughput = Math.min(computeBoundThroughput, aggregateMemoryThroughput)
+
+  // 数值安全检查
+  if (!Number.isFinite(theoreticalThroughput) || theoreticalThroughput <= 0) {
+    console.warn(`多GPU计算异常: GPUs=${requiredGPUs}, activeParams=${activeParams}, theoreticalThroughput=${theoreticalThroughput}`)
+    return requiredGPUs // 返回一个保守的默认值
+  }
+
+  // 4. 应用统一的系统效率因子
+  const systemEfficiency = calculateSystemEfficiency(batchSize, contextLength, precision)
+
   return theoreticalThroughput * systemEfficiency
 }
+
+// 计算GPU间通信效率
+function calculateInterGpuCommEfficiency(gpus: number): number {
+  if (gpus === 1) return 1.0
+  
+  // 基于现代GPU互联技术（NVLink, InfiniBand等）的实际性能
+  if (gpus <= 2) {
+    return 0.95 // 2卡NVLink效率很高
+  } else if (gpus <= 4) {
+    return 0.90 // 4卡NVLink仍然很好
+  } else if (gpus <= 8) {
+    return 0.85 // 8卡需要更复杂的拓扑，效率下降
+  } else if (gpus <= 16) {
+    return 0.80 // 跨节点通信开始影响性能
+  } else if (gpus <= 32) {
+    return 0.75 // 大规模部署，通信开销显著
+  } else {
+    return Math.max(0.70, 0.75 - (gpus - 32) * 0.005) // 超大规模，效率进一步下降
+  }
+}
+
+// 保留原有的并行效率函数作为备用（兼容性）
+function calculateParallelEfficiency(gpus: number): number {
+  return calculateInterGpuCommEfficiency(gpus)
+}
+
+
 
 // 计算KV Cache每个token的字节数
 function calcKvCacheBytesPerToken(parameters: number, selectedModel?: string): number {
@@ -513,8 +448,8 @@ function calculateMinRequiredGPUs(
   const requiredTotalThroughput = expectedTokensPerSecond * batchSize
 
   // 使用单GPU吞吐量作为基准来估算初始GPU数量
-  const singleGpuThroughput = calculateSingleGpuThroughput(
-    parameters, activeParams, batchSize, contextLength, gpuModel, precision, selectedModel
+  const singleGpuThroughput = calculateMultiGpuThroughput(
+    parameters, activeParams, batchSize, contextLength, gpuModel, precision, 1, selectedModel
   )
 
   // 计算基于性能需求的GPU数量（粗略估算）
