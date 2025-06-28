@@ -26,6 +26,35 @@ pnpm dev
 - React 19 + TypeScript
 - shadcn/ui + Tailwind CSS
 - 支持中英文双语
+- Datadog 日志监控（可选）
+
+## 日志监控（可选）
+
+项目集成了 Datadog 日志监控功能，可以帮助你：
+
+- 监控用户使用情况和计算结果
+- 跟踪性能指标和错误信息
+- 分析用户行为和使用模式
+
+### 快速配置
+
+1. 创建 `.env.local` 文件
+2. 添加你的 Datadog Client Token：
+   ```env
+   NEXT_PUBLIC_DATADOG_CLIENT_TOKEN=your_token_here
+   ```
+3. 重启开发服务器
+
+详细配置说明请查看 [Datadog 设置指南](./doc/DATADOG_SETUP.md)
+
+### 测试配置
+
+```bash
+# 运行配置检查脚本
+node scripts/test-datadog.js
+```
+
+> **注意**: 如果不配置 Datadog，应用仍会正常工作，日志将输出到控制台。
 
 ## 文档
 
@@ -36,3 +65,4 @@ pnpm dev
 - [组件设计](./doc/COMPONENTS.md)
 - [样式设计](./doc/STYLING.md)
 - [开发指南](./doc/DEVELOPMENT.md)
+- [Datadog 设置指南](./doc/DATADOG_SETUP.md)

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { logLLMCalculation, LogLevel } from '@/lib/datadog-server-logger'
 
 export async function POST(request: Request) {
     try {
@@ -110,6 +111,50 @@ export async function POST(request: Request) {
         }
 
         console.log(`[${locale}] ================================`)
+
+        // 发送日志到 Datadog
+        try {
+            await logLLMCalculation({
+                message: `LLM GPU Memory Calculation - ${selectedModel || 'Custom Model'} (${parameters}B parameters)`,
+                level: LogLevel.INFO,
+                calculationType: 'llm-gpu-memory',
+                parameters: {
+                    modelName: selectedModel,
+                    parameters,
+                    precision,
+                    gpuModel,
+                    gpuMemory,
+                    batchSize,
+                    contextLength,
+                    expectedTokensPerSecond: Number(expectedTokensPerSecond),
+                    locale
+                },
+                results: {
+                    totalMemory,
+                    requiredGPUs,
+                    memoryBreakdown: data.memoryBreakdown,
+                    performanceAnalysis: {
+                        throughputInfo,
+                        gpuAnalysis,
+                        performanceAnalysis
+                    }
+                },
+                context: {
+                    userAgent: request.headers.get('user-agent'),
+                    timestamp: new Date().toISOString(),
+                    sessionId: request.headers.get('x-session-id'), // 如果前端发送了会话ID
+                },
+                tags: [
+                    `model:${selectedModel || 'custom'}`,
+                    `precision:${precision}`,
+                    `gpu:${gpuModel}`,
+                    `locale:${locale}`
+                ]
+            })
+        } catch (datadogError) {
+            console.error('Failed to send log to Datadog:', datadogError)
+            // 不影响主要功能，继续执行
+        }
 
         return NextResponse.json({ success: true })
     } catch (error) {
