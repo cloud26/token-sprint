@@ -356,17 +356,16 @@ function calculateMultiGpuThroughput(
   const totalComputeTflops = computeTflops * requiredGPUs * precisionMultiplier
   const computeBoundThroughput = (totalComputeTflops * 1000) / flopsPerTokenInBillions
 
-  // 2. 内存带宽限制：关键改进 - 考虑模型并行和KV Cache分片
-  // 在tensor并行中，模型权重和KV Cache都应该分片到不同GPU上
+  // 2. 内存带宽限制：主要考虑模型权重访问
+  // KV Cache访问相对较小且有很好的缓存优化，不作为主要带宽瓶颈
   const modelWeightBytesPerGpu = (effectiveParams * 1e9 * bytesPerParam) / requiredGPUs
-  const kvCacheBytesPerToken = calcKvCacheBytesPerToken(parameters, selectedModel)
   
-  // KV Cache也应该按tensor并行分片：每个GPU只处理其分配的部分
-  // 现代推理框架（如vLLM）中，KV Cache按注意力头维度分片
-  const kvCacheBytesPerTokenPerGpu = kvCacheBytesPerToken / requiredGPUs
-  
-  // 每个GPU的内存访问量：分片的模型权重 + 分片的KV Cache
-  const memoryAccessPerGpuPerToken = modelWeightBytesPerGpu + kvCacheBytesPerTokenPerGpu * batchSize
+  // 主要的内存带宽消耗：模型权重读取（每个token都需要读取完整的分片权重）
+  // KV Cache访问被忽略，因为：
+  // 1. 单次访问量相对较小
+  // 2. 访问模式规律，缓存命中率高  
+  // 3. 可以与计算并行进行
+  const memoryAccessPerGpuPerToken = modelWeightBytesPerGpu
   const memoryAccessGBPerGpuPerToken = memoryAccessPerGpuPerToken / 1e9
   
   // 单GPU的内存带宽限制吞吐量
