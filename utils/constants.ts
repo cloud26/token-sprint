@@ -2097,6 +2097,11 @@ export const GPU_FP16_TFLOPS: Record<string, number> = Object.fromEntries(
   gpuModels.map((gpu) => [gpu.name, gpu.fp16Tflops])
 );
 
+// 创建GPU内存带宽查找映射
+export const GPU_MEMORY_BANDWIDTH: Record<string, number> = Object.fromEntries(
+  gpuModels.map((gpu) => [gpu.name, gpu.memoryBandwidthInGB])
+);
+
 // 根据系列和类别对模型进行分组的辅助函数
 export const getModelsByGroup = () => {
   const groups: Record<string, ModelInfo[]> = {};
