@@ -601,7 +601,7 @@
     "throughputRequirement": {
       "title": "Требования к пропускной способности",
       "totalThroughput": "Требования к пропускной способности {totalThroughput} токенов/с",
-      "requiredGPUs": "Требуется **{count}** GPU (на основе вычислительной производительности)"
+      "requiredGPUs": "Требуется **{count}** GPU (на основе пропускной способности VRAM и вычислительной производительности)"
     },
     "performanceComparison": {
       "meetExpectation": "✅ Соответствует ожиданию {expected} токен/с",

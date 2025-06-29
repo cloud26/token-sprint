@@ -580,7 +580,7 @@
     "throughputRequirement": {
       "title": "Durchsatzanforderungen",
       "totalThroughput": "Durchsatzanforderungen {totalThroughput} Token/s",
-      "requiredGPUs": "Benötigt **{count}** GPUs (basierend auf Rechenleistung)"
+      "requiredGPUs": "Benötigt **{count}** GPUs (basierend auf VRAM-Bandbreite und Rechenleistung)"
     },
     "performanceComparison": {
       "meetExpectation": "✅ Erfüllt Erwartung {expected} Token/s",

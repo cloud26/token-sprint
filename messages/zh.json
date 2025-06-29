@@ -561,7 +561,7 @@
     "throughputRequirement": {
       "title": "吞吐需求",
       "totalThroughput": "吞吐需求 {totalThroughput} tokens/s",
-      "requiredGPUs": "需要 **{count}** 张显卡（基于算力性能）"
+      "requiredGPUs": "需要 **{count}** 张显卡（基于显存带宽和算力性能）"
     },
     "performanceComparison": {
       "meetExpectation": "✅ 满足期望 {expected} token/s",

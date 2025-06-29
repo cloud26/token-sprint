@@ -571,7 +571,7 @@
     "throughputRequirement": {
       "title": "スループット要件",
       "totalThroughput": "スループット要件 {totalThroughput} トークン/秒",
-      "requiredGPUs": "**{count}** 台のGPUが必要（計算パフォーマンスベース）"
+      "requiredGPUs": "**{count}** 台のGPUが必要（VRAMバンド幅と計算パフォーマンスベース）"
     },
     "performanceComparison": {
       "meetExpectation": "✅ 期待値 {expected} トークン/秒を満たす",

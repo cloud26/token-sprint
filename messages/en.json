@@ -559,11 +559,11 @@
       "requiredGPUs": "Requires **{count}** GPUs (based on memory capacity)",
       "memoryWarning": "⚠️ Memory Warning"
     },
-    "throughputRequirement": {
-      "title": "Throughput Requirements",
-      "totalThroughput": "Throughput Requirements {totalThroughput} tokens/s",
-      "requiredGPUs": "Requires **{count}** GPUs (based on computing performance)"
-    },
+          "throughputRequirement": {
+        "title": "Throughput Requirements",
+        "totalThroughput": "Throughput Requirements {totalThroughput} tokens/s",
+        "requiredGPUs": "Requires **{count}** GPUs (based on VRAM bandwidth \u0026 computing performance)"
+      },
     "performanceComparison": {
       "meetExpectation": "✅ Meets expectation {expected} token/s",
       "belowExpectation": "❌ Below expectation {expected} token/s"
