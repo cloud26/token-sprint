@@ -427,13 +427,16 @@ function calculateL2CacheHitRate(
   requiredGPUs: number = 1,
   precision: string = "FP16"
 ): number {
-  // 简化的线性缓存命中率：命中率 = k * concurrent + b
-  // 基于SGLang等实际推理框架的benchmark数据校准
+  // 基于并发数的缓存命中率：反映权重访问重叠概率
+  // 逻辑：N个用户同时访问，权重复用的概率增加
   
-  const k = 0.03  // 斜率：每增加1个并发，命中率提升3%
-  const b = 0.05  // 截距：单用户时几乎没有缓存命中（顺序访问权重）
-  
-  let cacheHitRate = k * batchSize + b
+  let cacheHitRate: number
+  if (batchSize === 1) {
+    cacheHitRate = 0.0  // 单用户没有缓存复用
+  } else {
+    // 多用户时，缓存命中率约等于 (N-1)/N，但考虑实际访问模式
+    cacheHitRate = 1 - 1 / batchSize  // 2用户=50%, 4用户=75%, 10用户=90%
+  }
   
   // 精度加成：低精度模型缓存效果更好
   if (precision === 'FP8' || precision === 'INT8') {
@@ -442,8 +445,8 @@ function calculateL2CacheHitRate(
     cacheHitRate += 0.08 // INT4额外+8%命中率
   }
   
-  // 确保命中率在合理范围内 [0.05, 0.95]
-  return Math.max(0.05, Math.min(0.95, cacheHitRate))
+  // 确保命中率在合理范围内 [0.0, 0.95]
+  return Math.max(0.0, Math.min(0.95, cacheHitRate))
 }
 
 // 获取GPU的L2缓存大小（MB）
