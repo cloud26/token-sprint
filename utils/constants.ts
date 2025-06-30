@@ -89,7 +89,7 @@ export const gpuModels: GPUModel[] = [
     name: "NVIDIA L20",
     memory: 48,
     memoryBandwidthInGB: 864,
-    fp16Tflops: 240,
+    fp16Tflops: 120,  
     architecture: "Ada Lovelace",
     releaseYear: 2023,
   },
