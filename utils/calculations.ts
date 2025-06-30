@@ -430,8 +430,8 @@ function calculateL2CacheHitRate(
   // 简化的线性缓存命中率：命中率 = k * concurrent + b
   // 基于SGLang等实际推理框架的benchmark数据校准
   
-  const k = 0.02  // 斜率：每增加1个并发，命中率提升2%
-  const b = 0.4   // 截距：单用户时的基础命中率40%（权重访问模式分散）
+  const k = 0.03  // 斜率：每增加1个并发，命中率提升3%
+  const b = 0.05  // 截距：单用户时几乎没有缓存命中（顺序访问权重）
   
   let cacheHitRate = k * batchSize + b
   
@@ -442,8 +442,8 @@ function calculateL2CacheHitRate(
     cacheHitRate += 0.08 // INT4额外+8%命中率
   }
   
-  // 确保命中率在合理范围内 [0.4, 0.95]
-  return Math.max(0.4, Math.min(0.95, cacheHitRate))
+  // 确保命中率在合理范围内 [0.05, 0.95]
+  return Math.max(0.05, Math.min(0.95, cacheHitRate))
 }
 
 // 获取GPU的L2缓存大小（MB）
