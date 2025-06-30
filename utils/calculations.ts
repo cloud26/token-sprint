@@ -427,29 +427,23 @@ function calculateL2CacheHitRate(
   requiredGPUs: number = 1,
   precision: string = "FP16"
 ): number {
-  // 简化的缓存命中率计算：主要基于并发度的线性函数
-  // 参考SGLang等实际推理框架的表现，缓存命中率主要受并发度影响
+  // 简化的线性缓存命中率：命中率 = k * concurrent + b
+  // 基于SGLang等实际推理框架的benchmark数据校准
   
-  // 基础命中率：现代推理框架的典型表现
-  let baseCacheHitRate = 0.6 // 60%基础命中率，基于实际benchmark
+  const k = 0.015 // 斜率：每增加1个并发，命中率提升1.5%
+  const b = 0.75  // 截距：单用户时的基础命中率75%
   
-  // 并发度的线性影响：更多并发 = 更好的缓存利用
-  // batch=1: 50%命中率（最差）
-  // batch=16: 70%命中率
-  // batch=32+: 80%命中率（最佳）
-  const batchFactor = Math.min(1.0, 0.5 + (batchSize - 1) * 0.02) // 每增加1个并发，提升2%
-  baseCacheHitRate *= batchFactor
+  let cacheHitRate = k * batchSize + b
   
-  // 精度影响：低精度模型缓存效果更好
+  // 精度加成：低精度模型缓存效果更好
   if (precision === 'FP8' || precision === 'INT8') {
-    baseCacheHitRate *= 1.1 // FP8/INT8模型缓存命中率更高
+    cacheHitRate += 0.05 // FP8/INT8额外+5%命中率
   } else if (precision === 'INT4') {
-    baseCacheHitRate *= 1.15 // INT4模型缓存命中率最高
+    cacheHitRate += 0.08 // INT4额外+8%命中率
   }
   
-  // 确保命中率在合理范围内 [0.4, 0.85]
-  // 基于SGLang、vLLM等框架的实际表现
-  return Math.max(0.4, Math.min(0.85, baseCacheHitRate))
+  // 确保命中率在合理范围内 [0.75, 0.95]
+  return Math.max(0.75, Math.min(0.95, cacheHitRate))
 }
 
 // 获取GPU的L2缓存大小（MB）
