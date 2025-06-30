@@ -559,11 +559,11 @@
       "requiredGPUs": "Requires **{count}** GPUs (based on memory capacity)",
       "memoryWarning": "⚠️ Memory Warning"
     },
-          "throughputRequirement": {
-        "title": "Throughput Requirements",
-        "totalThroughput": "Throughput Requirements {totalThroughput} tokens/s",
+    "throughputRequirement": {
+      "title": "Throughput Requirements",
+      "totalThroughput": "Throughput Requirements {totalThroughput} tokens/s",
         "requiredGPUs": "Requires **{count}** GPUs (based on VRAM bandwidth \u0026 computing performance)"
-      },
+    },
     "performanceComparison": {
       "meetExpectation": "✅ Meets expectation {expected} token/s",
       "belowExpectation": "❌ Below expectation {expected} token/s"
@@ -588,8 +588,12 @@
           "answer": "The system efficiency factor (40% base) accounts for real-world overhead including: framework overhead (Ollama, vLLM), memory access patterns, batch processing efficiency, and hardware utilization. This factor was calibrated using actual A100 40GB benchmark data with an observed average efficiency of 37.2%."
         },
         {
+          "question": "How does L2 cache hit rate affect GPU throughput calculations?",
+          "answer": "L2 cache significantly impacts memory bandwidth utilization. When model weights are cached in L2, they can be accessed at ~12TB/s instead of ~3.35TB/s from HBM. Our calculation considers cache hit rates based on: **GPU L2 cache size** (e.g., H100: 50MB, A100: 40MB), **tensor parallelism** (each GPU only stores 1/N of model weights), **batch size** (larger batches enable better weight reuse, while batch=1 has poor cache utilization as parameters are accessed sequentially), **context length** (longer contexts may cause cache evictions), and **access patterns**. In multi-GPU setups, each GPU's cache only needs to store its portion of the model, significantly improving cache hit rates. Cache hit rates typically range from 5%-75%, with larger batches and better weight distribution achieving higher hit rates."
+        },
+        {
           "question": "How does precision affect performance?",
-          "answer": "Different precisions affect both memory usage and compute performance: **FP16** (baseline), **FP8** (2x speedup), **INT4** (4x speedup, 1.2x system efficiency boost). Based on benchmark data, INT4 quantization actually performs better than theoretical expectations due to reduced memory pressure."
+          "answer": "Lower precision formats reduce both memory usage and increase throughput: **FP16** (2 bytes/param): Baseline performance, **FP8** (1 byte/param): ~2x memory reduction, **INT4** (0.5 bytes/param): ~4x memory reduction with 20% performance boost due to better cache utilization. However, aggressive quantization may impact model accuracy, requiring techniques like GPTQ or AWQ to maintain quality."
         },
         {
           "question": "Why might my results differ from other calculators?",

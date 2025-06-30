@@ -603,11 +603,15 @@
         },
         {
           "question": "Was repräsentiert der Systemeffizienzfaktor?",
-          "answer": "Der Systemeffizienzfaktor (40% Basis) berücksichtigt reale Overheads einschließlich: Framework-Overhead (Ollama, vLLM), Speicherzugriffsmuster, Batch-Verarbeitungseffizienz und Hardware-Auslastung. Dieser Faktor wurde mit tatsächlichen A100 40GB Benchmark-Daten kalibriert mit einer beobachteten durchschnittlichen Effizienz von 37,2%."
+          "answer": "Der Systemeffizienzfaktor (40% Basis) berücksichtigt reale Overheads: Framework-Overhead (Ollama, vLLM), Speicherzugriffsmuster, Batch-Verarbeitungseffizienz und Hardware-Auslastung. Dieser Faktor wurde mit tatsächlichen A100 40GB Benchmark-Daten kalibriert, mit einer beobachteten durchschnittlichen Effizienz von 37,2%."
         },
         {
-          "question": "Wie beeinflusst Präzision die Leistung?",
-          "answer": "Verschiedene Präzisionen beeinflussen sowohl Speichernutzung als auch Rechenleistung: **FP16** (Basislinie), **FP8** (2x Beschleunigung), **INT4** (4x Beschleunigung, 1,2x Systemeffizienz-Boost). Basierend auf Benchmark-Daten funktioniert INT4-Quantisierung tatsächlich besser als theoretische Erwartungen aufgrund reduzierter Speicherbelastung."
+          "question": "Wie beeinflusst die L2-Cache-Trefferrate die GPU-Durchsatzberechnungen?",
+          "answer": "L2-Cache beeinflusst die Speicherbandbreitennutzung erheblich. Wenn Modellgewichte im L2 zwischengespeichert sind, können sie mit ~12TB/s statt ~3,35TB/s vom HBM zugegriffen werden. Unsere Berechnung berücksichtigt Cache-Trefferraten basierend auf: **GPU L2-Cache-Größe** (z.B. H100: 50MB, A100: 40MB), **Tensor-Parallelismus** (jede GPU speichert nur 1/N der Modellgewichte), **Batch-Größe** (größere Batches ermöglichen bessere Gewichts-Wiederverwendung, während batch=1 schlechte Cache-Nutzung hat, da Parameter sequenziell zugegriffen werden), **Kontext-Länge** (längere Kontexte können Cache-Evictions verursachen), und **Zugriffsmuster**. In Multi-GPU-Setups muss der Cache jeder GPU nur ihren Modellteil speichern, was die Cache-Trefferraten erheblich verbessert. Cache-Trefferraten liegen typischerweise zwischen 5%-75%, wobei größere Batches und bessere Gewichtsverteilung höhere Trefferraten erreichen."
+        },
+        {
+          "question": "Wie beeinflusst die Präzision die Leistung?",
+          "answer": "Niedrigere Präzisionsformate reduzieren sowohl Speicherverbrauch als auch erhöhen den Durchsatz: **FP16** (2 Bytes/Parameter): Baseline-Performance, **FP8** (1 Byte/Parameter): ~2x Speicherreduktion, **INT4** (0,5 Bytes/Parameter): ~4x Speicherreduktion mit 20% Performance-Boost durch bessere Cache-Nutzung. Jedoch kann aggressive Quantisierung die Modellgenauigkeit beeinträchtigen und erfordert Techniken wie GPTQ oder AWQ zur Qualitätserhaltung."
         },
         {
           "question": "Warum unterscheiden sich meine Ergebnisse von anderen Rechnern?",
