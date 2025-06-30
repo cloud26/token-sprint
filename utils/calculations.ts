@@ -351,7 +351,7 @@ function calculateSystemEfficiency(
   }
 
   // 推理框架开销（SGLang、vLLM等现代框架优化很好）
-  systemEfficiency *= 0.92 // 推理框架开销降低至8%，基于SGLang等高性能框架
+  systemEfficiency *= 0.85 // 推理框架开销15%，基于SGLang等高性能框架
 
   return systemEfficiency
 }
