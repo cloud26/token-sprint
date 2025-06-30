@@ -438,12 +438,7 @@ function calculateL2CacheHitRate(
     cacheHitRate = 1 - 1 / batchSize  // 2用户=50%, 4用户=75%, 10用户=90%
   }
   
-  // 精度加成：低精度模型缓存效果更好
-  if (precision === 'FP8' || precision === 'INT8') {
-    cacheHitRate += 0.05 // FP8/INT8额外+5%命中率
-  } else if (precision === 'INT4') {
-    cacheHitRate += 0.08 // INT4额外+8%命中率
-  }
+  // 精度对缓存命中率影响不大，保持公式简洁
   
   // 确保命中率在合理范围内 [0.0, 0.95]
   return Math.max(0.0, Math.min(0.95, cacheHitRate))
