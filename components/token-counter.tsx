@@ -87,6 +87,7 @@ const models: ModelInfo[] = [
     { value: "gemini-pro", label: "Gemini Pro ⚠️", encoding: "gpt-4" },
 
     // Qwen 系列 - 使用官方 tokenizer
+    { value: "qwen3-coder-480b", label: "Qwen3-Coder-480B-A35B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen3-235b", label: "Qwen3-235B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen2.5-72b", label: "Qwen2.5-72B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen2.5-32b", label: "Qwen2.5-32B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },

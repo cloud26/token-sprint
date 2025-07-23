@@ -95,7 +95,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
             if (
                 (preferredModelType === 'deepseek' && modelName.includes('deepseek')) ||
                 (preferredModelType === 'llama' && modelName.includes('llama')) ||
-                (preferredModelType === 'qwen' && modelName.includes('qwen')) ||
+                (preferredModelType === 'qwen' && (modelName.includes('qwen') || modelName.includes('Qwen3-Coder'))) ||
                 (preferredModelType === 'claude' && modelName.includes('claude')) ||
                 (preferredModelType === 'gemini' && modelName.includes('gemini'))
             ) {
@@ -115,7 +115,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
         const defaultModels: Record<string, string> = {
             'deepseek': 'DeepSeek-R1',
             'llama': 'Llama 4 Scout',
-            'qwen': 'Qwen3-235B-A22B',
+            'qwen': 'Qwen3-Coder-480B-A35B',
             'claude': 'DeepSeek-R1', // Claude模型不在modelExamples中，使用默认
             'gemini': 'DeepSeek-R1'  // Gemini模型不在modelExamples中，使用默认
         }
@@ -331,147 +331,146 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                 role="main"
             >
                 <CardContent className="p-4 space-y-3">
-                    {/* Model Selection 和 Model Parameters 放在同一行 */}
-                    <div className="grid grid-cols-2 gap-3">
-                        <div className="space-y-1">
-                            <div className="flex items-center gap-2">
-                                <Label className="text-sm">{t('modelSelection.label')}</Label>
-                                <Tooltip>
-                                    <TooltipTrigger>
-                                        <InfoIcon className="h-3 w-3 text-muted-foreground" />
-                                    </TooltipTrigger>
-                                    <TooltipContent className="max-w-xs">
-                                        <div className="space-y-2">
-                                            <p className="font-medium">{t('modelSelection.tooltip.title')}</p>
-                                            {t.raw('modelSelection.tooltip.features').map((feature: string, index: number) => (
-                                                <p key={index} className="text-xs">• {feature}</p>
-                                            ))}
-                                        </div>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </div>
-                            <Popover open={modelPopoverOpen} onOpenChange={setModelPopoverOpen}>
-                                <PopoverTrigger asChild>
-                                    <Button variant="outline" role="combobox" className="w-full justify-between text-sm">
-                                        <div className="flex items-center gap-2 min-w-0">
-                                            {selectedModel ? (
-                                                <>
-                                                    <span className="truncate">{selectedModel}</span>
-                                                    {(() => {
-                                                        const currentModel = MODELS.find(m => m.name === selectedModel);
-                                                        return currentModel?.isMoE && (
-                                                            <span className="px-1.5 py-0.5 text-xs bg-orange-100 text-orange-700 rounded-md font-medium flex-shrink-0">
-                                                                MoE
-                                                            </span>
-                                                        );
-                                                    })()}
-                                                </>
-                                            ) : (
-                                                <span>{t('modelSelection.placeholder')}</span>
-                                            )}
-                                        </div>
-                                        <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
-                                    <Command>
-                                        <CommandInput placeholder={t('modelSelection.searchPlaceholder')} />
-                                        <CommandList>
-                                            <CommandEmpty>{t('modelSelection.notFound')}</CommandEmpty>
-                                            {/* 按系列分组显示模型 */}
-                                            {(() => {
-                                                // 使用配置中的分组信息，这已经包含了正确的排序
-                                                const allGroups = getModelsByGroup();
+                    {/* Model Selection - 单独一行 */}
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                            <Label className="text-sm">{t('modelSelection.label')}</Label>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <InfoIcon className="h-3 w-3 text-muted-foreground" />
+                                </TooltipTrigger>
+                                <TooltipContent className="max-w-xs">
+                                    <div className="space-y-2">
+                                        <p className="font-medium">{t('modelSelection.tooltip.title')}</p>
+                                        {t.raw('modelSelection.tooltip.features').map((feature: string, index: number) => (
+                                            <p key={index} className="text-xs">• {feature}</p>
+                                        ))}
+                                    </div>
+                                </TooltipContent>
+                            </Tooltip>
+                        </div>
+                        <Popover open={modelPopoverOpen} onOpenChange={setModelPopoverOpen}>
+                            <PopoverTrigger asChild>
+                                <Button variant="outline" role="combobox" className="w-full justify-between text-sm">
+                                    <div className="flex items-center gap-2 min-w-0">
+                                        {selectedModel ? (
+                                            <>
+                                                <span className="truncate">{selectedModel}</span>
+                                                {(() => {
+                                                    const currentModel = MODELS.find(m => m.name === selectedModel);
+                                                    return currentModel?.isMoE && (
+                                                        <span className="px-1.5 py-0.5 text-xs bg-orange-100 text-orange-700 rounded-md font-medium flex-shrink-0">
+                                                            MoE
+                                                        </span>
+                                                    );
+                                                })()}
+                                            </>
+                                        ) : (
+                                            <span>{t('modelSelection.placeholder')}</span>
+                                        )}
+                                    </div>
+                                    <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
+                                <Command>
+                                    <CommandInput placeholder={t('modelSelection.searchPlaceholder')} />
+                                    <CommandList>
+                                        <CommandEmpty>{t('modelSelection.notFound')}</CommandEmpty>
+                                        {/* 按系列分组显示模型 */}
+                                        {(() => {
+                                            // 使用配置中的分组信息，这已经包含了正确的排序
+                                            const allGroups = getModelsByGroup();
 
-                                                // 如果有优先类型，调整系列的显示顺序
-                                                let seriesOrder = Object.keys(allGroups);
-                                                if (preferredModelType) {
-                                                    const preferredSeries: string[] = [];
-                                                    const otherSeries: string[] = [];
+                                            // 如果有优先类型，调整系列的显示顺序
+                                            let seriesOrder = Object.keys(allGroups);
+                                            if (preferredModelType) {
+                                                const preferredSeries: string[] = [];
+                                                const otherSeries: string[] = [];
 
-                                                    seriesOrder.forEach(series => {
-                                                        const seriesLower = series.toLowerCase();
-                                                        if (
-                                                            (preferredModelType === 'deepseek' && seriesLower.includes('deepseek')) ||
-                                                            (preferredModelType === 'llama' && seriesLower.includes('llama')) ||
-                                                            (preferredModelType === 'qwen' && seriesLower.includes('qwen'))
-                                                        ) {
-                                                            preferredSeries.push(series);
-                                                        } else {
-                                                            otherSeries.push(series);
-                                                        }
-                                                    });
+                                                seriesOrder.forEach(series => {
+                                                    const seriesLower = series.toLowerCase();
+                                                    if (
+                                                        (preferredModelType === 'deepseek' && seriesLower.includes('deepseek')) ||
+                                                        (preferredModelType === 'llama' && seriesLower.includes('llama')) ||
+                                                        (preferredModelType === 'qwen' && (seriesLower.includes('qwen') || seriesLower.includes('qwen 3')))
+                                                    ) {
+                                                        preferredSeries.push(series);
+                                                    } else {
+                                                        otherSeries.push(series);
+                                                    }
+                                                });
 
-                                                    seriesOrder = [...preferredSeries, ...otherSeries];
-                                                }
+                                                seriesOrder = [...preferredSeries, ...otherSeries];
+                                            }
 
-                                                return seriesOrder.map(series => (
-                                                    <CommandGroup key={series} heading={series}>
-                                                        {allGroups[series].map((model) => (
-                                                            <CommandItem
-                                                                key={model.name}
-                                                                value={model.name}
-                                                                onSelect={(currentValue) => {
-                                                                    handleModelChange(currentValue === selectedModel ? "" : currentValue)
-                                                                    setModelPopoverOpen(false)
-                                                                }}
-                                                                className="flex flex-col items-start py-2 px-3 hover:bg-slate-50"
-                                                            >
-                                                                <div className="flex items-center w-full">
-                                                                    <Check
-                                                                        className={cn(
-                                                                            "mr-2 h-3 w-3 flex-shrink-0",
-                                                                            selectedModel === model.name ? "opacity-100" : "opacity-0",
-                                                                        )}
-                                                                    />
-                                                                    <div className="flex-1 min-w-0">
-                                                                        <div className="flex items-center justify-between w-full">
-                                                                            <div className="flex items-center gap-2 min-w-0">
-                                                                                <span className="font-medium text-sm truncate">{model.name}</span>
-                                                                                {model.isMoE && (
-                                                                                    <span className="px-1.5 py-0.5 text-xs bg-orange-100 text-orange-700 rounded-md font-medium flex-shrink-0">
-                                                                                        MoE
-                                                                                    </span>
-                                                                                )}
-                                                                            </div>
-                                                                            <span className="text-xs text-blue-600 ml-2 flex-shrink-0">{model.parameters}</span>
+                                            return seriesOrder.map(series => (
+                                                <CommandGroup key={series} heading={series}>
+                                                    {allGroups[series].map((model) => (
+                                                        <CommandItem
+                                                            key={model.name}
+                                                            value={model.name}
+                                                            onSelect={(currentValue) => {
+                                                                handleModelChange(currentValue === selectedModel ? "" : currentValue)
+                                                                setModelPopoverOpen(false)
+                                                            }}
+                                                            className="flex flex-col items-start py-2 px-3 hover:bg-slate-50"
+                                                        >
+                                                            <div className="flex items-center w-full">
+                                                                <Check
+                                                                    className={cn(
+                                                                        "mr-2 h-3 w-3 flex-shrink-0",
+                                                                        selectedModel === model.name ? "opacity-100" : "opacity-0",
+                                                                    )}
+                                                                />
+                                                                <div className="flex-1 min-w-0">
+                                                                    <div className="flex items-center justify-between w-full">
+                                                                        <div className="flex items-center gap-2 min-w-0">
+                                                                            <span className="font-medium text-sm truncate">{model.name}</span>
+                                                                            {model.isMoE && (
+                                                                                <span className="px-1.5 py-0.5 text-xs bg-orange-100 text-orange-700 rounded-md font-medium flex-shrink-0">
+                                                                                    MoE
+                                                                                </span>
+                                                                            )}
                                                                         </div>
+                                                                        <span className="text-xs text-blue-600 ml-2 flex-shrink-0">{model.parameters}</span>
                                                                     </div>
                                                                 </div>
-                                                            </CommandItem>
-                                                        ))}
-                                                    </CommandGroup>
-                                                ));
-                                            })()}
-                                        </CommandList>
-                                    </Command>
-                                </PopoverContent>
-                            </Popover>
-                        </div>
+                                                            </div>
+                                                        </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                            ));
+                                        })()}
+                                    </CommandList>
+                                </Command>
+                            </PopoverContent>
+                        </Popover>
+                    </div>
 
-                        <div className="space-y-1">
-                            <div className="flex items-center gap-2">
-                                <Label htmlFor="parameters" className="text-sm">
-                                    {t('parameters.label')}
-                                </Label>
-                                <Tooltip>
-                                    <TooltipTrigger>
-                                        <InfoIcon className="h-3 w-3 text-muted-foreground" />
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <p>{t('parameters.tooltip')}</p>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </div>
-                            <Input
-                                id="parameters"
-                                type="text"
-                                value={parameters}
-                                onChange={(e) => handleParameterChange(e.target.value)}
-                                className="text-sm"
-                                placeholder={t('parameters.placeholder')}
-                            />
+                    {/* Model Parameters - 单独一行 */}
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                            <Label htmlFor="parameters" className="text-sm">
+                                {t('parameters.label')}
+                            </Label>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <InfoIcon className="h-3 w-3 text-muted-foreground" />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>{t('parameters.tooltip')}</p>
+                                </TooltipContent>
+                            </Tooltip>
                         </div>
+                        <Input
+                            id="parameters"
+                            type="text"
+                            value={parameters}
+                            onChange={(e) => handleParameterChange(e.target.value)}
+                            className="text-sm"
+                            placeholder={t('parameters.placeholder')}
+                        />
                     </div>
 
                     {/* 精度和上下文长度放在同一行 */}
@@ -907,6 +906,19 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                         <button
                                             className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                             onClick={() => {
+                                                setSelectedModel("Qwen3-Coder-480B-A35B")
+                                                setParameters("480")
+                                                setPrecision("FP8")
+                                                setGpuModel("NVIDIA H100 (80GB)")
+                                                setBatchSize("2")
+                                                setContextLength("4096")
+                                            }}
+                                        >
+                                            Qwen3-Coder 480B
+                                        </button>
+                                        <button
+                                            className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
+                                            onClick={() => {
                                                 setSelectedModel("Qwen3-235B-A22B")
                                                 setParameters("235")
                                                 setPrecision("FP8")
@@ -1020,9 +1032,9 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                     {/* FAQ 部分 */}
                     <section className="mt-6">
                         <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                            <h3 className="text-lg font-semibold text-slate-800 mb-4">
+                            <h2 className="text-lg font-semibold text-slate-800 mb-4">
                                 {t('faq.title')}
-                            </h3>
+                            </h2>
                             <div className="space-y-3">
                                 {t.raw('faq.items').map((item: { question: string; answer: string }, index: number) => (
                                     <div key={index} className="bg-white rounded-lg border border-slate-200 overflow-hidden">

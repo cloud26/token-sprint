@@ -1523,6 +1523,20 @@ export const MODELS: ModelInfo[] = [
 
   // Qwen 系列 (开源可私有化部署)
   {
+    name: "Qwen3-Coder-480B-A35B",
+    parameters: "480B",
+    parametersNum: 480,
+    value: "qwen3-coder-480b-a35b",
+    d_model: 6144,
+    n_layers: 94,
+    activeParams: 35,
+    isMoE: true,
+    source: "Qwen3-Coder technical report - most powerful agentic coding model",
+    verificationUrl: "https://huggingface.co/Qwen/Qwen3-Coder-480B-A35B-Instruct",
+    series: "Qwen 3",
+    category: "代码专用",
+  },
+  {
     name: "Qwen3-235B-A22B",
     parameters: "235B",
     parametersNum: 235,
