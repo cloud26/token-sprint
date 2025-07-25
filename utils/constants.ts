@@ -89,7 +89,7 @@ export const gpuModels: GPUModel[] = [
     name: "NVIDIA L20",
     memory: 48,
     memoryBandwidthInGB: 864,
-    fp16Tflops: 120,  
+    fp16Tflops: 120,
     architecture: "Ada Lovelace",
     releaseYear: 2023,
   },
@@ -139,94 +139,121 @@ export const gpuModels: GPUModel[] = [
     name: "NVIDIA RTX 5090",
     memory: 32,
     memoryBandwidthInGB: 2304,
-    fp16Tflops: 1049,
+    fp16Tflops: 120.0,
     architecture: "Blackwell",
     category: "消费级",
     releaseYear: 2025,
-  },
+  }, // Estimated based on RTX 4090 with ~45% improvement
   {
     name: "NVIDIA RTX 5080",
     memory: 16,
     memoryBandwidthInGB: 672,
-    fp16Tflops: 563,
+    fp16Tflops: 75.0,
     architecture: "Blackwell",
     category: "消费级",
     releaseYear: 2025,
-  },
+  }, // Estimated based on RTX 4080 with ~50% improvement
   {
     name: "NVIDIA RTX 5070 Ti",
     memory: 16,
     memoryBandwidthInGB: 896,
-    fp16Tflops: 439,
+    fp16Tflops: 60.0,
     architecture: "Blackwell",
     category: "消费级",
     releaseYear: 2025,
-  },
+  }, // Estimated based on RTX 4070 Ti with ~50% improvement
   {
     name: "NVIDIA RTX 5070",
     memory: 12,
     memoryBandwidthInGB: 672,
-    fp16Tflops: 308,
+    fp16Tflops: 45.0,
     architecture: "Blackwell",
     category: "消费级",
     releaseYear: 2025,
-  },
+  }, // Estimated based on RTX 4070 with ~54% improvement
+  {
+    name: "NVIDIA RTX 5080 SUPER",
+    memory: 20,
+    memoryBandwidthInGB: 896,
+    fp16Tflops: 85.0,
+    architecture: "Blackwell",
+    category: "消费级",
+    releaseYear: 2025,
+  }, // Estimated based on RTX 4080 SUPER with ~63% improvement
+  {
+    name: "NVIDIA RTX 5070 Ti SUPER",
+    memory: 16,
+    memoryBandwidthInGB: 672,
+    fp16Tflops: 65.0,
+    architecture: "Blackwell",
+    category: "消费级",
+    releaseYear: 2025,
+  }, // Estimated based on RTX 4070 Ti SUPER with ~62% improvement
+  {
+    name: "NVIDIA RTX 5070 SUPER",
+    memory: 12,
+    memoryBandwidthInGB: 576,
+    fp16Tflops: 50.0,
+    architecture: "Blackwell",
+    category: "消费级",
+    releaseYear: 2025,
+  }, // Estimated based on RTX 4070 SUPER with ~71% improvement
 
   // NVIDIA RTX 4000系列
   {
     name: "NVIDIA RTX 4090",
     memory: 24,
     memoryBandwidthInGB: 1008,
-    fp16Tflops: 330.3,
+    fp16Tflops: 82.58,
     architecture: "Ada Lovelace",
     category: "消费级",
     releaseYear: 2022,
-  }, // Dense Tensor performance
+  }, // FP16 performance from TechPowerUp
   {
     name: "NVIDIA RTX 4080 SUPER",
     memory: 16,
     memoryBandwidthInGB: 736.3,
-    fp16Tflops: 194.9,
+    fp16Tflops: 52.2,
     architecture: "Ada Lovelace",
     category: "消费级",
     releaseYear: 2024,
-  }, // Estimated based on RTX 4080
+  }, // FP16 performance from TechPowerUp
   {
     name: "NVIDIA RTX 4080",
     memory: 16,
     memoryBandwidthInGB: 716.8,
-    fp16Tflops: 194.9,
+    fp16Tflops: 49.9,
     architecture: "Ada Lovelace",
     category: "消费级",
     releaseYear: 2022,
-  }, // Dense Tensor performance
+  }, // FP16 performance from TechPowerUp
   {
     name: "NVIDIA RTX 4070 Ti Super",
     memory: 16,
     memoryBandwidthInGB: 672.3,
-    fp16Tflops: 44.1,
+    fp16Tflops: 40.1,
     architecture: "Ada Lovelace",
     category: "消费级",
     releaseYear: 2024,
-  }, // Dense Tensor performance
+  }, // FP16 performance from TechPowerUp
   {
     name: "NVIDIA RTX 4070 Ti",
     memory: 12,
     memoryBandwidthInGB: 504,
-    fp16Tflops: 40.09,
+    fp16Tflops: 40.1,
     architecture: "Ada Lovelace",
     category: "消费级",
     releaseYear: 2023,
-  }, // Dense Tensor performance
+  }, // FP16 performance from TechPowerUp
   {
     name: "NVIDIA RTX 4070",
     memory: 12,
     memoryBandwidthInGB: 504,
-    fp16Tflops: 29.15,
+    fp16Tflops: 29.2,
     architecture: "Ada Lovelace",
     category: "消费级",
     releaseYear: 2023,
-  }, // Dense Tensor performance
+  }, // FP16 performance from TechPowerUp
   {
     name: "NVIDIA RTX 4060 Ti (16GB)",
     memory: 16,
@@ -259,47 +286,47 @@ export const gpuModels: GPUModel[] = [
     name: "NVIDIA RTX 3090 Ti",
     memory: 24,
     memoryBandwidthInGB: 1008,
-    fp16Tflops: 321,
+    fp16Tflops: 78.0,
     architecture: "Ampere",
     category: "消费级",
     releaseYear: 2022,
-  },
+  }, // FP16 performance from TechPowerUp
   {
     name: "NVIDIA RTX 3090",
     memory: 24,
     memoryBandwidthInGB: 936.2,
-    fp16Tflops: 285,
+    fp16Tflops: 71.0,
     architecture: "Ampere",
     category: "消费级",
     releaseYear: 2020,
-  },
+  }, // FP16 performance from TechPowerUp
   {
     name: "NVIDIA RTX 3080 Ti",
     memory: 12,
     memoryBandwidthInGB: 912.4,
-    fp16Tflops: 273,
+    fp16Tflops: 67.0,
     architecture: "Ampere",
     category: "消费级",
     releaseYear: 2021,
-  },
+  }, // FP16 performance from TechPowerUp
   {
     name: "NVIDIA RTX 3080",
     memory: 10,
     memoryBandwidthInGB: 760,
-    fp16Tflops: 238,
+    fp16Tflops: 58.0,
     architecture: "Ampere",
     category: "消费级",
     releaseYear: 2020,
-  },
+  }, // FP16 performance from TechPowerUp
   {
     name: "NVIDIA RTX 3070 Ti",
     memory: 8,
     memoryBandwidthInGB: 608,
-    fp16Tflops: 163,
+    fp16Tflops: 40.0,
     architecture: "Ampere",
     category: "消费级",
     releaseYear: 2021,
-  },
+  }, // FP16 performance from TechPowerUp
 
   // NVIDIA Tesla/数据中心系列
   {
@@ -677,39 +704,39 @@ export const gpuModels: GPUModel[] = [
   {
     name: "AMD Radeon RX 7900 XTX",
     memory: 24,
-    fp16Tflops: 100,
+    fp16Tflops: 61.4,
     architecture: "RDNA 3",
     category: "消费级",
     releaseYear: 2022,
     memoryBandwidthInGB: 960,
-  },
+  }, // FP16 performance from TechPowerUp
   {
     name: "AMD Radeon RX 7900 XT",
     memory: 20,
-    fp16Tflops: 85,
+    fp16Tflops: 52.0,
     architecture: "RDNA 3",
     category: "消费级",
     releaseYear: 2022,
     memoryBandwidthInGB: 800,
-  },
+  }, // FP16 performance from TechPowerUp
   {
     name: "AMD Radeon RX 7800 XT",
     memory: 16,
-    fp16Tflops: 70,
+    fp16Tflops: 37.4,
     architecture: "RDNA 3",
     category: "消费级",
     releaseYear: 2023,
     memoryBandwidthInGB: 624,
-  },
+  }, // FP16 performance from TechPowerUp
   {
     name: "AMD Radeon RX 7700 XT",
     memory: 12,
-    fp16Tflops: 60,
+    fp16Tflops: 32.0,
     architecture: "RDNA 3",
     category: "消费级",
     releaseYear: 2023,
     memoryBandwidthInGB: 432,
-  },
+  }, // FP16 performance from TechPowerUp
   {
     name: "AMD Radeon RX 7600 XT",
     memory: 16,
@@ -740,21 +767,21 @@ export const gpuModels: GPUModel[] = [
   {
     name: "AMD Radeon RX 6900 XT",
     memory: 16,
-    fp16Tflops: 45,
+    fp16Tflops: 23.0,
     architecture: "RDNA 2",
     category: "消费级",
     releaseYear: 2020,
     memoryBandwidthInGB: 512,
-  },
+  }, // FP16 performance from TechPowerUp
   {
     name: "AMD Radeon RX 6800 XT",
     memory: 16,
-    fp16Tflops: 40,
+    fp16Tflops: 20.7,
     architecture: "RDNA 2",
     category: "消费级",
     releaseYear: 2020,
     memoryBandwidthInGB: 512,
-  },
+  }, // FP16 performance from TechPowerUp
   {
     name: "AMD Radeon RX 6800",
     memory: 16,

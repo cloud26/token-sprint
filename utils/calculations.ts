@@ -144,7 +144,7 @@ function calcComputationMemory(
 // 计算KV Cache每个token的大小 (GB) - 精确公式
 function calcKvCacheSizePerToken(n_layers: number, d_model: number, precision: string = "FP16"): number {
   const BYTES_IN_GB = 1_073_741_824
-  
+
   // 根据模型精度确定KV Cache的字节数
   // 现代推理框架通常会对KV Cache使用与模型相同或更低的精度
   let kvCacheBytes = 2 // 默认FP16
@@ -155,15 +155,15 @@ function calcKvCacheSizePerToken(n_layers: number, d_model: number, precision: s
   } else if (precision === "FP32") {
     kvCacheBytes = 4 // FP32模型
   }
-  
+
   // 公式: 2 (key + value) * kvCacheBytes * n_layers * d_model
   const theoreticalSize = (2 * kvCacheBytes * n_layers * d_model) / BYTES_IN_GB
-  
+
   // 应用实际推理框架的优化因子
   // 基于SGLang、vLLM等框架的实际表现，KV Cache有显著优化
   // 参考SGLang在L20上成功运行Qwen3-32B的表现
   const optimizationFactor = 0.6 // 40%的优化空间，包括压缩、量化、分页等
-  
+
   return theoreticalSize * optimizationFactor
 }
 
@@ -381,24 +381,24 @@ function calculateMultiGpuThroughput(
 
   // 2. 内存带宽限制：考虑L2缓存命中率的影响
   const modelWeightBytesPerGpu = (effectiveParams * 1e9 * bytesPerParam) / requiredGPUs
-  
+
   // L2缓存命中率计算 - 基于模型大小和访问模式
   // 参考：arXiv:2504.06319 "Accelerating LLM Inference Throughput via Asynchronous KV Cache Prefetching"
   // 以及实际GPU基准测试数据
   const l2CacheHitRate = calculateL2CacheHitRate(effectiveParams, batchSize, contextLength, gpuModel, requiredGPUs, precision)
-  
+
   // 有效内存访问量 = 总访问量 × (1 - 缓存命中率)
   // 缓存命中的数据从L2缓存读取（速度更快），缓存未命中的数据从HBM读取
   const effectiveMemoryAccessRatio = 1 - l2CacheHitRate
-  
+
   // 主要的内存带宽消耗：模型权重读取（考虑缓存命中率）
   // 只有缓存未命中的访问才会消耗HBM带宽
   const memoryAccessPerGpuPerToken = modelWeightBytesPerGpu * effectiveMemoryAccessRatio
   const memoryAccessGBPerGpuPerToken = memoryAccessPerGpuPerToken / 1e9
-  
+
   // 单GPU的内存带宽限制吞吐量
   const singleGpuMemoryThroughput = memoryBandwidthGB / memoryAccessGBPerGpuPerToken
-  
+
   // 多GPU的聚合内存带宽吞吐量（考虑GPU间通信开销）
   const interGpuCommEfficiency = calculateInterGpuCommEfficiency(requiredGPUs)
   const aggregateMemoryThroughput = singleGpuMemoryThroughput * requiredGPUs * interGpuCommEfficiency
@@ -420,16 +420,16 @@ function calculateMultiGpuThroughput(
 
 // 计算L2缓存命中率 - 基于模型大小、批次大小和访问模式
 function calculateL2CacheHitRate(
-  activeParams: number, 
-  batchSize: number, 
-  contextLength: number, 
+  activeParams: number,
+  batchSize: number,
+  contextLength: number,
   gpuModel: string,
   requiredGPUs: number = 1,
   precision: string = "FP16"
 ): number {
   // 基于并发数的缓存命中率：反映权重访问重叠概率
   // 逻辑：N个用户同时访问，权重复用的概率增加
-  
+
   let cacheHitRate: number
   if (batchSize === 1) {
     cacheHitRate = 0.0  // 单用户没有缓存复用
@@ -437,9 +437,9 @@ function calculateL2CacheHitRate(
     // 多用户时，缓存命中率约等于 (N-1)/N，但考虑实际访问模式
     cacheHitRate = 1 - 1 / batchSize  // 2用户=50%, 4用户=75%, 10用户=90%
   }
-  
+
   // 精度对缓存命中率影响不大，保持公式简洁
-  
+
   // 确保命中率在合理范围内 [0.0, 0.95]
   return Math.max(0.0, Math.min(0.95, cacheHitRate))
 }
@@ -452,26 +452,29 @@ function getGpuL2CacheSize(gpuModel: string): number {
     'NVIDIA H200': 114, // 114MB L2 cache
     'NVIDIA H100': 50,  // 50MB L2 cache  
     'NVIDIA H20': 48,   // 48MB L2 cache
-    
+
     // NVIDIA Ampere架构
     'NVIDIA A100 (80GB)': 40, // 40MB L2 cache
     'NVIDIA A100 (40GB)': 40,
     'NVIDIA A40': 6,
     'NVIDIA A30': 24,
     'NVIDIA A10': 6,
-    
+
     // NVIDIA Ada Lovelace架构
     'NVIDIA RTX 6000 Ada': 96,
     'NVIDIA RTX 5000 Ada': 64,
     'NVIDIA RTX 4000 Ada': 36,
     'NVIDIA RTX 3000 Ada': 24,
-    
+
     // NVIDIA RTX 5000系列
     'NVIDIA RTX 5090': 128,
+    'NVIDIA RTX 5080 SUPER': 96,
     'NVIDIA RTX 5080': 64,
+    'NVIDIA RTX 5070 Ti SUPER': 64,
     'NVIDIA RTX 5070 Ti': 48,
+    'NVIDIA RTX 5070 SUPER': 48,
     'NVIDIA RTX 5070': 36,
-    
+
     // NVIDIA RTX 4000系列
     'NVIDIA RTX 4090': 72,
     'NVIDIA RTX 4080 SUPER': 64,
@@ -482,35 +485,35 @@ function getGpuL2CacheSize(gpuModel: string): number {
     'NVIDIA RTX 4060 Ti (16GB)': 32,
     'NVIDIA RTX 4060 Ti (8GB)': 32,
     'NVIDIA RTX 4060': 24,
-    
+
     // NVIDIA RTX 3000系列
     'NVIDIA RTX 3090 Ti': 6,
     'NVIDIA RTX 3090': 6,
     'NVIDIA RTX 3080 Ti': 6,
     'NVIDIA RTX 3080': 5,
     'NVIDIA RTX 3070 Ti': 4,
-    
+
     // AMD数据中心
     'AMD Instinct MI300X': 256, // 256MB L2 cache
     'AMD Instinct MI250X': 8,
     'AMD Instinct MI100': 8,
-    
+
     // Apple Silicon
     'Apple M4 Max (128GB)': 32,
     'Apple M4 Max (64GB)': 32,
     'Apple M4 Max (36GB)': 32,
-    
+
     // 默认值
     'default': 32
   }
-  
+
   return l2CacheSizes[gpuModel] || l2CacheSizes['default']
 }
 
 // 计算GPU间通信效率
 function calculateInterGpuCommEfficiency(gpus: number): number {
   if (gpus === 1) return 1.0
-  
+
   // 基于现代GPU互联技术（NVLink, InfiniBand等）的实际性能
   if (gpus <= 2) {
     return 0.95 // 2卡NVLink效率很高
@@ -525,7 +528,7 @@ function calculateInterGpuCommEfficiency(gpus: number): number {
   } else {
     return Math.max(0.70, 0.75 - (gpus - 32) * 0.005) // 超大规模，效率进一步下降
   }
-  }
+}
 
 // 保留原有的并行效率函数作为备用（兼容性）
 function calculateParallelEfficiency(gpus: number): number {
@@ -539,7 +542,7 @@ function calcKvCacheBytesPerToken(parameters: number, selectedModel?: string): n
   // 获取模型架构信息
   const architectureInfo = getModelArchitectureInfo(parameters, selectedModel)
   const { d_model, n_layers } = architectureInfo
-  
+
   // KV Cache: 2 (key + value) * 2 (FP16字节数) * n_layers * d_model
   return 2 * 2 * n_layers * d_model
 }
