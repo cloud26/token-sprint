@@ -327,14 +327,14 @@ function calculateSystemEfficiency(
   // vLLM在高并发下表现优异，移除过于保守的基础效率限制
   let systemEfficiency = 1.0 // 移除基础效率限制，从理论峰值开始计算
 
-  // 批次大小对效率的影响
-  if (batchSize >= 32) {
-    systemEfficiency *= 1.2 // 大批次提高效率
-  } else if (batchSize >= 8) {
-    systemEfficiency *= 1.1
-  } else if (batchSize === 1) {
-    systemEfficiency *= 0.7 // 单用户时效率较低
-  }
+  // 批次大小对效率的影响，这里不再考虑
+  // if (batchSize >= 32) {
+  //   systemEfficiency *= 1.2 // 大批次提高效率
+  // } else if (batchSize >= 8) {
+  //   systemEfficiency *= 1.1
+  // } else if (batchSize === 1) {
+  //   systemEfficiency *= 0.7 // 单用户时效率较低
+  // }
 
   // 上下文长度对效率的影响
   if (contextLength > 32768) {
@@ -356,7 +356,7 @@ function calculateSystemEfficiency(
   return systemEfficiency
 }
 
-// 计算多GPU聚合吞吐量 - 考虑模型并行和数据并行的区别
+// 计算多GPU聚合吞吐量 - 正确的计算逻辑
 function calculateMultiGpuThroughput(
   parameters: number,
   activeParams: number,
@@ -374,37 +374,42 @@ function calculateMultiGpuThroughput(
   const bytesPerParam = PRECISION_BYTES[precision] || 2
   const effectiveParams = activeParams
 
-  // 1. 计算限制：多GPU情况下计算能力线性叠加
+  // 1. 计算限制的总吞吐量（固定值，不受并发影响）
   const flopsPerTokenInBillions = 2 * effectiveParams
   const totalComputeTflops = computeTflops * requiredGPUs * precisionMultiplier
   const computeBoundThroughput = (totalComputeTflops * 1000) / flopsPerTokenInBillions
 
-  // 2. 内存带宽限制：考虑L2缓存命中率的影响
+  // 2. 内存带宽限制的总吞吐量（受并发影响）
   const modelWeightBytesPerGpu = (effectiveParams * 1e9 * bytesPerParam) / requiredGPUs
 
-  // L2缓存命中率计算 - 基于模型大小和访问模式
-  // 参考：arXiv:2504.06319 "Accelerating LLM Inference Throughput via Asynchronous KV Cache Prefetching"
-  // 以及实际GPU基准测试数据
-  const l2CacheHitRate = calculateL2CacheHitRate(effectiveParams, batchSize, contextLength, gpuModel, requiredGPUs, precision)
-
-  // 有效内存访问量 = 总访问量 × (1 - 缓存命中率)
-  // 缓存命中的数据从L2缓存读取（速度更快），缓存未命中的数据从HBM读取
-  const effectiveMemoryAccessRatio = 1 - l2CacheHitRate
-
-  // 主要的内存带宽消耗：模型权重读取（考虑缓存命中率）
-  // 只有缓存未命中的访问才会消耗HBM带宽
-  const memoryAccessPerGpuPerToken = modelWeightBytesPerGpu * effectiveMemoryAccessRatio
+  // 2.1 先计算单用户的基础内存吞吐量
+  const memoryAccessPerGpuPerToken = modelWeightBytesPerGpu
   const memoryAccessGBPerGpuPerToken = memoryAccessPerGpuPerToken / 1e9
-
-  // 单GPU的内存带宽限制吞吐量
   const singleGpuMemoryThroughput = memoryBandwidthGB / memoryAccessGBPerGpuPerToken
-
-  // 多GPU的聚合内存带宽吞吐量（考虑GPU间通信开销）
   const interGpuCommEfficiency = calculateInterGpuCommEfficiency(requiredGPUs)
-  const aggregateMemoryThroughput = singleGpuMemoryThroughput * requiredGPUs * interGpuCommEfficiency
+  const baseMemoryThroughput = singleGpuMemoryThroughput * requiredGPUs * interGpuCommEfficiency
 
-  // 3. 实际吞吐量受限于计算和内存带宽的较小值
-  const theoreticalThroughput = Math.min(computeBoundThroughput, aggregateMemoryThroughput)
+  let memoryBoundThroughput: number
+
+  if (batchSize === 1) {
+    // 2.1 单用户情况：直接使用基础内存吞吐量
+    memoryBoundThroughput = baseMemoryThroughput
+  } else {
+    // 2.2 多用户情况：在单用户基础上应用缓存收益系数
+    const l2CacheHitRate = calculateL2CacheHitRate(effectiveParams, batchSize, contextLength, gpuModel, requiredGPUs, precision)
+    
+    // 缓存命中率转换为吞吐量提升系数
+    // 命中率X% → 内存访问减少X% → 吞吐量提升 = 1/(1-X)
+    const cacheEfficiencyBonus = 1 / (1 - l2CacheHitRate)
+    const maxBonus = cacheEfficiencyBonus
+    
+    memoryBoundThroughput = baseMemoryThroughput * maxBonus
+  }
+
+  // console.log("memoryBoundThroughput", memoryBoundThroughput)
+  // console.log("computeBoundThroughput", computeBoundThroughput)
+  // 3. 最终总吞吐量 = min(算力限制, 内存带宽限制)
+  const theoreticalThroughput = Math.min(computeBoundThroughput, memoryBoundThroughput)
 
   // 数值安全检查
   if (!Number.isFinite(theoreticalThroughput) || theoreticalThroughput <= 0) {
@@ -418,7 +423,7 @@ function calculateMultiGpuThroughput(
   return theoreticalThroughput * systemEfficiency
 }
 
-// 计算L2缓存命中率 - 基于模型大小、批次大小和访问模式
+// 计算L2缓存命中率 - 多用户权重共享
 function calculateL2CacheHitRate(
   activeParams: number,
   batchSize: number,
@@ -427,21 +432,15 @@ function calculateL2CacheHitRate(
   requiredGPUs: number = 1,
   precision: string = "FP16"
 ): number {
-  // 基于并发数的缓存命中率：反映权重访问重叠概率
-  // 逻辑：N个用户同时访问，权重复用的概率增加
-
-  let cacheHitRate: number
-  if (batchSize === 1) {
-    cacheHitRate = 0.0  // 单用户没有缓存复用
-  } else {
-    // 多用户时，缓存命中率约等于 (N-1)/N，但考虑实际访问模式
-    cacheHitRate = 1 - 1 / batchSize  // 2用户=50%, 4用户=75%, 10用户=90%
+  if (batchSize <= 1) {
+    return 0.0
   }
 
-  // 精度对缓存命中率影响不大，保持公式简洁
+  // 理论权重共享效率：(N-1)/N
+  // N个用户中，每个用户平均有(N-1)/N的概率访问已在缓存中的权重
+  const theoreticalHitRate = (batchSize - 1) / batchSize
 
-  // 确保命中率在合理范围内 [0.0, 0.95]
-  return Math.max(0.0, Math.min(0.95, cacheHitRate))
+  return theoreticalHitRate
 }
 
 // 获取GPU的L2缓存大小（MB）
