@@ -343,12 +343,12 @@ function calculateSystemEfficiency(
     systemEfficiency *= 0.9
   }
 
-  // 精度对系统效率的影响 - 基于实际测试调整
-  if (precision === 'INT4') {
-    systemEfficiency *= 1.2 // INT4在实际测试中表现更好
-  } else if (precision === 'INT8') {
-    systemEfficiency *= 1.1 // INT8也有提升
-  }
+  // 精度对系统效率的影响，已经通过precisionMultiplier处理
+  // if (precision === 'INT4') {
+  //   systemEfficiency *= 1.2 // INT4在实际测试中表现更好
+  // } else if (precision === 'INT8') {
+  //   systemEfficiency *= 1.1 // INT8也有提升
+  // }
 
   // 推理框架开销（SGLang、vLLM等现代框架优化很好）
   systemEfficiency *= 0.85 // 推理框架开销15%，基于SGLang等高性能框架
@@ -439,8 +439,8 @@ function calculateL2CacheHitRate(
   // 理论权重共享效率：(N-1)/N
   // N个用户中，每个用户平均有(N-1)/N的概率访问已在缓存中的权重
   const theoreticalHitRate = (batchSize - 1) / batchSize
-
-  return theoreticalHitRate
+  // 实际命中率打 9 折
+  return theoreticalHitRate * 0.9
 }
 
 // 获取GPU的L2缓存大小（MB）
