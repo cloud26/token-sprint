@@ -22,32 +22,24 @@ export interface GPUModel {
 export const gpuModels: GPUModel[] = [
   // NVIDIA 最新架构 - Blackwell
   {
-    name: "NVIDIA GB200",
-    memory: 192,
-    memoryBandwidthInGB: 16000,
-    fp16Tflops: 9000,
-    architecture: "Grace Blackwell",
-    category: "数据中心",
-    releaseYear: 2024,
-  },
-  {
     name: "NVIDIA B200",
     memory: 192,
-    memoryBandwidthInGB: 8000,
-    fp16Tflops: 4500,
+    memoryBandwidthInGB: 5000,
+    fp16Tflops: 2250,
     architecture: "Blackwell",
     category: "数据中心",
     releaseYear: 2024,
   }, // FP16 dense with sparsity
   {
     name: "NVIDIA B100",
-    memory: 192,
-    memoryBandwidthInGB: 8000,
-    fp16Tflops: 3500,
+    memory: 192, // GB
+    memoryBandwidthInGB: 4500, // GB/s，估计值
+    fp16Tflops: 1750, // dense FP16，不含 sparsity
     architecture: "Blackwell",
     category: "数据中心",
     releaseYear: 2024,
-  }, // FP16 dense with sparsity
+  },
+
   // NVIDIA Hopper架构
   {
     name: "NVIDIA H200",
@@ -61,8 +53,8 @@ export const gpuModels: GPUModel[] = [
   {
     name: "NVIDIA H100",
     memory: 80,
-    memoryBandwidthInGB: 3350,
-    fp16Tflops: 1000,
+    memoryBandwidthInGB: 3300,
+    fp16Tflops: 989,
     architecture: "Hopper",
     category: "数据中心",
     releaseYear: 2022,
@@ -81,7 +73,7 @@ export const gpuModels: GPUModel[] = [
     name: "NVIDIA L40",
     memory: 48,
     memoryBandwidthInGB: 864,
-    fp16Tflops: 362,
+    fp16Tflops: 181,
     architecture: "Ada Lovelace",
     releaseYear: 2022,
   },
@@ -102,102 +94,76 @@ export const gpuModels: GPUModel[] = [
     releaseYear: 2023,
   },
   {
-    name: "NVIDIA RTX 6000 Ada",
-    memory: 48,
-    memoryBandwidthInGB: 960,
-    fp16Tflops: 362,
-    architecture: "Ada Lovelace",
-    releaseYear: 2022,
+    "name": "NVIDIA RTX 6000 Ada",
+    "memory": 48,
+    "memoryBandwidthInGB": 960,
+    "fp16Tflops": 91.06,
+    "architecture": "Ada Lovelace",
+    "releaseYear": 2022
   },
   {
-    name: "NVIDIA RTX 5000 Ada",
-    memory: 32,
-    memoryBandwidthInGB: 576,
-    fp16Tflops: 240,
-    architecture: "Ada Lovelace",
-    releaseYear: 2023,
+    "name": "NVIDIA RTX 5000 Ada",
+    "memory": 32,
+    "memoryBandwidthInGB": 576,
+    "fp16Tflops": 65.28,
+    "architecture": "Ada Lovelace",
+    "releaseYear": 2023
   },
   {
-    name: "NVIDIA RTX 4000 Ada",
-    memory: 20,
-    memoryBandwidthInGB: 360,
-    fp16Tflops: 120,
-    architecture: "Ada Lovelace",
-    releaseYear: 2023,
+    "name": "NVIDIA RTX 4000 Ada",
+    "memory": 20,
+    "memoryBandwidthInGB": 360,
+    "fp16Tflops": 26.73,
+    "architecture": "Ada Lovelace",
+    "releaseYear": 2023
   },
   {
-    name: "NVIDIA RTX 3000 Ada",
-    memory: 12,
-    memoryBandwidthInGB: 256,
-    fp16Tflops: 80,
-    architecture: "Ada Lovelace",
-    releaseYear: 2024,
+    "name": "NVIDIA RTX 3000 Ada",
+    "memory": 8,
+    "memoryBandwidthInGB": 256,
+    "fp16Tflops": 15.6,
+    "architecture": "Ada Lovelace",
+    "releaseYear": 2023
   },
 
   // NVIDIA RTX 5000系列 (Blackwell消费级)
   {
     name: "NVIDIA RTX 5090",
     memory: 32,
-    memoryBandwidthInGB: 2304,
-    fp16Tflops: 120.0,
+    memoryBandwidthInGB: 1790,
+    fp16Tflops: 104.8,
     architecture: "Blackwell",
     category: "消费级",
     releaseYear: 2025,
-  }, // Estimated based on RTX 4090 with ~45% improvement
+  }, // TechPowerUp verified: 21760 CUDA cores, 32GB GDDR7, 1.79 TB/s
   {
     name: "NVIDIA RTX 5080",
     memory: 16,
-    memoryBandwidthInGB: 672,
-    fp16Tflops: 75.0,
+    memoryBandwidthInGB: 960,
+    fp16Tflops: 56.28,
     architecture: "Blackwell",
     category: "消费级",
     releaseYear: 2025,
-  }, // Estimated based on RTX 4080 with ~50% improvement
+  }, // TechPowerUp verified: 10752 CUDA cores, 16GB GDDR7, 960 GB/s
   {
     name: "NVIDIA RTX 5070 Ti",
     memory: 16,
     memoryBandwidthInGB: 896,
-    fp16Tflops: 60.0,
+    fp16Tflops: 43.94,
     architecture: "Blackwell",
     category: "消费级",
     releaseYear: 2025,
-  }, // Estimated based on RTX 4070 Ti with ~50% improvement
-  {
-    name: "NVIDIA RTX 5070",
-    memory: 12,
-    memoryBandwidthInGB: 672,
-    fp16Tflops: 45.0,
-    architecture: "Blackwell",
-    category: "消费级",
-    releaseYear: 2025,
-  }, // Estimated based on RTX 4070 with ~54% improvement
+  }, // TechPowerUp verified: 8960 CUDA cores, 16GB GDDR7, 896 GB/s
   {
     name: "NVIDIA RTX 5080 SUPER",
-    memory: 20,
-    memoryBandwidthInGB: 896,
-    fp16Tflops: 85.0,
+    memory: 24,
+    memoryBandwidthInGB: 1020,
+    fp16Tflops: 56.28,
     architecture: "Blackwell",
     category: "消费级",
     releaseYear: 2025,
-  }, // Estimated based on RTX 4080 SUPER with ~63% improvement
-  {
-    name: "NVIDIA RTX 5070 Ti SUPER",
-    memory: 16,
-    memoryBandwidthInGB: 672,
-    fp16Tflops: 65.0,
-    architecture: "Blackwell",
-    category: "消费级",
-    releaseYear: 2025,
-  }, // Estimated based on RTX 4070 Ti SUPER with ~62% improvement
-  {
-    name: "NVIDIA RTX 5070 SUPER",
-    memory: 12,
-    memoryBandwidthInGB: 576,
-    fp16Tflops: 50.0,
-    architecture: "Blackwell",
-    category: "消费级",
-    releaseYear: 2025,
-  }, // Estimated based on RTX 4070 SUPER with ~71% improvement
+  }, // TechPowerUp specs: same cores as 5080 but 24GB GDDR7, 32 Gbps
+  
 
   // NVIDIA RTX 4000系列
   {
@@ -332,47 +298,48 @@ export const gpuModels: GPUModel[] = [
   {
     name: "NVIDIA A100 (80GB)",
     memory: 80,
-    memoryBandwidthInGB: 2048,
-    fp16Tflops: 312,
+    memoryBandwidthInGB: 1940,
+    fp16Tflops: 77.97,
     architecture: "Ampere",
     category: "数据中心",
-    releaseYear: 2020,
-  },
+    releaseYear: 2021,
+  }, // TechPowerUp verified: GA100, 6912 CUDA cores, 80GB HBM2e, 1.94 TB/s
   {
     name: "NVIDIA A100 (40GB)",
     memory: 40,
-    memoryBandwidthInGB: 1600,
-    fp16Tflops: 312,
+    memoryBandwidthInGB: 1560,
+    fp16Tflops: 77.97,
     architecture: "Ampere",
     category: "数据中心",
     releaseYear: 2020,
-  },
+  }, // TechPowerUp verified: GA100, 6912 CUDA cores, 40GB HBM2e, 1.56 TB/s
   {
     name: "NVIDIA A40",
     memory: 48,
     memoryBandwidthInGB: 696,
-    fp16Tflops: 150,
+    fp16Tflops: 37.42,
     architecture: "Ampere",
+    category: "数据中心",
     releaseYear: 2020,
-  },
+  }, // TechPowerUp verified: GA102, 10752 CUDA cores, 48GB GDDR6, 695.8 GB/s
   {
     name: "NVIDIA A30",
     memory: 24,
     memoryBandwidthInGB: 933,
-    fp16Tflops: 130,
+    fp16Tflops: 10.32,
     architecture: "Ampere",
     category: "数据中心",
     releaseYear: 2021,
-  },
+  }, // TechPowerUp verified: GA100, 3584 CUDA cores, 24GB HBM2e, 933.1 GB/s
   {
     name: "NVIDIA A10",
     memory: 24,
     memoryBandwidthInGB: 600,
-    fp16Tflops: 125,
+    fp16Tflops: 31.52,
     architecture: "Ampere",
     category: "数据中心",
     releaseYear: 2021,
-  },
+  }, // TechPowerUp verified: GA102, 9216 CUDA cores, 24GB GDDR6, 600.2 GB/s
   {
     name: "NVIDIA V100S",
     memory: 32,
@@ -421,67 +388,22 @@ export const gpuModels: GPUModel[] = [
   {
     name: "NVIDIA P40",
     memory: 24,
-    memoryBandwidthInGB: 549,
-    fp16Tflops: 12,
+    memoryBandwidthInGB: 347,
+    fp16Tflops: 0.18,
     architecture: "Pascal",
     category: "数据中心",
     releaseYear: 2016,
-  },
-  {
-    name: "NVIDIA M60",
-    memory: 16,
-    memoryBandwidthInGB: 320,
-    fp16Tflops: 9,
-    architecture: "Maxwell",
-    category: "数据中心",
-    releaseYear: 2015,
-  },
-  {
-    name: "NVIDIA M40 (24GB)",
-    memory: 24,
-    memoryBandwidthInGB: 288,
-    fp16Tflops: 7,
-    architecture: "Maxwell",
-    category: "数据中心",
-    releaseYear: 2015,
-  },
-  {
-    name: "NVIDIA K80",
-    memory: 24,
-    memoryBandwidthInGB: 480,
-    fp16Tflops: 5,
-    architecture: "Kepler",
-    category: "数据中心",
-    releaseYear: 2014,
-  },
+  }, // TechPowerUp verified: GP102, 3840 CUDA cores, 347.1 GB/s GDDR5
   // NVIDIA 经典显卡
-  {
-    name: "NVIDIA TITAN V",
-    memory: 12,
-    memoryBandwidthInGB: 653,
-    fp16Tflops: 110,
-    architecture: "Volta",
-    category: "消费级",
-    releaseYear: 2017,
-  },
-  {
-    name: "NVIDIA GTX 1080 Ti",
-    memory: 11,
-    memoryBandwidthInGB: 484,
-    fp16Tflops: 35,
-    architecture: "Pascal",
-    category: "消费级",
-    releaseYear: 2017,
-  },
   {
     name: "NVIDIA TITAN RTX",
     memory: 24,
     memoryBandwidthInGB: 672,
-    fp16Tflops: 130,
+    fp16Tflops: 32.62,
     architecture: "Turing",
     category: "消费级",
     releaseYear: 2018,
-  },
+  }, // TechPowerUp verified: TU102, 4608 CUDA cores, 576 Tensor cores, 672 GB/s GDDR6
 
   // AMD 数据中心/专业卡
   // CDNA 4 架构 (2025年)
@@ -637,30 +559,6 @@ export const gpuModels: GPUModel[] = [
     memoryBandwidthInGB: 512,
     releaseYear: 2021,
   },
-  {
-    name: "AMD Radeon PRO W6600",
-    memory: 8,
-    fp16Tflops: 50,
-    architecture: "RDNA 2",
-    memoryBandwidthInGB: 224,
-    releaseYear: 2021,
-  },
-  {
-    name: "AMD Radeon PRO W5700",
-    memory: 8,
-    fp16Tflops: 45,
-    architecture: "RDNA 1",
-    memoryBandwidthInGB: 224,
-    releaseYear: 2019,
-  },
-  {
-    name: "AMD Radeon PRO W5500",
-    memory: 8,
-    fp16Tflops: 40,
-    architecture: "RDNA 1",
-    memoryBandwidthInGB: 224,
-    releaseYear: 2019,
-  },
 
   // AMD RDNA 4架构消费级 (RX 9000系列)
 
@@ -729,30 +627,12 @@ export const gpuModels: GPUModel[] = [
     memoryBandwidthInGB: 624,
   }, // FP16 performance from TechPowerUp
   {
-    name: "AMD Radeon RX 7700 XT",
-    memory: 12,
-    fp16Tflops: 32.0,
-    architecture: "RDNA 3",
-    category: "消费级",
-    releaseYear: 2023,
-    memoryBandwidthInGB: 432,
-  }, // FP16 performance from TechPowerUp
-  {
     name: "AMD Radeon RX 7600 XT",
     memory: 16,
     fp16Tflops: 50,
     architecture: "RDNA 3",
     category: "消费级",
     releaseYear: 2024,
-    memoryBandwidthInGB: 288,
-  },
-  {
-    name: "AMD Radeon RX 7600",
-    memory: 8,
-    fp16Tflops: 45,
-    architecture: "RDNA 3",
-    category: "消费级",
-    releaseYear: 2023,
     memoryBandwidthInGB: 288,
   },
   {
@@ -791,42 +671,6 @@ export const gpuModels: GPUModel[] = [
     releaseYear: 2020,
     memoryBandwidthInGB: 512,
   },
-  {
-    name: "AMD Radeon RX 6750 XT",
-    memory: 12,
-    fp16Tflops: 35,
-    architecture: "RDNA 2",
-    category: "消费级",
-    releaseYear: 2022,
-    memoryBandwidthInGB: 432,
-  },
-  {
-    name: "AMD Radeon RX 6700 XT",
-    memory: 12,
-    fp16Tflops: 32,
-    architecture: "RDNA 2",
-    category: "消费级",
-    releaseYear: 2021,
-    memoryBandwidthInGB: 384,
-  },
-  {
-    name: "AMD Radeon RX 6650 XT",
-    memory: 8,
-    fp16Tflops: 30,
-    architecture: "RDNA 2",
-    category: "消费级",
-    releaseYear: 2022,
-    memoryBandwidthInGB: 280,
-  },
-  {
-    name: "AMD Radeon RX 6600 XT",
-    memory: 8,
-    fp16Tflops: 28,
-    architecture: "RDNA 2",
-    category: "消费级",
-    releaseYear: 2021,
-    memoryBandwidthInGB: 256,
-  },
   // AMD 经典显卡
   {
     name: "AMD Radeon VII",
@@ -836,24 +680,6 @@ export const gpuModels: GPUModel[] = [
     category: "消费级",
     releaseYear: 2019,
     memoryBandwidthInGB: 1024,
-  },
-  {
-    name: "AMD Radeon RX 5700 XT",
-    memory: 8,
-    fp16Tflops: 20,
-    architecture: "RDNA 1",
-    category: "消费级",
-    releaseYear: 2019,
-    memoryBandwidthInGB: 448,
-  },
-  {
-    name: "AMD Radeon RX 5700",
-    memory: 8,
-    fp16Tflops: 18,
-    architecture: "RDNA 1",
-    category: "消费级",
-    releaseYear: 2019,
-    memoryBandwidthInGB: 448,
   },
 
   {
@@ -1091,15 +917,6 @@ export const gpuModels: GPUModel[] = [
     releaseYear: 2022,
     memoryBandwidthInGB: 100,
   },
-  {
-    name: "Apple M2 (8GB)",
-    memory: 8,
-    fp16Tflops: 35,
-    architecture: "M2",
-    category: "Apple Silicon",
-    releaseYear: 2022,
-    memoryBandwidthInGB: 100,
-  },
 
   {
     name: "Apple M1 Ultra (128GB)",
@@ -1155,34 +972,7 @@ export const gpuModels: GPUModel[] = [
     releaseYear: 2020,
     memoryBandwidthInGB: 68.3,
   },
-  {
-    name: "Apple M1 (8GB)",
-    memory: 8,
-    fp16Tflops: 30,
-    architecture: "M1",
-    category: "Apple Silicon",
-    releaseYear: 2020,
-    memoryBandwidthInGB: 68.3,
-  },
 
-  {
-    name: "Intel Arc B580",
-    memory: 12,
-    fp16Tflops: 55,
-    architecture: "Battlemage",
-    category: "消费级",
-    releaseYear: 2024,
-    memoryBandwidthInGB: 456,
-  },
-  {
-    name: "Intel Arc B570",
-    memory: 10,
-    fp16Tflops: 50,
-    architecture: "Battlemage",
-    category: "消费级",
-    releaseYear: 2024,
-    memoryBandwidthInGB: 380,
-  },
   {
     name: "Intel Arc A770 (16GB)",
     memory: 16,
