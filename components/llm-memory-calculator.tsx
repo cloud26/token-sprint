@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { calculateInferenceMemory } from "@/utils/calculations"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip"
-import { precisions, gpuModels, MODELS, GPU_FP16_TFLOPS, getModelsByGroup } from "@/utils/constants"
+import { precisions, gpuModels, MODELS, getModelsByGroup } from "@/utils/constants"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
@@ -134,9 +134,9 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     const [precision, setPrecision] = useState<string>("FP8")
     const [gpuModel, setGpuModel] = useState<string>("NVIDIA H100 (80GB)")
     const [selectedModel, setSelectedModel] = useState<string>(getDefaultModel())
-    const [batchSize, setBatchSize] = useState<string>("1") // 并发量
+    const [batchSize, setBatchSize] = useState<string>("1") // 并发用户数 - 影响KV缓存显存
     const [contextLength, setContextLength] = useState<string>("1024") // 上下文长度
-    const [expectedTokensPerSecond, setExpectedTokensPerSecond] = useState<string>("10") // 每用户期望体验
+    // 移除期望吞吐量配置 - 专注于内存计算
     const [manualGpuCount, setManualGpuCount] = useState<string>("") // 手动设置的GPU数量
 
     // Popover 开关状态
@@ -162,42 +162,28 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
             Number(contextLength),
             gpuModel,
             selectedModelValue, // 传入具体的模型标识符
-            Number(expectedTokensPerSecond) || undefined, // 传入期望体验
+            undefined, // 不传入期望体验 - 专注于内存计算
             Number(manualGpuCount) || undefined // 传入手动GPU数量
         )
-    }, [parameters, precision, gpuMemory, batchSize, contextLength, gpuModel, selectedModelValue, expectedTokensPerSecond, manualGpuCount])
+    }, [parameters, precision, gpuMemory, batchSize, contextLength, gpuModel, selectedModelValue, manualGpuCount])
 
-    // 使用防抖来优化GPU数量自动计算
+    // 使用防抖来优化GPU数量自动计算 - 简化为只基于内存需求
     const [isUserTyping, setIsUserTyping] = React.useState(false)
 
-    // 防抖计算GPU数量
+    // 防抖计算GPU数量 - 只基于内存需求
     React.useEffect(() => {
         const timer = setTimeout(() => {
             setIsUserTyping(false)
 
-            // 当有期望体验要求时，自动计算推荐GPU数量
-            if (memory.performanceAnalysis && Number(expectedTokensPerSecond) > 1) {
-                const recommendedGpus = memory.performanceAnalysis.minRequiredGPUs
-                const memoryBasedGpus = memory.gpuAnalysis.baseRequiredGPUs
-
-                // 选择较大的值作为推荐GPU数量（满足内存和性能需求）
-                const finalRecommendedGpus = Math.max(recommendedGpus, memoryBasedGpus)
-
-                // 只有当计算结果与当前值不同时才更新
-                if (finalRecommendedGpus.toString() !== manualGpuCount) {
-                    setManualGpuCount(finalRecommendedGpus.toString())
-                }
-            } else if (Number(expectedTokensPerSecond) <= 1) {
-                // 如果期望体验很低，使用内存需求计算
-                const memoryBasedGpus = memory.gpuAnalysis.baseRequiredGPUs
-                if (memoryBasedGpus.toString() !== manualGpuCount) {
-                    setManualGpuCount(memoryBasedGpus.toString())
-                }
+            // 使用内存需求计算推荐GPU数量
+            const memoryBasedGpus = memory.gpuAnalysis.baseRequiredGPUs
+            if (memoryBasedGpus.toString() !== manualGpuCount) {
+                setManualGpuCount(memoryBasedGpus.toString())
             }
         }, 500) // 500ms防抖延迟
 
         return () => clearTimeout(timer)
-    }, [expectedTokensPerSecond, batchSize, selectedModel, parameters, precision, contextLength, gpuModel])
+    }, [selectedModel, parameters, precision, batchSize, contextLength, gpuModel, memory.gpuAnalysis.baseRequiredGPUs, manualGpuCount])
 
     // 当模型选择改变时更新参数
     const handleModelChange = (newModel: string) => {
@@ -224,21 +210,14 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                     gpuMemory,
                     batchSize: Number(batchSize),
                     contextLength: Number(contextLength),
-                    expectedTokensPerSecond: Number(expectedTokensPerSecond),
+                    expectedTokensPerSecond: 0, // 不记录期望吞吐量
                     manualGpuCount: Number(manualGpuCount) || null,
                     selectedModel,
                     locale,
                     // 计算结果
                     totalMemory: memory.totalMemory,
                     requiredGPUs: memory.requiredGPUs,
-                    // 详细性能指标
-                    throughputInfo: {
-                        tokensPerSecond: memory.throughputInfo.tokensPerSecond,
-                        tokensPerSecondPerUser: memory.throughputInfo.tokensPerSecondPerUser,
-                        estimatedLatency: memory.throughputInfo.estimatedLatency,
-                        maxQPS: memory.throughputInfo.maxQPS,
-                        avgOutputTokens: memory.throughputInfo.avgOutputTokens
-                    },
+                    // 移除性能指标记录 - 专注于内存计算
                     // GPU分析
                     gpuAnalysis: memory.gpuAnalysis ? {
                         baseRequiredGPUs: memory.gpuAnalysis.baseRequiredGPUs,
@@ -272,7 +251,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
         }
     };
 
-    // 在计算结果更新时记录日志（防抖）
+    // 在计算结果更新时记录日志（防抖） - 简化为基于内存的计算
     useEffect(() => {
         const timer = setTimeout(() => {
             if (!isUserTyping) {
@@ -281,7 +260,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
         }, 1000); // 1秒防抖延迟
 
         return () => clearTimeout(timer);
-    }, [parameters, precision, gpuModel, batchSize, contextLength, expectedTokensPerSecond, manualGpuCount, memory, isUserTyping]);
+    }, [parameters, precision, gpuModel, batchSize, contextLength, manualGpuCount, memory, isUserTyping]);
 
     const handleParameterChange = (value: string) => {
         setParameters(value.replace(/[^0-9.]/g, ""))
@@ -294,11 +273,6 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
 
     const handleContextLengthChange = (value: string) => {
         setContextLength(value.replace(/[^0-9]/g, ""))
-    }
-
-    const handleExpectedTokensPerSecondChange = (value: string) => {
-        setIsUserTyping(true)
-        setExpectedTokensPerSecond(value.replace(/[^0-9]/g, ""))
     }
 
     const handleManualGpuCountChange = (value: string) => {
@@ -642,7 +616,6 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                             </div>
                                                             <div className="flex items-center justify-between w-full mt-1">
                                                                 <div className="flex items-center space-x-2 text-xs text-gray-600">
-                                                                    <span className="text-green-600">{gpu.fp16Tflops} TFLOPS (FP16)</span>
                                                                     <span className="text-purple-600">{gpu.architecture}</span>
                                                                     <span className="text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded font-medium">{gpu.releaseYear}</span>
                                                                 </div>
@@ -658,70 +631,39 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                         </Popover>
                     </div>
 
-                    {/* 并发用户数 和每用户期望体验放在同一行 */}
-                    <div className="grid grid-cols-2 gap-3">
-                        <div className="space-y-1">
-                            <div className="flex items-center gap-2">
-                                <Label htmlFor="batchSize" className="text-sm">{t('concurrency.label')}</Label>
-                                <Tooltip>
-                                    <TooltipTrigger>
-                                        <InfoIcon className="h-3 w-3 text-muted-foreground" />
-                                    </TooltipTrigger>
-                                    <TooltipContent className="max-w-sm">
-                                        <div className="space-y-2 text-xs">
-                                            <p><strong>{t('concurrency.tooltip.title')}</strong></p>
-                                            {t.raw('concurrency.tooltip.scenarios').map((scenario: string, index: number) => (
-                                                <p key={index}>{scenario}</p>
-                                            ))}
-                                            <div className="border-t pt-2 mt-2">
-                                                <p><strong>{t('concurrency.tooltip.estimation.title')}</strong></p>
-                                                {t.raw('concurrency.tooltip.estimation.methods').map((method: string, index: number) => (
-                                                    <p key={index}>{method}</p>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </div>
-                            <Input
-                                id="batchSize"
-                                type="text"
-                                value={batchSize}
-                                onChange={(e) => handleBatchSizeChange(e.target.value)}
-                                className="text-sm"
-                                placeholder={t('concurrency.placeholder')}
-                            />
-                        </div>
-
-                        <div className="space-y-1">
-                            <div className="flex items-center gap-2">
-                                <Label htmlFor="expectedTokensPerSecond" className="text-sm">{t('expectedTokensPerSecond.label')}</Label>
-                                <Tooltip>
-                                    <TooltipTrigger>
-                                        <InfoIcon className="h-3 w-3 text-muted-foreground" />
-                                    </TooltipTrigger>
-                                    <TooltipContent className="max-w-sm">
-                                        <div className="space-y-2 text-xs">
-                                            <p><strong>{t('expectedTokensPerSecond.tooltip.title')}</strong></p>
-                                            {t.raw('expectedTokensPerSecond.tooltip.levels').map((level: string, index: number) => (
-                                                <p key={index}>{level}</p>
+                    {/* 并发用户数 - 影响KV缓存显存 */}
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                            <Label htmlFor="batchSize" className="text-sm">{t('concurrency.label')}</Label>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <InfoIcon className="h-3 w-3 text-muted-foreground" />
+                                </TooltipTrigger>
+                                <TooltipContent className="max-w-sm">
+                                    <div className="space-y-2 text-xs">
+                                        <p><strong>{t('concurrency.tooltip.title')}</strong></p>
+                                        <p>并发用户数会显著影响KV缓存的显存占用。每个用户的对话历史都需要在GPU显存中存储。</p>
+                                        {t.raw('concurrency.tooltip.scenarios').map((scenario: string, index: number) => (
+                                            <p key={index}>{scenario}</p>
+                                        ))}
+                                        <div className="border-t pt-2 mt-2">
+                                            <p><strong>{t('concurrency.tooltip.estimation.title')}</strong></p>
+                                            {t.raw('concurrency.tooltip.estimation.methods').map((method: string, index: number) => (
+                                                <p key={index}>{method}</p>
                                             ))}
                                         </div>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <Input
-                                    id="expectedTokensPerSecond"
-                                    type="text"
-                                    value={expectedTokensPerSecond}
-                                    onChange={(e) => handleExpectedTokensPerSecondChange(e.target.value)}
-                                    className="text-sm flex-1"
-                                    placeholder={t('expectedTokensPerSecond.placeholder')}
-                                />
-                                <span className="text-sm text-gray-500 whitespace-nowrap">{t('expectedTokensPerSecond.unit')}</span>
-                            </div>
+                                    </div>
+                                </TooltipContent>
+                            </Tooltip>
                         </div>
+                        <Input
+                            id="batchSize"
+                            type="text"
+                            value={batchSize}
+                            onChange={(e) => handleBatchSizeChange(e.target.value)}
+                            className="text-sm"
+                            placeholder={t('concurrency.placeholder')}
+                        />
                     </div>
 
                     {/* GPU数目 - 单独一行，突出显示 */}
@@ -750,9 +692,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                         value={manualGpuCount}
                                         onChange={(e) => handleManualGpuCountChange(e.target.value)}
                                         className={`text-lg font-bold h-12 ${(() => {
-                                            const recommendedGpus = memory.performanceAnalysis && Number(expectedTokensPerSecond) > 1
-                                                ? Math.max(memory.performanceAnalysis.minRequiredGPUs, memory.gpuAnalysis.baseRequiredGPUs)
-                                                : memory.gpuAnalysis.baseRequiredGPUs;
+                                            const recommendedGpus = memory.gpuAnalysis.baseRequiredGPUs;
                                             const isAutoCalculated = !isUserTyping && manualGpuCount === recommendedGpus.toString();
                                             return isAutoCalculated ? 'pr-14' : 'pr-3';
                                         })()} ${memory.gpuAnalysis.memoryWarning ? 'border-red-500' : 'border-blue-300'}`}
@@ -760,9 +700,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                     />
                                     {(() => {
                                         // 判断当前GPU数量是否为自动计算的值
-                                        const recommendedGpus = memory.performanceAnalysis && Number(expectedTokensPerSecond) > 1
-                                            ? Math.max(memory.performanceAnalysis.minRequiredGPUs, memory.gpuAnalysis.baseRequiredGPUs)
-                                            : memory.gpuAnalysis.baseRequiredGPUs;
+                                        const recommendedGpus = memory.gpuAnalysis.baseRequiredGPUs;
 
                                         const isAutoCalculated = !isUserTyping && manualGpuCount === recommendedGpus.toString();
 
@@ -838,59 +776,11 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                     {/* 性能指标 */}
                     <section>
                         <div className="bg-green-50 p-4 rounded-lg space-y-4">
-                            {/* 吞吐需求概览 */}
-                            <div className="text-center p-3 bg-green-100 rounded-lg border border-green-300 mb-3">
-                                <p className="text-lg font-bold text-green-700">
-                                    {t('throughputRequirement.totalThroughput', { totalThroughput: (Number(batchSize) * Number(expectedTokensPerSecond)).toLocaleString() })}
-                                </p>
-                                {memory.performanceAnalysis && Number(expectedTokensPerSecond) > 1 && (
-                                    <p className="text-sm text-green-600 mt-1" dangerouslySetInnerHTML={{
-                                        __html: renderMarkdownText(t('throughputRequirement.requiredGPUs', { count: memory.performanceAnalysis.minRequiredGPUs }))
-                                    }} />
-                                )}
-                            </div>
+                            {/* 隐藏吞吐需求概览 - 专注于内存计算 */}
 
 
 
-                            {/* 3x1网格显示性能指标 */}
-                            <div className="grid grid-cols-3 gap-3">
-                                <div className="bg-white p-2 rounded border border-green-200 text-center">
-                                    <Label className="text-gray-600 text-xs font-medium">{t('performance.metrics.totalThroughput.label')}</Label>
-                                    <p className="text-base font-bold text-green-600 mt-1">
-                                        {memory.throughputInfo.tokensPerSecond.toLocaleString()} {t('performance.metrics.totalThroughput.unit')}
-                                    </p>
-                                    <p className="text-xs text-gray-500 mt-1">{t('performance.metrics.totalThroughput.description')}</p>
-                                </div>
-
-                                <div className="bg-white p-2 rounded border border-green-200 text-center">
-                                    <Label className="text-gray-600 text-xs font-medium">{t('performance.metrics.throughputPerUser.label')}</Label>
-                                    <p className="text-base font-bold text-green-600 mt-1">
-                                        {memory.throughputInfo.tokensPerSecondPerUser.toLocaleString()} tokens/s
-                                    </p>
-                                    <div className="text-xs text-gray-500 space-y-1 mt-1">
-                                        <p>{t('performance.metrics.throughputPerUser.description', { users: batchSize })}</p>
-                                        {Number(expectedTokensPerSecond) > 0 && (
-                                            <div className={`px-2 py-1 rounded text-xs ${memory.throughputInfo.tokensPerSecondPerUser >= Number(expectedTokensPerSecond)
-                                                ? 'bg-green-100 text-green-700'
-                                                : 'bg-red-100 text-red-700'
-                                                }`}>
-                                                {memory.throughputInfo.tokensPerSecondPerUser >= Number(expectedTokensPerSecond)
-                                                    ? t('performanceComparison.meetExpectation', { expected: expectedTokensPerSecond })
-                                                    : t('performanceComparison.belowExpectation', { expected: expectedTokensPerSecond })
-                                                }
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-
-                                <div className="bg-white p-2 rounded border border-green-200 text-center">
-                                    <Label className="text-gray-600 text-xs font-medium">{t('performance.metrics.estimatedLatency.label')}</Label>
-                                    <p className="text-base font-bold text-green-600 mt-1">
-                                        {memory.throughputInfo.estimatedLatency.toLocaleString()} {t('performance.metrics.estimatedLatency.unit')}
-                                    </p>
-                                    <p className="text-xs text-gray-500 mt-1">{t('performance.metrics.estimatedLatency.description', { avgTokens: memory.throughputInfo.avgOutputTokens })}</p>
-                                </div>
-                            </div>
+                            {/* 隐藏性能指标显示 - 只保留基于内存的计算结果 */}
                         </div>
                     </section>
 
@@ -910,7 +800,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                 setParameters("480")
                                                 setPrecision("FP8")
                                                 setGpuModel("NVIDIA H100 (80GB)")
-                                                setBatchSize("2")
+                                                setBatchSize("1")
                                                 setContextLength("4096")
                                             }}
                                         >
@@ -923,7 +813,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                 setParameters("235")
                                                 setPrecision("FP8")
                                                 setGpuModel("NVIDIA H100 (80GB)")
-                                                setBatchSize("4")
+                                                setBatchSize("2")
                                                 setContextLength("4096")
                                             }}
                                         >
@@ -936,7 +826,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                 setParameters("671")
                                                 setPrecision("FP8")
                                                 setGpuModel("NVIDIA H100 (80GB)")
-                                                setBatchSize("2")
+                                                setBatchSize("1")
                                                 setContextLength("2048")
                                             }}
                                         >
@@ -949,7 +839,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                 setParameters("70")
                                                 setPrecision("FP16")
                                                 setGpuModel("NVIDIA A100 (80GB)")
-                                                setBatchSize("8")
+                                                setBatchSize("4")
                                                 setContextLength("2048")
                                             }}
                                         >
@@ -962,7 +852,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                 setParameters("70")
                                                 setPrecision("FP8")
                                                 setGpuModel("NVIDIA H100 (80GB)")
-                                                setBatchSize("32")
+                                                setBatchSize("16")
                                                 setContextLength("4096")
                                             }}
                                         >
@@ -975,7 +865,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                 setParameters("8")
                                                 setPrecision("FP16")
                                                 setGpuModel("NVIDIA RTX 4090 (24GB)")
-                                                setBatchSize("4")
+                                                setBatchSize("2")
                                                 setContextLength("1024")
                                             }}
                                         >
@@ -988,7 +878,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                 setParameters("8")
                                                 setPrecision("FP16")
                                                 setGpuModel("NVIDIA RTX 4090 (24GB)")
-                                                setBatchSize("16")
+                                                setBatchSize("4")
                                                 setContextLength("2048")
                                             }}
                                         >
@@ -1001,7 +891,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                 setParameters("72")
                                                 setPrecision("FP8")
                                                 setGpuModel("NVIDIA H100 (80GB)")
-                                                setBatchSize("6")
+                                                setBatchSize("3")
                                                 setContextLength("4096")
                                             }}
                                         >
@@ -1014,7 +904,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                 setParameters("32")
                                                 setPrecision("INT4")
                                                 setGpuModel("NVIDIA RTX 4090 (24GB)")
-                                                setBatchSize("8")
+                                                setBatchSize("2")
                                                 setContextLength("2048")
                                             }}
                                         >
