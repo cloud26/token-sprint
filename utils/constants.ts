@@ -163,7 +163,7 @@ export const gpuModels: GPUModel[] = [
     category: "消费级",
     releaseYear: 2025,
   }, // TechPowerUp specs: same cores as 5080 but 24GB GDDR7, 32 Gbps
-  
+
 
   // NVIDIA RTX 4000系列
   {
@@ -1864,6 +1864,64 @@ export const MODELS: ModelInfo[] = [
     verificationUrl: "https://huggingface.co/codellama/CodeLlama-7b-hf",
     series: "CodeLlama",
     category: "代码专用",
+  },
+
+  // GLM-4.5 系列 (Z.ai开源智能体模型)
+  {
+    name: "GLM-4.5",
+    parameters: "355B",
+    parametersNum: 355,
+    value: "glm-4.5",
+    d_model: 7168, // Based on typical scaling for 355B models
+    n_layers: 80, // Estimated based on parameter count
+    activeParams: 32,
+    isMoE: true,
+    source: "GLM-4.5 foundation model designed for intelligent agents",
+    verificationUrl: "https://huggingface.co/zai-org/GLM-4.5",
+    series: "GLM-4.5",
+    category: "原始模型",
+  },
+  {
+    name: "GLM-4.5-Air",
+    parameters: "106B",
+    parametersNum: 106,
+    value: "glm-4.5-air",
+    d_model: 5120, // More compact design than GLM-4.5
+    n_layers: 60, // Estimated based on parameter count
+    activeParams: 12,
+    isMoE: true,
+    source: "GLM-4.5-Air compact model with superior efficiency",
+    verificationUrl: "https://huggingface.co/zai-org/GLM-4.5-Air",
+    series: "GLM-4.5",
+    category: "原始模型",
+  },
+  {
+    name: "GLM-4.5-Base",
+    parameters: "355B",
+    parametersNum: 355,
+    value: "glm-4.5-base",
+    d_model: 7168,
+    n_layers: 80,
+    activeParams: 32,
+    isMoE: true,
+    source: "GLM-4.5 base model before instruction tuning",
+    verificationUrl: "https://huggingface.co/zai-org/GLM-4.5-Base",
+    series: "GLM-4.5",
+    category: "原始模型",
+  },
+  {
+    name: "GLM-4.5-Air-Base",
+    parameters: "106B",
+    parametersNum: 106,
+    value: "glm-4.5-air-base",
+    d_model: 5120,
+    n_layers: 60,
+    activeParams: 12,
+    isMoE: true,
+    source: "GLM-4.5-Air base model before instruction tuning",
+    verificationUrl: "https://huggingface.co/zai-org/GLM-4.5-Air-Base",
+    series: "GLM-4.5",
+    category: "原始模型",
   },
 ];
 

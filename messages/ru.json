@@ -33,6 +33,9 @@
         "input": "Входной текст",
         "inputPlaceholder": "Введите или вставьте текст для подсчета токенов...",
         "model": "Выберите модель",
+        "selectModel": "Выберите модель...",
+        "searchModels": "Поиск моделей...",
+        "noModelsFound": "Модели не найдены",
         "results": "Результаты",
         "tokens": "Количество токенов",
         "characters": "Символы",
@@ -44,6 +47,7 @@
           "claude": "Серия Anthropic Claude (🤗)",
           "llama": "Серия Meta Llama (🤗)",
           "deepseek": "Серия DeepSeek (🤗)",
+          "glm": "Серия GLM (🤗)",
           "mistral": "Серия Mistral (🤗)",
           "gemini": "Серия Google Gemini (оценка)",
           "qwen": "Серия Qwen (🤗)"

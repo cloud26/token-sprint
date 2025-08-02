@@ -124,6 +124,9 @@
         "input": "入力テキスト",
         "inputPlaceholder": "トークン数を計算するテキストを入力または貼り付けてください...",
         "model": "モデル選択",
+        "selectModel": "モデルを選択...",
+        "searchModels": "モデルを検索...",
+        "noModelsFound": "モデルが見つかりません",
         "results": "結果",
         "tokens": "トークン数",
         "characters": "文字数",
@@ -135,6 +138,7 @@
           "claude": "Anthropic Claudeシリーズ (🤗)",
           "llama": "Meta Llamaシリーズ (🤗)",
           "deepseek": "DeepSeekシリーズ (🤗)",
+          "glm": "GLMシリーズ (🤗)",
           "mistral": "Mistralシリーズ (🤗)",
           "gemini": "Google Geminiシリーズ (推定)",
           "qwen": "Qwenシリーズ (🤗)"

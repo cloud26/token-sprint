@@ -4,11 +4,14 @@ import { useState, useEffect, useMemo, useRef } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Button } from "@/components/ui/button"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { type Language } from '@/config/languages'
 import { encodingForModel } from "js-tiktoken"
 import { useTranslations } from 'next-intl'
-import { Loader2 } from "lucide-react"
+import { Loader2, ChevronsUpDown, Check } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 // 使用 Hugging Face Transformers.js 进行本地 tokenization
 // 支持多种模型的社区 tokenizer
@@ -86,6 +89,12 @@ const models: ModelInfo[] = [
     { value: "gemini-1.5-flash", label: "Gemini 1.5 Flash ⚠️", encoding: "gpt-4" },
     { value: "gemini-pro", label: "Gemini Pro ⚠️", encoding: "gpt-4" },
 
+    // GLM-4.5 系列 - 使用官方 Hugging Face 模型
+    { value: "glm-4.5", label: "GLM-4.5 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5" },
+    { value: "glm-4.5-air", label: "GLM-4.5-Air 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5-Air" },
+    { value: "glm-4.5-base", label: "GLM-4.5-Base 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5-Base" },
+    { value: "glm-4.5-air-base", label: "GLM-4.5-Air-Base 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5-Air-Base" },
+
     // Qwen 系列 - 使用官方 tokenizer
     { value: "qwen3-coder-480b", label: "Qwen3-Coder-480B-A35B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen3-235b", label: "Qwen3-235B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
@@ -114,6 +123,7 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
     const [tokenizerCache, setTokenizerCache] = useState<Map<string, any>>(new Map())
     const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
     const [loadingState, setLoadingState] = useState<'preparing' | 'downloading' | 'initializing' | 'ready' | 'error'>('preparing')
+    const [modelPopoverOpen, setModelPopoverOpen] = useState(false)
 
     // 根据优先公司重新排序模型列表，或者只显示特定公司的模型
     const sortedModels = useMemo(() => {
@@ -352,72 +362,101 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
                 {/* 模型选择 */}
                 <div className="space-y-2">
                     <Label>{tc('model')}</Label>
-                    <Select value={selectedModel} onValueChange={handleModelChange}>
-                        <SelectTrigger className="text-base">
-                            <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="max-h-80 overflow-y-auto">
-                            {(() => {
-                                const modelGroups = [
-                                    {
-                                        name: tc('modelGroups.openai'),
-                                        bgColor: 'bg-blue-50',
-                                        filter: (m: ModelInfo) => m.value.startsWith('gpt-') || m.value.startsWith('text-')
-                                    },
-                                    {
-                                        name: tc('modelGroups.claude'),
-                                        bgColor: 'bg-purple-50',
-                                        filter: (m: ModelInfo) => m.value.startsWith('claude')
-                                    },
-                                    {
-                                        name: tc('modelGroups.llama'),
-                                        bgColor: 'bg-orange-50',
-                                        filter: (m: ModelInfo) => m.value.startsWith('llama') || m.value.startsWith('code-llama')
-                                    },
-                                    {
-                                        name: tc('modelGroups.deepseek'),
-                                        bgColor: 'bg-gray-50',
-                                        filter: (m: ModelInfo) => m.value.startsWith('deepseek')
-                                    },
-                                    {
-                                        name: tc('modelGroups.mistral'),
-                                        bgColor: 'bg-indigo-50',
-                                        filter: (m: ModelInfo) => m.value.startsWith('mistral') || m.value.startsWith('codestral')
-                                    },
-                                    {
-                                        name: tc('modelGroups.gemini'),
-                                        bgColor: 'bg-green-50',
-                                        filter: (m: ModelInfo) => m.value.startsWith('gemini')
-                                    },
-                                    {
-                                        name: tc('modelGroups.qwen'),
-                                        bgColor: 'bg-yellow-50',
-                                        filter: (m: ModelInfo) => m.value.startsWith('qwen')
-                                    }
-                                ];
+                    <Popover open={modelPopoverOpen} onOpenChange={setModelPopoverOpen}>
+                        <PopoverTrigger asChild>
+                            <Button
+                                variant="outline"
+                                role="combobox"
+                                aria-expanded={modelPopoverOpen}
+                                className="w-full justify-between text-base font-normal"
+                            >
+                                {selectedModel ? (
+                                    (() => {
+                                        const currentModel = models.find(m => m.value === selectedModel);
+                                        return currentModel ? currentModel.label : selectedModel;
+                                    })()
+                                ) : (
+                                    tc('selectModel')
+                                )}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
+                            <Command>
+                                <CommandInput placeholder={tc('searchModels')} />
+                                <CommandList>
+                                    <CommandEmpty>{tc('noModelsFound')}</CommandEmpty>
+                                    {(() => {
+                                        const modelGroups = [
+                                            {
+                                                name: tc('modelGroups.openai'),
+                                                filter: (m: ModelInfo) => m.value.startsWith('gpt-') || m.value.startsWith('text-')
+                                            },
+                                            {
+                                                name: tc('modelGroups.claude'),
+                                                filter: (m: ModelInfo) => m.value.startsWith('claude')
+                                            },
+                                            {
+                                                name: tc('modelGroups.llama'),
+                                                filter: (m: ModelInfo) => m.value.startsWith('llama') || m.value.startsWith('code-llama')
+                                            },
+                                            {
+                                                name: tc('modelGroups.deepseek'),
+                                                filter: (m: ModelInfo) => m.value.startsWith('deepseek')
+                                            },
+                                            {
+                                                name: tc('modelGroups.glm'),
+                                                filter: (m: ModelInfo) => m.value.startsWith('glm')
+                                            },
+                                            {
+                                                name: tc('modelGroups.mistral'),
+                                                filter: (m: ModelInfo) => m.value.startsWith('mistral') || m.value.startsWith('codestral')
+                                            },
+                                            {
+                                                name: tc('modelGroups.gemini'),
+                                                filter: (m: ModelInfo) => m.value.startsWith('gemini')
+                                            },
+                                            {
+                                                name: tc('modelGroups.qwen'),
+                                                filter: (m: ModelInfo) => m.value.startsWith('qwen')
+                                            }
+                                        ];
 
-                                return modelGroups.map((group, groupIndex) => {
-                                    const groupModels = sortedModels.filter(group.filter);
-                                    if (groupModels.length === 0) return null; // 不显示空分组
+                                        return modelGroups.map((group) => {
+                                            const groupModels = sortedModels.filter(group.filter);
+                                            if (groupModels.length === 0) return null;
 
-                                    return (
-                                        <div key={group.name}>
-                                            <div className={`px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide ${group.bgColor}${groupIndex > 0 ? ' mt-1' : ''}`}>
-                                                {group.name}
-                                            </div>
-                                            {groupModels.map((model) => (
-                                                <SelectItem key={model.value} value={model.value} className="pl-6 pr-3 py-2.5 cursor-pointer">
-                                                    <div className="flex items-center justify-between w-full">
-                                                        <div className="font-medium text-sm">{model.label}</div>
-                                                    </div>
-                                                </SelectItem>
-                                            ))}
-                                        </div>
-                                    );
-                                }).filter(Boolean); // 过滤掉 null 值
-                            })()}
-                        </SelectContent>
-                    </Select>
+                                            return (
+                                                <CommandGroup key={group.name} heading={group.name}>
+                                                    {groupModels.map((model) => (
+                                                        <CommandItem
+                                                            key={model.value}
+                                                            value={model.value}
+                                                            onSelect={(currentValue) => {
+                                                                handleModelChange(currentValue === selectedModel ? "" : currentValue);
+                                                                setModelPopoverOpen(false);
+                                                            }}
+                                                            className="flex items-center justify-between py-2 px-3 hover:bg-slate-50 cursor-pointer"
+                                                        >
+                                                            <div className="flex items-center">
+                                                                <div className="font-medium text-sm">{model.label}</div>
+                                                            </div>
+                                                            <Check
+                                                                className={cn(
+                                                                    "ml-auto h-4 w-4",
+                                                                    selectedModel === model.value ? "opacity-100" : "opacity-0"
+                                                                )}
+                                                            />
+                                                        </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                            );
+                                        }).filter(Boolean);
+                                    })()}
+                                </CommandList>
+                            </Command>
+                        </PopoverContent>
+                    </Popover>
                 </div>
 
                 {/* 文本输入 */}

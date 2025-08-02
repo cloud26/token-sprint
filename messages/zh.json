@@ -33,6 +33,9 @@
         "input": "输入文本",
         "inputPlaceholder": "在此输入或粘贴您要计算token数量的文本...",
         "model": "选择模型",
+        "selectModel": "选择一个模型...",
+        "searchModels": "搜索模型...",
+        "noModelsFound": "未找到模型",
         "results": "统计结果",
         "tokens": "Token 数量",
         "characters": "字符数",
@@ -44,6 +47,7 @@
           "claude": "Anthropic Claude 系列 (🤗)",
           "llama": "Meta Llama 系列 (🤗)",
           "deepseek": "DeepSeek 系列 (🤗)",
+          "glm": "GLM 系列 (🤗)",
           "mistral": "Mistral 系列 (🤗)",
           "gemini": "Google Gemini 系列 (估算)",
           "qwen": "Qwen 系列 (🤗)"

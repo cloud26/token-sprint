@@ -33,6 +33,9 @@
         "input": "Input Text",
         "inputPlaceholder": "Enter or paste your text here to count tokens...",
         "model": "Select Model",
+        "selectModel": "Select a model...",
+        "searchModels": "Search models...",
+        "noModelsFound": "No models found",
         "results": "Results",
         "tokens": "Token Count",
         "characters": "Characters",
@@ -44,6 +47,7 @@
           "claude": "Anthropic Claude Series (🤗)",
           "llama": "Meta Llama Series (🤗)",
           "deepseek": "DeepSeek Series (🤗)",
+          "glm": "GLM Series (🤗)",
           "mistral": "Mistral Series (🤗)",
           "gemini": "Google Gemini Series (Estimation)",
           "qwen": "Qwen Series (🤗)"
