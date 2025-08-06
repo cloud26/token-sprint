@@ -28,7 +28,7 @@ export const models: Record<string, ModelConfig> = {
         slug: "gpt",
         name: "GPT-OSS",
         parameters: 117, // GPT-OSS-120B默认参数
-        recommendedPrecision: "FP8"
+        recommendedPrecision: "MXFP4"
     }
 }
 

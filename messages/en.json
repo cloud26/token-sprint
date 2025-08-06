@@ -382,7 +382,7 @@
     },
     "precision": {
       "label": "Precision",
-      "tooltip": "Different precisions affect memory usage, FP32 highest, FP8 lowest"
+      "tooltip": "Different precisions affect memory usage: FP32 (highest), FP16, FP8, MXFP4 (native GPT-OSS), INT8, INT4 (lowest)"
     },
     "concurrency": {
       "label": "Concurrent Users",

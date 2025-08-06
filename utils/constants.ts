@@ -3,6 +3,7 @@ export const precisions = [
   { name: "FP32", value: "FP32" },
   { name: "FP16", value: "FP16" },
   { name: "FP8", value: "FP8" },
+  { name: "MXFP4", value: "MXFP4" },
   { name: "INT8", value: "INT8" },
   { name: "INT4", value: "INT4" },
 ];
@@ -1993,6 +1994,7 @@ export const PRECISION_MULTIPLIERS: Record<string, number> = {
   FP16: 1.0, // 16位浮点基准
   BF16: 1.0, // Brain Float 16，类似FP16
   FP8: 2.0, // 8位浮点，2倍性能提升
+  MXFP4: 4.0, // Microscaling FP4，4倍性能提升
   INT8: 2.0, // 8位整数，2倍性能提升
   INT4: 4.0, // 4位整数，4倍性能提升
   INT2: 8.0, // 2位整数，8倍性能提升
@@ -2005,6 +2007,7 @@ export const PRECISION_BYTES: Record<string, number> = {
   FP16: 2, // 16位 = 2字节
   BF16: 2, // Brain Float 16 = 2字节
   FP8: 1, // 8位 = 1字节
+  MXFP4: 0.5, // Microscaling FP4 = 0.5字节
   INT8: 1, // 8位整数 = 1字节
   INT4: 0.5, // 4位 = 0.5字节
   INT2: 0.25, // 2位 = 0.25字节

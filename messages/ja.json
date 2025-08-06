@@ -390,7 +390,7 @@
     },
     "precision": {
       "label": "精度",
-      "tooltip": "異なる精度はメモリ使用量に影響、FP32が最高、FP8が最低"
+      "tooltip": "異なる精度はメモリ使用量に影響：FP32（最高）、FP16、FP8、MXFP4（GPT-OSSネイティブ）、INT8、INT4（最低）"
     },
     "concurrency": {
       "label": "同時ユーザー数",

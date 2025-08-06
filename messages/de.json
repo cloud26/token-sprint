@@ -381,7 +381,7 @@
     },
     "precision": {
       "label": "Präzision",
-      "tooltip": "Verschiedene Präzisionen beeinflussen den Speicherverbrauch, FP32 am höchsten, FP8 am niedrigsten"
+      "tooltip": "Verschiedene Präzisionen beeinflussen den Speicherverbrauch: FP32 (höchste), FP16, FP8, MXFP4 (GPT-OSS nativ), INT8, INT4 (niedrigste)"
     },
     "concurrency": {
       "label": "Gleichzeitige Benutzer",

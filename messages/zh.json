@@ -380,7 +380,7 @@
     },
     "precision": {
       "label": "计算精度",
-      "tooltip": "不同的计算精度会影响显存使用量，FP32最高，FP8最低"
+      "tooltip": "不同的计算精度会影响显存使用量：FP32（最高）、FP16、FP8、MXFP4（GPT-OSS原生支持）、INT8、INT4（最低）"
     },
     "concurrency": {
       "label": "并发用户数",

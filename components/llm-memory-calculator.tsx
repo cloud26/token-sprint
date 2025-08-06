@@ -918,7 +918,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                             onClick={() => {
                                                 setSelectedModel("GPT-OSS-120B")
                                                 setParameters("117")
-                                                setPrecision("FP8")
+                                                setPrecision("MXFP4")
                                                 setGpuModel("NVIDIA H100 (80GB)")
                                                 setBatchSize("1")
                                                 setContextLength("4096")
@@ -931,7 +931,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                             onClick={() => {
                                                 setSelectedModel("GPT-OSS-20B")
                                                 setParameters("21")
-                                                setPrecision("FP16")
+                                                setPrecision("MXFP4")
                                                 setGpuModel("NVIDIA RTX 4090 (24GB)")
                                                 setBatchSize("2")
                                                 setContextLength("2048")

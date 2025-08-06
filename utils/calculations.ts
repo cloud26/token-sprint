@@ -150,8 +150,8 @@ function calcKvCacheSizePerToken(n_layers: number, d_model: number, precision: s
   let kvCacheBytes = 2 // 默认FP16
   if (precision === "FP8" || precision === "INT8") {
     kvCacheBytes = 1 // FP8/INT8模型通常KV Cache也使用8位
-  } else if (precision === "INT4") {
-    kvCacheBytes = 0.5 // INT4模型可能KV Cache使用4位或8位，取中间值
+  } else if (precision === "MXFP4" || precision === "INT4") {
+    kvCacheBytes = 0.5 // MXFP4/INT4模型可能KV Cache使用4位或8位，取中间值
   } else if (precision === "FP32") {
     kvCacheBytes = 4 // FP32模型
   }
@@ -397,12 +397,12 @@ function calculateMultiGpuThroughput(
   } else {
     // 2.2 多用户情况：在单用户基础上应用缓存收益系数
     const l2CacheHitRate = calculateL2CacheHitRate(effectiveParams, batchSize, contextLength, gpuModel, requiredGPUs, precision)
-    
+
     // 缓存命中率转换为吞吐量提升系数
     // 命中率X% → 内存访问减少X% → 吞吐量提升 = 1/(1-X)
     const cacheEfficiencyBonus = 1 / (1 - l2CacheHitRate)
     const maxBonus = cacheEfficiencyBonus
-    
+
     memoryBoundThroughput = baseMemoryThroughput * maxBonus
   }
 
