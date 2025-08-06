@@ -1923,6 +1923,36 @@ export const MODELS: ModelInfo[] = [
     series: "GLM-4.5",
     category: "原始模型",
   },
+
+  // GPT-OSS 系列 (OpenAI开源权重模型)
+  {
+    name: "GPT-OSS-120B",
+    parameters: "117B",
+    parametersNum: 117,
+    value: "gpt-oss-120b",
+    d_model: 6144, // Based on official specifications
+    n_layers: 36, // From official spec table
+    activeParams: 5.1,
+    isMoE: true,
+    source: "OpenAI open-weight model designed for powerful reasoning and agentic tasks",
+    verificationUrl: "https://huggingface.co/openai/gpt-oss-120b",
+    series: "GPT-OSS",
+    category: "原始模型",
+  },
+  {
+    name: "GPT-OSS-20B",
+    parameters: "21B",
+    parametersNum: 21,
+    value: "gpt-oss-20b",
+    d_model: 4096, // Based on official specifications
+    n_layers: 24, // From official spec table
+    activeParams: 3.6,
+    isMoE: true,
+    source: "OpenAI open-weight model for lower latency and local use cases",
+    verificationUrl: "https://huggingface.co/openai/gpt-oss-20b",
+    series: "GPT-OSS",
+    category: "原始模型",
+  },
 ];
 
 // 为了向后兼容，保留 modelExamples 导出
@@ -2006,6 +2036,7 @@ export const getModelsByGroup = () => {
   // 按系列名称排序，优先显示热门系列
   const seriesOrder = [
     "DeepSeek",
+    "GPT-OSS",
     "Llama 4",
     "Llama 3.2",
     "Llama 3.1",

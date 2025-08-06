@@ -55,6 +55,10 @@ const models: ModelInfo[] = [
     { value: "gpt-3.5-turbo", label: "GPT-3.5 Turbo", encoding: "gpt-3.5-turbo" },
     { value: "text-davinci-003", label: "GPT-3 Davinci", encoding: "text-davinci-003" },
 
+    // OpenAI GPT-OSS 系列 - 使用官方 Hugging Face 模型
+    { value: "gpt-oss-120b", label: "GPT-OSS-120B 🤗", encoding: "huggingface", hub: "openai/gpt-oss-120b" },
+    { value: "gpt-oss-20b", label: "GPT-OSS-20B 🤗", encoding: "huggingface", hub: "openai/gpt-oss-20b" },
+
     // Claude 系列 - 使用 Hugging Face 社区 tokenizer
     { value: "claude-opus-4", label: "Claude 4 Opus 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
     { value: "claude-sonnet-4", label: "Claude 4 Sonnet 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
