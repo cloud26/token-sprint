@@ -23,6 +23,12 @@ export const models: Record<string, ModelConfig> = {
         name: "Qwen",
         parameters: 235,
         recommendedPrecision: "FP8"
+    },
+    gpt: {
+        slug: "gpt",
+        name: "GPT-OSS",
+        parameters: 117, // GPT-OSS-120B默认参数
+        recommendedPrecision: "FP8"
     }
 }
 

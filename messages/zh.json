@@ -271,6 +271,17 @@
             "显存效率极高",
             "多语言支持优秀"
           ]
+        },
+        "gpt": {
+          "modelName": "GPT-OSS",
+          "modelVersions": "GPT-OSS-120B/20B",
+          "features": "开源权重推理模型",
+          "specialFeatures": [
+            "Apache 2.0 开源许可证",
+            "可配置推理强度等级",
+            "完整思维链访问",
+            "原生智能体能力"
+          ]
         }
       }
     },

@@ -263,6 +263,17 @@
             "Extremely memory efficient",
             "Excellent multilingual support"
           ]
+        },
+        "gpt": {
+          "modelName": "GPT-OSS",
+          "modelVersions": "GPT-OSS-120B/20B",
+          "features": "open-weight reasoning models",
+          "specialFeatures": [
+            "Apache 2.0 permissive license",
+            "Configurable reasoning effort levels",
+            "Full chain-of-thought access",
+            "Native agentic capabilities"
+          ]
         }
       }
     },

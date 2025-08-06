@@ -262,6 +262,17 @@
             "Extrem speichereffizient",
             "Ausgezeichnete mehrsprachige Unterstützung"
           ]
+        },
+        "gpt": {
+          "modelName": "GPT-OSS",
+          "modelVersions": "GPT-OSS-120B/20B",
+          "features": "Open-Weight-Reasoning-Modelle",
+          "specialFeatures": [
+            "Apache 2.0 permissive Lizenz",
+            "Konfigurierbare Reasoning-Effort-Level",
+            "Vollständiger Chain-of-Thought-Zugang",
+            "Native Agenten-Fähigkeiten"
+          ]
         }
       }
     },

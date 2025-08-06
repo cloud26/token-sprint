@@ -98,7 +98,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                 (preferredModelType === 'qwen' && (modelName.includes('qwen') || modelName.includes('Qwen3-Coder'))) ||
                 (preferredModelType === 'claude' && modelName.includes('claude')) ||
                 (preferredModelType === 'gemini' && modelName.includes('gemini')) ||
-                (preferredModelType === 'gpt-oss' && modelName.includes('gpt-oss'))
+                (preferredModelType === 'gpt' && modelName.includes('gpt-oss'))
             ) {
                 preferred.push(model)
             } else {
@@ -119,7 +119,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
             'qwen': 'Qwen3-Coder-480B-A35B',
             'claude': 'DeepSeek-R1', // Claude模型不在modelExamples中，使用默认
             'gemini': 'DeepSeek-R1',  // Gemini模型不在modelExamples中，使用默认
-            'gpt-oss': 'GPT-OSS-120B' // GPT-OSS系列默认使用120B模型
+            'gpt': 'GPT-OSS-120B' // GPT-OSS系列默认使用120B模型
         }
 
         return defaultModels[preferredModelType] || "DeepSeek-R1"
@@ -370,7 +370,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                         (preferredModelType === 'deepseek' && seriesLower.includes('deepseek')) ||
                                                         (preferredModelType === 'llama' && seriesLower.includes('llama')) ||
                                                         (preferredModelType === 'qwen' && (seriesLower.includes('qwen') || seriesLower.includes('qwen 3'))) ||
-                                                        (preferredModelType === 'gpt-oss' && seriesLower.includes('gpt-oss'))
+                                                        (preferredModelType === 'gpt' && seriesLower.includes('gpt-oss'))
                                                     ) {
                                                         preferredSeries.push(series);
                                                     } else {
