@@ -100,15 +100,22 @@ const models: ModelInfo[] = [
     { value: "glm-4.5-air-base", label: "GLM-4.5-Air-Base 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5-Air-Base" },
 
     // Qwen 系列 - 使用官方 tokenizer
+    // Qwen3-Next 系列
+    { value: "qwen3-next-80b-a3b-instruct", label: "Qwen3-Next-80B-A3B-Instruct 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen3-next-80b-a3b-thinking", label: "Qwen3-Next-80B-A3B-Thinking 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    // Qwen3 系列
     { value: "qwen3-coder-480b", label: "Qwen3-Coder-480B-A35B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen3-235b", label: "Qwen3-235B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    // Qwen2.5 系列
     { value: "qwen2.5-72b", label: "Qwen2.5-72B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen2.5-32b", label: "Qwen2.5-32B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwq-32b", label: "QwQ-32B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen2.5-14b", label: "Qwen2.5-14B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen2.5-7b", label: "Qwen2.5-7B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    // Qwen2 系列
     { value: "qwen2-72b", label: "Qwen2-72B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen2-7b", label: "Qwen2-7B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    // Qwen 云服务
     { value: "qwen-plus", label: "Qwen-Plus 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen-turbo", label: "Qwen-Turbo 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen-max", label: "Qwen-Max 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
