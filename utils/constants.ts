@@ -1340,6 +1340,35 @@ export const MODELS: ModelInfo[] = [
   },
 
   // Qwen 系列 (开源可私有化部署)
+  // Qwen3-Next 系列
+  {
+    name: "Qwen3-Next-80B-A3B-Instruct",
+    parameters: "81B",
+    parametersNum: 81,
+    value: "qwen3-next-80b-a3b-instruct",
+    d_model: 5120,
+    n_layers: 72,
+    activeParams: 3,
+    isMoE: true,
+    source: "Qwen3-Next official release - instruction-tuned model",
+    verificationUrl: "https://huggingface.co/Qwen/Qwen3-Next-80B-A3B-Instruct",
+    series: "Qwen 3-Next",
+    category: "原始模型",
+  },
+  {
+    name: "Qwen3-Next-80B-A3B-Thinking",
+    parameters: "81B",
+    parametersNum: 81,
+    value: "qwen3-next-80b-a3b-thinking",
+    d_model: 5120,
+    n_layers: 72,
+    activeParams: 3,
+    isMoE: true,
+    source: "Qwen3-Next official release - reasoning-focused model",
+    verificationUrl: "https://huggingface.co/Qwen/Qwen3-Next-80B-A3B-Thinking",
+    series: "Qwen 3-Next",
+    category: "推理专用",
+  },
   {
     name: "Qwen3-Coder-480B-A35B",
     parameters: "480B",
@@ -2044,6 +2073,7 @@ export const getModelsByGroup = () => {
     "Llama 3.2",
     "Llama 3.1",
     "Llama 3",
+    "Qwen 3-Next",
     "Qwen 3",
     "Qwen 2.5",
     "Qwen 2",

@@ -95,7 +95,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
             if (
                 (preferredModelType === 'deepseek' && modelName.includes('deepseek')) ||
                 (preferredModelType === 'llama' && modelName.includes('llama')) ||
-                (preferredModelType === 'qwen' && (modelName.includes('qwen') || modelName.includes('Qwen3-Coder'))) ||
+                (preferredModelType === 'qwen' && (modelName.includes('qwen') || modelName.includes('qwen3-coder') || modelName.includes('qwen3-next'))) ||
                 (preferredModelType === 'claude' && modelName.includes('claude')) ||
                 (preferredModelType === 'gemini' && modelName.includes('gemini')) ||
                 (preferredModelType === 'gpt' && modelName.includes('gpt-oss'))
