@@ -54,6 +54,20 @@ export const getLocaleForLanguage = (lang: Language) => LANGUAGE_CONFIG.LOCALE_M
 // 辅助函数：获取语言的hreflang属性
 export const getHreflangForLanguage = (lang: Language) => LANGUAGE_CONFIG.HREFLANG_MAP[lang]
 
+// 辅助函数：获取语言的 HTML lang 属性值
+// HTML lang 属性通常使用 ISO 639-1 格式，与 hreflang 略有不同
+export const getHtmlLangForLanguage = (lang: Language): string => {
+  // HTML lang 属性映射（ISO 639-1 格式）
+  const HTML_LANG_MAP: Record<Language, string> = {
+    'en': 'en',
+    'zh': 'zh-CN',
+    'ru': 'ru',
+    'ja': 'ja',
+    'de': 'de'
+  }
+  return HTML_LANG_MAP[lang]
+}
+
 // 辅助函数：生成多语言URL映射（用于alternates.languages）
 // baseUrl: 基础URL（包含协议和域名），例如 "https://app.linpp2009.com"
 // path: 路径（可选），例如 "token-counter-visualizer" 或 "token-counter-visualizer/gpt-4"
