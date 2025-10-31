@@ -2,7 +2,7 @@ import TokenSpeedDemo from "@/components/token-speed-demo"
 import LanguageSwitcher from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
 import { use } from "react"
-import { type Language } from "@/config/languages"
+import { type Language, getCanonicalUrl, generateLanguageAlternates } from "@/config/languages"
 import { Metadata } from "next"
 import { SideNav } from "@/components/side-nav"
 import { Breadcrumb } from "@/components/breadcrumb"
@@ -21,11 +21,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
         title: t('metadata.title'),
         description: t('metadata.description'),
         alternates: {
-            canonical: `${baseUrl}/${lang}/${path}`,
-            languages: {
-                'en': `${baseUrl}/en/${path}`,
-                'zh': `${baseUrl}/zh/${path}`,
-            },
+            canonical: getCanonicalUrl(baseUrl, lang, path),
+            languages: generateLanguageAlternates(baseUrl, path),
         },
         other: {
             'application-name': 'AI Token Generation Speed Visualizer',

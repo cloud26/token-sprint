@@ -2,7 +2,7 @@ import TokenCounter from "@/components/token-counter"
 import LanguageSwitcher from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
 import { use, Suspense } from "react"
-import { type Language } from "@/config/languages"
+import { type Language, getCanonicalUrl, generateLanguageAlternates } from "@/config/languages"
 import { Metadata } from "next"
 import { SideNav } from "@/components/side-nav"
 import Link from "next/link"
@@ -23,11 +23,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
         description: t('metadata.description'),
         keywords: t('metadata.keywords'),
         alternates: {
-            canonical: `${baseUrl}/${lang}/${path}`,
-            languages: {
-                'en': `${baseUrl}/en/${path}`,
-                'zh': `${baseUrl}/zh/${path}`,
-            },
+            canonical: getCanonicalUrl(baseUrl, lang, path),
+            languages: generateLanguageAlternates(baseUrl, path),
         },
         other: {
             'application-name': 'AI Token Counter'

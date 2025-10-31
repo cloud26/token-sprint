@@ -55,24 +55,38 @@ export const getLocaleForLanguage = (lang: Language) => LANGUAGE_CONFIG.LOCALE_M
 export const getHreflangForLanguage = (lang: Language) => LANGUAGE_CONFIG.HREFLANG_MAP[lang]
 
 // 辅助函数：生成多语言URL映射（用于alternates.languages）
-export const generateLanguageAlternates = (baseUrl: string, currentLang?: Language) => {
+// baseUrl: 基础URL（包含协议和域名），例如 "https://app.linpp2009.com"
+// path: 路径（可选），例如 "token-counter-visualizer" 或 "token-counter-visualizer/gpt-4"
+// 函数会在域名后、路径前插入语言代码，生成 ${baseUrl}/${lang}/${path}
+export const generateLanguageAlternates = (baseUrl: string, path?: string) => {
   const alternates: Record<string, string> = {}
+
+  // 确保 path 格式正确：去除前导斜杠（如果存在），然后添加单个前导斜杠
+  const normalizedPath = path ? `/${path.replace(/^\/+/, '')}` : ''
 
   LANGUAGE_CONFIG.SUPPORTED_LANGUAGES.forEach(lang => {
     // 所有语言都包含语言前缀，包括英语
-    alternates[getHreflangForLanguage(lang)] = `${baseUrl}/${lang}`
+    // URL 格式：${baseUrl}/${lang}${normalizedPath}
+    alternates[getHreflangForLanguage(lang)] = `${baseUrl}/${lang}${normalizedPath}`
   })
 
   // 添加 x-default
-  alternates['x-default'] = `${baseUrl}/en`
+  alternates['x-default'] = `${baseUrl}/en${normalizedPath}`
 
   return alternates
 }
 
 // 辅助函数：获取规范URL
-export const getCanonicalUrl = (baseUrl: string, lang: Language) => {
+// baseUrl: 基础URL（包含协议和域名），例如 "https://app.linpp2009.com"
+// path: 路径（可选），例如 "token-counter-visualizer" 或 "token-counter-visualizer/gpt-4"
+// 函数会在域名后、路径前插入语言代码，生成 ${baseUrl}/${lang}/${path}
+export const getCanonicalUrl = (baseUrl: string, lang: Language, path?: string) => {
+  // 确保 path 格式正确：去除前导斜杠（如果存在），然后添加单个前导斜杠
+  const normalizedPath = path ? `/${path.replace(/^\/+/, '')}` : ''
+
   // 所有语言都包含语言前缀，包括英语
-  return `${baseUrl}/${lang}`
+  // URL 格式：${baseUrl}/${lang}${normalizedPath}
+  return `${baseUrl}/${lang}${normalizedPath}`
 }
 
 export const tools = {
