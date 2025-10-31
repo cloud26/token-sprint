@@ -61,8 +61,8 @@ export async function generateMetadata({
         description: seoDescription,
         keywords: keywords,
         alternates: {
-            canonical: `${baseUrl}/${lang}/${path}`,
-            languages: generateLanguageAlternates(`${baseUrl}/${path}`, lang),
+            canonical: getCanonicalUrl(baseUrl, lang, path),
+            languages: generateLanguageAlternates(baseUrl, path),
         },
         other: {
             'application-name': `${model.name} GPU Calculator`

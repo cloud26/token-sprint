@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         description: t('home.metadata.description'),
         alternates: {
             canonical: getCanonicalUrl(baseUrl, lang as Language),
-            languages: generateLanguageAlternates(baseUrl, lang as Language),
+            languages: generateLanguageAlternates(baseUrl, undefined),
         },
         openGraph: {
             title: t('home.metadata.title'),

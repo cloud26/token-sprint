@@ -49,8 +49,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
         description: seoDescription,
         keywords: keywords,
         alternates: {
-            canonical: `${baseUrl}/${lang}/${path}`,
-            languages: generateLanguageAlternates(`${baseUrl}/${path}`, lang),
+            canonical: getCanonicalUrl(baseUrl, lang, path),
+            languages: generateLanguageAlternates(baseUrl, path),
         },
         other: {
             'application-name': `${model.name} Token Counter`

@@ -1,7 +1,7 @@
 import LanguageSwitcher from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
 import { use, Suspense } from "react"
-import { type Language } from "@/config/languages"
+import { type Language, getCanonicalUrl, generateLanguageAlternates } from "@/config/languages"
 import { Metadata } from "next"
 import LLMMemoryCalculator from "@/components/llm-memory-calculator"
 import { SideNav } from "@/components/side-nav"
@@ -23,11 +23,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
         description: t('metadata.description'),
         keywords: t('metadata.keywords'),
         alternates: {
-            canonical: `${baseUrl}/${lang}/${path}`,
-            languages: {
-                'en': `${baseUrl}/en/${path}`,
-                'zh': `${baseUrl}/zh/${path}`,
-            },
+            canonical: getCanonicalUrl(baseUrl, lang, path),
+            languages: generateLanguageAlternates(baseUrl, path),
         },
     }
 }
