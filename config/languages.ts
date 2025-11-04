@@ -1,9 +1,9 @@
-export type Language = "en" | "zh" | "zh-tw" | "ru" | "ja" | "de" | "ar"
+export type Language = "en" | "zh" | "zh-tw" | "ru" | "ja" | "de" | "ar" | "es"
 
 // 中心化语言配置
 export const LANGUAGE_CONFIG = {
   // 支持的语言列表
-  SUPPORTED_LANGUAGES: ['en', 'zh', 'zh-tw', 'ru', 'ja', 'de', 'ar'] as const,
+  SUPPORTED_LANGUAGES: ['en', 'zh', 'zh-tw', 'ru', 'ja', 'de', 'ar', 'es'] as const,
 
   // 默认语言
   DEFAULT_LANGUAGE: 'en' as const,
@@ -16,7 +16,8 @@ export const LANGUAGE_CONFIG = {
     'ru': 'ru_RU',
     'ja': 'ja_JP',
     'de': 'de_DE',
-    'ar': 'ar_SA'
+    'ar': 'ar_SA',
+    'es': 'es_ES'
   } as const,
 
   // 语言标签（用于UI显示）
@@ -27,7 +28,8 @@ export const LANGUAGE_CONFIG = {
     'ru': 'Русский',
     'ja': '日本語',
     'de': 'Deutsch',
-    'ar': 'العربية'
+    'ar': 'العربية',
+    'es': 'Español'
   } as const,
 
   // 语言代码到全名的映射
@@ -38,7 +40,8 @@ export const LANGUAGE_CONFIG = {
     'ru': 'Russian',
     'ja': 'Japanese',
     'de': 'German',
-    'ar': 'Arabic'
+    'ar': 'Arabic',
+    'es': 'Spanish'
   } as const,
 
   // hreflang 映射
@@ -49,7 +52,8 @@ export const LANGUAGE_CONFIG = {
     'ru': 'ru',
     'ja': 'ja',
     'de': 'de',
-    'ar': 'ar'
+    'ar': 'ar',
+    'es': 'es'
   } as const,
 
   // RTL 语言列表（从右到左）
@@ -76,7 +80,8 @@ export const getHtmlLangForLanguage = (lang: Language): string => {
     'ru': 'ru',
     'ja': 'ja',
     'de': 'de',
-    'ar': 'ar'
+    'ar': 'ar',
+    'es': 'es'
   }
   return HTML_LANG_MAP[lang]
 }

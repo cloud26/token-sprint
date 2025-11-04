@@ -1,0 +1,643 @@
+{
+  "common": {
+    "backToHome": "Back to Home",
+    "navigation": {
+      "home": "Home"
+    },
+    "feedback": {
+      "contactPrompt": "💡 Questions or suggestions? Contact me via email or X"
+    },
+    "ui": {
+      "generateExample": "Generate Example",
+      "tokenizerError": "Tokenizer Error: Using estimation",
+      "loadingTokenizer": "Loading Hugging Face tokenizer...",
+      "approximateCount": "Approximate count, precise calculation in progress...",
+      "tokenBreakdown": "Token Breakdown",
+      "hide": "Hide",
+      "show": "Show",
+      "text": "Text",
+      "tokenIds": "Token IDs",
+      "tokensFound": "{count} tokens found:",
+      "tokenTooltip": "Token {index}: \"{token}\" (ID: {id})",
+      "businessGuide": "Business Guide: Token Optimization & Cost Control",
+      "whySpeedMatters": "Why Token Generation Speed Matters",
+      "loadingStates": {
+        "preparing": "Preparing to load tokenizer...",
+        "downloading": "Downloading tokenizer files...",
+        "initializing": "Initializing tokenizer...",
+        "ready": "Tokenizer ready!",
+        "error": "Error loading tokenizer"
+      },
+
+      "tokenCounter": {
+        "input": "Input Text",
+        "inputPlaceholder": "Enter or paste your text here to count tokens...",
+        "model": "Select Model",
+        "selectModel": "Select a model...",
+        "searchModels": "Search models...",
+        "noModelsFound": "No models found",
+        "results": "Results",
+        "tokens": "Token Count",
+        "characters": "Characters",
+        "words": "Words",
+        "calculating": "Calculating...",
+        "exampleText": "Two households, both alike in dignity, In fair Verona, where we lay our scene, From ancient grudge break to new mutiny, Where civil blood makes civil hands unclean. From forth the fatal loins of these two foes A pair of star-cross'd lovers take their life; Whose misadventured piteous overthrows Do with their death bury their parents' strife.",
+        "modelGroups": {
+          "openai": "OpenAI GPT Series (Native)",
+          "claude": "Anthropic Claude Series (🤗)",
+          "llama": "Meta Llama Series (🤗)",
+          "deepseek": "DeepSeek Series (🤗)",
+          "glm": "GLM Series (🤗)",
+          "mistral": "Mistral Series (🤗)",
+          "gemini": "Google Gemini Series (Estimation)",
+          "qwen": "Qwen Series (🤗)"
+        }
+      },
+      "optimizationTipsFor": "Optimization Tips for {model}",
+      "tokenEfficiency": "Token Efficiency: Use precise, concise prompts to minimize token usage and costs.",
+      "modelSelection": "Model Selection: Choose the right {company} model for your specific use case and budget.",
+      "batchProcessing": "Batch Processing: Combine multiple requests when possible to reduce API overhead.",
+      "contextManagement": "Context Management: Monitor conversation length to stay within model limits.",
+      "costPlanning": "Cost Planning: Use this counter to estimate costs before implementing in production.",
+      "optimizationTips": "Optimization Tips",
+      "speedGuideContent": {
+        "intro": "Token generation speed directly impacts user experience in AI applications. Research shows delays over 3 seconds significantly increase user abandonment rates.",
+        "speedBenchmarks": {
+          "title": "📊 Speed Benchmarks",
+          "chatgpt": "ChatGPT-4: ~20-40 tokens/sec",
+          "claude": "Claude 3.5: ~25-50 tokens/sec",
+          "local": "Local models: 5-200+ tokens/sec"
+        },
+        "optimizationTips": {
+          "title": "⚡ Optimization Tips",
+          "streaming": "Use streaming for perceived speed",
+          "progress": "Show progress indicators",
+          "optimize": "Optimize for your use case"
+        },
+        "useTool": {
+          "title": "Use this tool to:",
+          "description": "Test optimal speeds for chatbots (15-30 tokens/sec), content tools (40+ tokens/sec), or educational platforms (5-15 tokens/sec). Find the sweet spot between performance and user experience."
+        }
+      },
+      "tokenGuide": {
+        "colorBlocks": "Each colored block represents one token",
+        "hover": "Hover over tokens to see their IDs",
+        "spaces": "⎵ represents spaces",
+        "hfModels": "🤗 models use Hugging Face community tokenizers"
+      },
+      "hfSection": {
+        "title": "Hugging Face Community Tokenizer",
+        "localProcessing": {
+          "title": "Local processing",
+          "description": "No API calls required"
+        },
+        "communityTokenizers": {
+          "title": "Community tokenizers",
+          "description": "Maintained by the open source community"
+        },
+        "tokenBreakdown": {
+          "title": "Token breakdown",
+          "description": "Full tokenization details available"
+        },
+        "hubModel": "Hub model",
+        "firstLoad": "First load may take time to download the tokenizer"
+      },
+      "usageTips": {
+        "title": "Tokenizer Types:",
+        "openaiModels": "OpenAI models",
+        "nativeJs": "Native js-tiktoken (most accurate)",
+        "hfModels": "🤗 models",
+        "communityTokenizers": "Hugging Face community tokenizers (very good approximation)",
+        "warningModels": "⚠️ models",
+        "gpt4Estimation": "GPT-4 tokenizer estimation",
+        "communityAccuracy": "Community tokenizers are reverse-engineered but quite accurate",
+        "localRun": "All tokenizers now run locally in your browser!"
+      },
+      "businessGuideContent": {
+        "costEstimation": {
+          "title": "💰 API Cost Estimation",
+          "description": "Understanding token counts is crucial for cost management. For example:",
+          "examples": {
+            "gpt4o": "GPT-4o: $15/1M input tokens - A 1000-token prompt costs ~$0.015",
+            "claude": "Claude 3.5 Sonnet: $3/1M tokens - Same prompt costs ~$0.003",
+            "gemini": "Gemini 1.5 Pro: $1.25/1M tokens - Same prompt costs ~$0.00125"
+          },
+          "tip": "Use our calculator to estimate costs before scaling your application."
+        },
+        "businessScenarios": {
+          "title": "🎯 Business Scenarios",
+          "contentGeneration": "Content Generation: Pre-calculate token limits for blog posts, marketing copy",
+          "customerSupport": "Customer Support: Optimize chatbot responses to stay within context windows",
+          "documentAnalysis": "Document Analysis: Chunk large documents efficiently for processing",
+          "apiIntegration": "API Integration: Validate input size before expensive API calls"
+        },
+        "optimizationStrategies": {
+          "title": "⚡ Optimization Strategies",
+          "modelSelection": "Model Selection: Use cheaper models for simple tasks, premium for complex ones",
+          "promptEngineering": "Prompt Engineering: Shorter, more specific prompts often yield better results",
+          "contextManagement": "Context Management: Monitor conversation length to avoid hitting limits",
+          "batchProcessing": "Batch Processing: Combine multiple requests to reduce overhead"
+        },
+        "proTip": {
+          "title": "💡 Pro Tip:",
+          "content": "Different tokenizers can produce 20-40% variation in token counts for the same text. Test with your target model's tokenizer for accurate cost estimation."
+        }
+      }
+    },
+    "gpu": {
+      "selectionGuide": "GPU Selection Guide for LLM Deployment",
+      "popularModels": "Popular AI Models GPU Requirements for Local Deployment",
+      "guide": {
+        "budgetOptions": {
+          "title": "💰 Budget-Friendly Options (Under $10k)",
+          "rtx4090": "RTX 4090 (24GB): Best for 7B-13B models, single card setup",
+          "rtx3090": "RTX 3090 (24GB): Good value for smaller models and experimentation",
+          "rtx4060ti": "Multiple RTX 4060 Ti (16GB): Cost-effective for distributed inference"
+        },
+        "enterpriseSolutions": {
+          "title": "🏢 Enterprise Solutions ($50k+)",
+          "h100": "NVIDIA H100 (80GB): Industry standard for production LLM deployment",
+          "a100": "NVIDIA A100 (80GB): Proven reliability, good for 70B+ models",
+          "mi355x": "AMD MI355X (288GB): Latest CDNA 4, highest memory capacity for massive models",
+          "mi350x": "AMD MI350X (288GB): CDNA 4 air-cooled, excellent price/performance",
+          "mi325x": "AMD MI325X (256GB): CDNA 3 with HBM3E, great for large model deployment",
+          "mi300x": "AMD MI300X (192GB): Proven CDNA 3, excellent for 400B+ models"
+        },
+        "proTips": {
+          "title": "⚡ Pro Tips for Optimization",
+          "fp8": "Use FP8/INT8: Reduce memory usage by 50-75% with minimal quality loss",
+          "moe": "Consider MoE Models: Qwen3-235B-A22B offers flagship performance with 4x H100 (vs 10x for DeepSeek-R1)",
+          "parallel": "Model Parallelism: Split large models across multiple GPUs",
+          "precision": "Mixed Precision: Combine FP16 inference with FP32 gradients for training",
+          "mapping": "Memory Mapping: Use CPU RAM for model storage, GPU for active layers"
+        }
+      },
+      "models": {
+        "qwen": {
+          "title": "🆕 Qwen2.5 & Qwen3 Local Deployment GPU Requirements",
+          "description": "Qwen2.5-72B & Qwen3-235B-A22B are the latest flagship models. Qwen2.5-72B needs 2x H100 with FP8, while Qwen3-235B-A22B (MoE) needs 4x H100. The Qwen2.5 series offers excellent multilingual capabilities with efficient local deployment."
+        },
+        "deepseek": {
+          "title": "DeepSeek R1 Local Deployment GPU Requirements",
+          "description": "DeepSeek R1 (671B parameters) requires substantial GPU memory for local deployment. With FP8 precision, you'll need approximately 10x NVIDIA H100 GPUs or equivalent high-memory configurations for optimal local inference performance."
+        },
+        "llama70b": {
+          "title": "Llama 3.1 70B Local Deployment GPU Requirements",
+          "description": "Llama 3.1 70B is more accessible for local deployment. With FP16 precision, you'll need 2x NVIDIA A100 (80GB) or H100. For consumer hardware, you'll need 7x RTX 4090 cards (24GB each)."
+        },
+        "llama405b": {
+          "title": "Llama 3.1 405B Local Deployment GPU Requirements",
+          "description": "Llama 3.1 405B requires high-end infrastructure for local deployment. With FP8 precision, you'll need 6x H100 GPUs. With FP16 precision, you'll need 11x A100 GPUs for local deployment."
+        },
+        "footer": "Use this calculator to get precise memory requirements for your specific use case and budget planning."
+      }
+    }
+  },
+  "home": {
+    "title": "Professional AI Development Tools",
+    "description": "Curated collection of practical AI development and analysis tools for your projects",
+    "metadata": {
+      "title": "AI Development Tools | Token Counter | GPU Calculator",
+      "description": "Free professional AI development tools including smart token counter, LLM GPU calculator, and AI generation speed simulator. Essential tools for AI developers to optimize efficiency and project costs."
+    }
+  },
+  "nav": {
+    "aiTools": "AI Tools",
+    "homePage": "AI Tools Homepage",
+    "goToHomePage": "Go to AI Tools Homepage",
+    "gpuCalculator": "GPU Calculator"
+  },
+  "tools": {
+    "tokenSpeedVisualizer": {
+      "title": "AI Token Generation Speed Simulator",
+      "description": "Experience realistic AI text generation at different speeds and understand the impact on user experience",
+      "metadata": {
+        "title": "AI Token Speed Simulator | Real AI Chat Experience",
+        "description": "Interactive AI text generation speed simulator. Experience how different token generation speeds affect user experience in AI conversations. Perfect for developers optimizing AI chat interfaces.",
+        "keywords": "ai token speed, ai generation speed, token generation, ai response time, ai performance"
+      }
+    },
+    "llmGpuCalculator": {
+      "title": "LLM Inference VRAM & GPU Requirement Calculator",
+      "description": "Accurately calculate how many GPUs you need to deploy LLMs. Supports NVIDIA, AMD, Huawei Ascend, Mac M-series. Get instant hardware requirements.",
+      "calculatorTitle": "{model} VRAM & GPU Requirement Calculator",
+      "calculatorDescription": "Calculate VRAM requirements and GPU count for {model} deployment. Support for NVIDIA, AMD, Apple, and Huawei",
+      "metadata": {
+        "title": "LLM Inference VRAM & GPU Requirement Calculator",
+        "description": "Calculate exact VRAM and GPU count for local LLM deployment. Supports NVIDIA H100/A100/RTX 4090, AMD, Huawei Ascend 910B, Mac M1/M2/M3/M4.",
+        "keywords": "llm vram calculator,vram calculator,llm inference hardware calculator,llm deployment calculator"
+      },
+      "models": {
+        "seoTitle": "{modelName} Inference GPU/VRAM Requirement Calculator",
+        "seoDescription": "Calculate VRAM and GPU count for {modelVersions} inference deployment. Support for NVIDIA, AMD, Apple, and Huawei GPUs with {features}.",
+        "keywords": "{modelLower},{modelLower} gpu requirements,{modelLower} deployment,{modelLower} local,{modelLower} ollama,{modelLower} vram calculator,vram calculator,{modelLower} local deployment",
+        "llama": {
+          "modelName": "Llama",
+          "modelVersions": "Llama 3/4",
+          "features": "MoE architecture",
+          "specialFeatures": [
+            "Llama 3.1 full series support",
+            "Latest Llama 4 series",
+            "Mixture-of-Experts (MoE) architecture",
+            "Multimodal AI capabilities"
+          ]
+        },
+        "deepseek": {
+          "modelName": "DeepSeek",
+          "modelVersions": "DeepSeek V3/R1",
+          "features": "enterprise-grade solutions",
+          "specialFeatures": [
+            "Massive 671B parameter scale",
+            "Industry-leading reasoning capabilities",
+            "Supports FP8 precision optimization",
+            "Suitable for enterprise deployment"
+          ]
+        },
+        "qwen": {
+          "modelName": "Qwen",
+          "modelVersions": "Qwen3",
+          "features": "efficient MoE architecture",
+          "specialFeatures": [
+            "Mixture-of-Experts (MoE) architecture",
+            "235B total, 22B active parameters",
+            "Extremely memory efficient",
+            "Excellent multilingual support"
+          ]
+        },
+        "gpt": {
+          "modelName": "GPT-OSS",
+          "modelVersions": "GPT-OSS-120B/20B",
+          "features": "open-weight reasoning models",
+          "specialFeatures": [
+            "Apache 2.0 permissive license",
+            "Configurable reasoning effort levels",
+            "Full chain-of-thought access",
+            "Native agentic capabilities"
+          ]
+        }
+      }
+    },
+    "tokenCounter": {
+      "title": "AI Token Counter & Tokenizer",
+      "description": "Support for GPT-4o, Claude 4, Gemini 1.5 Pro, Llama 4, DeepSeek-R1, Qwen3 and other leading models",
+      "metadata": {
+        "title": "Token Counter & Calculator: ChatGPT, GPT, Claude, Llama Tokenizer",
+        "description": "Free online token counter & calculator for ChatGPT, GPT-4o, Claude 4, Llama models. Real-time token counting, cost estimation, LLM token calculator.",
+        "keywords": "tiktokenizer, token counter,tokenizers ai,token calculator,tokenization tools,gpt token counter,chatgpt token counter"
+      },
+      "structured": {
+        "tokenCountingModels": "Token counting for multiple AI models",
+        "visualBreakdown": "Visual token breakdown",
+        "modelSupport": "Support for GPT, Claude, Gemini, DeepSeek, Llama models",
+        "realtimeAnalysis": "Real-time token analysis",
+        "aiTokenCounter": "AI Token Counter"
+      },
+      "models": {
+        "description": "{company} token counter and tokenizer tool. {accuracyNote}",
+        "seoTitle": "{displayName} Token Counter & Calculator: Free {displayName} Tokenizer {titleSuffix}",
+        "seoDescription": "Free {displayName} token counter & calculator for {versions}. {features}",
+        "keywords": "tiktokenizer, token counter,tokenizers ai,token calculator,tokenization tools,{keywordName} token counter",
+        "openai-gpt": {
+          "company": "OpenAI",
+          "displayName": "ChatGPT",
+          "keywordName": "openai",
+          "titleSuffix": "Online",
+          "accuracyNote": "The most accurate OpenAI token counting tool.",
+          "versions": "GPT-4o, GPT-4, GPT-3.5",
+          "features": "Native tokenizer accuracy, real-time cost estimation, online token calculator.",
+          "representativeModels": "GPT-4o, GPT-4, GPT-4 Turbo, GPT-3.5 Turbo"
+        },
+        "anthropic-claude": {
+          "company": "Anthropic Claude",
+          "displayName": "Claude",
+          "keywordName": "claude",
+          "titleSuffix": "Online",
+          "accuracyNote": "Approximate token counting for Claude models using advanced estimation.",
+          "versions": "Claude 4, Claude 3.5",
+          "features": "Online token estimator with cost calculation, Hugging Face tokenizer.",
+          "representativeModels": "Claude 4 Opus, Claude 4 Sonnet, Claude 3.5 Sonnet, Claude 3.5 Haiku"
+        },
+        "google-gemini": {
+          "company": "Google Gemini",
+          "displayName": "Gemini",
+          "keywordName": "gemini",
+          "titleSuffix": "",
+          "accuracyNote": "Approximate token counting for Gemini models using advanced estimation.",
+          "versions": "Gemini 1.5 Pro, Flash",
+          "features": "Online token estimator with real-time counting and cost estimation.",
+          "representativeModels": "Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini Pro"
+        },
+        "meta-llama": {
+          "company": "Meta Llama",
+          "displayName": "Llama",
+          "keywordName": "llama",
+          "titleSuffix": "",
+          "accuracyNote": "Approximate token counting for Llama models using advanced estimation.",
+          "versions": "Llama 4, Llama 3",
+          "features": "Online LLM token estimator with Hugging Face tokenizer, open source models.",
+          "representativeModels": "Llama 3.1 405B, Llama 3.1 70B, Llama 3.1 8B, Llama 2 70B"
+        },
+        "deepseek": {
+          "company": "DeepSeek",
+          "displayName": "DeepSeek",
+          "keywordName": "deepseek",
+          "titleSuffix": "",
+          "accuracyNote": "Approximate token counting for DeepSeek models using advanced estimation.",
+          "versions": "DeepSeek R1, V3",
+          "features": "Online token estimator with cost calculation and optimization.",
+          "representativeModels": "DeepSeek-R1, DeepSeek-V3 Chat"
+        },
+        "alibaba-qwen": {
+          "company": "Alibaba Qwen",
+          "displayName": "Qwen",
+          "keywordName": "qwen",
+          "titleSuffix": "",
+          "accuracyNote": "Approximate token counting for Qwen models using advanced estimation.",
+          "versions": "Qwen3, Qwen2.5",
+          "features": "Online token estimator with multilingual support and cost optimization.",
+          "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        }
+      }
+    }
+  },
+  "calculator": {
+    "modelSelection": {
+      "label": "Model Selection",
+      "placeholder": "Select model...",
+      "searchPlaceholder": "Search models...",
+      "notFound": "No matching model found",
+      "tooltip": {
+        "title": "Select preset model for quick configuration",
+        "features": [
+          "Automatically set parameter count",
+          "Includes latest mainstream models",
+          "Search functionality supported"
+        ]
+      }
+    },
+    "parameters": {
+      "label": "Model Parameters (Billions)",
+      "tooltip": "Model size in billions of parameters, e.g., 671B (DeepSeek R1), 70B (Llama 3.1 70B), 405B (Llama 3.1 405B), 7B, 13B",
+      "placeholder": "Enter model size (e.g., 7, 13, 70)"
+    },
+    "precision": {
+      "label": "Precision",
+      "tooltip": "Different precisions affect memory usage: FP32 (highest), FP16, FP8, MXFP4 (native GPT-OSS), INT8, INT4 (lowest)"
+    },
+    "concurrency": {
+      "label": "Concurrent Users",
+      "placeholder": "8",
+      "tooltip": {
+        "title": "💼 Concurrent Users Planning:",
+        "scenarios": [
+          "• 1-4 users: Testing environment, small-scale trials",
+          "• 8-16 users: Internal department use, small applications",
+          "• 32-64 users: Enterprise applications, medium-scale services",
+          "• 128+ users: Large-scale production, high-concurrency services"
+        ],
+        "estimation": {
+          "title": "💡 How to estimate concurrency:",
+          "methods": [
+            "• Customer service bot: Expected simultaneous customer inquiries",
+            "• Internal tools: Team members who might use simultaneously",
+            "• API service: Expected QPS × Average response time (seconds)",
+            "• Chat application: DAU × Online rate × Activity rate"
+          ]
+        }
+      }
+    },
+    "contextLength": {
+      "label": "Average Context Length",
+      "placeholder": "Select Average Context Length...",
+      "searchPlaceholder": "Search Average Context Length...",
+      "notFound": "No matching option found",
+      "tooltip": {
+        "title": "Average context length affects memory usage",
+        "features": [
+          "Mainly affects KV Cache memory size",
+          "Based on typical usage patterns, not maximum capacity",
+          "Choosing appropriate scenario optimizes costs"
+        ]
+      },
+      "options": [
+        {
+          "value": "256",
+          "label": "256 tokens",
+          "description": "Very short interactions",
+          "scenarios": "Typical usage: Quick Q&A, simple commands, short code snippets"
+        },
+        {
+          "value": "512",
+          "label": "512 tokens",
+          "description": "Short conversations",
+          "scenarios": "Typical usage: ChatGPT-style dialogue, basic assistance, brief explanations"
+        },
+        {
+          "value": "1024",
+          "label": "1K tokens",
+          "description": "Standard interactions",
+          "scenarios": "Typical usage: Customer service, document Q&A, code assistance"
+        },
+        {
+          "value": "2048",
+          "label": "2K tokens",
+          "description": "Extended conversations",
+          "scenarios": "Typical usage: Technical discussions, detailed analysis, longer documents"
+        },
+        {
+          "value": "4096",
+          "label": "4K tokens",
+          "description": "Complex tasks",
+          "scenarios": "Typical usage: Paper analysis, code review, comprehensive reports"
+        },
+        {
+          "value": "8192",
+          "label": "8K tokens",
+          "description": "Long-form content",
+          "scenarios": "Typical usage: Book chapters, large codebases, research documents"
+        },
+        {
+          "value": "16384",
+          "label": "16K tokens",
+          "description": "Very long context",
+          "scenarios": "Typical usage: Multi-document analysis, extensive code refactoring"
+        }
+      ]
+    },
+    "gpu": {
+      "label": "GPU Model",
+      "placeholder": "Search GPU models...",
+      "searchPlaceholder": "Search GPU models...",
+      "notFound": "No GPU model found"
+    },
+    "results": {
+      "totalMemory": "Total Memory Required",
+      "requiredGPUs": "Required GPUs",
+      "unit": "x"
+    },
+    "memoryBreakdown": {
+      "title": "Memory Breakdown",
+      "modelInfo": "Model: {parameters}B parameters",
+      "moeInfo": "(MoE: {activeParams}B active)",
+      "components": {
+        "modelMemory": {
+          "label": "Model Memory",
+          "description": "All model weights"
+        },
+        "kvCache": {
+          "label": "KV Cache",
+          "description": "Conversation history cache"
+        },
+        "activationMemory": {
+          "label": "Activation Memory",
+          "descriptionMoE": "Expert model optimization",
+          "descriptionNormal": "Concurrent processing cache"
+        },
+        "computationCache": {
+          "label": "Computation Cache",
+          "description": "Temporary computation cache"
+        }
+      }
+    },
+    "performance": {
+      "title": "Performance Metrics",
+      "explanation": "Performance relationship: Max QPS = Concurrent Users ÷ Average Response Time (based on {avgTokens} tokens output)",
+      "metrics": {
+        "totalThroughput": {
+          "label": "Total Throughput",
+          "description": "Total computing power of all GPUs",
+          "unit": "tokens/s"
+        },
+        "throughputPerUser": {
+          "label": "Throughput Per User",
+          "description": "Total throughput ÷ {users} users",
+          "unit": "tokens/s/user"
+        },
+        "estimatedLatency": {
+          "label": "Estimated Latency",
+          "description": "{avgTokens} tokens average response time",
+          "unit": "ms"
+        },
+        "maxQPS": {
+          "label": "Max QPS",
+          "description": "{concurrency} concurrent ÷ {latency}s",
+          "unit": "queries/s"
+        }
+      }
+    },
+    "quickStart": {
+      "title": "Scenario Examples (GPU + Model + Concurrency):",
+      "description": "Click these examples to quickly configure popular model deployment scenarios!",
+      "examples": {
+        "flagship": "🆕 Flagship Model (Qwen3-235B + H100 + 4 concurrent)",
+        "ultraLarge": "Ultra-Large Model (DeepSeek-R1 + H100 + 2 concurrent)",
+        "enterprise": "Enterprise Model (Llama3-70B + A100 + 8 concurrent)",
+        "highConcurrency": "High Concurrency Service (Llama3-70B + H100 + 32 concurrent)",
+        "lightweight": "Lightweight Deployment (Llama3-8B + RTX4090 + 4 concurrent)",
+        "mediumScale": "Medium Scale (Llama3-8B + RTX4090 + 16 concurrent)",
+        "popular": "🔥 Popular Model (Qwen2.5-72B + H100 + 6 concurrent)",
+        "reasoning": "Reasoning Model (QwQ-32B + RTX4090 + 8 concurrent)"
+      }
+    },
+    "expectedTokensPerSecond": {
+      "label": "Expected Experience Per User",
+      "placeholder": "1",
+      "unit": "token/s",
+      "tooltip": {
+        "title": "Choose appropriate generation speed based on business scenarios",
+        "levels": [
+          "• 80+ token/s: Long-form content, research documents (8K+ tokens scenarios)",
+          "• 50-80 token/s: Technical discussions, paper analysis (2K-4K tokens scenarios)",
+          "• 30-50 token/s: Customer service bots, code assistance (1K-2K tokens scenarios)",
+          "• 15-30 token/s: Quick Q&A, simple dialogue (256-512 tokens scenarios)",
+          "• <15 token/s: Poor experience, users may abandon"
+        ]
+      }
+    },
+    "gpuCount": {
+      "label": "GPU Count",
+      "placeholder": "Auto-calculated",
+      "unit": "GPUs",
+      "autoLabel": "Auto",
+      "tooltip": {
+        "title": "GPU Count Configuration",
+        "features": [
+          "• Auto-calculation: Intelligently recommend based on concurrency and expected experience",
+          "• Manual modification: Can override auto-calculated results",
+          "• Satisfy both: Memory requirements and performance requirements",
+          "• Red warning: Insufficient memory, may not run"
+        ]
+      }
+    },
+    "memoryRequirement": {
+      "title": "Memory Requirements",
+      "totalMemory": "Memory Requirements {totalMemory} GB",
+      "requiredGPUs": "Requires **{count}** GPUs (based on memory capacity)",
+      "memoryWarning": "⚠️ Memory Warning"
+    },
+    "throughputRequirement": {
+      "title": "Throughput Requirements",
+      "totalThroughput": "Throughput Requirements {totalThroughput} tokens/s",
+        "requiredGPUs": "Requires **{count}** GPUs (based on VRAM bandwidth \u0026 computing performance)"
+    },
+    "performanceComparison": {
+      "meetExpectation": "✅ Meets expectation {expected} token/s",
+      "belowExpectation": "❌ Below expectation {expected} token/s"
+    },
+    "faq": {
+      "title": "📋 Calculation Formula FAQ",
+      "items": [
+        {
+          "question": "How is GPU throughput calculated?",
+          "answer": "We use a dual-constraint approach: **Compute-bound throughput** = (GPU TFLOPS × Precision multiplier × 1000) ÷ (2 × Active parameters in billions), and **Memory-bound throughput** = Memory bandwidth (GB/s) ÷ Total memory access per token (GB). The actual throughput is the minimum of these two values, representing the actual bottleneck."
+        },
+        {
+          "question": "Why do we consider memory bandwidth limitations?",
+          "answer": "Based on [A100 40GB benchmark data](https://www.databasemart.com/blog/ollama-gpu-benchmark-a100-40gb), all tested models were limited by memory bandwidth rather than compute power. This validates our memory bandwidth-based calculation approach, which is more accurate than pure compute-based estimates."
+        },
+        {
+          "question": "How are MoE models handled differently?",
+          "answer": "For MoE (Mixture of Experts) models like DeepSeek-R1 (671B total, 37B active), we only consider the **active parameters** for bandwidth calculations. This means the memory access per token is based on 37B parameters, not the full 671B, making MoE models much more efficient for inference."
+        },
+        {
+          "question": "What does the system efficiency factor represent?",
+          "answer": "The system efficiency factor (40% base) accounts for real-world overhead including: framework overhead (Ollama, vLLM), memory access patterns, batch processing efficiency, and hardware utilization. This factor was calibrated using actual A100 40GB benchmark data with an observed average efficiency of 37.2%."
+        },
+        {
+          "question": "How does L2 cache hit rate affect GPU throughput calculations?",
+          "answer": "L2 cache significantly impacts memory bandwidth utilization. When model weights are cached in L2, they can be accessed at ~12TB/s instead of ~3.35TB/s from HBM. We use a simplified probability model to calculate cache hit rates: **Hit rate = (N-1)/N**, where N is the number of concurrent users. This reflects the probability of weight access overlap: **1 user**: 0% hit rate (no cache reuse), **2 users**: 50% hit rate (second user can reuse weights loaded by first user), **4 users**: 75% hit rate, **10 users**: 90% hit rate. This approach is based on probability theory: when multiple users access the model simultaneously, the probability that subsequent users access the same weights increases, improving cache efficiency."
+        },
+        {
+          "question": "How does precision affect performance?",
+          "answer": "Lower precision formats reduce both memory usage and increase throughput: **FP16** (2 bytes/param): Baseline performance, **FP8** (1 byte/param): ~2x memory reduction, **INT4** (0.5 bytes/param): ~4x memory reduction with 20% performance boost due to better cache utilization. However, aggressive quantization may impact model accuracy, requiring techniques like GPTQ or AWQ to maintain quality."
+        },
+        {
+          "question": "Why might my results differ from other calculators?",
+          "answer": "Our calculator uses memory bandwidth as the primary constraint and real benchmark data for calibration, while many others use only compute-based estimates. We also properly handle MoE models and include realistic system efficiency factors, leading to more accurate real-world predictions."
+        },
+        {
+          "question": "What are the budget-friendly GPU options for LLM deployment?",
+          "answer": "**💰 Budget-Friendly Options (Under $10k)**: **RTX 4090 (24GB)** - Best for 7B-13B models, single card setup; **RTX 3090 (24GB)** - Good value for smaller models and experimentation; **Multiple RTX 4060 Ti (16GB)** - Cost-effective for distributed inference."
+        },
+        {
+          "question": "What are the enterprise-grade GPU solutions?",
+          "answer": "**🏢 Enterprise Solutions ($50k+)**: **NVIDIA H100 (80GB)** - Industry standard for production LLM deployment; **NVIDIA A100 (80GB)** - Proven reliability, good for 70B+ models; **AMD MI355X (288GB)** - Latest CDNA 4, highest memory capacity for massive models; **AMD MI350X (288GB)** - CDNA 4 air-cooled, excellent price/performance; **AMD MI325X (256GB)** - CDNA 3 with HBM3E, great for large model deployment; **AMD MI300X (192GB)** - Proven CDNA 3, excellent for 400B+ models."
+        },
+        {
+          "question": "What are the GPU requirements for popular AI models?",
+          "answer": "**🆕 Qwen2.5 & Qwen3**: Qwen2.5-72B needs 2x H100 with FP8, while Qwen3-235B-A22B (MoE) needs 4x H100. **DeepSeek R1**: 671B parameters require ~10x H100 with FP8 for optimal performance. **Llama 3.1 70B**: 2x A100/H100 with FP16, or 7x RTX 4090 for consumer hardware. **Llama 3.1 405B**: 6x H100 with FP8, or 11x A100 with FP16."
+        },
+        {
+          "question": "What are the pro tips for GPU optimization?",
+          "answer": "**⚡ Pro Tips**: **Use FP8/INT8** - Reduce memory usage by 50-75% with minimal quality loss; **Consider MoE Models** - Qwen3-235B-A22B offers flagship performance with 4x H100 (vs 10x for DeepSeek-R1); **Model Parallelism** - Split large models across multiple GPUs; **Mixed Precision** - Combine FP16 inference with FP32 gradients for training; **Memory Mapping** - Use CPU RAM for model storage, GPU for active layers."
+        }
+      ]
+    }
+  },
+  "updateNotification": {
+    "title": "What's New",
+    "feature1": "More accurate GPU calculations",
+    "feature2": "Comprehensive FAQ guide",
+    "dismiss": "Dismiss notification"
+  }
+}
