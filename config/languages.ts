@@ -1,9 +1,9 @@
-export type Language = "en" | "zh" | "ru" | "ja" | "de" | "ar"
+export type Language = "en" | "zh" | "zh-tw" | "ru" | "ja" | "de" | "ar"
 
 // 中心化语言配置
 export const LANGUAGE_CONFIG = {
   // 支持的语言列表
-  SUPPORTED_LANGUAGES: ['en', 'zh', 'ru', 'ja', 'de', 'ar'] as const,
+  SUPPORTED_LANGUAGES: ['en', 'zh', 'zh-tw', 'ru', 'ja', 'de', 'ar'] as const,
 
   // 默认语言
   DEFAULT_LANGUAGE: 'en' as const,
@@ -12,6 +12,7 @@ export const LANGUAGE_CONFIG = {
   LOCALE_MAP: {
     'en': 'en_US',
     'zh': 'zh_CN',
+    'zh-tw': 'zh_TW',
     'ru': 'ru_RU',
     'ja': 'ja_JP',
     'de': 'de_DE',
@@ -21,7 +22,8 @@ export const LANGUAGE_CONFIG = {
   // 语言标签（用于UI显示）
   LANGUAGE_LABELS: {
     'en': 'English',
-    'zh': '中文',
+    'zh': '简体中文',
+    'zh-tw': '繁體中文',
     'ru': 'Русский',
     'ja': '日本語',
     'de': 'Deutsch',
@@ -31,7 +33,8 @@ export const LANGUAGE_CONFIG = {
   // 语言代码到全名的映射
   LANGUAGE_NAMES: {
     'en': 'English',
-    'zh': 'Chinese',
+    'zh': 'Chinese (Simplified)',
+    'zh-tw': 'Chinese (Traditional)',
     'ru': 'Russian',
     'ja': 'Japanese',
     'de': 'German',
@@ -42,6 +45,7 @@ export const LANGUAGE_CONFIG = {
   HREFLANG_MAP: {
     'en': 'en',
     'zh': 'zh-CN',
+    'zh-tw': 'zh-TW',
     'ru': 'ru',
     'ja': 'ja',
     'de': 'de',
@@ -68,6 +72,7 @@ export const getHtmlLangForLanguage = (lang: Language): string => {
   const HTML_LANG_MAP: Record<Language, string> = {
     'en': 'en',
     'zh': 'zh-CN',
+    'zh-tw': 'zh-TW',
     'ru': 'ru',
     'ja': 'ja',
     'de': 'de',
