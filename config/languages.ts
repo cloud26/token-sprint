@@ -1,9 +1,9 @@
-export type Language = "en" | "zh" | "ru" | "ja" | "de"
+export type Language = "en" | "zh" | "ru" | "ja" | "de" | "ar"
 
 // 中心化语言配置
 export const LANGUAGE_CONFIG = {
   // 支持的语言列表
-  SUPPORTED_LANGUAGES: ['en', 'zh', 'ru', 'ja', 'de'] as const,
+  SUPPORTED_LANGUAGES: ['en', 'zh', 'ru', 'ja', 'de', 'ar'] as const,
 
   // 默认语言
   DEFAULT_LANGUAGE: 'en' as const,
@@ -14,7 +14,8 @@ export const LANGUAGE_CONFIG = {
     'zh': 'zh_CN',
     'ru': 'ru_RU',
     'ja': 'ja_JP',
-    'de': 'de_DE'
+    'de': 'de_DE',
+    'ar': 'ar_SA'
   } as const,
 
   // 语言标签（用于UI显示）
@@ -23,7 +24,8 @@ export const LANGUAGE_CONFIG = {
     'zh': '中文',
     'ru': 'Русский',
     'ja': '日本語',
-    'de': 'Deutsch'
+    'de': 'Deutsch',
+    'ar': 'العربية'
   } as const,
 
   // 语言代码到全名的映射
@@ -32,7 +34,8 @@ export const LANGUAGE_CONFIG = {
     'zh': 'Chinese',
     'ru': 'Russian',
     'ja': 'Japanese',
-    'de': 'German'
+    'de': 'German',
+    'ar': 'Arabic'
   } as const,
 
   // hreflang 映射
@@ -41,8 +44,12 @@ export const LANGUAGE_CONFIG = {
     'zh': 'zh-CN',
     'ru': 'ru',
     'ja': 'ja',
-    'de': 'de'
-  } as const
+    'de': 'de',
+    'ar': 'ar'
+  } as const,
+
+  // RTL 语言列表（从右到左）
+  RTL_LANGUAGES: ['ar'] as const
 } as const
 
 // 辅助函数：获取所有语言
@@ -63,9 +70,20 @@ export const getHtmlLangForLanguage = (lang: Language): string => {
     'zh': 'zh-CN',
     'ru': 'ru',
     'ja': 'ja',
-    'de': 'de'
+    'de': 'de',
+    'ar': 'ar'
   }
   return HTML_LANG_MAP[lang]
+}
+
+// 辅助函数：判断语言是否为 RTL（从右到左）
+export const isRtlLanguage = (lang: Language): boolean => {
+  return LANGUAGE_CONFIG.RTL_LANGUAGES.includes(lang as any)
+}
+
+// 辅助函数：获取语言的文本方向
+export const getTextDirection = (lang: Language): 'ltr' | 'rtl' => {
+  return isRtlLanguage(lang) ? 'rtl' : 'ltr'
 }
 
 // 辅助函数：生成多语言URL映射（用于alternates.languages）

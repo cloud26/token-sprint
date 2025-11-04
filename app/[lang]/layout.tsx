@@ -3,7 +3,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
-import { getHtmlLangForLanguage, type Language } from '@/config/languages'
+import { getHtmlLangForLanguage, getTextDirection, type Language } from '@/config/languages'
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import Script from 'next/script'
@@ -25,9 +25,10 @@ export default async function Layout({
 
     const messages = await getMessages()
     const htmlLang = getHtmlLangForLanguage(lang as Language)
-
+    const dir = getTextDirection(lang as Language)
+    
     return (
-        <html lang={htmlLang}>
+        <html lang={htmlLang} dir={dir}>
             <head>
                 <meta name="google-adsense-account" content="ca-pub-8472112646404075" />
                 {/* Google AdSense */}
