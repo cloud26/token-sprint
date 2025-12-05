@@ -6,7 +6,7 @@ Token Sprint 采用分层的组件架构，从底层的 UI 基础组件到顶层
 
 ## 组件分层
 
-```
+\`\`\`
 页面组件 (Pages)
     ↓
 布局组件 (Layouts)
@@ -16,7 +16,7 @@ Token Sprint 采用分层的组件架构，从底层的 UI 基础组件到顶层
 UI 基础组件 (UI Components)
     ↓
 原子组件 (Primitives)
-```
+\`\`\`
 
 ## UI 基础组件层
 
@@ -29,7 +29,7 @@ UI 基础组件 (UI Components)
 ### 核心组件
 
 #### Button 组件
-```typescript
+\`\`\`typescript
 // components/ui/button.tsx
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link"
@@ -49,7 +49,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     )
   }
 )
-```
+\`\`\`
 
 **特性**:
 - 支持多种视觉变体
@@ -58,7 +58,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 - TypeScript 类型安全
 
 #### Card 组件
-```typescript
+\`\`\`typescript
 // components/ui/card.tsx
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
@@ -75,7 +75,7 @@ const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
     <div ref={ref} className={cn("flex flex-col space-y-1.5 p-6", className)} {...props} />
   )
 )
-```
+\`\`\`
 
 **组合模式**:
 - Card + CardHeader + CardContent + CardFooter
@@ -83,7 +83,7 @@ const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 - 一致的视觉样式
 
 #### Input 组件
-```typescript
+\`\`\`typescript
 // components/ui/input.tsx
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
@@ -102,12 +102,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     )
   }
 )
-```
+\`\`\`
 
 ### 复合组件
 
 #### Select 组件
-```typescript
+\`\`\`typescript
 // components/ui/select.tsx
 const Select = SelectPrimitive.Root
 const SelectTrigger = React.forwardRef<
@@ -126,10 +126,10 @@ const SelectTrigger = React.forwardRef<
     <ChevronDown className="h-4 w-4 opacity-50" />
   </SelectPrimitive.Trigger>
 ))
-```
+\`\`\`
 
 **使用示例**:
-```typescript
+\`\`\`typescript
 <Select value={precision} onValueChange={setPrecision}>
   <SelectTrigger className="text-lg">
     <SelectValue />
@@ -142,7 +142,7 @@ const SelectTrigger = React.forwardRef<
     ))}
   </SelectContent>
 </Select>
-```
+\`\`\`
 
 ## 业务组件层
 
@@ -159,17 +159,17 @@ const SelectTrigger = React.forwardRef<
 **功能**: Token 生成速度可视化演示
 
 **状态管理**:
-```typescript
+\`\`\`typescript
 const [speed, setSpeed] = useState<number>(5)
 const [language, setLanguage] = useState<"en" | "zh">(initialLanguage)
 const [isGenerating, setIsGenerating] = useState<boolean>(false)
 const [generatedText, setGeneratedText] = useState<string>("")
 const [elapsedTime, setElapsedTime] = useState<number>(0)
 const [tokenCount, setTokenCount] = useState<number>(0)
-```
+\`\`\`
 
 **核心逻辑**:
-```typescript
+\`\`\`typescript
 // Token 生成逻辑
 const generateTokens = () => {
   if (positionRef.current < tokensRef.current.length) {
@@ -188,10 +188,10 @@ const generateTokens = () => {
     setIsGenerating(false)
   }
 }
-```
+\`\`\`
 
 **组件结构**:
-```typescript
+\`\`\`typescript
 return (
   <div className="space-y-6">
     {/* 控制面板 */}
@@ -268,33 +268,33 @@ return (
     </div>
   </div>
 )
-```
+\`\`\`
 
 #### LLMMemoryCalculator 组件
 
 **功能**: 大模型推理显存计算
 
 **状态管理**:
-```typescript
+\`\`\`typescript
 const [parameters, setParameters] = useState<string>("671")
 const [precision, setPrecision] = useState<string>("FP8")
 const [gpuModel, setGpuModel] = useState<string>("NVIDIA H100")
 const [selectedModel, setSelectedModel] = useState<string>("DeepSeek-R1")
-```
+\`\`\`
 
 **计算逻辑**:
-```typescript
+\`\`\`typescript
 const selectedGpu = gpuModels.find((gpu) => `${gpu.name} (${gpu.memory}GB)` === gpuModel)
 const gpuMemory = selectedGpu ? selectedGpu.memory : 80
 const memory = calculateInferenceMemory(Number(parameters), precision, gpuMemory)
-```
+\`\`\`
 
 **表单验证**:
-```typescript
+\`\`\`typescript
 const handleParameterChange = (value: string) => {
   setParameters(value.replace(/[^0-9.]/g, ""))
 }
-```
+\`\`\`
 
 ### 布局组件
 
@@ -302,7 +302,7 @@ const handleParameterChange = (value: string) => {
 
 **功能**: 侧边导航栏
 
-```typescript
+\`\`\`typescript
 interface SideNavProps {
   language: Language
   currentPath: string
@@ -335,13 +335,13 @@ export function SideNav({ language, currentPath }: SideNavProps) {
     </nav>
   )
 }
-```
+\`\`\`
 
 #### LanguageSwitcher 组件
 
 **功能**: 语言切换器
 
-```typescript
+\`\`\`typescript
 interface LanguageSwitcherProps {
   language: Language
   className?: string
@@ -372,14 +372,14 @@ export default function LanguageSwitcher({ language, className }: LanguageSwitch
     </div>
   )
 }
-```
+\`\`\`
 
 ## 组件设计模式
 
 ### 1. 组合模式 (Composition Pattern)
 
 **Card 组件系列**:
-```typescript
+\`\`\`typescript
 // 基础组件
 <Card>
   <CardHeader>
@@ -393,12 +393,12 @@ export default function LanguageSwitcher({ language, className }: LanguageSwitch
     底部操作
   </CardFooter>
 </Card>
-```
+\`\`\`
 
 ### 2. 渲染属性模式 (Render Props Pattern)
 
 **Tooltip 组件**:
-```typescript
+\`\`\`typescript
 <Tooltip>
   <TooltipTrigger asChild>
     <Button variant="outline">Hover me</Button>
@@ -407,12 +407,12 @@ export default function LanguageSwitcher({ language, className }: LanguageSwitch
     <p>提示内容</p>
   </TooltipContent>
 </Tooltip>
-```
+\`\`\`
 
 ### 3. 高阶组件模式 (HOC Pattern)
 
 **forwardRef 包装**:
-```typescript
+\`\`\`typescript
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
     return (
@@ -426,12 +426,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   }
 )
 Input.displayName = "Input"
-```
+\`\`\`
 
 ### 4. 受控/非受控组件模式
 
 **Select 组件**:
-```typescript
+\`\`\`typescript
 // 受控模式
 <Select value={value} onValueChange={setValue}>
   <SelectTrigger>
@@ -446,13 +446,13 @@ Input.displayName = "Input"
 <Select defaultValue="option1">
   {/* ... */}
 </Select>
-```
+\`\`\`
 
 ## 样式设计系统
 
 ### CSS 变量系统
 
-```css
+\`\`\`css
 :root {
   /* 颜色系统 */
   --background: 0 0% 100%;
@@ -467,11 +467,11 @@ Input.displayName = "Input"
   /* 间距系统 */
   --radius: 0.5rem;
 }
-```
+\`\`\`
 
 ### 组件变体系统
 
-```typescript
+\`\`\`typescript
 // 使用 class-variance-authority
 const buttonVariants = cva(
   // 基础样式
@@ -499,12 +499,12 @@ const buttonVariants = cva(
     },
   }
 )
-```
+\`\`\`
 
 ## 可访问性设计
 
 ### ARIA 属性
-```typescript
+\`\`\`typescript
 <button
   aria-expanded={isOpen}
   aria-haspopup="listbox"
@@ -513,10 +513,10 @@ const buttonVariants = cva(
 >
   选择选项
 </button>
-```
+\`\`\`
 
 ### 键盘导航
-```typescript
+\`\`\`typescript
 const handleKeyDown = (event: React.KeyboardEvent) => {
   switch (event.key) {
     case 'Enter':
@@ -529,37 +529,37 @@ const handleKeyDown = (event: React.KeyboardEvent) => {
       break
   }
 }
-```
+\`\`\`
 
 ### 焦点管理
-```typescript
+\`\`\`typescript
 useEffect(() => {
   if (isOpen && triggerRef.current) {
     triggerRef.current.focus()
   }
 }, [isOpen])
-```
+\`\`\`
 
 ## 性能优化
 
 ### React.memo 优化
-```typescript
+\`\`\`typescript
 const ExpensiveComponent = React.memo(({ data }: Props) => {
   return <div>{/* 复杂渲染逻辑 */}</div>
 }, (prevProps, nextProps) => {
   return prevProps.data.id === nextProps.data.id
 })
-```
+\`\`\`
 
 ### useCallback 优化
-```typescript
+\`\`\`typescript
 const handleClick = useCallback((id: string) => {
   // 处理点击事件
 }, [dependency])
-```
+\`\`\`
 
 ### 懒加载组件
-```typescript
+\`\`\`typescript
 const HeavyComponent = lazy(() => import('./HeavyComponent'))
 
 function App() {
@@ -569,12 +569,12 @@ function App() {
     </Suspense>
   )
 }
-```
+\`\`\`
 
 ## 测试策略
 
 ### 组件单元测试
-```typescript
+\`\`\`typescript
 import { render, screen, fireEvent } from '@testing-library/react'
 import { Button } from './button'
 
@@ -591,10 +591,10 @@ describe('Button', () => {
     expect(handleClick).toHaveBeenCalledTimes(1)
   })
 })
-```
+\`\`\`
 
 ### 可访问性测试
-```typescript
+\`\`\`typescript
 import { axe, toHaveNoViolations } from 'jest-axe'
 
 expect.extend(toHaveNoViolations)
@@ -604,4 +604,4 @@ it('should not have any accessibility violations', async () => {
   const results = await axe(container)
   expect(results).toHaveNoViolations()
 })
-``` 
+\`\`\`

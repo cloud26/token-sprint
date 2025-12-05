@@ -15,4 +15,4 @@ export const TOOL_PATHS = {
   tokenCounter: "token-counter-visualizer"
 } as const;
 
-export type ToolPath = keyof typeof TOOL_PATHS; 
+export type ToolPath = keyof typeof TOOL_PATHS;

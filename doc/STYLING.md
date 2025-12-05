@@ -22,7 +22,7 @@ Token Sprint 采用现代化的设计系统，基于 Tailwind CSS 和 CSS 变量
 
 ### 主色调定义
 
-```css
+\`\`\`css
 /* app/globals.css */
 :root {
   /* 背景色 */
@@ -67,11 +67,11 @@ Token Sprint 采用现代化的设计系统，基于 Tailwind CSS 和 CSS 变量
   /* 圆角 */
   --radius: 0.5rem;
 }
-```
+\`\`\`
 
 ### 暗色主题
 
-```css
+\`\`\`css
 .dark {
   --background: 222.2 84% 4.9%;
   --foreground: 210 40% 98%;
@@ -102,11 +102,11 @@ Token Sprint 采用现代化的设计系统，基于 Tailwind CSS 和 CSS 变量
   
   --ring: 212.7 26.8% 83.9%;
 }
-```
+\`\`\`
 
 ### 语义化颜色
 
-```css
+\`\`\`css
 /* 功能性颜色 */
 :root {
   /* 成功 */
@@ -125,13 +125,13 @@ Token Sprint 采用现代化的设计系统，基于 Tailwind CSS 和 CSS 变量
   --error: 0 84.2% 60.2%;
   --error-foreground: 210 40% 98%;
 }
-```
+\`\`\`
 
 ## 字体系统
 
 ### 字体族定义
 
-```css
+\`\`\`css
 /* 系统字体栈 */
 .font-sans {
   font-family: 
@@ -160,11 +160,11 @@ Token Sprint 采用现代化的设计系统，基于 Tailwind CSS 和 CSS 变量
     Menlo,
     monospace;
 }
-```
+\`\`\`
 
 ### 字体大小规范
 
-```typescript
+\`\`\`typescript
 // tailwind.config.ts
 module.exports = {
   theme: {
@@ -182,11 +182,11 @@ module.exports = {
     }
   }
 }
-```
+\`\`\`
 
 ### 字重系统
 
-```css
+\`\`\`css
 .font-thin { font-weight: 100; }
 .font-extralight { font-weight: 200; }
 .font-light { font-weight: 300; }
@@ -196,13 +196,13 @@ module.exports = {
 .font-bold { font-weight: 700; }
 .font-extrabold { font-weight: 800; }
 .font-black { font-weight: 900; }
-```
+\`\`\`
 
 ## 间距系统
 
 ### 基础间距
 
-```typescript
+\`\`\`typescript
 // tailwind.config.ts
 module.exports = {
   theme: {
@@ -245,11 +245,11 @@ module.exports = {
     }
   }
 }
-```
+\`\`\`
 
 ### 语义化间距
 
-```css
+\`\`\`css
 /* 组件内部间距 */
 .space-component-xs { gap: 0.25rem; }  /* 4px */
 .space-component-sm { gap: 0.5rem; }   /* 8px */
@@ -263,11 +263,11 @@ module.exports = {
 .space-layout-md { gap: 2rem; }        /* 32px */
 .space-layout-lg { gap: 3rem; }        /* 48px */
 .space-layout-xl { gap: 4rem; }        /* 64px */
-```
+\`\`\`
 
 ## 圆角系统
 
-```typescript
+\`\`\`typescript
 // tailwind.config.ts
 module.exports = {
   theme: {
@@ -284,11 +284,11 @@ module.exports = {
     }
   }
 }
-```
+\`\`\`
 
 ## 阴影系统
 
-```typescript
+\`\`\`typescript
 // tailwind.config.ts
 module.exports = {
   theme: {
@@ -304,13 +304,13 @@ module.exports = {
     }
   }
 }
-```
+\`\`\`
 
 ## 组件变体系统
 
 ### Button 变体
 
-```typescript
+\`\`\`typescript
 // components/ui/button.tsx
 import { cva, type VariantProps } from "class-variance-authority"
 
@@ -345,11 +345,11 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
 }
-```
+\`\`\`
 
 ### Card 变体
 
-```typescript
+\`\`\`typescript
 // components/ui/card.tsx
 const cardVariants = cva(
   "rounded-lg border bg-card text-card-foreground shadow-sm",
@@ -374,13 +374,13 @@ const cardVariants = cva(
     },
   }
 )
-```
+\`\`\`
 
 ## 响应式设计
 
 ### 断点系统
 
-```typescript
+\`\`\`typescript
 // tailwind.config.ts
 module.exports = {
   theme: {
@@ -393,11 +393,11 @@ module.exports = {
     }
   }
 }
-```
+\`\`\`
 
 ### 响应式工具类
 
-```css
+\`\`\`css
 /* 移动优先的响应式设计 */
 .container {
   width: 100%;
@@ -440,11 +440,11 @@ module.exports = {
     max-width: 1536px;
   }
 }
-```
+\`\`\`
 
 ### 响应式组件示例
 
-```typescript
+\`\`\`typescript
 // 响应式导航栏
 <nav className="
   fixed left-0 top-0 h-full w-64 
@@ -463,13 +463,13 @@ module.exports = {
 ">
   {/* 移动端导航 */}
 </nav>
-```
+\`\`\`
 
 ## 动画系统
 
 ### 基础动画
 
-```css
+\`\`\`css
 /* app/globals.css */
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -507,11 +507,11 @@ module.exports = {
 .animate-spin {
   animation: spin 1s linear infinite;
 }
-```
+\`\`\`
 
 ### 过渡效果
 
-```css
+\`\`\`css
 /* 通用过渡 */
 .transition-all {
   transition-property: all;
@@ -530,13 +530,13 @@ module.exports = {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
-```
+\`\`\`
 
 ## 主题切换系统
 
 ### 主题提供者
 
-```typescript
+\`\`\`typescript
 // components/theme-provider.tsx
 "use client"
 
@@ -547,11 +547,11 @@ import { type ThemeProviderProps } from "next-themes/dist/types"
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>
 }
-```
+\`\`\`
 
 ### 主题切换组件
 
-```typescript
+\`\`\`typescript
 // components/theme-toggle.tsx
 "use client"
 
@@ -575,13 +575,13 @@ export function ThemeToggle() {
     </Button>
   )
 }
-```
+\`\`\`
 
 ## 自定义样式
 
 ### 全局样式
 
-```css
+\`\`\`css
 /* app/globals.css */
 @tailwind base;
 @tailwind components;
@@ -653,11 +653,11 @@ export function ThemeToggle() {
     display: none;
   }
 }
-```
+\`\`\`
 
 ### 组件特定样式
 
-```css
+\`\`\`css
 /* Token 生成器特定样式 */
 .token-display {
   @apply min-h-[400px] max-h-[600px] overflow-y-auto 
@@ -685,11 +685,11 @@ export function ThemeToggle() {
 .result-value {
   @apply text-xl font-semibold;
 }
-```
+\`\`\`
 
 ## 打印样式
 
-```css
+\`\`\`css
 /* 打印样式 */
 @media print {
   .no-print {
@@ -712,13 +712,13 @@ export function ThemeToggle() {
     @apply border border-gray-300 bg-white text-black;
   }
 }
-```
+\`\`\`
 
 ## 性能优化
 
 ### CSS 优化
 
-```typescript
+\`\`\`typescript
 // tailwind.config.ts
 module.exports = {
   content: [
@@ -737,11 +737,11 @@ module.exports = {
     ],
   },
 }
-```
+\`\`\`
 
 ### 关键 CSS 内联
 
-```typescript
+\`\`\`typescript
 // next.config.mjs
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -754,13 +754,13 @@ const nextConfig = {
 }
 
 export default nextConfig
-```
+\`\`\`
 
 ## 可访问性样式
 
 ### 焦点样式
 
-```css
+\`\`\`css
 /* 高对比度焦点环 */
 .focus-visible\:ring-2:focus-visible {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
@@ -774,11 +774,11 @@ export default nextConfig
          px-4 py-2 rounded-md font-medium transition-all
          focus:top-4;
 }
-```
+\`\`\`
 
 ### 高对比度模式
 
-```css
+\`\`\`css
 @media (prefers-contrast: high) {
   :root {
     --border: 0 0% 20%;
@@ -792,11 +792,11 @@ export default nextConfig
     --ring: 0 0% 80%;
   }
 }
-```
+\`\`\`
 
 ### 减少动画
 
-```css
+\`\`\`css
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -807,4 +807,4 @@ export default nextConfig
     scroll-behavior: auto !important;
   }
 }
-``` 
+\`\`\`

@@ -990,4 +990,4 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
 
         </TooltipProvider>
     )
-} 
+}

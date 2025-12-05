@@ -20,4 +20,4 @@ export const datadogConfig: DatadogConfig = {
 
 export const isDatadogEnabled = (): boolean => {
   return Boolean(datadogConfig.clientToken)
-} 
+}

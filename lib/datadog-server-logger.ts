@@ -161,4 +161,4 @@ export const logError = (message: string, context?: Record<string, any>, tags?: 
   datadogServerLogger.error(message, context, tags)
 
 export const logLLMCalculation = (data: LLMCalculationLogData) =>
-  datadogServerLogger.logLLMCalculation(data) 
+  datadogServerLogger.logLLMCalculation(data)

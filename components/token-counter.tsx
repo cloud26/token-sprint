@@ -674,4 +674,4 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
             </CardContent>
         </Card>
     )
-} 
+}

@@ -161,4 +161,4 @@ export async function POST(request: Request) {
         console.error('记录日志失败:', error)
         return NextResponse.json({ success: false, error: '记录日志失败' }, { status: 500 })
     }
-} 
+}

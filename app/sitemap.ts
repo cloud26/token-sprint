@@ -58,4 +58,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ...gpuCalculatorUrls,
         ...tokenCounterUrls,
     ]
-} 
+}

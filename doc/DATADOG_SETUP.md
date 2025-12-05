@@ -13,7 +13,7 @@
 
 在你的项目根目录创建 `.env.local` 文件（如果不存在），并添加以下环境变量：
 
-```env
+\`\`\`env
 # Datadog Configuration
 # 必需：从 Datadog 获取的 Client Token
 NEXT_PUBLIC_DATADOG_CLIENT_TOKEN=your_datadog_client_token_here
@@ -23,7 +23,7 @@ NEXT_PUBLIC_DATADOG_SITE=datadoghq.com
 
 # 可选：应用版本号
 NEXT_PUBLIC_APP_VERSION=0.1.0
-```
+\`\`\`
 
 ### Datadog 站点选项
 
@@ -52,7 +52,7 @@ NEXT_PUBLIC_APP_VERSION=0.1.0
 
 所有日志都包含以下标准字段：
 
-```json
+\`\`\`json
 {
   "message": "日志消息",
   "level": "info|warn|error|debug",
@@ -67,7 +67,7 @@ NEXT_PUBLIC_APP_VERSION=0.1.0
     "results": {...}
   }
 }
-```
+\`\`\`
 
 ### 特殊标签
 
@@ -103,14 +103,14 @@ NEXT_PUBLIC_APP_VERSION=0.1.0
 要测试 Datadog 集成是否正常工作：
 
 1. **检查配置**：运行配置检查脚本
-   ```bash
+   \`\`\`bash
    pnpm test:datadog
-   ```
+   \`\`\`
 
 2. **启动开发服务器**
-   ```bash
+   \`\`\`bash
    pnpm dev
-   ```
+   \`\`\`
 
 3. **测试日志功能**：
    - 在浏览器中打开应用
@@ -157,9 +157,9 @@ NEXT_PUBLIC_APP_VERSION=0.1.0
 
 要启用详细的调试日志，可以在浏览器控制台中设置：
 
-```javascript
+\`\`\`javascript
 localStorage.setItem('datadog-debug', 'true')
-```
+\`\`\`
 
 然后刷新页面，系统会输出更详细的调试信息。
 
@@ -179,4 +179,4 @@ localStorage.setItem('datadog-debug', 'true')
 
 - [Datadog Browser Logs 官方文档](https://docs.datadoghq.com/logs/log_collection/javascript/)
 - [Datadog Client Token 管理](https://docs.datadoghq.com/account_management/api-app-keys/#client-tokens)
-- [Next.js 环境变量文档](https://nextjs.org/docs/basic-features/environment-variables) 
+- [Next.js 环境变量文档](https://nextjs.org/docs/basic-features/environment-variables)

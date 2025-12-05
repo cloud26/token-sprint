@@ -79,14 +79,14 @@
 ### 模型配置
 新增模型需要在 `components/token-counter.tsx` 中添加配置：
 
-```typescript
+\`\`\`typescript
 {
     value: "model-name",
     label: "Model Display Name 🤗",
     encoding: "huggingface",
     hub: "organization/model-name"
 }
-```
+\`\`\`
 
 ### 支持的 Hub 格式
 - `organization/model-name`: 标准 Hugging Face Hub 路径
@@ -107,4 +107,4 @@
 
 ---
 
-基于参考项目：https://github.com/ppaanngggg/token-counter 
+基于参考项目：https://github.com/ppaanngggg/token-counter

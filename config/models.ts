@@ -98,4 +98,4 @@ export function getTokenCounterModelBySlug(slug: string): TokenCounterModel | un
 export function getTokenCounterDefaultModel(companySlug: string): string {
     const model = getTokenCounterModelBySlug(companySlug)
     return model?.defaultModel || 'gpt-4o'
-} 
+}

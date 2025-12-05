@@ -214,4 +214,4 @@ function OptimizationTipsSection({ model }: { model: any }) {
             </div>
         </section>
     )
-} 
+}

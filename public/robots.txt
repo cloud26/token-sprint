@@ -7,4 +7,4 @@ User-agent: Mediapartners-Google
 Allow: /
 
 # Sitemap location
-Sitemap: https://app.linpp2009.com/sitemap.xml 
+Sitemap: https://app.linpp2009.com/sitemap.xml

@@ -191,4 +191,3 @@ function StructuredData({ language, model, modelSlug }: { language: Language, mo
         />
     )
 }
-

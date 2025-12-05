@@ -114,4 +114,3 @@ export const tools = {
     path: "token-counter-visualizer"
   }
 }
-

@@ -10,7 +10,7 @@
 
 ### 环境安装
 
-```bash
+\`\`\`bash
 # 1. 克隆项目
 git clone <repository-url>
 cd token-sprint
@@ -23,13 +23,13 @@ pnpm dev
 
 # 4. 在浏览器中打开
 # http://localhost:3000
-```
+\`\`\`
 
 ### 环境变量配置
 
 创建 `.env.local` 文件：
 
-```bash
+\`\`\`bash
 # 网站基础 URL
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
 
@@ -38,11 +38,11 @@ NODE_ENV=development
 
 # 可选：分析工具配置
 NEXT_PUBLIC_VERCEL_ANALYTICS_ID=your_analytics_id
-```
+\`\`\`
 
 ## 项目结构详解
 
-```
+\`\`\`
 token-sprint/
 ├── app/                    # Next.js App Router
 │   ├── [lang]/            # 国际化路由
@@ -93,13 +93,13 @@ token-sprint/
 ├── next.config.mjs       # Next.js 配置
 ├── components.json       # shadcn/ui 配置
 └── middleware.ts         # Next.js 中间件
-```
+\`\`\`
 
 ## 开发流程
 
 ### 1. 功能开发流程
 
-```bash
+\`\`\`bash
 # 1. 创建功能分支
 git checkout -b feature/new-feature
 
@@ -116,13 +116,13 @@ git commit -m "feat: add new feature"
 git push origin feature/new-feature
 
 # 5. 创建 Pull Request
-```
+\`\`\`
 
 ### 2. 添加新工具的流程
 
 #### 步骤 1: 配置路由和多语言
 
-```typescript
+\`\`\`typescript
 // config/languages.ts
 export const tools = {
   // 现有工具...
@@ -148,19 +148,19 @@ export const tools = {
     }
   }
 }
-```
+\`\`\`
 
 #### 步骤 2: 创建页面路由
 
-```bash
+\`\`\`bash
 # 创建页面目录
 mkdir -p app/[lang]/new-tool
 
 # 创建页面文件
 touch app/[lang]/new-tool/page.tsx
-```
+\`\`\`
 
-```typescript
+\`\`\`typescript
 // app/[lang]/new-tool/page.tsx
 import { use } from "react"
 import { tools, type Language } from "@/config/languages"
@@ -216,11 +216,11 @@ export default function NewToolPage({
         </div>
     )
 }
-```
+\`\`\`
 
 #### 步骤 3: 创建组件
 
-```typescript
+\`\`\`typescript
 // components/new-tool.tsx
 "use client"
 
@@ -247,20 +247,20 @@ export default function NewTool({ language }: NewToolProps) {
         </Card>
     )
 }
-```
+\`\`\`
 
 ### 3. 添加新语言支持
 
 #### 步骤 1: 更新类型定义
 
-```typescript
+\`\`\`typescript
 // config/languages.ts
 export type Language = "en" | "zh" | "ja" // 添加新语言
-```
+\`\`\`
 
 #### 步骤 2: 更新所有配置对象
 
-```typescript
+\`\`\`typescript
 export const tools = {
   tokenSpeedVisualizer: {
     title: {
@@ -271,11 +271,11 @@ export const tools = {
     // ... 其他配置
   }
 }
-```
+\`\`\`
 
 #### 步骤 3: 更新中间件
 
-```typescript
+\`\`\`typescript
 // middleware.ts
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
@@ -302,13 +302,13 @@ export const config = {
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 }
-```
+\`\`\`
 
 ## 代码规范
 
 ### TypeScript 规范
 
-```typescript
+\`\`\`typescript
 // 1. 使用明确的类型定义
 interface ComponentProps {
   title: string
@@ -328,11 +328,11 @@ interface ApiResponse<T> {
 
 // 4. 导出类型定义
 export type { ComponentProps, Status, ApiResponse }
-```
+\`\`\`
 
 ### React 组件规范
 
-```typescript
+\`\`\`typescript
 // 1. 使用函数组件和 Hooks
 export default function MyComponent({ title, onAction }: ComponentProps) {
   const [state, setState] = useState<string>("")
@@ -356,11 +356,11 @@ export default function MyComponent({ title, onAction }: ComponentProps) {
     </div>
   )
 }
-```
+\`\`\`
 
 ### CSS/Tailwind 规范
 
-```typescript
+\`\`\`typescript
 // 1. 使用 cn 函数合并类名
 import { cn } from "@/lib/utils"
 
@@ -390,11 +390,11 @@ const Button = ({ className, variant, ...props }) => {
   // 响应式
   "md:p-6 lg:p-8"
 )}>
-```
+\`\`\`
 
 ### 文件命名规范
 
-```
+\`\`\`
 # 组件文件
 components/
 ├── ui/
@@ -423,11 +423,11 @@ config/
 ├── languages.ts          # kebab-case
 ├── database.ts
 └── auth-config.ts
-```
+\`\`\`
 
 ### Git 提交规范
 
-```bash
+\`\`\`bash
 # 提交消息格式
 <type>(<scope>): <description>
 
@@ -448,13 +448,13 @@ style(components): format code with prettier
 refactor(utils): extract common validation logic
 test(calculator): add unit tests for memory calculation
 chore(deps): update dependencies to latest versions
-```
+\`\`\`
 
 ## 测试策略
 
 ### 单元测试
 
-```typescript
+\`\`\`typescript
 // __tests__/utils/calculations.test.ts
 import { calculateInferenceMemory } from '@/utils/calculations'
 
@@ -474,11 +474,11 @@ describe('calculateInferenceMemory', () => {
     expect(result.requiredGPUs).toBe(0)
   })
 })
-```
+\`\`\`
 
 ### 组件测试
 
-```typescript
+\`\`\`typescript
 // __tests__/components/Button.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react'
 import { Button } from '@/components/ui/button'
@@ -502,11 +502,11 @@ describe('Button', () => {
     expect(screen.getByRole('button')).toHaveClass('bg-destructive')
   })
 })
-```
+\`\`\`
 
 ### E2E 测试
 
-```typescript
+\`\`\`typescript
 // e2e/calculator.spec.ts
 import { test, expect } from '@playwright/test'
 
@@ -521,13 +521,13 @@ test('LLM memory calculator works correctly', async ({ page }) => {
   await expect(page.locator('[data-testid="model-memory"]')).toContainText('14 GB')
   await expect(page.locator('[data-testid="inference-memory"]')).toContainText('21 GB')
 })
-```
+\`\`\`
 
 ## 性能优化
 
 ### 代码分割
 
-```typescript
+\`\`\`typescript
 // 动态导入大型组件
 import { lazy, Suspense } from 'react'
 
@@ -540,11 +540,11 @@ function App() {
     </Suspense>
   )
 }
-```
+\`\`\`
 
 ### 图片优化
 
-```typescript
+\`\`\`typescript
 // 使用 Next.js Image 组件
 import Image from 'next/image'
 
@@ -560,11 +560,11 @@ function MyComponent() {
     />
   )
 }
-```
+\`\`\`
 
 ### 缓存策略
 
-```typescript
+\`\`\`typescript
 // API 路由缓存
 // app/api/data/route.ts
 export async function GET() {
@@ -576,13 +576,13 @@ export async function GET() {
     }
   })
 }
-```
+\`\`\`
 
 ## 部署指南
 
 ### 构建优化
 
-```bash
+\`\`\`bash
 # 1. 安装依赖
 pnpm install --frozen-lockfile
 
@@ -591,20 +591,20 @@ pnpm build
 
 # 3. 启动生产服务器
 pnpm start
-```
+\`\`\`
 
 ### 环境变量
 
-```bash
+\`\`\`bash
 # 生产环境变量
 NEXT_PUBLIC_BASE_URL=https://your-domain.com
 NODE_ENV=production
 NEXT_PUBLIC_VERCEL_ANALYTICS_ID=your_analytics_id
-```
+\`\`\`
 
 ### Vercel 部署
 
-```json
+\`\`\`json
 // vercel.json
 {
   "buildCommand": "pnpm build",
@@ -613,7 +613,7 @@ NEXT_PUBLIC_VERCEL_ANALYTICS_ID=your_analytics_id
   "framework": "nextjs",
   "regions": ["hkg1", "sfo1"]
 }
-```
+\`\`\`
 
 ## 故障排除
 
@@ -621,7 +621,7 @@ NEXT_PUBLIC_VERCEL_ANALYTICS_ID=your_analytics_id
 
 #### 1. 依赖安装失败
 
-```bash
+\`\`\`bash
 # 清除缓存
 pnpm store prune
 rm -rf node_modules
@@ -629,36 +629,36 @@ rm pnpm-lock.yaml
 
 # 重新安装
 pnpm install
-```
+\`\`\`
 
 #### 2. TypeScript 类型错误
 
-```bash
+\`\`\`bash
 # 重新生成类型
 pnpm tsc --noEmit
 
 # 检查 tsconfig.json 配置
-```
+\`\`\`
 
 #### 3. 样式不生效
 
-```bash
+\`\`\`bash
 # 检查 Tailwind CSS 配置
 # 确保 content 路径正确
 # 重启开发服务器
-```
+\`\`\`
 
 #### 4. 路由问题
 
-```bash
+\`\`\`bash
 # 检查 middleware.ts 配置
 # 确认语言路由设置正确
 # 检查 app 目录结构
-```
+\`\`\`
 
 ### 调试工具
 
-```typescript
+\`\`\`typescript
 // 开发环境调试
 if (process.env.NODE_ENV === 'development') {
   console.log('Debug info:', { state, props })
@@ -667,7 +667,7 @@ if (process.env.NODE_ENV === 'development') {
 // React DevTools
 // Next.js DevTools
 // Tailwind CSS IntelliSense
-```
+\`\`\`
 
 ## 贡献指南
 
@@ -687,4 +687,4 @@ if (process.env.NODE_ENV === 'development') {
 - 性能是否有优化空间
 - 是否遵循了项目规范
 - 测试覆盖率是否足够
-- 文档是否完整准确 
+- 文档是否完整准确

@@ -17,4 +17,4 @@ export function BackToHome() {
             {t('backToHome')}
         </Link>
     )
-} 
+}

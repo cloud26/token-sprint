@@ -46,4 +46,4 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
             </DropdownMenu>
         </div>
     )
-} 
+}

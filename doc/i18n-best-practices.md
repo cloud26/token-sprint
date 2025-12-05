@@ -4,18 +4,18 @@
 
 你们目前的结构已经相当不错，采用了功能域 + 通用组件的混合模式：
 
-```
+\`\`\`
 common/          # ✅ 通用组件和UI元素
 tools/           # ✅ 按功能工具分组
   llmGpuCalculator/models/  # ✅ 模型配置嵌套在工具内
   tokenCounter/models/      # ✅ 保持一致性
-```
+\`\`\`
 
 ## 推荐的组织原则
 
 ### 1. 混合式结构（推荐）
 
-```javascript
+\`\`\`javascript
 {
   // 通用层 - 可复用组件
   "common": {
@@ -50,7 +50,7 @@ tools/           # ✅ 按功能工具分组
     }
   }
 }
-```
+\`\`\`
 
 ### 2. 组织原则优先级
 
@@ -64,7 +64,7 @@ tools/           # ✅ 按功能工具分组
 ### 优化点 1: 元数据分离
 
 **当前:**
-```javascript
+\`\`\`javascript
 "tools": {
   "tokenCounter": {
     "title": "...",
@@ -74,10 +74,10 @@ tools/           # ✅ 按功能工具分组
     }
   }
 }
-```
+\`\`\`
 
 **建议优化:**
-```javascript
+\`\`\`javascript
 // 选项A: 保持现状（推荐）
 "tools": {
   "tokenCounter": {
@@ -93,14 +93,14 @@ tools/           # ✅ 按功能工具分组
     "tokenCounter": { "title": "...", "description": "..." }
   }
 }
-```
+\`\`\`
 
 ### 优化点 2: 跨工具概念提取
 
 **当前问题:** GPU相关内容在多个地方重复
 
 **建议:**
-```javascript
+\`\`\`javascript
 "domains": {
   "gpu": {
     "models": {
@@ -113,24 +113,24 @@ tools/           # ✅ 按功能工具分组
     }
   }
 }
-```
+\`\`\`
 
 ### 优化点 3: 模板系统改进
 
 **当前的插值模板已经很好:**
-```javascript
+\`\`\`javascript
 "seoTitle": "{modelName} Calculator | {features}"
-```
+\`\`\`
 
 **可以进一步优化:**
-```javascript
+\`\`\`javascript
 "templates": {
   "seo": {
     "toolTitle": "{toolName} | {features}",
     "toolDescription": "Free {toolName} for {useCases}. {features}."
   }
 }
-```
+\`\`\`
 
 ## 实际应用建议
 
@@ -144,7 +144,7 @@ tools/           # ✅ 按功能工具分组
 **可以考虑的小幅优化:**
 
 1. **加强一致性:**
-```javascript
+\`\`\`javascript
 // 统一结构
 "tools": {
   "tokenCounter": {
@@ -160,10 +160,10 @@ tools/           # ✅ 按功能工具分组
     "business": {}
   }
 }
-```
+\`\`\`
 
 2. **提取共同概念:**
-```javascript
+\`\`\`javascript
 "domains": {
   "ai": {
     "companies": {
@@ -173,7 +173,7 @@ tools/           # ✅ 按功能工具分组
     }
   }
 }
-```
+\`\`\`
 
 ## 维护建议
 
@@ -181,7 +181,7 @@ tools/           # ✅ 按功能工具分组
 
 对于大型项目，考虑拆分文件：
 
-```
+\`\`\`
 messages/
 ├── en/
 │   ├── common.json      # 通用组件
@@ -193,7 +193,7 @@ messages/
     ├── pages.json
     ├── tools.json
     └── domains.json
-```
+\`\`\`
 
 ### 命名约定
 
@@ -213,4 +213,4 @@ messages/
 
 1. **保持现有的优点** - 功能域分组 + 通用组件
 2. **小幅优化** - 加强一致性，提取共同概念
-3. **渐进式改进** - 不需要大规模重构 
+3. **渐进式改进** - 不需要大规模重构

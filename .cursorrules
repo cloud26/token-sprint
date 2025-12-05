@@ -105,7 +105,7 @@ This is a Next.js 15 TypeScript project with shadcn/ui components, next-intl for
 - Manual issue closure is preferred to maintain better issue lifecycle control
 
 ## Development Commands
-```bash
+\`\`\`bash
 # Development
 pnpm dev
 
@@ -120,7 +120,7 @@ pnpm lint
 pnpm add <package>
 pnpm add -D <dev-package>
 pnpm remove <package>
-```
+\`\`\`
 
 ## AI/LLM Specific Guidelines
 - When working with tokenization, use js-tiktoken library
@@ -155,4 +155,4 @@ pnpm remove <package>
 3. **Internationalization**: Add translations to other languages ONLY when explicitly requested
 4. **Testing**: Test English version first, then other languages after internationalization
 
-Remember: This project emphasizes performance, accessibility, and internationalization. Always consider these aspects when making changes or additions. However, prioritize English-first development and only internationalize when specifically requested. 
+Remember: This project emphasizes performance, accessibility, and internationalization. Always consider these aspects when making changes or additions. However, prioritize English-first development and only internationalize when specifically requested.

@@ -90,4 +90,4 @@ export default async function Layout({
 // 定义支持的语言
 export function generateStaticParams() {
     return routing.locales.map((locale) => ({ lang: locale }))
-} 
+}

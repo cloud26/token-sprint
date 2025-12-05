@@ -7,4 +7,4 @@ export const routing = defineRouting({
   locales: LANGUAGE_CONFIG.SUPPORTED_LANGUAGES,
   // 默认语言
   defaultLocale: LANGUAGE_CONFIG.DEFAULT_LANGUAGE
-}); 
+});

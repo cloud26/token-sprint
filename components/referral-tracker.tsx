@@ -36,4 +36,4 @@ export function ReferralTracker() {
             <ReferralTrackerInner />
         </Suspense>
     )
-} 
+}

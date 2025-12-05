@@ -105,4 +105,4 @@ export function SideNav({ currentPath }: SideNavProps) {
             </nav>
         </>
     )
-} 
+}
