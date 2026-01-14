@@ -48,6 +48,7 @@
     "cmdk": "latest",
     "date-fns": "4.1.0",
     "embla-carousel-react": "latest",
+    "html-to-image": "^1.11.13",
     "input-otp": "latest",
     "js-tiktoken": "latest",
     "lucide-react": "^0.454.0",

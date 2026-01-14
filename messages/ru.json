@@ -622,6 +622,37 @@
       "meetExpectation": "✅ Соответствует ожиданию {expected} токен/с",
       "belowExpectation": "❌ Ниже ожидания {expected} токен/с"
     },
+    "share": {
+      "button": "Поделиться конфигурацией",
+      "dialogTitle": "Поделиться конфигурацией GPU",
+      "dialogDescription": "Загрузите или скопируйте эту карточку конфигурации, чтобы поделиться своим планом развертывания LLM с коллегами или в социальных сетях.",
+      "downloadButton": "Скачать изображение",
+      "copyButton": "Копировать в буфер обмена",
+      "copySuccess": "Скопировано в буфер обмена!",
+      "copyError": "Не удалось скопировать в буфер обмена",
+      "downloadError": "Не удалось сгенерировать изображение",
+      "generating": "Генерация...",
+      "card": {
+        "title": "Конфигурация памяти LLM GPU",
+        "configuration": "Конфигурация",
+        "model": "Модель",
+        "parameters": "Параметры",
+        "precision": "Точность",
+        "gpu": "GPU",
+        "gpuCount": "Количество GPU",
+        "concurrency": "Одновременные пользователи",
+        "contextLength": "Длина контекста",
+        "memoryBreakdown": "Разбивка памяти",
+        "modelMemory": "Память модели",
+        "kvCache": "KV-кэш",
+        "activation": "Активация",
+        "computation": "Вычисления",
+        "totalMemory": "Общая память",
+        "poweredBy": "При поддержке",
+        "email": "linpp2009@gmail.com",
+        "website": "app.linpp2009.com"
+      }
+    },
     "faq": {
       "title": "📋 FAQ по формулам расчета",
       "items": [

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Check, ChevronsUpDown, InfoIcon, ChevronDown, ChevronRight } from "lucide-react"
+import { Check, ChevronsUpDown, InfoIcon, ChevronDown, ChevronRight, Share2 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -15,6 +15,8 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { useTranslations, useLocale } from 'next-intl'
 import React from "react"
+import { ShareDialog } from "@/components/share-dialog"
+import { ShareCardData } from "@/components/share-card"
 
 interface CalculatorProps {
     preferredModelType?: string // 优先显示的模型类型，如 'deepseek', 'llama', 'qwen' 等
@@ -148,6 +150,9 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
 
     // FAQ 展开状态
     const [expandedFaqItems, setExpandedFaqItems] = useState<Set<number>>(new Set())
+
+    // 分享对话框状态
+    const [isShareDialogOpen, setIsShareDialogOpen] = useState(false)
 
     const selectedGpu = gpuModels.find((gpu) => `${gpu.name} (${gpu.memory}GB)` === gpuModel)
     const gpuMemory = selectedGpu ? selectedGpu.memory : 80 // 默认使用 80GB
@@ -298,6 +303,30 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
         return answer
             .replace(/\*\*(.*?)\*\*/g, '<span class="font-semibold text-blue-700">$1</span>')
             .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>')
+    }
+
+    // 准备分享数据
+    const prepareShareData = (): ShareCardData => {
+        return {
+            modelName: selectedModel,
+            parameters: parameters,
+            precision: precision,
+            gpuModel: gpuModel,
+            gpuCount: Number(manualGpuCount) || memory.gpuAnalysis.baseRequiredGPUs,
+            totalMemory: memory.totalMemory,
+            batchSize: batchSize,
+            contextLength: contextLength,
+            modelMemory: memory.modelMemory,
+            kvCacheMemory: memory.kvCacheMemory,
+            activationMemory: memory.activationMemory,
+            computationMemory: memory.computationMemory,
+            locale: locale
+        }
+    }
+
+    // 处理分享按钮点击
+    const handleShare = () => {
+        setIsShareDialogOpen(true)
     }
 
     return (
@@ -773,6 +802,17 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                     <div className="text-xs text-red-600">{memory.gpuAnalysis.memoryWarning}</div>
                                 </div>
                             )}
+
+                            {/* 分享按钮 */}
+                            <div className="flex justify-center pt-4 border-t border-slate-200">
+                                <Button
+                                    onClick={handleShare}
+                                    className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all"
+                                >
+                                    <Share2 className="h-4 w-4 mr-2" />
+                                    {t('share.button')}
+                                </Button>
+                            </div>
                         </div>
                     </section>
 
@@ -988,6 +1028,41 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                 </CardContent>
             </Card>
 
+            {/* 分享对话框 */}
+            <ShareDialog
+                open={isShareDialogOpen}
+                onOpenChange={setIsShareDialogOpen}
+                data={prepareShareData()}
+                translations={{
+                    dialogTitle: t('share.dialogTitle'),
+                    dialogDescription: t('share.dialogDescription'),
+                    downloadButton: t('share.downloadButton'),
+                    copyButton: t('share.copyButton'),
+                    copySuccess: t('share.copySuccess'),
+                    copyError: t('share.copyError'),
+                    downloadError: t('share.downloadError'),
+                    generating: t('share.generating'),
+                    card: {
+                        title: t('share.card.title'),
+                        configuration: t('share.card.configuration'),
+                        model: t('share.card.model'),
+                        parameters: t('share.card.parameters'),
+                        precision: t('share.card.precision'),
+                        gpu: t('share.card.gpu'),
+                        gpuCount: t('share.card.gpuCount'),
+                        concurrency: t('share.card.concurrency'),
+                        contextLength: t('share.card.contextLength'),
+                        memoryBreakdown: t('share.card.memoryBreakdown'),
+                        modelMemory: t('share.card.modelMemory'),
+                        kvCache: t('share.card.kvCache'),
+                        activation: t('share.card.activation'),
+                        computation: t('share.card.computation'),
+                        totalMemory: t('share.card.totalMemory'),
+                        poweredBy: t('share.card.poweredBy'),
+                        website: t('share.card.website')
+                    }
+                }}
+            />
         </TooltipProvider>
     )
 }

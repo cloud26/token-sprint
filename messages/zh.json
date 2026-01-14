@@ -582,6 +582,37 @@
       "meetExpectation": "✅ 满足期望 {expected} token/s",
       "belowExpectation": "❌ 低于期望 {expected} token/s"
     },
+    "share": {
+      "button": "分享配置",
+      "dialogTitle": "分享您的GPU配置",
+      "dialogDescription": "下载或复制此配置卡片，与同事或在社交媒体上分享您的LLM部署方案。",
+      "downloadButton": "下载图片",
+      "copyButton": "复制到剪贴板",
+      "copySuccess": "已复制到剪贴板！",
+      "copyError": "复制失败",
+      "downloadError": "生成图片失败",
+      "generating": "生成中...",
+      "card": {
+        "title": "LLM GPU 显存配置",
+        "configuration": "配置信息",
+        "model": "模型",
+        "parameters": "参数量",
+        "precision": "精度",
+        "gpu": "GPU型号",
+        "gpuCount": "GPU数量",
+        "concurrency": "并发用户",
+        "contextLength": "上下文长度",
+        "memoryBreakdown": "显存分解",
+        "modelMemory": "模型显存",
+        "kvCache": "KV缓存",
+        "activation": "激活显存",
+        "computation": "计算缓存",
+        "totalMemory": "总显存",
+        "poweredBy": "技术支持",
+        "email": "linpp2009@gmail.com",
+        "website": "app.linpp2009.com"
+      }
+    },
     "faq": {
       "title": "📋 计算公式常见问题",
       "items": [

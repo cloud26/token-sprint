@@ -592,6 +592,37 @@
       "meetExpectation": "✅ 期待値 {expected} トークン/秒を満たす",
       "belowExpectation": "❌ 期待値 {expected} トークン/秒を下回る"
     },
+    "share": {
+      "button": "設定を共有",
+      "dialogTitle": "GPU設定を共有",
+      "dialogDescription": "この設定カードをダウンロードまたはコピーして、同僚やソーシャルメディアでLLMデプロイメントプランを共有してください。",
+      "downloadButton": "画像をダウンロード",
+      "copyButton": "クリップボードにコピー",
+      "copySuccess": "クリップボードにコピーしました！",
+      "copyError": "コピーに失敗しました",
+      "downloadError": "画像の生成に失敗しました",
+      "generating": "生成中...",
+      "card": {
+        "title": "LLM GPUメモリ設定",
+        "configuration": "設定",
+        "model": "モデル",
+        "parameters": "パラメータ数",
+        "precision": "精度",
+        "gpu": "GPU",
+        "gpuCount": "GPU数",
+        "concurrency": "同時ユーザー数",
+        "contextLength": "コンテキスト長",
+        "memoryBreakdown": "メモリ内訳",
+        "modelMemory": "モデルメモリ",
+        "kvCache": "KVキャッシュ",
+        "activation": "アクティベーション",
+        "computation": "計算",
+        "totalMemory": "合計メモリ",
+        "poweredBy": "提供",
+        "email": "linpp2009@gmail.com",
+        "website": "app.linpp2009.com"
+      }
+    },
     "faq": {
       "title": "📋 計算式FAQ",
       "items": [

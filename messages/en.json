@@ -584,6 +584,37 @@
       "meetExpectation": "✅ Meets expectation {expected} token/s",
       "belowExpectation": "❌ Below expectation {expected} token/s"
     },
+    "share": {
+      "button": "Share Configuration",
+      "dialogTitle": "Share Your GPU Configuration",
+      "dialogDescription": "Download or copy this configuration card to share your LLM deployment plan with colleagues or on social media.",
+      "downloadButton": "Download Image",
+      "copyButton": "Copy to Clipboard",
+      "copySuccess": "Copied to clipboard!",
+      "copyError": "Failed to copy to clipboard",
+      "downloadError": "Failed to generate image",
+      "generating": "Generating...",
+      "card": {
+        "title": "LLM GPU Memory Configuration",
+        "configuration": "Configuration",
+        "model": "Model",
+        "parameters": "Parameters",
+        "precision": "Precision",
+        "gpu": "GPU",
+        "gpuCount": "GPU Count",
+        "concurrency": "Concurrent Users",
+        "contextLength": "Context Length",
+        "memoryBreakdown": "Memory Breakdown",
+        "modelMemory": "Model Memory",
+        "kvCache": "KV Cache",
+        "activation": "Activation",
+        "computation": "Computation",
+        "totalMemory": "Total Memory",
+        "poweredBy": "Powered by",
+        "email": "linpp2009@gmail.com",
+        "website": "app.linpp2009.com"
+      }
+    },
     "faq": {
       "title": "📋 Calculation Formula FAQ",
       "items": [

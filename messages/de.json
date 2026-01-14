@@ -601,6 +601,37 @@
       "meetExpectation": "✅ Erfüllt Erwartung {expected} Token/s",
       "belowExpectation": "❌ Unter Erwartung {expected} Token/s"
     },
+    "share": {
+      "button": "Konfiguration teilen",
+      "dialogTitle": "GPU-Konfiguration teilen",
+      "dialogDescription": "Laden Sie diese Konfigurationskarte herunter oder kopieren Sie sie, um Ihren LLM-Bereitstellungsplan mit Kollegen oder in sozialen Medien zu teilen.",
+      "downloadButton": "Bild herunterladen",
+      "copyButton": "In Zwischenablage kopieren",
+      "copySuccess": "In Zwischenablage kopiert!",
+      "copyError": "Fehler beim Kopieren in Zwischenablage",
+      "downloadError": "Fehler beim Generieren des Bildes",
+      "generating": "Wird generiert...",
+      "card": {
+        "title": "LLM GPU-Speicherkonfiguration",
+        "configuration": "Konfiguration",
+        "model": "Modell",
+        "parameters": "Parameter",
+        "precision": "Präzision",
+        "gpu": "GPU",
+        "gpuCount": "GPU-Anzahl",
+        "concurrency": "Gleichzeitige Benutzer",
+        "contextLength": "Kontextlänge",
+        "memoryBreakdown": "Speicheraufschlüsselung",
+        "modelMemory": "Modellspeicher",
+        "kvCache": "KV-Cache",
+        "activation": "Aktivierung",
+        "computation": "Berechnung",
+        "totalMemory": "Gesamtspeicher",
+        "poweredBy": "Powered by",
+        "email": "linpp2009@gmail.com",
+        "website": "app.linpp2009.com"
+      }
+    },
     "faq": {
       "title": "📋 Berechnungsformel FAQ",
       "items": [

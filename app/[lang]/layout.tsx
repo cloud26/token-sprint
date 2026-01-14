@@ -9,6 +9,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import Script from 'next/script'
 import { ReferralTracker } from '@/components/referral-tracker'
 import { SidebarAds } from '@/components/sidebar-ads'
+import { Toaster } from '@/components/ui/toaster'
 
 export default async function Layout({
     children,
@@ -79,6 +80,7 @@ export default async function Layout({
                 <SidebarAds />
                 <NextIntlClientProvider messages={messages}>
                     {children}
+                    <Toaster />
                 </NextIntlClientProvider>
                 <Analytics />
                 <SpeedInsights />
