@@ -82,6 +82,24 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
             label: '16K tokens',
             description: '超长上下文',
             scenarios: '典型使用: 多文档分析、大规模代码重构'
+        },
+        {
+            value: '32768',
+            label: '32K tokens',
+            description: '书籍与代码库',
+            scenarios: '典型使用: 代码库分析、整本书处理、大型项目文档'
+        },
+        {
+            value: '65536',
+            label: '64K tokens',
+            description: '超长上下文、多文档',
+            scenarios: '典型使用: 多文档对比、大规模代码重构、企业知识库'
+        },
+        {
+            value: '131072',
+            label: '128K tokens',
+            description: '海量文档、全景分析',
+            scenarios: '典型使用: 研究综述、大型项目规划、企业级AI助手'
         }
     ]
 

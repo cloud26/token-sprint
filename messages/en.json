@@ -461,6 +461,24 @@
           "label": "16K tokens",
           "description": "Very long context",
           "scenarios": "Typical usage: Multi-document analysis, extensive code refactoring"
+        },
+        {
+          "value": "32768",
+          "label": "32K tokens",
+          "description": "Books and codebases",
+          "scenarios": "Typical usage: Codebase analysis, full book processing, large project documentation"
+        },
+        {
+          "value": "65536",
+          "label": "64K tokens",
+          "description": "Ultra-long context, multi-document",
+          "scenarios": "Typical usage: Multi-document comparison, large-scale code refactoring, enterprise knowledge bases"
+        },
+        {
+          "value": "131072",
+          "label": "128K tokens",
+          "description": "Massive documents, panoramic analysis",
+          "scenarios": "Typical usage: Research surveys, large project planning, enterprise AI assistants"
         }
       ]
     },
