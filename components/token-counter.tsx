@@ -100,6 +100,11 @@ const models: ModelInfo[] = [
     { value: "glm-4.5-air-base", label: "GLM-4.5-Air-Base 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5-Air-Base" },
 
     // Qwen 系列 - 使用官方 tokenizer
+    // Qwen3.5 系列
+    { value: "qwen3.5-397b-a17b", label: "Qwen3.5-397B-A17B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen3.5-122b-a10b", label: "Qwen3.5-122B-A10B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen3.5-35b-a3b", label: "Qwen3.5-35B-A3B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen3.5-27b", label: "Qwen3.5-27B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     // Qwen3-Next 系列
     { value: "qwen3-next-80b-a3b-instruct", label: "Qwen3-Next-80B-A3B-Instruct 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen3-next-80b-a3b-thinking", label: "Qwen3-Next-80B-A3B-Thinking 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
