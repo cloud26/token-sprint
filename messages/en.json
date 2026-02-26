@@ -28,7 +28,6 @@
         "ready": "Tokenizer ready!",
         "error": "Error loading tokenizer"
       },
-
       "tokenCounter": {
         "input": "Input Text",
         "inputPlaceholder": "Enter or paste your text here to count tokens...",
@@ -421,18 +420,6 @@
       },
       "options": [
         {
-          "value": "256",
-          "label": "256 tokens",
-          "description": "Very short interactions",
-          "scenarios": "Typical usage: Quick Q&A, simple commands, short code snippets"
-        },
-        {
-          "value": "512",
-          "label": "512 tokens",
-          "description": "Short conversations",
-          "scenarios": "Typical usage: ChatGPT-style dialogue, basic assistance, brief explanations"
-        },
-        {
           "value": "1024",
           "label": "1K tokens",
           "description": "Standard interactions",
@@ -596,7 +583,7 @@
     "throughputRequirement": {
       "title": "Throughput Requirements",
       "totalThroughput": "Throughput Requirements {totalThroughput} tokens/s",
-        "requiredGPUs": "Requires **{count}** GPUs (based on VRAM bandwidth \u0026 computing performance)"
+      "requiredGPUs": "Requires **{count}** GPUs (based on VRAM bandwidth & computing performance)"
     },
     "performanceComparison": {
       "meetExpectation": "✅ Meets expectation {expected} token/s",
