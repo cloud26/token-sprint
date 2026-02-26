@@ -28,7 +28,6 @@
         "ready": "Tokenizer ready!",
         "error": "Error loading tokenizer"
       },
-
       "tokenCounter": {
         "input": "Input Text",
         "inputPlaceholder": "Enter or paste your text here to count tokens...",
@@ -421,18 +420,6 @@
       },
       "options": [
         {
-          "value": "256",
-          "label": "256 tokens",
-          "description": "Very short interactions",
-          "scenarios": "Typical usage: Quick Q&A, simple commands, short code snippets"
-        },
-        {
-          "value": "512",
-          "label": "512 tokens",
-          "description": "Short conversations",
-          "scenarios": "Typical usage: ChatGPT-style dialogue, basic assistance, brief explanations"
-        },
-        {
           "value": "1024",
           "label": "1K tokens",
           "description": "Standard interactions",
@@ -461,6 +448,24 @@
           "label": "16K tokens",
           "description": "Very long context",
           "scenarios": "Typical usage: Multi-document analysis, extensive code refactoring"
+        },
+        {
+          "value": "32768",
+          "label": "32K tokens",
+          "description": "Books and codebases",
+          "scenarios": "Typical usage: Codebase analysis, full book processing, large project documentation"
+        },
+        {
+          "value": "65536",
+          "label": "64K tokens",
+          "description": "Ultra-long context, multi-document",
+          "scenarios": "Typical usage: Multi-document comparison, large-scale code refactoring, enterprise knowledge bases"
+        },
+        {
+          "value": "131072",
+          "label": "128K tokens",
+          "description": "Massive documents, panoramic analysis",
+          "scenarios": "Typical usage: Research surveys, large project planning, enterprise AI assistants"
         }
       ]
     },
@@ -578,7 +583,7 @@
     "throughputRequirement": {
       "title": "Throughput Requirements",
       "totalThroughput": "Throughput Requirements {totalThroughput} tokens/s",
-        "requiredGPUs": "Requires **{count}** GPUs (based on VRAM bandwidth \u0026 computing performance)"
+      "requiredGPUs": "Requires **{count}** GPUs (based on VRAM bandwidth & computing performance)"
     },
     "performanceComparison": {
       "meetExpectation": "✅ Meets expectation {expected} token/s",

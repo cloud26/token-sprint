@@ -28,7 +28,6 @@
         "ready": "Tokenizer bereit!",
         "error": "Fehler beim Laden des Tokenizers"
       },
-
       "tokenCounter": {
         "input": "Eingabetext",
         "inputPlaceholder": "Geben Sie hier Ihren Text ein oder fügen Sie ihn ein, um Token zu zählen...",
@@ -420,18 +419,6 @@
       },
       "options": [
         {
-          "value": "256",
-          "label": "256 Token",
-          "description": "Sehr kurze Interaktionen",
-          "scenarios": "Typische Nutzung: Schnelle Q&A, einfache Befehle, kurze Code-Snippets"
-        },
-        {
-          "value": "512",
-          "label": "512 Token",
-          "description": "Kurze Gespräche",
-          "scenarios": "Typische Nutzung: ChatGPT-ähnliche Dialoge, grundlegende Unterstützung, kurze Erklärungen"
-        },
-        {
           "value": "1024",
           "label": "1K Token",
           "description": "Standard-Interaktionen",
@@ -462,6 +449,12 @@
           "scenarios": "Typische Nutzung: Multi-Dokument-Analyse, umfangreiches Code-Refactoring"
         },
         {
+          "value": "32768",
+          "label": "32K Token",
+          "description": "Bücher und Codebasen",
+          "scenarios": "Typische Nutzung: Codebasis-Analyse, vollständige Buchverarbeitung, große Projektdokumentation"
+        },
+        {
           "value": "65536",
           "label": "64K Token",
           "description": "Ultra-langer Kontext, Multi-Dokumente",
@@ -472,12 +465,6 @@
           "label": "128K Token",
           "description": "Massive Dokumente, panoramische Analyse",
           "scenarios": "Geeignet für: Forschungsübersichten, große Projektplanung, unternehmensweite KI-Assistenten"
-        },
-        {
-          "value": "262144",
-          "label": "256K Token",
-          "description": "Extreme Länge, professionelle Szenarien",
-          "scenarios": "Geeignet für: Juristische Falldatenbanken, medizinische Literatur, ultra-große Projekte"
         }
       ]
     },

@@ -28,7 +28,6 @@
         "ready": "分词器已就绪！",
         "error": "分词器加载失败"
       },
-
       "tokenCounter": {
         "input": "输入文本",
         "inputPlaceholder": "在此输入或粘贴您要计算token数量的文本...",
@@ -53,7 +52,6 @@
           "qwen": "Qwen 系列 (🤗)"
         }
       },
-
       "optimizationTipsFor": "{model} 优化建议",
       "tokenEfficiency": "Token效率: 使用精确、简洁的提示词来最小化token使用量和成本。",
       "modelSelection": "模型选择: 根据您的具体用例和预算选择合适的{company}模型。",
@@ -143,13 +141,6 @@
           "title": "💡 专业提示：",
           "content": "不同的分词器对相同文本的token计数可能有20-40%的差异。使用目标模型的分词器进行测试以获得准确的成本估算。"
         }
-      },
-      "loadingStates": {
-        "preparing": "准备加载分词器...",
-        "downloading": "正在下载分词器文件...",
-        "initializing": "正在初始化分词器...",
-        "ready": "分词器已就绪！",
-        "error": "分词器加载失败"
       }
     },
     "gpu": {
@@ -370,7 +361,11 @@
       "notFound": "未找到匹配的模型",
       "tooltip": {
         "title": "选择预设模型快速配置",
-        "features": ["自动设置参数数量", "包含最新主流模型", "支持搜索功能"]
+        "features": [
+          "自动设置参数数量",
+          "包含最新主流模型",
+          "支持搜索功能"
+        ]
       }
     },
     "parameters": {
@@ -419,18 +414,6 @@
       },
       "options": [
         {
-          "value": "256",
-          "label": "256 tokens",
-          "description": "极短交互",
-          "scenarios": "典型使用: 快速问答、简单指令、短代码片段"
-        },
-        {
-          "value": "512",
-          "label": "512 tokens",
-          "description": "短对话",
-          "scenarios": "典型使用: ChatGPT式对话、基础辅助、简短解释"
-        },
-        {
           "value": "1024",
           "label": "1K tokens",
           "description": "标准交互",
@@ -459,6 +442,24 @@
           "label": "16K tokens",
           "description": "超长上下文",
           "scenarios": "典型使用: 多文档分析、大规模代码重构"
+        },
+        {
+          "value": "32768",
+          "label": "32K tokens",
+          "description": "书籍与代码库",
+          "scenarios": "典型使用: 代码库分析、整本书处理、大型项目文档"
+        },
+        {
+          "value": "65536",
+          "label": "64K tokens",
+          "description": "超长上下文、多文档",
+          "scenarios": "典型使用: 多文档对比、大规模代码重构、企业知识库"
+        },
+        {
+          "value": "131072",
+          "label": "128K tokens",
+          "description": "海量文档、全景分析",
+          "scenarios": "典型使用: 研究综述、大型项目规划、企业级AI助手"
         }
       ]
     },
@@ -545,7 +546,7 @@
         "title": "根据业务场景选择合适的生成速度",
         "levels": [
           "• 80+ token/s: 长篇内容、研究文档 (8K+ tokens场景)",
-          "• 50-80 token/s: 技术讨论、论文分析 (2K-4K tokens场景)", 
+          "• 50-80 token/s: 技术讨论、论文分析 (2K-4K tokens场景)",
           "• 30-50 token/s: 客服机器人、代码辅助 (1K-2K tokens场景)",
           "• 15-30 token/s: 快速问答、简单对话 (256-512 tokens场景)",
           "• <15 token/s: 体验较差，用户可能放弃"

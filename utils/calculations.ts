@@ -12,6 +12,8 @@ interface MemoryCalculationResult {
   architectureInfo: {
     d_model: number
     n_layers: number
+    n_kv_heads?: number
+    d_head?: number
     activeParams: number
     isMoE: boolean
     source: string
@@ -142,7 +144,8 @@ function calcComputationMemory(
 }
 
 // 计算KV Cache每个token的大小 (GB) - 精确公式
-function calcKvCacheSizePerToken(n_layers: number, d_model: number, precision: string = "FP16"): number {
+// 使用 n_kv_heads * d_head 代替 d_model，正确反映 GQA/MQA/MLA 架构的KV Cache大小
+function calcKvCacheSizePerToken(n_layers: number, d_model: number, precision: string = "FP16", n_kv_heads?: number, d_head?: number): number {
   const BYTES_IN_GB = 1_073_741_824
 
   // 根据模型精度确定KV Cache的字节数
@@ -156,15 +159,14 @@ function calcKvCacheSizePerToken(n_layers: number, d_model: number, precision: s
     kvCacheBytes = 4 // FP32模型
   }
 
-  // 公式: 2 (key + value) * kvCacheBytes * n_layers * d_model
-  const theoreticalSize = (2 * kvCacheBytes * n_layers * d_model) / BYTES_IN_GB
+  // 计算有效的KV维度
+  // GQA/MQA: kv_dim = n_kv_heads * d_head (远小于 d_model = n_heads * d_head)
+  // MLA (DeepSeek): kv_dim 为压缩后的latent维度
+  // 标准MHA: kv_dim = d_model (n_kv_heads = n_heads)
+  const kvDim = (n_kv_heads && d_head) ? n_kv_heads * d_head : d_model
 
-  // 应用实际推理框架的优化因子
-  // 基于SGLang、vLLM等框架的实际表现，KV Cache有显著优化
-  // 参考SGLang在L20上成功运行Qwen3-32B的表现
-  const optimizationFactor = 0.6 // 40%的优化空间，包括压缩、量化、分页等
-
-  return theoreticalSize * optimizationFactor
+  // 公式: 2 (key + value) * kvCacheBytes * n_layers * kvDim
+  return (2 * kvCacheBytes * n_layers * kvDim) / BYTES_IN_GB
 }
 
 // 直接使用用户选择的上下文长度作为平均值
@@ -190,6 +192,8 @@ function calcSimplifiedKvCache(parameters: number, contextLength: number, batchS
 function getModelArchitectureInfo(parameters: number, selectedModel?: string): {
   d_model: number;
   n_layers: number;
+  n_kv_heads?: number;
+  d_head?: number;
   activeParams: number;
   isMoE: boolean;
   source: string; // 信息来源，帮助用户验证
@@ -208,6 +212,8 @@ function getModelArchitectureInfo(parameters: number, selectedModel?: string): {
       return {
         d_model: foundModel.d_model,
         n_layers: foundModel.n_layers,
+        n_kv_heads: foundModel.n_kv_heads,
+        d_head: foundModel.d_head,
         activeParams: foundModel.activeParams || foundModel.parametersNum,
         isMoE: foundModel.isMoE || false,
         source: foundModel.source,
@@ -223,6 +229,8 @@ function getModelArchitectureInfo(parameters: number, selectedModel?: string): {
     return {
       d_model: model.d_model,
       n_layers: model.n_layers,
+      n_kv_heads: model.n_kv_heads,
+      d_head: model.d_head,
       activeParams: model.activeParams || parameters,
       isMoE: model.isMoE || false,
       source: model.source,
@@ -598,8 +606,8 @@ function calculateMinRequiredGPUs(
   const bytesPerParameter = PRECISION_BYTES[precision] || 4
   const modelMemory = parameters * bytesPerParameter
   const architectureInfo = getModelArchitectureInfo(parameters, selectedModel)
-  const { d_model, n_layers } = architectureInfo
-  const kvCacheSizePerToken = calcKvCacheSizePerToken(n_layers, d_model, precision)
+  const { d_model, n_layers, n_kv_heads, d_head } = architectureInfo
+  const kvCacheSizePerToken = calcKvCacheSizePerToken(n_layers, d_model, precision, n_kv_heads, d_head)
   const effectiveContextLength = getEffectiveContextLength(contextLength)
   const kvCacheMemory = kvCacheSizePerToken * effectiveContextLength * batchSize
   const activationMemory = calcActivationMemory(activeParams, batchSize, contextLength)
@@ -709,13 +717,13 @@ export function calculateInferenceMemory(
 
   // 获取模型架构参数（包含验证信息）- 现在传入模型名称
   const architectureInfo = getModelArchitectureInfo(parameters, selectedModel)
-  const { d_model, n_layers, activeParams, isMoE } = architectureInfo
+  const { d_model, n_layers, n_kv_heads, d_head, activeParams, isMoE } = architectureInfo
 
   // 1. 模型权重内存 (GB) - 基于总参数
   const modelMemory = parameters * bytesPerParameter
 
-  // 2. KV Cache 内存 (GB) - 考虑实际使用率
-  const kvCacheSizePerToken = calcKvCacheSizePerToken(n_layers, d_model, precision)
+  // 2. KV Cache 内存 (GB) - 使用 n_kv_heads * d_head 精确计算GQA/MLA模型的KV Cache
+  const kvCacheSizePerToken = calcKvCacheSizePerToken(n_layers, d_model, precision, n_kv_heads, d_head)
   const effectiveContextLength = getEffectiveContextLength(contextLength)
   const kvCacheMemory = kvCacheSizePerToken * effectiveContextLength * batchSize
 

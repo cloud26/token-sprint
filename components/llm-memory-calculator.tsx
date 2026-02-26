@@ -42,18 +42,6 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     // Context Length 配置选项 - 从翻译文件获取
     const CONTEXT_LENGTH_OPTIONS: ContextLengthOption[] = t.raw('contextLength.options') || [
         {
-            value: '256',
-            label: '256 tokens',
-            description: '极短交互',
-            scenarios: '典型使用: 快速问答、简单指令、短代码片段'
-        },
-        {
-            value: '512',
-            label: '512 tokens',
-            description: '短对话',
-            scenarios: '典型使用: ChatGPT式对话、基础辅助、简短解释'
-        },
-        {
             value: '1024',
             label: '1K tokens',
             description: '标准交互',
@@ -82,6 +70,24 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
             label: '16K tokens',
             description: '超长上下文',
             scenarios: '典型使用: 多文档分析、大规模代码重构'
+        },
+        {
+            value: '32768',
+            label: '32K tokens',
+            description: '书籍与代码库',
+            scenarios: '典型使用: 代码库分析、整本书处理、大型项目文档'
+        },
+        {
+            value: '65536',
+            label: '64K tokens',
+            description: '超长上下文、多文档',
+            scenarios: '典型使用: 多文档对比、大规模代码重构、企业知识库'
+        },
+        {
+            value: '131072',
+            label: '128K tokens',
+            description: '海量文档、全景分析',
+            scenarios: '典型使用: 研究综述、大型项目规划、企业级AI助手'
         }
     ]
 
@@ -139,7 +145,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     const [gpuModel, setGpuModel] = useState<string>("NVIDIA H100 (80GB)")
     const [selectedModel, setSelectedModel] = useState<string>(getDefaultModel())
     const [batchSize, setBatchSize] = useState<string>("1") // 并发用户数 - 影响KV缓存显存
-    const [contextLength, setContextLength] = useState<string>("1024") // 上下文长度
+    const [contextLength, setContextLength] = useState<string>("4096") // 上下文长度
     // 移除期望吞吐量配置 - 专注于内存计算
     const [manualGpuCount, setManualGpuCount] = useState<string>("") // 手动设置的GPU数量
 
