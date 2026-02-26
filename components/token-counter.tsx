@@ -94,6 +94,7 @@ const models: ModelInfo[] = [
     { value: "gemini-pro", label: "Gemini Pro ⚠️", encoding: "gpt-4" },
 
     // GLM-4.5 系列 - 使用官方 Hugging Face 模型
+    { value: "glm-5", label: "GLM-5 🤗", encoding: "huggingface", hub: "zai-org/GLM-5" },
     { value: "glm-4.5", label: "GLM-4.5 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5" },
     { value: "glm-4.5-air", label: "GLM-4.5-Air 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5-Air" },
     { value: "glm-4.5-base", label: "GLM-4.5-Base 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5-Base" },
@@ -124,6 +125,12 @@ const models: ModelInfo[] = [
     { value: "qwen-plus", label: "Qwen-Plus 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen-turbo", label: "Qwen-Turbo 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen-max", label: "Qwen-Max 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+
+    // Kimi 系列 - 使用官方 Hugging Face 模型 (原生INT4量化)
+    { value: "kimi-k2.5", label: "Kimi-K2.5 🤗", encoding: "huggingface", hub: "moonshotai/Kimi-K2.5" },
+
+    // MiniMax 系列 - 使用官方 Hugging Face 模型
+    { value: "minimax-m2.5", label: "MiniMax-M2.5 🤗", encoding: "huggingface", hub: "MiniMaxAI/MiniMax-M2.5" },
 ]
 
 export default function TokenCounter({ language, defaultModel, preferredCompany, restrictToCompany }: TokenCounterProps) {

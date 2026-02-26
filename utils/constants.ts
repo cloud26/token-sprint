@@ -1765,46 +1765,6 @@ export const MODELS: ModelInfo[] = [
     category: "原始模型",
   },
 
-  // 其他开源模型 (可私有化部署)
-  {
-    name: "ChatGLM-6B",
-    parameters: "6B",
-    parametersNum: 6,
-    value: "chatglm-6b",
-    d_model: 4096,
-    n_layers: 28,
-    n_kv_heads: 32,
-    d_head: 128,
-    source: "Estimated for 6B model",
-    series: "ChatGLM",
-    category: "原始模型",
-  },
-  {
-    name: "Baichuan2-13B",
-    parameters: "13B",
-    parametersNum: 13,
-    value: "baichuan2-13b",
-    d_model: 5120,
-    n_layers: 40,
-    n_kv_heads: 40,
-    d_head: 128,
-    source: "Estimated based on 13B architecture",
-    series: "Baichuan 2",
-    category: "原始模型",
-  },
-  {
-    name: "Baichuan2-7B",
-    parameters: "7B",
-    parametersNum: 7,
-    value: "baichuan2-7b",
-    d_model: 4096,
-    n_layers: 32,
-    n_kv_heads: 32,
-    d_head: 128,
-    source: "Estimated based on 7B architecture",
-    series: "Baichuan 2",
-    category: "原始模型",
-  },
   {
     name: "Qwen3-0.6B",
     parameters: "0.6B",
@@ -1952,36 +1912,6 @@ export const MODELS: ModelInfo[] = [
     source: "Google Gemma 2 series",
     verificationUrl: "https://huggingface.co/google/gemma-2-2b",
     series: "Gemma",
-    category: "原始模型",
-  },
-
-  // Yi 系列 (01.AI开源)
-  {
-    name: "Yi-34B",
-    parameters: "34B",
-    parametersNum: 34,
-    value: "yi-34b",
-    d_model: 7168,
-    n_layers: 60,
-    n_kv_heads: 8,
-    d_head: 128,
-    source: "01.AI Yi series - bilingual model",
-    verificationUrl: "https://huggingface.co/01-ai/Yi-34B",
-    series: "Yi",
-    category: "原始模型",
-  },
-  {
-    name: "Yi-6B",
-    parameters: "6B",
-    parametersNum: 6,
-    value: "yi-6b",
-    d_model: 4096,
-    n_layers: 32,
-    n_kv_heads: 4,
-    d_head: 128,
-    source: "01.AI Yi series - bilingual model",
-    verificationUrl: "https://huggingface.co/01-ai/Yi-6B",
-    series: "Yi",
     category: "原始模型",
   },
 
@@ -2155,6 +2085,60 @@ export const MODELS: ModelInfo[] = [
     category: "原始模型",
   },
 
+  // GLM-5 系列 (Z.ai智谱AI开源智能体模型)
+  {
+    name: "GLM-5",
+    parameters: "744B",
+    parametersNum: 744,
+    value: "glm-5",
+    d_model: 7168, // Estimated: consistent with GLM-4.x series (GLM-4.5 uses 7168)
+    n_layers: 94, // Estimated based on scaling from GLM-4.5 (80 layers at 355B to ~94 layers at 744B)
+    n_kv_heads: 8, // Estimated: consistent with GLM-4.5 series GQA configuration
+    d_head: 128,
+    activeParams: 40,
+    isMoE: true,
+    source: "GLM-5: 744B-A40B MoE model for complex systems engineering and long-horizon agentic tasks (architecture params estimated from GLM-4.5 scaling)",
+    verificationUrl: "https://huggingface.co/zai-org/GLM-5",
+    series: "GLM-5",
+    category: "原始模型",
+  },
+
+  // Kimi-K2.5 系列 (Moonshot AI原生INT4量化多模态智能体模型)
+  {
+    name: "Kimi-K2.5",
+    parameters: "1T",
+    parametersNum: 1000,
+    value: "kimi-k2.5",
+    d_model: 7168, // From official model card: Attention Hidden Dimension = 7168
+    n_layers: 61, // From official model card: Number of Layers = 61
+    n_kv_heads: 1, // MLA (Multi-head Latent Attention) stores compressed KV latent per token
+    d_head: 512, // Estimated MLA compressed latent dimension (c_kv); actual KV footprint may differ
+    activeParams: 32,
+    isMoE: true,
+    source: "Kimi-K2.5: 1T-A32B native multimodal agentic model with MLA attention; natively INT4 quantized — use INT4 precision for accurate memory calculation",
+    verificationUrl: "https://huggingface.co/moonshotai/Kimi-K2.5",
+    series: "Kimi K2.5",
+    category: "原始模型",
+  },
+
+  // MiniMax-M2.5 系列 (MiniMax AI高效编程智能体模型)
+  {
+    name: "MiniMax-M2.5",
+    parameters: "230B",
+    parametersNum: 230,
+    value: "minimax-m2.5",
+    d_model: 3072, // From MiniMaxM2 architecture (hidden_size=3072)
+    n_layers: 62, // From MiniMaxM2 architecture (num_hidden_layers=62)
+    n_kv_heads: 8, // From MiniMaxM2 architecture (num_key_value_heads=8, GQA)
+    d_head: 128, // From MiniMaxM2 architecture (head_dim=128)
+    activeParams: 10,
+    isMoE: true,
+    source: "MiniMax-M2.5: 230B-A10B MoE model (256 experts, top-8 routing) for coding and agentic tasks; architecture based on MiniMax-M2 design",
+    verificationUrl: "https://huggingface.co/MiniMaxAI/MiniMax-M2.5",
+    series: "MiniMax M2.5",
+    category: "原始模型",
+  },
+
   // GPT-OSS 系列 (OpenAI开源权重模型)
   {
     name: "GPT-OSS-120B",
@@ -2274,27 +2258,32 @@ export const getModelsByGroup = () => {
     groups[groupKey].push(model);
   });
 
-  // 按系列名称排序，优先显示热门系列
+  // 按系列名称排序，优先显示最新发布的系列
   const seriesOrder = [
-    "DeepSeek",
-    "GPT-OSS",
-    "Llama 4",
-    "Llama 3.2",
-    "Llama 3.1",
-    "Llama 3",
+    // 2026 年发布
+    "Kimi K2.5",
+    "GLM-5",
+    "MiniMax M2.5",
+    "Qwen 3.5",
     "Qwen 3-Next",
+    // 2025 年发布
+    "GPT-OSS",
+    "GLM-4.5",
     "Qwen 3",
-    "Qwen 2.5",
-    "Qwen 2",
+    "Llama 4",
+    "DeepSeek",
+    // 2024 年及更早
     "Qwen QwQ",
+    "Llama 3.2",
+    "Qwen 2.5",
+    "Llama 3.1",
+    "Qwen 2",
+    "Llama 3",
+    "Gemma",
     "Mixtral",
     "Mistral",
-    "Gemma",
-    "Yi",
     "Phi",
     "CodeLlama",
-    "ChatGLM",
-    "Baichuan 2",
   ];
 
   const sortedGroups: Record<string, ModelInfo[]> = {};
