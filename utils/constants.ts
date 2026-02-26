@@ -1073,6 +1073,7 @@ export interface ModelInfo {
   verificationUrl?: string;
   series: string; // 模型系列，如 "DeepSeek", "Llama 4", "Qwen 3"
   category: string; // 模型类别，如 "原始模型", "蒸馏模型", "代码专用"
+  defaultPrecision?: string; // 模型原生量化精度，如 "INT4"，选中该模型时自动设置
 }
 
 // 统一的模型数据 - 包含架构信息的完整模型列表
@@ -2119,6 +2120,7 @@ export const MODELS: ModelInfo[] = [
     verificationUrl: "https://huggingface.co/moonshotai/Kimi-K2.5",
     series: "Kimi K2.5",
     category: "原始模型",
+    defaultPrecision: "INT4",
   },
 
   // MiniMax-M2.5 系列 (MiniMax AI高效编程智能体模型)
