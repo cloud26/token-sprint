@@ -204,6 +204,9 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
         const model = sortedModelExamples.find(m => m.name === newModel)
         if (model) {
             setParameters(model.parametersNum.toString())
+            if (model.defaultPrecision) {
+                setPrecision(model.defaultPrecision)
+            }
         }
     }
 
