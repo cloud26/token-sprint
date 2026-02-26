@@ -49,7 +49,9 @@
           "glm": "GLM-Serie (🤗)",
           "mistral": "Mistral-Serie (🤗)",
           "gemini": "Google Gemini-Serie (Schätzung)",
-          "qwen": "Qwen-Serie (🤗)"
+          "qwen": "Qwen-Serie (🤗)",
+          "kimi": "Moonshot Kimi-Serie (🤗)",
+          "minimax": "MiniMax-Serie (🤗)"
         }
       },
       "optimizationTipsFor": "Optimierungstipps für {model}",
@@ -355,6 +357,26 @@
           "versions": "Qwen3, Qwen2.5",
           "features": "Online-Token-Schätzer mit mehrsprachiger Unterstützung und Kostenoptimierung.",
           "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        },
+        "moonshot-kimi": {
+          "company": "Moonshot AI",
+          "displayName": "Kimi",
+          "keywordName": "kimi",
+          "titleSuffix": "",
+          "accuracyNote": "Ungefähre Token-Zählung für Kimi-Modelle mit Hugging Face Tokenizer.",
+          "versions": "Kimi K2, Kimi K2.5",
+          "features": "Online-Token-Schätzer mit 256K-Kontext-Unterstützung und Kostenkalkulation.",
+          "representativeModels": "Kimi K2, Kimi K2 Instruct, Kimi K2.5"
+        },
+        "minimax": {
+          "company": "MiniMax",
+          "displayName": "MiniMax",
+          "keywordName": "minimax",
+          "titleSuffix": "",
+          "accuracyNote": "Ungefähre Token-Zählung für MiniMax-Modelle mit Hugging Face Tokenizer.",
+          "versions": "MiniMax-Text-01, MiniMax-M1",
+          "features": "Online-Token-Schätzer mit 1M-Kontext und Reasoning-Fähigkeiten.",
+          "representativeModels": "MiniMax-Text-01, MiniMax-M1, MiniMax-M1-40k"
         }
       }
     }

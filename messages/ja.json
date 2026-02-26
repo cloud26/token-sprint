@@ -141,7 +141,9 @@
           "glm": "GLMシリーズ (🤗)",
           "mistral": "Mistralシリーズ (🤗)",
           "gemini": "Google Geminiシリーズ (推定)",
-          "qwen": "Qwenシリーズ (🤗)"
+          "qwen": "Qwenシリーズ (🤗)",
+          "kimi": "Moonshot Kimiシリーズ (🤗)",
+          "minimax": "MiniMaxシリーズ (🤗)"
         }
       },
       "loadingStates": {
@@ -364,6 +366,26 @@
           "versions": "Qwen3、Qwen2.5",
           "features": "多言語サポートとコスト最適化機能付きオンライントークン推定器。",
           "representativeModels": "Qwen3-Chat、Qwen2.5-Coder"
+        },
+        "moonshot-kimi": {
+          "company": "Moonshot AI",
+          "displayName": "Kimi",
+          "keywordName": "kimi",
+          "titleSuffix": "",
+          "accuracyNote": "Hugging FaceトークナイザーによるKimiモデルの概算トークンカウント。",
+          "versions": "Kimi K2、Kimi K2.5",
+          "features": "256Kコンテキスト対応のオンライントークン推定器。",
+          "representativeModels": "Kimi K2、Kimi K2 Instruct、Kimi K2.5"
+        },
+        "minimax": {
+          "company": "MiniMax",
+          "displayName": "MiniMax",
+          "keywordName": "minimax",
+          "titleSuffix": "",
+          "accuracyNote": "Hugging FaceトークナイザーによるMiniMaxモデルの概算トークンカウント。",
+          "versions": "MiniMax-Text-01、MiniMax-M1",
+          "features": "100万コンテキスト対応の推論機能付きオンライントークン推定器。",
+          "representativeModels": "MiniMax-Text-01、MiniMax-M1、MiniMax-M1-40k"
         }
       }
     }

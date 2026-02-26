@@ -50,7 +50,9 @@
           "glm": "Серия GLM (🤗)",
           "mistral": "Серия Mistral (🤗)",
           "gemini": "Серия Google Gemini (оценка)",
-          "qwen": "Серия Qwen (🤗)"
+          "qwen": "Серия Qwen (🤗)",
+          "kimi": "Серия Moonshot Kimi (🤗)",
+          "minimax": "Серия MiniMax (🤗)"
         }
       },
 
@@ -364,6 +366,26 @@
           "versions": "Qwen3, Qwen2.5",
           "features": "Онлайн оценщик токенов с многоязычной поддержкой и оптимизацией затрат.",
           "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        },
+        "moonshot-kimi": {
+          "company": "Moonshot AI",
+          "displayName": "Kimi",
+          "keywordName": "kimi",
+          "titleSuffix": "",
+          "accuracyNote": "Приблизительный подсчёт токенов для моделей Kimi с токенизатором Hugging Face.",
+          "versions": "Kimi K2, Kimi K2.5",
+          "features": "Онлайн оценщик токенов с поддержкой контекста 256K и расчётом затрат.",
+          "representativeModels": "Kimi K2, Kimi K2 Instruct, Kimi K2.5"
+        },
+        "minimax": {
+          "company": "MiniMax",
+          "displayName": "MiniMax",
+          "keywordName": "minimax",
+          "titleSuffix": "",
+          "accuracyNote": "Приблизительный подсчёт токенов для моделей MiniMax с токенизатором Hugging Face.",
+          "versions": "MiniMax-Text-01, MiniMax-M1",
+          "features": "Онлайн оценщик токенов с поддержкой контекста 1M и возможностями рассуждения.",
+          "representativeModels": "MiniMax-Text-01, MiniMax-M1, MiniMax-M1-40k"
         }
       }
     }

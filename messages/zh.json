@@ -50,7 +50,9 @@
           "glm": "GLM 系列 (🤗)",
           "mistral": "Mistral 系列 (🤗)",
           "gemini": "Google Gemini 系列 (估算)",
-          "qwen": "Qwen 系列 (🤗)"
+          "qwen": "Qwen 系列 (🤗)",
+          "kimi": "Moonshot Kimi 系列 (🤗)",
+          "minimax": "MiniMax 系列 (🤗)"
         }
       },
 
@@ -358,6 +360,24 @@
           "versions": "Qwen3、Qwen2.5",
           "features": "多语言在线token估算器，成本优化。",
           "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        },
+        "moonshot-kimi": {
+          "company": "月之暗面",
+          "displayName": "Kimi",
+          "keywordName": "kimi",
+          "accuracyNote": "使用Hugging Face分词器为Kimi模型提供近似token计数。",
+          "versions": "Kimi K2、Kimi K2.5",
+          "features": "在线token估算器，支持256K超长上下文。",
+          "representativeModels": "Kimi K2, Kimi K2 Instruct, Kimi K2.5"
+        },
+        "minimax": {
+          "company": "MiniMax",
+          "displayName": "MiniMax",
+          "keywordName": "minimax",
+          "accuracyNote": "使用Hugging Face分词器为MiniMax模型提供近似token计数。",
+          "versions": "MiniMax-Text-01、MiniMax-M1",
+          "features": "在线token估算器，支持百万级超长上下文和推理能力。",
+          "representativeModels": "MiniMax-Text-01, MiniMax-M1, MiniMax-M1-40k"
         }
       }
     }

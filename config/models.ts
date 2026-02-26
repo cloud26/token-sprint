@@ -84,6 +84,18 @@ export const tokenCounterModels: TokenCounterModel[] = [
         name: 'Alibaba Qwen',
         company: 'Alibaba',
         defaultModel: 'qwen3-chat'
+    },
+    {
+        slug: 'moonshot-kimi',
+        name: 'Moonshot Kimi',
+        company: 'Moonshot',
+        defaultModel: 'kimi-k2'
+    },
+    {
+        slug: 'minimax',
+        name: 'MiniMax',
+        company: 'MiniMax',
+        defaultModel: 'minimax-text-01'
     }
 ]
 

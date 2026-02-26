@@ -93,6 +93,10 @@ const models: ModelInfo[] = [
     { value: "gemini-1.5-flash", label: "Gemini 1.5 Flash ⚠️", encoding: "gpt-4" },
     { value: "gemini-pro", label: "Gemini Pro ⚠️", encoding: "gpt-4" },
 
+    // GLM-Z1 系列 - 智谱AI最新推理模型
+    { value: "glm-z1-32b", label: "GLM-Z1-32B 🤗", encoding: "huggingface", hub: "THUDM/GLM-Z1-32B" },
+    { value: "glm-z1-9b", label: "GLM-Z1-9B 🤗", encoding: "huggingface", hub: "THUDM/GLM-Z1-9B" },
+
     // GLM-4.5 系列 - 使用官方 Hugging Face 模型
     { value: "glm-4.5", label: "GLM-4.5 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5" },
     { value: "glm-4.5-air", label: "GLM-4.5-Air 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5-Air" },
@@ -100,6 +104,10 @@ const models: ModelInfo[] = [
     { value: "glm-4.5-air-base", label: "GLM-4.5-Air-Base 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5-Air-Base" },
 
     // Qwen 系列 - 使用官方 tokenizer
+    // Qwen 3.5 系列
+    { value: "qwen3.5-72b", label: "Qwen3.5-72B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen3.5-32b", label: "Qwen3.5-32B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen3.5-7b", label: "Qwen3.5-7B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     // Qwen3-Next 系列
     { value: "qwen3-next-80b-a3b-instruct", label: "Qwen3-Next-80B-A3B-Instruct 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen3-next-80b-a3b-thinking", label: "Qwen3-Next-80B-A3B-Thinking 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
@@ -119,6 +127,16 @@ const models: ModelInfo[] = [
     { value: "qwen-plus", label: "Qwen-Plus 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen-turbo", label: "Qwen-Turbo 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen-max", label: "Qwen-Max 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+
+    // Kimi 系列 (Moonshot AI) - 使用官方 Hugging Face 模型
+    { value: "kimi-k2", label: "Kimi K2 🤗", encoding: "huggingface", hub: "moonshotai/Kimi-K2-Instruct" },
+    { value: "kimi-k2-instruct", label: "Kimi K2 Instruct 🤗", encoding: "huggingface", hub: "moonshotai/Kimi-K2-Instruct" },
+    { value: "kimi-k2.5", label: "Kimi K2.5 🤗", encoding: "huggingface", hub: "moonshotai/Kimi-K2-Instruct" },
+
+    // MiniMax 系列 - 使用官方 Hugging Face 模型
+    { value: "minimax-text-01", label: "MiniMax-Text-01 🤗", encoding: "huggingface", hub: "MiniMaxAI/MiniMax-Text-01" },
+    { value: "minimax-m1", label: "MiniMax-M1 🤗", encoding: "huggingface", hub: "MiniMaxAI/MiniMax-M1" },
+    { value: "minimax-m1-40k", label: "MiniMax-M1-40k 🤗", encoding: "huggingface", hub: "MiniMaxAI/MiniMax-M1-40k" },
 ]
 
 export default function TokenCounter({ language, defaultModel, preferredCompany, restrictToCompany }: TokenCounterProps) {
@@ -161,6 +179,10 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
             } else if (company === 'alibaba' && (modelValue.startsWith('qwen') || modelValue.startsWith('qwq'))) {
                 isPreferred = true
             } else if (company === 'mistral' && (modelValue.startsWith('mistral') || modelValue.startsWith('codestral'))) {
+                isPreferred = true
+            } else if (company === 'moonshot' && modelValue.startsWith('kimi')) {
+                isPreferred = true
+            } else if (company === 'minimax' && modelValue.startsWith('minimax')) {
                 isPreferred = true
             }
 
@@ -430,6 +452,14 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
                                             {
                                                 name: tc('modelGroups.qwen'),
                                                 filter: (m: ModelInfo) => m.value.startsWith('qwen')
+                                            },
+                                            {
+                                                name: tc('modelGroups.kimi'),
+                                                filter: (m: ModelInfo) => m.value.startsWith('kimi')
+                                            },
+                                            {
+                                                name: tc('modelGroups.minimax'),
+                                                filter: (m: ModelInfo) => m.value.startsWith('minimax')
                                             }
                                         ];
 

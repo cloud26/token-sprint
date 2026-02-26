@@ -50,7 +50,9 @@
           "glm": "GLM Series (🤗)",
           "mistral": "Mistral Series (🤗)",
           "gemini": "Google Gemini Series (Estimation)",
-          "qwen": "Qwen Series (🤗)"
+          "qwen": "Qwen Series (🤗)",
+          "kimi": "Moonshot Kimi Series (🤗)",
+          "minimax": "MiniMax Series (🤗)"
         }
       },
       "optimizationTipsFor": "Optimization Tips for {model}",
@@ -356,6 +358,26 @@
           "versions": "Qwen3, Qwen2.5",
           "features": "Online token estimator with multilingual support and cost optimization.",
           "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        },
+        "moonshot-kimi": {
+          "company": "Moonshot AI",
+          "displayName": "Kimi",
+          "keywordName": "kimi",
+          "titleSuffix": "",
+          "accuracyNote": "Approximate token counting for Kimi models using Hugging Face tokenizer.",
+          "versions": "Kimi K2, Kimi K2.5",
+          "features": "Online token estimator with 256K context support and cost estimation.",
+          "representativeModels": "Kimi K2, Kimi K2 Instruct, Kimi K2.5"
+        },
+        "minimax": {
+          "company": "MiniMax",
+          "displayName": "MiniMax",
+          "keywordName": "minimax",
+          "titleSuffix": "",
+          "accuracyNote": "Approximate token counting for MiniMax models using Hugging Face tokenizer.",
+          "versions": "MiniMax-Text-01, MiniMax-M1",
+          "features": "Online token estimator with 1M context support and reasoning capabilities.",
+          "representativeModels": "MiniMax-Text-01, MiniMax-M1, MiniMax-M1-40k"
         }
       }
     }
