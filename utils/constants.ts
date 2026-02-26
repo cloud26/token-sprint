@@ -1765,46 +1765,6 @@ export const MODELS: ModelInfo[] = [
     category: "原始模型",
   },
 
-  // 其他开源模型 (可私有化部署)
-  {
-    name: "ChatGLM-6B",
-    parameters: "6B",
-    parametersNum: 6,
-    value: "chatglm-6b",
-    d_model: 4096,
-    n_layers: 28,
-    n_kv_heads: 32,
-    d_head: 128,
-    source: "Estimated for 6B model",
-    series: "ChatGLM",
-    category: "原始模型",
-  },
-  {
-    name: "Baichuan2-13B",
-    parameters: "13B",
-    parametersNum: 13,
-    value: "baichuan2-13b",
-    d_model: 5120,
-    n_layers: 40,
-    n_kv_heads: 40,
-    d_head: 128,
-    source: "Estimated based on 13B architecture",
-    series: "Baichuan 2",
-    category: "原始模型",
-  },
-  {
-    name: "Baichuan2-7B",
-    parameters: "7B",
-    parametersNum: 7,
-    value: "baichuan2-7b",
-    d_model: 4096,
-    n_layers: 32,
-    n_kv_heads: 32,
-    d_head: 128,
-    source: "Estimated based on 7B architecture",
-    series: "Baichuan 2",
-    category: "原始模型",
-  },
   {
     name: "Qwen3-0.6B",
     parameters: "0.6B",
@@ -1952,36 +1912,6 @@ export const MODELS: ModelInfo[] = [
     source: "Google Gemma 2 series",
     verificationUrl: "https://huggingface.co/google/gemma-2-2b",
     series: "Gemma",
-    category: "原始模型",
-  },
-
-  // Yi 系列 (01.AI开源)
-  {
-    name: "Yi-34B",
-    parameters: "34B",
-    parametersNum: 34,
-    value: "yi-34b",
-    d_model: 7168,
-    n_layers: 60,
-    n_kv_heads: 8,
-    d_head: 128,
-    source: "01.AI Yi series - bilingual model",
-    verificationUrl: "https://huggingface.co/01-ai/Yi-34B",
-    series: "Yi",
-    category: "原始模型",
-  },
-  {
-    name: "Yi-6B",
-    parameters: "6B",
-    parametersNum: 6,
-    value: "yi-6b",
-    d_model: 4096,
-    n_layers: 32,
-    n_kv_heads: 4,
-    d_head: 128,
-    source: "01.AI Yi series - bilingual model",
-    verificationUrl: "https://huggingface.co/01-ai/Yi-6B",
-    series: "Yi",
     category: "原始模型",
   },
 
@@ -2328,30 +2258,32 @@ export const getModelsByGroup = () => {
     groups[groupKey].push(model);
   });
 
-  // 按系列名称排序，优先显示热门系列
+  // 按系列名称排序，优先显示最新发布的系列
   const seriesOrder = [
-    "DeepSeek",
-    "GPT-OSS",
+    // 2026 年发布
     "Kimi K2.5",
     "GLM-5",
     "MiniMax M2.5",
-    "Llama 4",
-    "Llama 3.2",
-    "Llama 3.1",
-    "Llama 3",
+    "Qwen 3.5",
     "Qwen 3-Next",
+    // 2025 年发布
+    "GPT-OSS",
+    "GLM-4.5",
     "Qwen 3",
-    "Qwen 2.5",
-    "Qwen 2",
+    "Llama 4",
+    "DeepSeek",
+    // 2024 年及更早
     "Qwen QwQ",
+    "Llama 3.2",
+    "Qwen 2.5",
+    "Llama 3.1",
+    "Qwen 2",
+    "Llama 3",
+    "Gemma",
     "Mixtral",
     "Mistral",
-    "Gemma",
-    "Yi",
     "Phi",
     "CodeLlama",
-    "ChatGLM",
-    "Baichuan 2",
   ];
 
   const sortedGroups: Record<string, ModelInfo[]> = {};
