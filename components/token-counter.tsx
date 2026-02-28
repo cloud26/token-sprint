@@ -176,6 +176,10 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
                 isPreferred = true
             } else if (company === 'minimax' && modelValue.startsWith('minimax')) {
                 isPreferred = true
+            } else if (company === 'zhipu' && modelValue.startsWith('glm')) {
+                isPreferred = true
+            } else if (company === 'moonshot' && modelValue.startsWith('kimi')) {
+                isPreferred = true
             }
 
             if (isPreferred) {

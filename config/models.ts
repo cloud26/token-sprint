@@ -90,6 +90,18 @@ export const tokenCounterModels: TokenCounterModel[] = [
         name: 'MiniMax',
         company: 'MiniMax',
         defaultModel: 'minimax-m2.5'
+    },
+    {
+        slug: 'zhipu-glm',
+        name: 'Zhipu GLM',
+        company: 'Zhipu',
+        defaultModel: 'glm-4.5'
+    },
+    {
+        slug: 'moonshot-kimi',
+        name: 'Moonshot Kimi',
+        company: 'Moonshot',
+        defaultModel: 'kimi-k2.5'
     }
 ]
 

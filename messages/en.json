@@ -365,6 +365,26 @@
           "versions": "MiniMax-M2.5",
           "features": "Online token estimator with Hugging Face tokenizer, MoE model support.",
           "representativeModels": "MiniMax-M2.5"
+        },
+        "zhipu-glm": {
+          "company": "Zhipu AI",
+          "displayName": "GLM-4.5",
+          "keywordName": "glm",
+          "titleSuffix": "",
+          "accuracyNote": "Accurate token counting for GLM models using the official Hugging Face tokenizer.",
+          "versions": "GLM-5, GLM-4.5, GLM-4.5-Air",
+          "features": "Online token estimator with Hugging Face tokenizer, MoE model support.",
+          "representativeModels": "GLM-4.5, GLM-5"
+        },
+        "moonshot-kimi": {
+          "company": "Moonshot AI",
+          "displayName": "Kimi-K2.5",
+          "keywordName": "kimi",
+          "titleSuffix": "",
+          "accuracyNote": "Accurate token counting for Kimi models using the official Hugging Face tokenizer.",
+          "versions": "Kimi-K2.5",
+          "features": "Online token estimator with Hugging Face tokenizer.",
+          "representativeModels": "Kimi-K2.5"
         }
       }
     }
