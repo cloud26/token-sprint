@@ -174,6 +174,8 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
                 isPreferred = true
             } else if (company === 'mistral' && (modelValue.startsWith('mistral') || modelValue.startsWith('codestral'))) {
                 isPreferred = true
+            } else if (company === 'minimax' && modelValue.startsWith('minimax')) {
+                isPreferred = true
             }
 
             if (isPreferred) {

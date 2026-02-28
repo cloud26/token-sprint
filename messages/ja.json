@@ -355,6 +355,16 @@
           "versions": "Qwen3、Qwen2.5",
           "features": "多言語サポートとコスト最適化機能付きオンライントークン推定器。",
           "representativeModels": "Qwen3-Chat、Qwen2.5-Coder"
+        },
+        "minimax-m25": {
+          "company": "MiniMax",
+          "displayName": "MiniMax",
+          "keywordName": "minimax",
+          "titleSuffix": "",
+          "accuracyNote": "公式Hugging FaceトークナイザーによるMiniMax-M2.5の正確なトークンカウント。",
+          "versions": "MiniMax-M2.5",
+          "features": "MiniMax-M2.5用の公式Hugging Faceトークナイザーによるオンライントークンカウンター。",
+          "representativeModels": "MiniMax-M2.5"
         }
       }
     }

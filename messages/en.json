@@ -355,6 +355,16 @@
           "versions": "Qwen3, Qwen2.5",
           "features": "Online token estimator with multilingual support and cost optimization.",
           "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        },
+        "minimax-m25": {
+          "company": "MiniMax",
+          "displayName": "MiniMax",
+          "keywordName": "minimax",
+          "titleSuffix": "",
+          "accuracyNote": "Accurate token counting for MiniMax-M2.5 using the official Hugging Face tokenizer.",
+          "versions": "MiniMax-M2.5",
+          "features": "Online token counter with official Hugging Face tokenizer for MiniMax-M2.5.",
+          "representativeModels": "MiniMax-M2.5"
         }
       }
     }
