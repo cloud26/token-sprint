@@ -350,7 +350,7 @@
           "features": "多语言在线token估算器，成本优化。",
           "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
         },
-        "minimax-m2.5": {
+        "minimax": {
           "company": "MiniMax",
           "displayName": "MiniMax-M2.5",
           "keywordName": "minimax",

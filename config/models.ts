@@ -86,8 +86,8 @@ export const tokenCounterModels: TokenCounterModel[] = [
         defaultModel: 'qwen3-chat'
     },
     {
-        slug: 'minimax-m2.5',
-        name: 'MiniMax-M2.5',
+        slug: 'minimax',
+        name: 'MiniMax',
         company: 'MiniMax',
         defaultModel: 'minimax-m2.5'
     }

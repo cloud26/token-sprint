@@ -356,7 +356,7 @@
           "features": "多言語サポートとコスト最適化機能付きオンライントークン推定器。",
           "representativeModels": "Qwen3-Chat、Qwen2.5-Coder"
         },
-        "minimax-m2.5": {
+        "minimax": {
           "company": "MiniMax",
           "displayName": "MiniMax-M2.5",
           "keywordName": "minimax",

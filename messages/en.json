@@ -356,7 +356,7 @@
           "features": "Online token estimator with multilingual support and cost optimization.",
           "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
         },
-        "minimax-m2.5": {
+        "minimax": {
           "company": "MiniMax",
           "displayName": "MiniMax-M2.5",
           "keywordName": "minimax",
