@@ -354,6 +354,36 @@
           "versions": "Qwen3, Qwen2.5",
           "features": "Online-Token-Schätzer mit mehrsprachiger Unterstützung und Kostenoptimierung.",
           "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        },
+        "minimax": {
+          "company": "MiniMax",
+          "displayName": "MiniMax-M2.5",
+          "keywordName": "minimax",
+          "titleSuffix": "",
+          "accuracyNote": "Genaue Token-Zählung für MiniMax-M2.5 mit dem offiziellen Hugging Face Tokenizer.",
+          "versions": "MiniMax-M2.5",
+          "features": "Online-Token-Schätzer mit Hugging Face Tokenizer und MoE-Modellunterstützung.",
+          "representativeModels": "MiniMax-M2.5"
+        },
+        "zhipu-glm": {
+          "company": "Zhipu AI",
+          "displayName": "GLM-4.5",
+          "keywordName": "glm",
+          "titleSuffix": "",
+          "accuracyNote": "Genaue Token-Zählung für GLM-Modelle mit dem offiziellen Hugging Face Tokenizer.",
+          "versions": "GLM-5, GLM-4.5, GLM-4.5-Air",
+          "features": "Online-Token-Schätzer mit Hugging Face Tokenizer und MoE-Modellunterstützung.",
+          "representativeModels": "GLM-4.5, GLM-5"
+        },
+        "moonshot-kimi": {
+          "company": "Moonshot AI",
+          "displayName": "Kimi-K2.5",
+          "keywordName": "kimi",
+          "titleSuffix": "",
+          "accuracyNote": "Genaue Token-Zählung für Kimi-Modelle mit dem offiziellen Hugging Face Tokenizer.",
+          "versions": "Kimi-K2.5",
+          "features": "Online-Token-Schätzer mit Hugging Face Tokenizer.",
+          "representativeModels": "Kimi-K2.5"
         }
       }
     }

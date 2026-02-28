@@ -355,6 +355,36 @@
           "versions": "Qwen3, Qwen2.5",
           "features": "Онлайн оценщик токенов с многоязычной поддержкой и оптимизацией затрат.",
           "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        },
+        "minimax": {
+          "company": "MiniMax",
+          "displayName": "MiniMax-M2.5",
+          "keywordName": "minimax",
+          "titleSuffix": "",
+          "accuracyNote": "Точный подсчёт токенов для MiniMax-M2.5 с использованием официального токенизатора Hugging Face.",
+          "versions": "MiniMax-M2.5",
+          "features": "Онлайн оценщик токенов с токенизатором Hugging Face и поддержкой MoE моделей.",
+          "representativeModels": "MiniMax-M2.5"
+        },
+        "zhipu-glm": {
+          "company": "Zhipu AI",
+          "displayName": "GLM-4.5",
+          "keywordName": "glm",
+          "titleSuffix": "",
+          "accuracyNote": "Точный подсчёт токенов для моделей GLM с использованием официального токенизатора Hugging Face.",
+          "versions": "GLM-5, GLM-4.5, GLM-4.5-Air",
+          "features": "Онлайн оценщик токенов с токенизатором Hugging Face и поддержкой MoE моделей.",
+          "representativeModels": "GLM-4.5, GLM-5"
+        },
+        "moonshot-kimi": {
+          "company": "Moonshot AI",
+          "displayName": "Kimi-K2.5",
+          "keywordName": "kimi",
+          "titleSuffix": "",
+          "accuracyNote": "Точный подсчёт токенов для моделей Kimi с использованием официального токенизатора Hugging Face.",
+          "versions": "Kimi-K2.5",
+          "features": "Онлайн оценщик токенов с токенизатором Hugging Face.",
+          "representativeModels": "Kimi-K2.5"
         }
       }
     }

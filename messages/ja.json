@@ -355,6 +355,36 @@
           "versions": "Qwen3、Qwen2.5",
           "features": "多言語サポートとコスト最適化機能付きオンライントークン推定器。",
           "representativeModels": "Qwen3-Chat、Qwen2.5-Coder"
+        },
+        "minimax": {
+          "company": "MiniMax",
+          "displayName": "MiniMax-M2.5",
+          "keywordName": "minimax",
+          "titleSuffix": "",
+          "accuracyNote": "公式Hugging Faceトークナイザーを使用したMiniMax-M2.5の正確なトークンカウント。",
+          "versions": "MiniMax-M2.5",
+          "features": "Hugging Faceトークナイザー対応のオンライントークン推定器、MoEモデルサポート。",
+          "representativeModels": "MiniMax-M2.5"
+        },
+        "zhipu-glm": {
+          "company": "Zhipu AI",
+          "displayName": "GLM-4.5",
+          "keywordName": "glm",
+          "titleSuffix": "",
+          "accuracyNote": "公式Hugging FaceトークナイザーによるGLMモデルの正確なトークンカウント。",
+          "versions": "GLM-5、GLM-4.5、GLM-4.5-Air",
+          "features": "Hugging Faceトークナイザー対応のオンライントークン推定器、MoEモデルサポート。",
+          "representativeModels": "GLM-4.5、GLM-5"
+        },
+        "moonshot-kimi": {
+          "company": "Moonshot AI",
+          "displayName": "Kimi-K2.5",
+          "keywordName": "kimi",
+          "titleSuffix": "",
+          "accuracyNote": "公式Hugging FaceトークナイザーによるKimiモデルの正確なトークンカウント。",
+          "versions": "Kimi-K2.5",
+          "features": "Hugging Faceトークナイザー対応のオンライントークン推定器。",
+          "representativeModels": "Kimi-K2.5"
         }
       }
     }

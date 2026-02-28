@@ -349,6 +349,33 @@
           "versions": "Qwen3、Qwen2.5",
           "features": "多语言在线token估算器，成本优化。",
           "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        },
+        "minimax": {
+          "company": "MiniMax",
+          "displayName": "MiniMax-M2.5",
+          "keywordName": "minimax",
+          "accuracyNote": "使用官方Hugging Face分词器为MiniMax-M2.5提供精确的token计数。",
+          "versions": "MiniMax-M2.5",
+          "features": "在线token估算器，支持Hugging Face分词器和MoE模型。",
+          "representativeModels": "MiniMax-M2.5"
+        },
+        "zhipu-glm": {
+          "company": "智谱AI",
+          "displayName": "GLM-4.5",
+          "keywordName": "glm",
+          "accuracyNote": "使用官方Hugging Face分词器为GLM模型提供精确的token计数。",
+          "versions": "GLM-5、GLM-4.5、GLM-4.5-Air",
+          "features": "在线token估算器，支持Hugging Face分词器和MoE模型。",
+          "representativeModels": "GLM-4.5、GLM-5"
+        },
+        "moonshot-kimi": {
+          "company": "Moonshot AI",
+          "displayName": "Kimi-K2.5",
+          "keywordName": "kimi",
+          "accuracyNote": "使用官方Hugging Face分词器为Kimi模型提供精确的token计数。",
+          "versions": "Kimi-K2.5",
+          "features": "在线token估算器，支持Hugging Face分词器。",
+          "representativeModels": "Kimi-K2.5"
         }
       }
     }
