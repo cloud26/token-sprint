@@ -355,6 +355,16 @@
           "versions": "Qwen3, Qwen2.5",
           "features": "Онлайн оценщик токенов с многоязычной поддержкой и оптимизацией затрат.",
           "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        },
+        "minimax-m2.5": {
+          "company": "MiniMax",
+          "displayName": "MiniMax-M2.5",
+          "keywordName": "minimax",
+          "titleSuffix": "",
+          "accuracyNote": "Точный подсчёт токенов для MiniMax-M2.5 с использованием официального токенизатора Hugging Face.",
+          "versions": "MiniMax-M2.5",
+          "features": "Онлайн оценщик токенов с токенизатором Hugging Face и поддержкой MoE моделей.",
+          "representativeModels": "MiniMax-M2.5"
         }
       }
     }

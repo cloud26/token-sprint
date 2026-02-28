@@ -354,6 +354,16 @@
           "versions": "Qwen3, Qwen2.5",
           "features": "Online-Token-Schätzer mit mehrsprachiger Unterstützung und Kostenoptimierung.",
           "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        },
+        "minimax-m2.5": {
+          "company": "MiniMax",
+          "displayName": "MiniMax-M2.5",
+          "keywordName": "minimax",
+          "titleSuffix": "",
+          "accuracyNote": "Genaue Token-Zählung für MiniMax-M2.5 mit dem offiziellen Hugging Face Tokenizer.",
+          "versions": "MiniMax-M2.5",
+          "features": "Online-Token-Schätzer mit Hugging Face Tokenizer und MoE-Modellunterstützung.",
+          "representativeModels": "MiniMax-M2.5"
         }
       }
     }

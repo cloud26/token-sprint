@@ -349,6 +349,15 @@
           "versions": "Qwen3、Qwen2.5",
           "features": "多语言在线token估算器，成本优化。",
           "representativeModels": "Qwen3-Chat, Qwen2.5-Coder"
+        },
+        "minimax-m2.5": {
+          "company": "MiniMax",
+          "displayName": "MiniMax-M2.5",
+          "keywordName": "minimax",
+          "accuracyNote": "使用官方Hugging Face分词器为MiniMax-M2.5提供精确的token计数。",
+          "versions": "MiniMax-M2.5",
+          "features": "在线token估算器，支持Hugging Face分词器和MoE模型。",
+          "representativeModels": "MiniMax-M2.5"
         }
       }
     }
