@@ -1,11 +1,20 @@
 // 精度配置
 export const precisions = [
-  { name: "FP32", value: "FP32" },
-  { name: "FP16", value: "FP16" },
-  { name: "FP8", value: "FP8" },
-  { name: "MXFP4", value: "MXFP4" },
-  { name: "INT8", value: "INT8" },
-  { name: "INT4", value: "INT4" },
+  { name: "FP32", value: "FP32", group: "standard" },
+  { name: "FP16", value: "FP16", group: "standard" },
+  { name: "FP8", value: "FP8", group: "standard" },
+  { name: "MXFP4", value: "MXFP4", group: "standard" },
+  { name: "INT8", value: "INT8", group: "standard" },
+  { name: "INT4", value: "INT4", group: "standard" },
+  // GGUF 量化格式 (llama.cpp)
+  { name: "GGUF Q8_0", value: "GGUF_Q8_0", group: "gguf" },
+  { name: "GGUF Q6_K", value: "GGUF_Q6_K", group: "gguf" },
+  { name: "GGUF Q5_K_M", value: "GGUF_Q5_K_M", group: "gguf" },
+  { name: "GGUF Q4_K_M", value: "GGUF_Q4_K_M", group: "gguf" },
+  { name: "GGUF Q4_K_S", value: "GGUF_Q4_K_S", group: "gguf" },
+  { name: "GGUF Q4_0", value: "GGUF_Q4_0", group: "gguf" },
+  { name: "GGUF Q3_K_M", value: "GGUF_Q3_K_M", group: "gguf" },
+  { name: "GGUF Q2_K", value: "GGUF_Q2_K", group: "gguf" },
 ];
 
 // GPU数据结构接口
@@ -2223,6 +2232,15 @@ export const PRECISION_MULTIPLIERS: Record<string, number> = {
   INT4: 4.0, // 4位整数，4倍性能提升
   INT2: 8.0, // 2位整数，8倍性能提升
   INT1: 16.0, // 1位整数，16倍性能提升
+  // GGUF 量化格式 (llama.cpp) - 基于内存带宽节省估算
+  GGUF_Q8_0: 2.0, // ~8.5 bpw（内存带宽节省约1.9x，注意内存占用比INT8略高）
+  GGUF_Q6_K: 2.4, // ~6.57 bpw
+  GGUF_Q5_K_M: 2.8, // ~5.68 bpw
+  GGUF_Q4_K_M: 3.3, // ~4.85 bpw，最常用
+  GGUF_Q4_K_S: 3.7, // ~4.37 bpw
+  GGUF_Q4_0: 3.5, // ~4.55 bpw（旧格式）
+  GGUF_Q3_K_M: 4.8, // ~3.35 bpw
+  GGUF_Q2_K: 6.0, // ~2.63 bpw，最高压缩率
 };
 
 // 精度对内存的影响（每个参数占用字节数）
@@ -2236,6 +2254,15 @@ export const PRECISION_BYTES: Record<string, number> = {
   INT4: 0.5, // 4位 = 0.5字节
   INT2: 0.25, // 2位 = 0.25字节
   INT1: 0.125, // 1位 = 0.125字节
+  // GGUF 量化格式 (llama.cpp) - 基于实际 bits-per-weight 计算：bpw / 8
+  GGUF_Q8_0: 1.0625, // ~8.5 bpw (8 bits/weight + 4-bit scale per 32 weights)
+  GGUF_Q6_K: 0.8213, // ~6.57 bpw (k-quant混合量化)
+  GGUF_Q5_K_M: 0.71, // ~5.68 bpw (k-quant混合量化)
+  GGUF_Q4_K_M: 0.6063, // ~4.85 bpw（最常用，quality/size最佳平衡）
+  GGUF_Q4_K_S: 0.5463, // ~4.37 bpw（Q4_K小版本）
+  GGUF_Q4_0: 0.5688, // ~4.55 bpw（旧格式，不推荐新部署）
+  GGUF_Q3_K_M: 0.4188, // ~3.35 bpw (k-quant混合量化)
+  GGUF_Q2_K: 0.3288, // ~2.63 bpw（最高压缩率，质量损失最大）
 };
 
 // 创建GPU性能查找映射（向后兼容）
