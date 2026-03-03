@@ -411,7 +411,7 @@
     },
     "precision": {
       "label": "精度",
-      "tooltip": "異なる精度はメモリ使用量に影響：FP32（最高）、FP16、FP8、MXFP4（GPT-OSSネイティブ）、INT8、INT4（最低）"
+      "tooltip": "異なる精度はメモリ使用量に影響：FP32（最高）、FP16、FP8、MXFP4（GPT-OSSネイティブ）、INT8、INT4（最低）。GGUF量化形式（Q4_K_M）はllama.cpp向けに最適化され、品質とサイズの優れたバランスを提供します。"
     },
     "concurrency": {
       "label": "同時ユーザー数",
