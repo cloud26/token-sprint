@@ -5,7 +5,7 @@ import { Check, ChevronsUpDown, InfoIcon, ChevronDown, ChevronRight, Share2 } fr
 import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { calculateInferenceMemory } from "@/utils/calculations"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip"
 import { precisions, gpuModels, MODELS, getModelsByGroup } from "@/utils/constants"
@@ -165,6 +165,10 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
 
     // 获取选中模型的value用于精确匹配
     const selectedModelValue = sortedModelExamples.find(m => m.name === selectedModel)?.value
+
+    // 缓存按分组过滤的精度列表
+    const standardPrecisions = React.useMemo(() => precisions.filter(p => p.group === 'standard'), [])
+    const ggufPrecisions = React.useMemo(() => precisions.filter(p => p.group === 'gguf'), [])
 
     const memory = React.useMemo(() => {
         return calculateInferenceMemory(
@@ -507,11 +511,23 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {precisions.map((p) => (
-                                        <SelectItem key={p.value} value={p.value}>
-                                            {p.name}
-                                        </SelectItem>
-                                    ))}
+                                    <SelectGroup>
+                                        <SelectLabel className="text-xs">{t('precision.groupStandard')}</SelectLabel>
+                                        {standardPrecisions.map((p) => (
+                                            <SelectItem key={p.value} value={p.value}>
+                                                {p.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                    <SelectSeparator />
+                                    <SelectGroup>
+                                        <SelectLabel className="text-xs">{t('precision.groupGguf')}</SelectLabel>
+                                        {ggufPrecisions.map((p) => (
+                                            <SelectItem key={p.value} value={p.value}>
+                                                {p.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
                                 </SelectContent>
                             </Select>
                         </div>

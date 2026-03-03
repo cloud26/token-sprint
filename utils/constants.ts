@@ -1,11 +1,13 @@
 // 精度配置
 export const precisions = [
-  { name: "FP32", value: "FP32" },
-  { name: "FP16", value: "FP16" },
-  { name: "FP8", value: "FP8" },
-  { name: "MXFP4", value: "MXFP4" },
-  { name: "INT8", value: "INT8" },
-  { name: "INT4", value: "INT4" },
+  { name: "FP32", value: "FP32", group: "standard" },
+  { name: "FP16", value: "FP16", group: "standard" },
+  { name: "FP8", value: "FP8", group: "standard" },
+  { name: "MXFP4", value: "MXFP4", group: "standard" },
+  { name: "INT8", value: "INT8", group: "standard" },
+  { name: "INT4", value: "INT4", group: "standard" },
+  // GGUF 量化格式 (llama.cpp)
+  { name: "GGUF Q4_K_M", value: "GGUF_Q4_K_M", group: "gguf" },
 ];
 
 // GPU数据结构接口
@@ -2223,6 +2225,8 @@ export const PRECISION_MULTIPLIERS: Record<string, number> = {
   INT4: 4.0, // 4位整数，4倍性能提升
   INT2: 8.0, // 2位整数，8倍性能提升
   INT1: 16.0, // 1位整数，16倍性能提升
+  // GGUF 量化格式 (llama.cpp) - 基于内存带宽节省估算
+  GGUF_Q4_K_M: 3.3, // ~4.85 bpw，最常用
 };
 
 // 精度对内存的影响（每个参数占用字节数）
@@ -2236,6 +2240,8 @@ export const PRECISION_BYTES: Record<string, number> = {
   INT4: 0.5, // 4位 = 0.5字节
   INT2: 0.25, // 2位 = 0.25字节
   INT1: 0.125, // 1位 = 0.125字节
+  // GGUF 量化格式 (llama.cpp) - 基于实际 bits-per-weight 计算：bpw / 8
+  GGUF_Q4_K_M: 0.6063, // ~4.85 bpw（最常用，quality/size最佳平衡）
 };
 
 // 创建GPU性能查找映射（向后兼容）

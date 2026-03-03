@@ -158,6 +158,7 @@ function calcKvCacheSizePerToken(n_layers: number, d_model: number, precision: s
   } else if (precision === "FP32") {
     kvCacheBytes = 4 // FP32模型
   }
+  // GGUF量化模型 (llama.cpp): KV Cache默认使用FP16（2字节），保持默认值
 
   // 计算有效的KV维度
   // GQA/MQA: kv_dim = n_kv_heads * d_head (远小于 d_model = n_heads * d_head)
