@@ -6,6 +6,19 @@ export const precisions = [
   { name: "MXFP4", value: "MXFP4" },
   { name: "INT8", value: "INT8" },
   { name: "INT4", value: "INT4" },
+  // GGUF quantization formats (llama.cpp)
+  { name: "Q2_K (GGUF)", value: "Q2_K" },
+  { name: "Q3_K_S (GGUF)", value: "Q3_K_S" },
+  { name: "Q3_K_M (GGUF)", value: "Q3_K_M" },
+  { name: "Q3_K_L (GGUF)", value: "Q3_K_L" },
+  { name: "Q4_0 (GGUF)", value: "Q4_0" },
+  { name: "Q4_K_S (GGUF)", value: "Q4_K_S" },
+  { name: "Q4_K_M (GGUF)", value: "Q4_K_M" },
+  { name: "Q5_0 (GGUF)", value: "Q5_0" },
+  { name: "Q5_K_S (GGUF)", value: "Q5_K_S" },
+  { name: "Q5_K_M (GGUF)", value: "Q5_K_M" },
+  { name: "Q6_K (GGUF)", value: "Q6_K" },
+  { name: "Q8_0 (GGUF)", value: "Q8_0" },
 ];
 
 // GPU数据结构接口
@@ -2223,6 +2236,19 @@ export const PRECISION_MULTIPLIERS: Record<string, number> = {
   INT4: 4.0, // 4位整数，4倍性能提升
   INT2: 8.0, // 2位整数，8倍性能提升
   INT1: 16.0, // 1位整数，16倍性能提升
+  // GGUF quantization performance multipliers (based on llama.cpp benchmarks)
+  Q2_K: 6.5, // ~2.5-3 bits per weight, significant speedup
+  Q3_K_S: 5.0, // ~3.3 bits per weight
+  Q3_K_M: 4.5, // ~3.5 bits per weight
+  Q3_K_L: 4.0, // ~3.7 bits per weight
+  Q4_0: 3.5, // 4.5 bits per weight (legacy format)
+  Q4_K_S: 3.8, // ~4.5 bits per weight
+  Q4_K_M: 3.5, // ~4.75 bits per weight
+  Q5_0: 2.8, // 5.5 bits per weight (legacy format)
+  Q5_K_S: 2.9, // ~5.5 bits per weight
+  Q5_K_M: 2.7, // ~5.75 bits per weight
+  Q6_K: 2.2, // ~6.5 bits per weight
+  Q8_0: 1.8, // 8.5 bits per weight
 };
 
 // 精度对内存的影响（每个参数占用字节数）
@@ -2236,6 +2262,19 @@ export const PRECISION_BYTES: Record<string, number> = {
   INT4: 0.5, // 4位 = 0.5字节
   INT2: 0.25, // 2位 = 0.25字节
   INT1: 0.125, // 1位 = 0.125字节
+  // GGUF quantization memory requirements (bytes per parameter, based on llama.cpp)
+  Q2_K: 0.344, // ~2.75 bits per weight
+  Q3_K_S: 0.413, // ~3.3 bits per weight
+  Q3_K_M: 0.438, // ~3.5 bits per weight
+  Q3_K_L: 0.463, // ~3.7 bits per weight
+  Q4_0: 0.563, // 4.5 bits per weight (legacy format, includes metadata)
+  Q4_K_S: 0.563, // ~4.5 bits per weight
+  Q4_K_M: 0.594, // ~4.75 bits per weight
+  Q5_0: 0.688, // 5.5 bits per weight (legacy format)
+  Q5_K_S: 0.688, // ~5.5 bits per weight
+  Q5_K_M: 0.719, // ~5.75 bits per weight
+  Q6_K: 0.813, // ~6.5 bits per weight
+  Q8_0: 1.063, // 8.5 bits per weight (8-bit with metadata)
 };
 
 // 创建GPU性能查找映射（向后兼容）

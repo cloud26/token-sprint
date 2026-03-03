@@ -150,13 +150,15 @@ function calcKvCacheSizePerToken(n_layers: number, d_model: number, precision: s
 
   // 根据模型精度确定KV Cache的字节数
   // 现代推理框架通常会对KV Cache使用与模型相同或更低的精度
-  let kvCacheBytes = 2 // 默认FP16
-  if (precision === "FP8" || precision === "INT8") {
-    kvCacheBytes = 1 // FP8/INT8模型通常KV Cache也使用8位
-  } else if (precision === "MXFP4" || precision === "INT4") {
-    kvCacheBytes = 0.5 // MXFP4/INT4模型可能KV Cache使用4位或8位，取中间值
-  } else if (precision === "FP32") {
-    kvCacheBytes = 4 // FP32模型
+  // 使用 PRECISION_BYTES 来获取精度对应的字节数，支持所有精度包括 GGUF 量化
+  let kvCacheBytes = PRECISION_BYTES[precision] || 2 // 默认FP16
+
+  // 对于某些 GGUF 格式，KV Cache 可能使用稍高精度以保持质量
+  // Q2_K, Q3_K_* 系列在 KV Cache 中可能使用 Q4 或 Q8
+  if (precision.startsWith("Q2_") || precision.startsWith("Q3_")) {
+    kvCacheBytes = Math.max(kvCacheBytes, 0.5) // 至少使用 Q4 精度
+  } else if (precision.startsWith("Q4_") || precision.startsWith("Q5_")) {
+    kvCacheBytes = Math.max(kvCacheBytes, 0.688) // 至少使用 Q5 精度
   }
 
   // 计算有效的KV维度

@@ -402,7 +402,7 @@
     },
     "precision": {
       "label": "计算精度",
-      "tooltip": "不同的计算精度会影响显存使用量：FP32（最高）、FP16、FP8、MXFP4（GPT-OSS原生支持）、INT8、INT4（最低）"
+      "tooltip": "不同的计算精度会影响显存使用量：FP32（最高）、FP16、FP8、MXFP4（GPT-OSS原生支持）、INT8、INT4（最低）。GGUF量化格式（Q2_K到Q8_0）针对llama.cpp优化，在质量和大小之间提供出色的平衡。"
     },
     "concurrency": {
       "label": "并发用户数",
