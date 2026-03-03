@@ -411,7 +411,7 @@
     },
     "precision": {
       "label": "精度",
-      "tooltip": "異なる精度はメモリ使用量に影響：FP32（最高）、FP16、FP8、MXFP4（GPT-OSSネイティブ）、INT8、INT4（最低）。GGUF量子化フォーマット（Q8_0、Q6_K、Q5_K_M、Q4_K_M、Q4_K_S、Q4_0、Q3_K_M、Q2_K）はllama.cppやOllamaでのローカル推論に使用されます。",
+      "tooltip": "異なる精度はメモリ使用量に影響：FP32（最高）、FP16、FP8、MXFP4（GPT-OSSネイティブ）、INT8、INT4（最低）。GGUF量子化フォーマット（Q8_0、Q6_K、Q5_K_M、Q4_K_M）はllama.cppやOllamaでのローカル推論に使用されます。",
       "groupStandard": "標準精度",
       "groupGguf": "GGUF量子化（llama.cpp / Ollama）"
     },

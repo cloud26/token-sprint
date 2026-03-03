@@ -402,7 +402,7 @@
     },
     "precision": {
       "label": "计算精度",
-      "tooltip": "不同的计算精度会影响显存使用量：FP32（最高）、FP16、FP8、MXFP4（GPT-OSS原生支持）、INT8、INT4（最低）。GGUF量化格式（Q8_0、Q6_K、Q5_K_M、Q4_K_M、Q4_K_S、Q4_0、Q3_K_M、Q2_K）用于llama.cpp和Ollama本地推理。",
+      "tooltip": "不同的计算精度会影响显存使用量：FP32（最高）、FP16、FP8、MXFP4（GPT-OSS原生支持）、INT8、INT4（最低）。GGUF量化格式（Q8_0、Q6_K、Q5_K_M、Q4_K_M）用于llama.cpp和Ollama本地推理。",
       "groupStandard": "标准精度",
       "groupGguf": "GGUF量化（llama.cpp / Ollama）"
     },

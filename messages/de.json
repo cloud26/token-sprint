@@ -410,7 +410,7 @@
     },
     "precision": {
       "label": "Präzision",
-      "tooltip": "Verschiedene Präzisionen beeinflussen den Speicherverbrauch: FP32 (höchste), FP16, FP8, MXFP4 (GPT-OSS nativ), INT8, INT4 (niedrigste). GGUF-Quantisierungsformate (Q8_0, Q6_K, Q5_K_M, Q4_K_M, Q4_K_S, Q4_0, Q3_K_M, Q2_K) werden für lokale Inferenz mit llama.cpp und Ollama verwendet.",
+      "tooltip": "Verschiedene Präzisionen beeinflussen den Speicherverbrauch: FP32 (höchste), FP16, FP8, MXFP4 (GPT-OSS nativ), INT8, INT4 (niedrigste). GGUF-Quantisierungsformate (Q8_0, Q6_K, Q5_K_M, Q4_K_M) werden für lokale Inferenz mit llama.cpp und Ollama verwendet.",
       "groupStandard": "Standard-Präzisionen",
       "groupGguf": "GGUF-Quantisierung (llama.cpp / Ollama)"
     },

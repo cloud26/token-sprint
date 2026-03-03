@@ -11,10 +11,6 @@ export const precisions = [
   { name: "GGUF Q6_K", value: "GGUF_Q6_K", group: "gguf" },
   { name: "GGUF Q5_K_M", value: "GGUF_Q5_K_M", group: "gguf" },
   { name: "GGUF Q4_K_M", value: "GGUF_Q4_K_M", group: "gguf" },
-  { name: "GGUF Q4_K_S", value: "GGUF_Q4_K_S", group: "gguf" },
-  { name: "GGUF Q4_0", value: "GGUF_Q4_0", group: "gguf" },
-  { name: "GGUF Q3_K_M", value: "GGUF_Q3_K_M", group: "gguf" },
-  { name: "GGUF Q2_K", value: "GGUF_Q2_K", group: "gguf" },
 ];
 
 // GPU数据结构接口
@@ -2237,10 +2233,6 @@ export const PRECISION_MULTIPLIERS: Record<string, number> = {
   GGUF_Q6_K: 2.4, // ~6.57 bpw
   GGUF_Q5_K_M: 2.8, // ~5.68 bpw
   GGUF_Q4_K_M: 3.3, // ~4.85 bpw，最常用
-  GGUF_Q4_K_S: 3.7, // ~4.37 bpw
-  GGUF_Q4_0: 3.5, // ~4.55 bpw（旧格式）
-  GGUF_Q3_K_M: 4.8, // ~3.35 bpw
-  GGUF_Q2_K: 6.0, // ~2.63 bpw，最高压缩率
 };
 
 // 精度对内存的影响（每个参数占用字节数）
@@ -2259,10 +2251,6 @@ export const PRECISION_BYTES: Record<string, number> = {
   GGUF_Q6_K: 0.8213, // ~6.57 bpw (k-quant混合量化)
   GGUF_Q5_K_M: 0.71, // ~5.68 bpw (k-quant混合量化)
   GGUF_Q4_K_M: 0.6063, // ~4.85 bpw（最常用，quality/size最佳平衡）
-  GGUF_Q4_K_S: 0.5463, // ~4.37 bpw（Q4_K小版本）
-  GGUF_Q4_0: 0.5688, // ~4.55 bpw（旧格式，不推荐新部署）
-  GGUF_Q3_K_M: 0.4188, // ~3.35 bpw (k-quant混合量化)
-  GGUF_Q2_K: 0.3288, // ~2.63 bpw（最高压缩率，质量损失最大）
 };
 
 // 创建GPU性能查找映射（向后兼容）
