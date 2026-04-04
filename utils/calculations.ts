@@ -459,10 +459,13 @@ function getGpuL2CacheSize(gpuModel: string): number {
     'NVIDIA H200': 114, // 114MB L2 cache
     'NVIDIA H100': 50,  // 50MB L2 cache  
     'NVIDIA H20': 48,   // 48MB L2 cache
+    'NVIDIA H800': 50,  // 50MB L2 cache（与 H100 相同）
 
     // NVIDIA Ampere架构
     'NVIDIA A100 (80GB)': 40, // 40MB L2 cache
     'NVIDIA A100 (40GB)': 40,
+    'NVIDIA A800 (80GB)': 40, // 40MB L2 cache（与 A100 80GB 相同）
+    'NVIDIA A800 (40GB)': 40, // 40MB L2 cache（与 A100 40GB 相同）
     'NVIDIA A40': 6,
     'NVIDIA A30': 24,
     'NVIDIA A10': 6,

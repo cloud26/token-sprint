@@ -69,6 +69,15 @@ export const gpuModels: GPUModel[] = [
     category: "数据中心",
     releaseYear: 2024,
   }, // 中国特供版，96 GB HBM3，4.0 TB/s → 4000 GB/s :contentReference[oaicite:2]{index=2}
+  {
+    name: "NVIDIA H800",
+    memory: 80,
+    memoryBandwidthInGB: 3350,
+    fp16Tflops: 989,
+    architecture: "Hopper",
+    category: "数据中心",
+    releaseYear: 2023,
+  }, // 中国特供版 H100，NVLink带宽受限，80GB HBM3
   // NVIDIA Ada Lovelace架构
   {
     name: "NVIDIA L40",
@@ -314,6 +323,24 @@ export const gpuModels: GPUModel[] = [
     category: "数据中心",
     releaseYear: 2020,
   }, // TechPowerUp verified: GA100, 6912 CUDA cores, 40GB HBM2e, 1.56 TB/s
+  {
+    name: "NVIDIA A800 (80GB)",
+    memory: 80,
+    memoryBandwidthInGB: 2000,
+    fp16Tflops: 77.97,
+    architecture: "Ampere",
+    category: "数据中心",
+    releaseYear: 2022,
+  }, // 中国特供版 A100，NVLink带宽受限，80GB HBM2e，2.0 TB/s
+  {
+    name: "NVIDIA A800 (40GB)",
+    memory: 40,
+    memoryBandwidthInGB: 1560,
+    fp16Tflops: 77.97,
+    architecture: "Ampere",
+    category: "数据中心",
+    releaseYear: 2022,
+  }, // 中国特供版 A100 40GB版本
   {
     name: "NVIDIA A40",
     memory: 48,
