@@ -6,6 +6,8 @@ export const precisions = [
   { name: "MXFP4", value: "MXFP4" },
   { name: "INT8", value: "INT8" },
   { name: "INT4", value: "INT4" },
+  // GGUF quantization format (llama.cpp) - most popular and recommended
+  { name: "Q4_K_M (GGUF)", value: "Q4_K_M" },
 ];
 
 // GPU数据结构接口
@@ -2250,6 +2252,8 @@ export const PRECISION_MULTIPLIERS: Record<string, number> = {
   INT4: 4.0, // 4位整数，4倍性能提升
   INT2: 8.0, // 2位整数，8倍性能提升
   INT1: 16.0, // 1位整数，16倍性能提升
+  // GGUF quantization performance multiplier (based on llama.cpp benchmarks)
+  Q4_K_M: 3.5, // ~4.75 bits per weight (most popular, best balance)
 };
 
 // 精度对内存的影响（每个参数占用字节数）
@@ -2263,6 +2267,8 @@ export const PRECISION_BYTES: Record<string, number> = {
   INT4: 0.5, // 4位 = 0.5字节
   INT2: 0.25, // 2位 = 0.25字节
   INT1: 0.125, // 1位 = 0.125字节
+  // GGUF quantization memory requirement (bytes per parameter, based on llama.cpp)
+  Q4_K_M: 0.594, // ~4.75 bits per weight (most popular, best balance)
 };
 
 // 创建GPU性能查找映射（向后兼容）

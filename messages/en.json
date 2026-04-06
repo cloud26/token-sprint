@@ -411,7 +411,7 @@
     },
     "precision": {
       "label": "Precision",
-      "tooltip": "Different precisions affect memory usage: FP32 (highest), FP16, FP8, MXFP4 (native GPT-OSS), INT8, INT4 (lowest)"
+      "tooltip": "Different precisions affect memory usage: FP32 (highest), FP16, FP8, MXFP4 (native GPT-OSS), INT8, INT4 (lowest). GGUF quantization formats (Q2_K to Q8_0) are optimized for llama.cpp and provide excellent quality-size tradeoffs."
     },
     "concurrency": {
       "label": "Concurrent Users",
