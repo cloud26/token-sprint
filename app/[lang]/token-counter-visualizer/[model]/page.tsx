@@ -1,4 +1,4 @@
-import TokenCounter from "@/components/token-counter"
+import dynamic from "next/dynamic"
 import LanguageSwitcher from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
 import { use, Suspense } from "react"
@@ -11,6 +11,15 @@ import { getTokenCounterModelBySlug, getAllTokenCounterModelSlugs, getTokenCount
 import { notFound } from "next/navigation"
 import { getTranslations } from 'next-intl/server'
 import { useTranslations, useLocale } from 'next-intl'
+import { TokenCounterSkeleton } from "@/components/token-counter-skeleton"
+
+const TokenCounter = dynamic(
+    () => import("@/components/token-counter"),
+    {
+        loading: () => <TokenCounterSkeleton />,
+        ssr: true,
+    }
+)
 
 export async function generateStaticParams() {
     const modelSlugs = getAllTokenCounterModelSlugs()
@@ -87,7 +96,7 @@ export default function TokenCounterModelPage({
 
                     <PageContent model={model} />
 
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<TokenCounterSkeleton />}>
                         <TokenCounter
                             language={language}
                             defaultModel={defaultModelValue}

@@ -1,7 +1,7 @@
-import TokenSpeedDemo from "@/components/token-speed-demo"
+import dynamic from "next/dynamic"
 import LanguageSwitcher from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
-import { use } from "react"
+import { use, Suspense } from "react"
 import { type Language, getCanonicalUrl, generateLanguageAlternates } from "@/config/languages"
 import { Metadata } from "next"
 import { SideNav } from "@/components/side-nav"
@@ -9,6 +9,15 @@ import { Breadcrumb } from "@/components/breadcrumb"
 import { UpdateNotification } from "@/components/update-notification"
 import { getTranslations } from 'next-intl/server'
 import { useTranslations, useLocale } from 'next-intl'
+import { TokenSpeedSkeleton } from "@/components/token-speed-skeleton"
+
+const TokenSpeedDemo = dynamic(
+    () => import("@/components/token-speed-demo"),
+    {
+        loading: () => <TokenSpeedSkeleton />,
+        ssr: true,
+    }
+)
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
     const { lang } = await params
@@ -51,7 +60,9 @@ export default function TokenGenerationSpeedVisualizer({
 
                     <PageContent />
 
-                    <TokenSpeedDemo initialLanguage={language} />
+                    <Suspense fallback={<TokenSpeedSkeleton />}>
+                        <TokenSpeedDemo initialLanguage={language} />
+                    </Suspense>
 
                     <SpeedGuideSection />
                 </div>
