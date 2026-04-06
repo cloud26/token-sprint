@@ -1,4 +1,4 @@
-import dynamic from "next/dynamic"
+import TokenCounter from "@/components/token-counter"
 import LanguageSwitcher from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
 import { use, Suspense } from "react"
@@ -10,15 +10,6 @@ import { Breadcrumb } from "@/components/breadcrumb"
 import { UpdateNotification } from "@/components/update-notification"
 import { getTranslations } from 'next-intl/server'
 import { useTranslations, useLocale } from 'next-intl'
-import { TokenCounterSkeleton } from "@/components/token-counter-skeleton"
-
-const TokenCounter = dynamic(
-    () => import("@/components/token-counter"),
-    {
-        loading: () => <TokenCounterSkeleton />,
-        ssr: true,
-    }
-)
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
     const { lang } = await params
@@ -63,7 +54,7 @@ export default function TokenCounterPage({
 
                     <PageContent />
 
-                    <Suspense fallback={<TokenCounterSkeleton />}>
+                    <Suspense fallback={<div>Loading...</div>}>
                         <TokenCounter language={language} />
                     </Suspense>
 

@@ -3,7 +3,7 @@ import { Footer } from "@/components/footer"
 import { use, Suspense } from "react"
 import { type Language, getAllLanguages, getCanonicalUrl, generateLanguageAlternates } from "@/config/languages"
 import { Metadata } from "next"
-import dynamic from "next/dynamic"
+import LLMMemoryCalculator from "@/components/llm-memory-calculator"
 import { SideNav } from "@/components/side-nav"
 import { GPUSelectionGuide } from "@/components/gpu-selection-guide"
 import { Breadcrumb } from "@/components/breadcrumb"
@@ -12,15 +12,6 @@ import { getModelBySlug, getAllModelSlugs } from "@/config/models"
 import { notFound } from "next/navigation"
 import { getTranslations } from 'next-intl/server'
 import { useTranslations } from 'next-intl'
-import { CalculatorSkeleton } from "@/components/calculator-skeleton"
-
-const LLMMemoryCalculator = dynamic(
-    () => import("@/components/llm-memory-calculator"),
-    {
-        loading: () => <CalculatorSkeleton />,
-        ssr: true,
-    }
-)
 
 export async function generateStaticParams() {
     const modelSlugs = getAllModelSlugs()
@@ -107,7 +98,7 @@ export default function ModelSpecificCalculatorPage({
 
                     <PageContent model={model} />
 
-                    <Suspense fallback={<CalculatorSkeleton />}>
+                    <Suspense fallback={<div>Loading...</div>}>
                         <LLMMemoryCalculator preferredModelType={modelSlug} />
                     </Suspense>
 

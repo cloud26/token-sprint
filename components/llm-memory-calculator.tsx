@@ -15,13 +15,8 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { useTranslations, useLocale } from 'next-intl'
 import React from "react"
-import dynamic from "next/dynamic"
+import { ShareDialog } from "@/components/share-dialog"
 import { ShareCardData } from "@/components/share-card"
-
-const ShareDialog = dynamic(
-    () => import("@/components/share-dialog").then(mod => mod.ShareDialog),
-    { ssr: false }
-)
 
 interface CalculatorProps {
     preferredModelType?: string // 优先显示的模型类型，如 'deepseek', 'llama', 'qwen' 等
