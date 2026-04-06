@@ -8,7 +8,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import Script from 'next/script'
 import { ReferralTracker } from '@/components/referral-tracker'
-import { SidebarAds } from '@/components/sidebar-ads'
+import { LazySidebarAds } from '@/components/lazy-sidebar-ads'
 import { Toaster } from '@/components/ui/toaster'
 
 export default async function Layout({
@@ -34,11 +34,13 @@ export default async function Layout({
                 {/* Preconnect to critical third-party origins */}
                 <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="" />
                 <link rel="preconnect" href="https://www.googletagmanager.com" />
-                {/* Google AdSense - loaded after page is interactive to avoid blocking LCP */}
+                <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+                <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+                {/* Google AdSense - loaded after page is fully idle to avoid blocking LCP */}
                 <Script
                     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8472112646404075"
                     crossOrigin="anonymous"
-                    strategy="afterInteractive"
+                    strategy="lazyOnload"
                 />
                 <Script
                     src="https://www.googletagmanager.com/gtag/js?id=G-4Z7YE2WSXQ"
@@ -80,7 +82,7 @@ export default async function Layout({
             </head>
             <body>
                 <ReferralTracker />
-                <SidebarAds />
+                <LazySidebarAds />
                 <NextIntlClientProvider messages={messages}>
                     {children}
                     <Toaster />

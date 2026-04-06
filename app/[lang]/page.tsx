@@ -3,8 +3,12 @@ import { Metadata } from "next"
 import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import { SideNav } from "@/components/side-nav"
-import LLMMemoryCalculator from "@/components/llm-memory-calculator"
+import dynamic from 'next/dynamic'
 import LanguageSwitcher from "@/components/language-switcher"
+
+const LLMMemoryCalculator = dynamic(() => import("@/components/llm-memory-calculator"), {
+    loading: () => <CalculatorSkeleton />,
+})
 import { Footer } from "@/components/footer"
 import { GPUSelectionGuide } from "@/components/gpu-selection-guide"
 import { Breadcrumb } from "@/components/breadcrumb"
@@ -35,6 +39,17 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     }
 }
 
+function CalculatorSkeleton() {
+    return (
+        <div className="space-y-4 animate-pulse">
+            <div className="h-10 bg-muted rounded-lg" />
+            <div className="h-32 bg-muted rounded-lg" />
+            <div className="h-10 bg-muted rounded-lg" />
+            <div className="h-48 bg-muted rounded-lg" />
+        </div>
+    )
+}
+
 export default function Home({
     params,
 }: {
@@ -63,9 +78,7 @@ export default function Home({
                             {t('tools.llmGpuCalculator.description')}
                         </p>
                     </div>
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <LLMMemoryCalculator />
-                    </Suspense>
+                    <LLMMemoryCalculator />
 
                     {/* GPU Selection Guide */}
                     {/* <div className="mt-8">

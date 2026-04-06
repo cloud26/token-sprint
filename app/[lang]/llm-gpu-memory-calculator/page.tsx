@@ -3,7 +3,18 @@ import { Footer } from "@/components/footer"
 import { use, Suspense } from "react"
 import { type Language, getCanonicalUrl, generateLanguageAlternates } from "@/config/languages"
 import { Metadata } from "next"
-import LLMMemoryCalculator from "@/components/llm-memory-calculator"
+import dynamic from 'next/dynamic'
+
+const LLMMemoryCalculator = dynamic(() => import("@/components/llm-memory-calculator"), {
+    loading: () => (
+        <div className="space-y-4 animate-pulse">
+            <div className="h-10 bg-muted rounded-lg" />
+            <div className="h-32 bg-muted rounded-lg" />
+            <div className="h-10 bg-muted rounded-lg" />
+            <div className="h-48 bg-muted rounded-lg" />
+        </div>
+    ),
+})
 import { SideNav } from "@/components/side-nav"
 import { GPUSelectionGuide } from "@/components/gpu-selection-guide"
 import { Breadcrumb } from "@/components/breadcrumb"

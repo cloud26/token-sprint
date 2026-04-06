@@ -1,7 +1,17 @@
-import TokenCounter from "@/components/token-counter"
+import dynamic from 'next/dynamic'
 import LanguageSwitcher from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
 import { use, Suspense } from "react"
+
+const TokenCounter = dynamic(() => import("@/components/token-counter"), {
+    loading: () => (
+        <div className="space-y-4 animate-pulse">
+            <div className="h-32 bg-muted rounded-lg" />
+            <div className="h-10 bg-muted rounded-lg" />
+            <div className="h-48 bg-muted rounded-lg" />
+        </div>
+    ),
+})
 import { type Language, getAllLanguages, getCanonicalUrl, generateLanguageAlternates } from "@/config/languages"
 import { Metadata } from "next"
 import { SideNav } from "@/components/side-nav"

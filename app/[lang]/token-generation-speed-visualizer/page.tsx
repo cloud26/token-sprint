@@ -1,7 +1,21 @@
-import TokenSpeedDemo from "@/components/token-speed-demo"
+import dynamic from 'next/dynamic'
 import LanguageSwitcher from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
-import { use } from "react"
+import { use, Suspense } from "react"
+
+const TokenSpeedDemo = dynamic(() => import("@/components/token-speed-demo"), {
+    loading: () => <SpeedDemoSkeleton />,
+})
+
+function SpeedDemoSkeleton() {
+    return (
+        <div className="space-y-4 animate-pulse">
+            <div className="h-10 bg-muted rounded-lg" />
+            <div className="h-24 bg-muted rounded-lg" />
+            <div className="h-40 bg-muted rounded-lg" />
+        </div>
+    )
+}
 import { type Language, getCanonicalUrl, generateLanguageAlternates } from "@/config/languages"
 import { Metadata } from "next"
 import { SideNav } from "@/components/side-nav"
