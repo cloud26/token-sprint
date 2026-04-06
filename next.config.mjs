@@ -15,7 +15,16 @@ const nextConfig = {
   },
   // 核心性能优化
   experimental: {
-    optimizePackageImports: ['lucide-react'],
+    optimizePackageImports: [
+      'lucide-react',
+      '@radix-ui/react-popover',
+      '@radix-ui/react-tooltip',
+      '@radix-ui/react-select',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-accordion',
+      'date-fns',
+      'recharts',
+    ],
   },
   // 压缩配置 - 核心优化
   compress: true,
