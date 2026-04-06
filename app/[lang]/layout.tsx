@@ -32,15 +32,13 @@ export default async function Layout({
             <head>
                 <meta name="google-adsense-account" content="ca-pub-8472112646404075" />
                 {/* Preconnect to critical third-party origins */}
-                <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+                <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="" />
                 <link rel="preconnect" href="https://www.googletagmanager.com" />
-                <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
-                <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
                 {/* Google AdSense - loaded after page is interactive to avoid blocking LCP */}
                 <Script
                     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8472112646404075"
                     crossOrigin="anonymous"
-                    strategy="lazyOnload"
+                    strategy="afterInteractive"
                 />
                 <Script
                     src="https://www.googletagmanager.com/gtag/js?id=G-4Z7YE2WSXQ"
