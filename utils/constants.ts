@@ -2113,6 +2113,40 @@ export const MODELS: ModelInfo[] = [
     category: "原始模型",
   },
 
+  // GLM-4.7 系列 (Z.ai智谱AI多语言编程与智能体模型)
+  {
+    name: "GLM-4.7",
+    parameters: "355B",
+    parametersNum: 355,
+    value: "glm-4.7",
+    d_model: 5120, // From config.json: hidden_size=5120
+    n_layers: 92, // From config.json: num_hidden_layers=92
+    n_kv_heads: 8, // From config.json: num_key_value_heads=8 (GQA)
+    d_head: 128,
+    activeParams: 32,
+    isMoE: true,
+    source: "GLM-4.7: 355B-A32B MoE model for multilingual coding and terminal workflows with interleaved thinking",
+    verificationUrl: "https://huggingface.co/zai-org/GLM-4.7",
+    series: "GLM-4.7",
+    category: "原始模型",
+  },
+  {
+    name: "GLM-4.7-Flash",
+    parameters: "30B",
+    parametersNum: 30,
+    value: "glm-4.7-flash",
+    d_model: 2048, // From config: hidden_size=2048
+    n_layers: 47, // From config: num_hidden_layers=47
+    n_kv_heads: 4, // Estimated GQA configuration for compact model
+    d_head: 128,
+    activeParams: 3,
+    isMoE: true,
+    source: "GLM-4.7-Flash: 30B-A3B lightweight MoE model (64 experts, top-4 routing) for efficient inference",
+    verificationUrl: "https://huggingface.co/zai-org/GLM-4.7-Flash",
+    series: "GLM-4.7",
+    category: "原始模型",
+  },
+
   // GLM-5 系列 (Z.ai智谱AI开源智能体模型)
   {
     name: "GLM-5",
@@ -2131,7 +2165,43 @@ export const MODELS: ModelInfo[] = [
     category: "原始模型",
   },
 
-  // Kimi-K2.5 系列 (Moonshot AI原生INT4量化多模态智能体模型)
+  // GLM-5.1 系列 (Z.ai智谱AI旗舰编程智能体模型，MLA注意力)
+  {
+    name: "GLM-5.1",
+    parameters: "744B",
+    parametersNum: 744,
+    value: "glm-5.1",
+    d_model: 6144, // From config: hidden_size=6144
+    n_layers: 78, // From config: num_hidden_layers=78
+    n_kv_heads: 1, // MLA (Multi-head Latent Attention) with compressed KV cache
+    d_head: 512, // kv_lora_rank=512 for KV cache compression
+    activeParams: 40,
+    isMoE: true,
+    source: "GLM-5.1: 744B-A40B MoE model with MLA + DeepSeek Sparse Attention; #1 on SWE-Bench Pro; uses kv_lora_rank=512 for KV compression",
+    verificationUrl: "https://huggingface.co/zai-org/GLM-5.1",
+    series: "GLM-5.1",
+    category: "原始模型",
+  },
+
+  // Kimi K2 系列 (Moonshot AI万亿参数MoE智能体模型)
+  {
+    name: "Kimi-K2",
+    parameters: "1T",
+    parametersNum: 1000,
+    value: "kimi-k2",
+    d_model: 7168, // From official model card: Attention Hidden Dimension = 7168
+    n_layers: 61, // From official model card: Number of Layers = 61
+    n_kv_heads: 1, // MLA (Multi-head Latent Attention) stores compressed KV latent per token
+    d_head: 512, // MLA compressed latent dimension (c_kv)
+    activeParams: 32,
+    isMoE: true,
+    source: "Kimi-K2: 1T-A32B MoE model (384 experts, top-8 routing) with MLA attention and MuonClip optimizer; 128K context",
+    verificationUrl: "https://huggingface.co/moonshotai/Kimi-K2",
+    series: "Kimi K2",
+    category: "原始模型",
+  },
+
+  // Kimi K2.5 系列 (Moonshot AI原生INT4量化多模态智能体模型)
   {
     name: "Kimi-K2.5",
     parameters: "1T",
@@ -2150,6 +2220,42 @@ export const MODELS: ModelInfo[] = [
     defaultPrecision: "INT4",
   },
 
+  // Kimi K2.6 系列 (Moonshot AI最新编程智能体模型)
+  {
+    name: "Kimi-K2.6",
+    parameters: "1T",
+    parametersNum: 1000,
+    value: "kimi-k2.6",
+    d_model: 7168, // Same architecture as K2/K2.5
+    n_layers: 61, // Same architecture as K2/K2.5
+    n_kv_heads: 1, // MLA (Multi-head Latent Attention)
+    d_head: 512, // MLA compressed latent dimension
+    activeParams: 32,
+    isMoE: true,
+    source: "Kimi-K2.6: 1T-A32B code-optimized model with improved agent planning and tool-use reliability; 256K context; same MoE architecture as K2/K2.5",
+    verificationUrl: "https://github.com/MoonshotAI/Kimi-K2",
+    series: "Kimi K2.6",
+    category: "原始模型",
+  },
+
+  // MiniMax-M2 系列 (MiniMax AI开源MoE模型)
+  {
+    name: "MiniMax-M2",
+    parameters: "230B",
+    parametersNum: 230,
+    value: "minimax-m2",
+    d_model: 3072, // From config.json: hidden_size=3072
+    n_layers: 62, // From config.json: num_hidden_layers=62
+    n_kv_heads: 8, // From config.json: num_key_value_heads=8 (GQA)
+    d_head: 128, // From config.json: head_dim=128
+    activeParams: 10,
+    isMoE: true,
+    source: "MiniMax-M2: 230B-A10B MoE model (256 experts, top-8 routing) for coding and agentic tasks",
+    verificationUrl: "https://huggingface.co/MiniMaxAI/MiniMax-M2",
+    series: "MiniMax M2",
+    category: "原始模型",
+  },
+
   // MiniMax-M2.5 系列 (MiniMax AI高效编程智能体模型)
   {
     name: "MiniMax-M2.5",
@@ -2165,6 +2271,24 @@ export const MODELS: ModelInfo[] = [
     source: "MiniMax-M2.5: 230B-A10B MoE model (256 experts, top-8 routing) for coding and agentic tasks; architecture based on MiniMax-M2 design",
     verificationUrl: "https://huggingface.co/MiniMaxAI/MiniMax-M2.5",
     series: "MiniMax M2.5",
+    category: "原始模型",
+  },
+
+  // MiniMax-M2.7 系列 (MiniMax AI最新自进化编程智能体模型)
+  {
+    name: "MiniMax-M2.7",
+    parameters: "230B",
+    parametersNum: 230,
+    value: "minimax-m2.7",
+    d_model: 3072, // Same architecture as M2/M2.5 (hidden_size=3072)
+    n_layers: 62, // Same architecture as M2/M2.5 (num_hidden_layers=62)
+    n_kv_heads: 8, // Same architecture as M2/M2.5 (num_key_value_heads=8, GQA)
+    d_head: 128, // Same architecture as M2/M2.5 (head_dim=128)
+    activeParams: 10,
+    isMoE: true,
+    source: "MiniMax-M2.7: 230B-A10B MoE model with self-evolution via RL; SWE-Pro 56.2%; same 256-expert architecture as M2 series",
+    verificationUrl: "https://huggingface.co/MiniMaxAI/MiniMax-M2.7",
+    series: "MiniMax M2.7",
     category: "原始模型",
   },
 
@@ -2290,12 +2414,18 @@ export const getModelsByGroup = () => {
   // 按系列名称排序，优先显示最新发布的系列
   const seriesOrder = [
     // 2026 年发布
+    "Kimi K2.6",
+    "GLM-5.1",
+    "MiniMax M2.7",
     "Kimi K2.5",
-    "GLM-5",
     "MiniMax M2.5",
     "Qwen 3.5",
     "Qwen 3-Next",
     // 2025 年发布
+    "Kimi K2",
+    "MiniMax M2",
+    "GLM-5",
+    "GLM-4.7",
     "GPT-OSS",
     "GLM-4.5",
     "Qwen 3",
