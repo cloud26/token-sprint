@@ -21,7 +21,18 @@ export interface GPUModel {
 
 // GPU完整规格信息 - 包含内存、性能和发布年份
 export const gpuModels: GPUModel[] = [
-  // NVIDIA 最新架构 - Blackwell
+  // NVIDIA 最新架构 - Blackwell Ultra
+  {
+    name: "NVIDIA B300",
+    memory: 288,
+    memoryBandwidthInGB: 8000,
+    fp16Tflops: 2500,
+    architecture: "Blackwell Ultra",
+    category: "数据中心",
+    releaseYear: 2025,
+  }, // Blackwell Ultra, 288 GB HBM3e, 8 TB/s, FP16 dense 2.5 PFLOPS
+
+  // NVIDIA Blackwell架构
   {
     name: "NVIDIA B200",
     memory: 192,
@@ -80,6 +91,15 @@ export const gpuModels: GPUModel[] = [
   }, // 中国特供版 H100，NVLink带宽受限，80GB HBM3
   // NVIDIA Ada Lovelace架构
   {
+    name: "NVIDIA L40S",
+    memory: 48,
+    memoryBandwidthInGB: 864,
+    fp16Tflops: 362,
+    architecture: "Ada Lovelace",
+    category: "数据中心",
+    releaseYear: 2023,
+  }, // L40S with Transformer Engine, FP16 Tensor 362 TFLOPS (no sparsity)
+  {
     name: "NVIDIA L40",
     memory: 48,
     memoryBandwidthInGB: 864,
@@ -135,6 +155,15 @@ export const gpuModels: GPUModel[] = [
     "architecture": "Ada Lovelace",
     "releaseYear": 2023
   },
+  // NVIDIA RTX PRO 系列 (Blackwell专业卡)
+  {
+    name: "NVIDIA RTX PRO 6000 Blackwell",
+    memory: 96,
+    memoryBandwidthInGB: 1790,
+    fp16Tflops: 126,
+    architecture: "Blackwell",
+    releaseYear: 2025,
+  }, // GB202, 24064 CUDA cores, 96GB GDDR7 ECC, 1.79 TB/s
 
   // NVIDIA RTX 5000系列 (Blackwell消费级)
   {
@@ -173,6 +202,42 @@ export const gpuModels: GPUModel[] = [
     category: "消费级",
     releaseYear: 2025,
   }, // TechPowerUp specs: same cores as 5080 but 24GB GDDR7, 32 Gbps
+  {
+    name: "NVIDIA RTX 5070",
+    memory: 12,
+    memoryBandwidthInGB: 672,
+    fp16Tflops: 30.9,
+    architecture: "Blackwell",
+    category: "消费级",
+    releaseYear: 2025,
+  }, // 6144 CUDA cores, 12GB GDDR7, 672 GB/s
+  {
+    name: "NVIDIA RTX 5060 Ti (16GB)",
+    memory: 16,
+    memoryBandwidthInGB: 448,
+    fp16Tflops: 23.7,
+    architecture: "Blackwell",
+    category: "消费级",
+    releaseYear: 2025,
+  }, // GB206, 4608 CUDA cores, 16GB GDDR7, 128-bit
+  {
+    name: "NVIDIA RTX 5060 Ti (8GB)",
+    memory: 8,
+    memoryBandwidthInGB: 448,
+    fp16Tflops: 23.7,
+    architecture: "Blackwell",
+    category: "消费级",
+    releaseYear: 2025,
+  }, // GB206, 4608 CUDA cores, 8GB GDDR7, 128-bit
+  {
+    name: "NVIDIA RTX 5060",
+    memory: 8,
+    memoryBandwidthInGB: 448,
+    fp16Tflops: 19.2,
+    architecture: "Blackwell",
+    category: "消费级",
+    releaseYear: 2025,
+  }, // GB206, 3840 CUDA cores, 8GB GDDR7, 128-bit
 
 
   // NVIDIA RTX 4000系列
@@ -221,6 +286,15 @@ export const gpuModels: GPUModel[] = [
     category: "消费级",
     releaseYear: 2023,
   }, // FP16 performance from TechPowerUp
+  {
+    name: "NVIDIA RTX 4070 SUPER",
+    memory: 12,
+    memoryBandwidthInGB: 504,
+    fp16Tflops: 35.48,
+    architecture: "Ada Lovelace",
+    category: "消费级",
+    releaseYear: 2024,
+  }, // 7168 CUDA cores, 12GB GDDR6X, 504 GB/s
   {
     name: "NVIDIA RTX 4070",
     memory: 12,
@@ -1028,6 +1102,15 @@ export const gpuModels: GPUModel[] = [
     releaseYear: 2022,
     memoryBandwidthInGB: 512,
   },
+  {
+    name: "Huawei Ascend 910C",
+    memory: 128,
+    fp16Tflops: 800,
+    architecture: "昇腾",
+    category: "数据中心",
+    releaseYear: 2024,
+    memoryBandwidthInGB: 3200,
+  }, // 双芯封装(2×910B), 128GB HBM2E, 3.2 TB/s
   {
     name: "Huawei Ascend 910B",
     memory: 64,
