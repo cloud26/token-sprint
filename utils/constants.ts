@@ -30,7 +30,7 @@ export const gpuModels: GPUModel[] = [
     architecture: "Blackwell Ultra",
     category: "数据中心",
     releaseYear: 2025,
-  }, // Blackwell Ultra, 288 GB HBM3e, 8 TB/s, FP16 dense 2.5 PFLOPS
+  }, // Blackwell Ultra, 288 GB HBM3e, 8 TB/s, FP16 dense 2500 TFLOPS
 
   // NVIDIA Blackwell架构
   {
@@ -162,6 +162,7 @@ export const gpuModels: GPUModel[] = [
     memoryBandwidthInGB: 1790,
     fp16Tflops: 126,
     architecture: "Blackwell",
+    category: "专业级",
     releaseYear: 2025,
   }, // GB202, 24064 CUDA cores, 96GB GDDR7 ECC, 1.79 TB/s
 
