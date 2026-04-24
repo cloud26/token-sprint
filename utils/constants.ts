@@ -1506,7 +1506,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "Qwen3.5 official release - flagship MoE model with hybrid GDN + MoE architecture",
     verificationUrl: "https://huggingface.co/Qwen/Qwen3.5-397B-A17B",
-    series: "Qwen 3",
+    series: "Qwen 3.5",
     category: "原始模型",
   },
   {
@@ -1522,7 +1522,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "Qwen3.5 official release - mid-size MoE model",
     verificationUrl: "https://huggingface.co/Qwen/Qwen3.5-122B-A10B",
-    series: "Qwen 3",
+    series: "Qwen 3.5",
     category: "原始模型",
   },
   {
@@ -1538,7 +1538,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "Qwen3.5 official release - compact MoE model",
     verificationUrl: "https://huggingface.co/Qwen/Qwen3.5-35B-A3B",
-    series: "Qwen 3",
+    series: "Qwen 3.5",
     category: "原始模型",
   },
   {
@@ -1552,7 +1552,7 @@ export const MODELS: ModelInfo[] = [
     d_head: 128,
     source: "Qwen3.5 official release - dense model",
     verificationUrl: "https://huggingface.co/Qwen/Qwen3.5-27B",
-    series: "Qwen 3",
+    series: "Qwen 3.5",
     category: "原始模型",
   },
   // Qwen3-Next 系列
@@ -1569,7 +1569,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "Qwen3-Next official release - instruction-tuned model",
     verificationUrl: "https://huggingface.co/Qwen/Qwen3-Next-80B-A3B-Instruct",
-    series: "Qwen 3",
+    series: "Qwen 3-Next",
     category: "原始模型",
   },
   {
@@ -1585,7 +1585,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "Qwen3-Next official release - reasoning-focused model",
     verificationUrl: "https://huggingface.co/Qwen/Qwen3-Next-80B-A3B-Thinking",
-    series: "Qwen 3",
+    series: "Qwen 3-Next",
     category: "推理专用",
   },
   {
@@ -2500,6 +2500,8 @@ export const getModelsByGroup = () => {
     "Kimi K2",
     "GLM-5",
     "MiniMax M2",
+    "Qwen 3.5",
+    "Qwen 3-Next",
     "Qwen 3",
     "GLM-4",
     "GPT-OSS",
