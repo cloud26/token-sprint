@@ -3,6 +3,7 @@ export const precisions = [
   { name: "FP32", value: "FP32" },
   { name: "FP16", value: "FP16" },
   { name: "FP8", value: "FP8" },
+  { name: "FP4+FP8", value: "FP4+FP8" },
   { name: "MXFP4", value: "MXFP4" },
   { name: "INT8", value: "INT8" },
   { name: "INT4", value: "INT4" },
@@ -1189,6 +1190,44 @@ export interface ModelInfo {
 
 // 统一的模型数据 - 包含架构信息的完整模型列表
 export const MODELS: ModelInfo[] = [
+  // DeepSeek V4 系列 (开源可私有化部署, CSA+HCA 注意力架构)
+  {
+    name: "DeepSeek-V4-Pro",
+    parameters: "1.6T",
+    parametersNum: 1600,
+    value: "deepseek-v4-pro",
+    d_model: 9216,
+    n_layers: 56,
+    n_kv_heads: 1,
+    d_head: 47,
+    activeParams: 49,
+    isMoE: true,
+    source: "DeepSeek-V4-Pro: 1.6T MoE (49B active), 256 experts top-6 routing, CSA+HCA attention with 9.5x smaller KV Cache vs V3.2, 1M context",
+    verificationUrl:
+      "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro",
+    series: "DeepSeek V4",
+    category: "原始模型",
+    defaultPrecision: "FP4+FP8",
+  },
+  {
+    name: "DeepSeek-V4-Flash",
+    parameters: "284B",
+    parametersNum: 284,
+    value: "deepseek-v4-flash",
+    d_model: 4096,
+    n_layers: 43,
+    n_kv_heads: 1,
+    d_head: 43,
+    activeParams: 13,
+    isMoE: true,
+    source: "DeepSeek-V4-Flash: 284B MoE (13B active), 256 experts top-6 routing, CSA+HCA attention with 13.7x smaller KV Cache vs V3.2, 1M context",
+    verificationUrl:
+      "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash",
+    series: "DeepSeek V4",
+    category: "原始模型",
+    defaultPrecision: "FP4+FP8",
+  },
+
   // DeepSeek 系列 (开源可私有化部署)
   {
     name: "DeepSeek-R1",
@@ -2453,6 +2492,7 @@ export const PRECISION_MULTIPLIERS: Record<string, number> = {
   FP16: 1.0, // 16位浮点基准
   BF16: 1.0, // Brain Float 16，类似FP16
   FP8: 2.0, // 8位浮点，2倍性能提升
+  "FP4+FP8": 3.0, // FP4+FP8混合精度，Expert权重FP4 + Attention权重FP8
   MXFP4: 4.0, // Microscaling FP4，4倍性能提升
   INT8: 2.0, // 8位整数，2倍性能提升
   INT4: 4.0, // 4位整数，4倍性能提升
@@ -2466,6 +2506,7 @@ export const PRECISION_BYTES: Record<string, number> = {
   FP16: 2, // 16位 = 2字节
   BF16: 2, // Brain Float 16 = 2字节
   FP8: 1, // 8位 = 1字节
+  "FP4+FP8": 0.55, // FP4+FP8混合精度：Expert权重FP4(0.5字节) + Attention/Dense权重FP8(1字节)，加权平均约0.55字节
   MXFP4: 0.5, // Microscaling FP4 = 0.5字节
   INT8: 1, // 8位整数 = 1字节
   INT4: 0.5, // 4位 = 0.5字节
@@ -2497,6 +2538,7 @@ export const getModelsByGroup = () => {
 
   // 按系列名称排序，优先显示最新发布的系列
   const seriesOrder = [
+    "DeepSeek V4",
     "Kimi K2",
     "GLM-5",
     "MiniMax M2",
