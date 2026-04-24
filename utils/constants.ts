@@ -2506,7 +2506,7 @@ export const PRECISION_BYTES: Record<string, number> = {
   FP16: 2, // 16位 = 2字节
   BF16: 2, // Brain Float 16 = 2字节
   FP8: 1, // 8位 = 1字节
-  "FP4+FP8": 0.55, // FP4+FP8混合精度：Expert权重FP4(0.5B) + Attention/Dense权重FP8(1B)，加权平均约0.55字节
+  "FP4+FP8": 0.55, // FP4+FP8混合精度：Expert权重FP4(0.5字节) + Attention/Dense权重FP8(1字节)，加权平均约0.55字节
   MXFP4: 0.5, // Microscaling FP4 = 0.5字节
   INT8: 1, // 8位整数 = 1字节
   INT4: 0.5, // 4位 = 0.5字节
