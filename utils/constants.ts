@@ -1397,7 +1397,7 @@ export const MODELS: ModelInfo[] = [
     source: "Llama 3.1 technical specifications",
     verificationUrl:
       "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md",
-    series: "Llama 3.1",
+    series: "Llama 3",
     category: "原始模型",
   },
   {
@@ -1412,7 +1412,7 @@ export const MODELS: ModelInfo[] = [
     source: "Llama 3.1 official model card",
     verificationUrl:
       "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md",
-    series: "Llama 3.1",
+    series: "Llama 3",
     category: "原始模型",
   },
   {
@@ -1427,7 +1427,7 @@ export const MODELS: ModelInfo[] = [
     source: "Llama 3.1 official model card",
     verificationUrl:
       "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md",
-    series: "Llama 3.1",
+    series: "Llama 3",
     category: "原始模型",
   },
   {
@@ -1442,7 +1442,7 @@ export const MODELS: ModelInfo[] = [
     source: "Llama 3.2 official model card",
     verificationUrl:
       "https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD.md",
-    series: "Llama 3.2",
+    series: "Llama 3",
     category: "原始模型",
   },
   {
@@ -1457,7 +1457,7 @@ export const MODELS: ModelInfo[] = [
     source: "Llama 3.2 official model card",
     verificationUrl:
       "https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD.md",
-    series: "Llama 3.2",
+    series: "Llama 3",
     category: "原始模型",
   },
   {
@@ -1472,7 +1472,7 @@ export const MODELS: ModelInfo[] = [
     source: "Llama 3.2 official model card",
     verificationUrl:
       "https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD.md",
-    series: "Llama 3.2",
+    series: "Llama 3",
     category: "原始模型",
   },
   {
@@ -1487,7 +1487,7 @@ export const MODELS: ModelInfo[] = [
     source: "Llama 3.2 official model card",
     verificationUrl:
       "https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD.md",
-    series: "Llama 3.2",
+    series: "Llama 3",
     category: "原始模型",
   },
 
@@ -1506,7 +1506,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "Qwen3.5 official release - flagship MoE model with hybrid GDN + MoE architecture",
     verificationUrl: "https://huggingface.co/Qwen/Qwen3.5-397B-A17B",
-    series: "Qwen 3.5",
+    series: "Qwen 3",
     category: "原始模型",
   },
   {
@@ -1522,7 +1522,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "Qwen3.5 official release - mid-size MoE model",
     verificationUrl: "https://huggingface.co/Qwen/Qwen3.5-122B-A10B",
-    series: "Qwen 3.5",
+    series: "Qwen 3",
     category: "原始模型",
   },
   {
@@ -1538,7 +1538,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "Qwen3.5 official release - compact MoE model",
     verificationUrl: "https://huggingface.co/Qwen/Qwen3.5-35B-A3B",
-    series: "Qwen 3.5",
+    series: "Qwen 3",
     category: "原始模型",
   },
   {
@@ -1552,7 +1552,7 @@ export const MODELS: ModelInfo[] = [
     d_head: 128,
     source: "Qwen3.5 official release - dense model",
     verificationUrl: "https://huggingface.co/Qwen/Qwen3.5-27B",
-    series: "Qwen 3.5",
+    series: "Qwen 3",
     category: "原始模型",
   },
   // Qwen3-Next 系列
@@ -1569,7 +1569,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "Qwen3-Next official release - instruction-tuned model",
     verificationUrl: "https://huggingface.co/Qwen/Qwen3-Next-80B-A3B-Instruct",
-    series: "Qwen 3-Next",
+    series: "Qwen 3",
     category: "原始模型",
   },
   {
@@ -1585,7 +1585,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "Qwen3-Next official release - reasoning-focused model",
     verificationUrl: "https://huggingface.co/Qwen/Qwen3-Next-80B-A3B-Thinking",
-    series: "Qwen 3-Next",
+    series: "Qwen 3",
     category: "推理专用",
   },
   {
@@ -1631,7 +1631,7 @@ export const MODELS: ModelInfo[] = [
     d_head: 128,
     source: "Qwen2.5-72B official configuration",
     verificationUrl: "https://huggingface.co/Qwen/Qwen2.5-72B",
-    series: "Qwen 2.5",
+    series: "Qwen 2",
     category: "原始模型",
   },
   {
@@ -1645,7 +1645,7 @@ export const MODELS: ModelInfo[] = [
     d_head: 128,
     source: "Qwen2.5-72B HuggingFace model card",
     verificationUrl: "https://huggingface.co/Qwen/Qwen2.5-72B",
-    series: "Qwen 2.5",
+    series: "Qwen 2",
     category: "原始模型",
   },
   {
@@ -1684,7 +1684,7 @@ export const MODELS: ModelInfo[] = [
     n_kv_heads: 8,
     d_head: 128,
     source: "Estimated based on scaling laws",
-    series: "Qwen 2.5",
+    series: "Qwen 2",
     category: "代码专用",
   },
   {
@@ -1711,7 +1711,7 @@ export const MODELS: ModelInfo[] = [
     n_kv_heads: 8,
     d_head: 128,
     source: "Estimated based on scaling laws",
-    series: "Qwen 2.5",
+    series: "Qwen 2",
     category: "原始模型",
   },
   {
@@ -1753,7 +1753,7 @@ export const MODELS: ModelInfo[] = [
     n_kv_heads: 8,
     d_head: 128,
     source: "Estimated based on 13B architecture",
-    series: "Qwen 2.5",
+    series: "Qwen 2",
     category: "原始模型",
   },
   {
@@ -1807,7 +1807,7 @@ export const MODELS: ModelInfo[] = [
     n_kv_heads: 4,
     d_head: 128,
     source: "Estimated based on 7B architecture",
-    series: "Qwen 2.5",
+    series: "Qwen 2",
     category: "原始模型",
   },
   {
@@ -1847,7 +1847,7 @@ export const MODELS: ModelInfo[] = [
     n_kv_heads: 2,
     d_head: 128,
     source: "Estimated for 3B model",
-    series: "Qwen 2.5",
+    series: "Qwen 2",
     category: "原始模型",
   },
   {
@@ -1860,7 +1860,7 @@ export const MODELS: ModelInfo[] = [
     n_kv_heads: 2,
     d_head: 128,
     source: "Estimated for 1.5B model",
-    series: "Qwen 2.5",
+    series: "Qwen 2",
     category: "原始模型",
   },
   {
@@ -1873,7 +1873,7 @@ export const MODELS: ModelInfo[] = [
     n_kv_heads: 2,
     d_head: 64,
     source: "Estimated for 0.5B model",
-    series: "Qwen 2.5",
+    series: "Qwen 2",
     category: "原始模型",
   },
 
@@ -2145,7 +2145,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "GLM-4.5 foundation model designed for intelligent agents",
     verificationUrl: "https://huggingface.co/zai-org/GLM-4.5",
-    series: "GLM-4.5",
+    series: "GLM-4",
     category: "原始模型",
   },
   {
@@ -2161,7 +2161,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "GLM-4.5-Air compact model with superior efficiency",
     verificationUrl: "https://huggingface.co/zai-org/GLM-4.5-Air",
-    series: "GLM-4.5",
+    series: "GLM-4",
     category: "原始模型",
   },
   {
@@ -2177,7 +2177,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "GLM-4.5 base model before instruction tuning",
     verificationUrl: "https://huggingface.co/zai-org/GLM-4.5-Base",
-    series: "GLM-4.5",
+    series: "GLM-4",
     category: "原始模型",
   },
   {
@@ -2193,7 +2193,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "GLM-4.5-Air base model before instruction tuning",
     verificationUrl: "https://huggingface.co/zai-org/GLM-4.5-Air-Base",
-    series: "GLM-4.5",
+    series: "GLM-4",
     category: "原始模型",
   },
 
@@ -2211,7 +2211,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "GLM-4.7: 355B-A32B MoE model for multilingual coding and terminal workflows with interleaved thinking",
     verificationUrl: "https://huggingface.co/zai-org/GLM-4.7",
-    series: "GLM-4.7",
+    series: "GLM-4",
     category: "原始模型",
   },
   {
@@ -2227,7 +2227,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "GLM-4.7-Flash: 30B-A3B lightweight MoE model (64 experts, top-4 routing) for efficient inference",
     verificationUrl: "https://huggingface.co/zai-org/GLM-4.7-Flash",
-    series: "GLM-4.7",
+    series: "GLM-4",
     category: "原始模型",
   },
 
@@ -2263,7 +2263,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "GLM-5.1: 744B-A40B MoE model with MLA + DeepSeek Sparse Attention; #1 on SWE-Bench Pro; uses kv_lora_rank=512 for KV compression",
     verificationUrl: "https://huggingface.co/zai-org/GLM-5.1",
-    series: "GLM-5.1",
+    series: "GLM-5",
     category: "原始模型",
   },
 
@@ -2299,7 +2299,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "Kimi-K2.5: 1T-A32B native multimodal agentic model with MLA attention; natively INT4 quantized — use INT4 precision for accurate memory calculation",
     verificationUrl: "https://huggingface.co/moonshotai/Kimi-K2.5",
-    series: "Kimi K2.5",
+    series: "Kimi K2",
     category: "原始模型",
     defaultPrecision: "INT4",
   },
@@ -2318,7 +2318,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "Kimi-K2.6: 1T-A32B code-optimized model with improved agent planning and tool-use reliability; 256K context; same MoE architecture as K2/K2.5",
     verificationUrl: "https://github.com/MoonshotAI/Kimi-K2",
-    series: "Kimi K2.6",
+    series: "Kimi K2",
     category: "原始模型",
   },
 
@@ -2354,7 +2354,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "MiniMax-M2.5: 230B-A10B MoE model (256 experts, top-8 routing) for coding and agentic tasks; architecture based on MiniMax-M2 design",
     verificationUrl: "https://huggingface.co/MiniMaxAI/MiniMax-M2.5",
-    series: "MiniMax M2.5",
+    series: "MiniMax M2",
     category: "原始模型",
   },
 
@@ -2372,7 +2372,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "MiniMax-M2.7: 230B-A10B MoE model with self-evolution via RL; SWE-Pro 56.2%; same 256-expert architecture as M2 series",
     verificationUrl: "https://huggingface.co/MiniMaxAI/MiniMax-M2.7",
-    series: "MiniMax M2.7",
+    series: "MiniMax M2",
     category: "原始模型",
   },
 
@@ -2497,29 +2497,15 @@ export const getModelsByGroup = () => {
 
   // 按系列名称排序，优先显示最新发布的系列
   const seriesOrder = [
-    // 2026 年发布
-    "Kimi K2.6",
-    "GLM-5.1",
-    "MiniMax M2.7",
-    "Kimi K2.5",
-    "MiniMax M2.5",
-    "Qwen 3.5",
-    "Qwen 3-Next",
-    // 2025 年发布
     "Kimi K2",
-    "MiniMax M2",
     "GLM-5",
-    "GLM-4.7",
-    "GPT-OSS",
-    "GLM-4.5",
+    "MiniMax M2",
     "Qwen 3",
+    "GLM-4",
+    "GPT-OSS",
     "Llama 4",
     "DeepSeek",
-    // 2024 年及更早
     "Qwen QwQ",
-    "Llama 3.2",
-    "Qwen 2.5",
-    "Llama 3.1",
     "Qwen 2",
     "Llama 3",
     "Gemma",
