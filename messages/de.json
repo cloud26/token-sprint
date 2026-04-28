@@ -242,7 +242,7 @@
         },
         "deepseek": {
           "modelName": "DeepSeek",
-          "modelVersions": "DeepSeek V3/R1",
+          "modelVersions": "DeepSeek V4/V3/R1",
           "features": "Enterprise-Grade-Lösungen",
           "specialFeatures": [
             "Massive 671B-Parameter-Skala",
@@ -352,9 +352,9 @@
           "keywordName": "deepseek",
           "titleSuffix": "",
           "accuracyNote": "Ungefähre Token-Zählung für DeepSeek-Modelle mit fortgeschrittener Schätzung.",
-          "versions": "DeepSeek R1, V3",
+          "versions": "DeepSeek V4-Pro, V4-Flash, R1, V3",
           "features": "Online-Token-Schätzer mit Kostenberechnung und Optimierung.",
-          "representativeModels": "DeepSeek-R1, DeepSeek-V3 Chat"
+          "representativeModels": "DeepSeek-V4-Pro, DeepSeek-V4-Flash, DeepSeek-R1"
         },
         "alibaba-qwen": {
           "company": "Alibaba Qwen",
@@ -575,12 +575,12 @@
       "description": "Klicken Sie auf diese Beispiele, um schnell beliebte Modellbereitstellungsszenarien zu konfigurieren!",
       "examples": {
         "flagship": "🆕 Flaggschiff-Modell (Qwen3-235B + H100 + 4 nebenläufig)",
-        "ultraLarge": "Ultra-Großes Modell (DeepSeek-R1 + H100 + 2 nebenläufig)",
-        "enterprise": "Unternehmensmodell (Llama3-70B + A100 + 8 nebenläufig)",
-        "highConcurrency": "Hochkonkurrenter Service (Llama3-70B + H100 + 32 nebenläufig)",
+        "ultraLarge": "Ultra-Großes Modell (DeepSeek-V4-Pro + H100 + 1 nebenläufig)",
+        "enterprise": "Unternehmensmodell (Llama 4 Scout + H100 + 4 nebenläufig)",
+        "highConcurrency": "Hochkonkurrenter Service (Llama 4 Scout + H100 + 16 nebenläufig)",
         "lightweight": "Leichtgewichtige Bereitstellung (Llama3-8B + RTX4090 + 4 nebenläufig)",
         "mediumScale": "Mittlerer Maßstab (Llama3-8B + RTX4090 + 16 nebenläufig)",
-        "popular": "🔥 Beliebtes Modell (Qwen2.5-72B + H100 + 6 nebenläufig)",
+        "popular": "🔥 Beliebtes Modell (DeepSeek-V4-Flash + H100 + 4 nebenläufig)",
         "reasoning": "Reasoning-Modell (QwQ-32B + RTX4090 + 8 nebenläufig)"
       }
     },

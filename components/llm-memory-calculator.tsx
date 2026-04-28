@@ -120,19 +120,19 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
 
     // 根据优先模型类型设置默认模型
     const getDefaultModel = () => {
-        if (!preferredModelType) return "DeepSeek-R1"
+        if (!preferredModelType) return "DeepSeek-V4-Pro"
 
         const defaultModels: Record<string, string> = {
-            'deepseek': 'DeepSeek-R1',
+            'deepseek': 'DeepSeek-V4-Pro',
             'llama': 'Llama 4 Scout',
             'qwen': 'Qwen3-Coder-480B-A35B',
-            'claude': 'DeepSeek-R1', // Claude模型不在modelExamples中，使用默认
-            'gemini': 'DeepSeek-R1',  // Gemini模型不在modelExamples中，使用默认
+            'claude': 'DeepSeek-V4-Pro', // Claude模型不在modelExamples中，使用默认
+            'gemini': 'DeepSeek-V4-Pro',  // Gemini模型不在modelExamples中，使用默认
             'gpt': 'GPT-OSS-120B', // GPT-OSS系列默认使用120B模型
             'mimo': 'MiMo-V2.5-Pro' // MiMo系列默认使用V2.5-Pro模型
         }
 
-        return defaultModels[preferredModelType] || "DeepSeek-R1"
+        return defaultModels[preferredModelType] || "DeepSeek-V4-Pro"
     }
 
     // 根据默认模型设置默认参数
@@ -877,12 +877,12 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                         <button
                                             className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                             onClick={() => {
-                                                setSelectedModel("DeepSeek-R1")
-                                                setParameters("671")
-                                                setPrecision("FP8")
+                                                setSelectedModel("DeepSeek-V4-Pro")
+                                                setParameters("1600")
+                                                setPrecision("FP4+FP8")
                                                 setGpuModel("NVIDIA H100 (80GB)")
                                                 setBatchSize("1")
-                                                setContextLength("2048")
+                                                setContextLength("4096")
                                             }}
                                         >
                                             {t('quickStart.examples.ultraLarge')}
@@ -890,12 +890,12 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                         <button
                                             className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                             onClick={() => {
-                                                setSelectedModel("Llama 3.1 70B")
-                                                setParameters("70")
-                                                setPrecision("FP16")
-                                                setGpuModel("NVIDIA A100 (80GB)")
+                                                setSelectedModel("Llama 4 Scout")
+                                                setParameters("109")
+                                                setPrecision("FP8")
+                                                setGpuModel("NVIDIA H100 (80GB)")
                                                 setBatchSize("4")
-                                                setContextLength("2048")
+                                                setContextLength("4096")
                                             }}
                                         >
                                             {t('quickStart.examples.enterprise')}
@@ -903,8 +903,8 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                         <button
                                             className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                             onClick={() => {
-                                                setSelectedModel("Llama 3.1 70B")
-                                                setParameters("70")
+                                                setSelectedModel("Llama 4 Scout")
+                                                setParameters("109")
                                                 setPrecision("FP8")
                                                 setGpuModel("NVIDIA H100 (80GB)")
                                                 setBatchSize("16")
@@ -942,11 +942,11 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                         <button
                                             className="px-3 py-1 bg-amber-200 hover:bg-amber-300 rounded text-xs transition-colors"
                                             onClick={() => {
-                                                setSelectedModel("Qwen2.5-72B")
-                                                setParameters("72")
-                                                setPrecision("FP8")
+                                                setSelectedModel("DeepSeek-V4-Flash")
+                                                setParameters("284")
+                                                setPrecision("FP4+FP8")
                                                 setGpuModel("NVIDIA H100 (80GB)")
-                                                setBatchSize("3")
+                                                setBatchSize("4")
                                                 setContextLength("4096")
                                             }}
                                         >

@@ -243,7 +243,7 @@
         },
         "deepseek": {
           "modelName": "DeepSeek",
-          "modelVersions": "DeepSeek V3/R1",
+          "modelVersions": "DeepSeek V4/V3/R1",
           "features": "エンタープライズグレードソリューション",
           "specialFeatures": [
             "大規模671Bパラメータスケール",
@@ -353,9 +353,9 @@
           "keywordName": "deepseek",
           "titleSuffix": "",
           "accuracyNote": "高度な推定を使用したDeepSeekモデルの概算トークンカウント。",
-          "versions": "DeepSeek R1、V3",
+          "versions": "DeepSeek V4-Pro、V4-Flash、R1、V3",
           "features": "コスト計算と最適化機能付きオンライントークン推定器。",
-          "representativeModels": "DeepSeek-R1、DeepSeek-V3 Chat"
+          "representativeModels": "DeepSeek-V4-Pro、DeepSeek-V4-Flash、DeepSeek-R1"
         },
         "alibaba-qwen": {
           "company": "Alibaba Qwen",
@@ -576,12 +576,12 @@
       "description": "これらの例をクリックして、人気のモデル展開シナリオを素早く設定！",
       "examples": {
         "flagship": "🆕 フラッグシップモデル（Qwen3-235B + H100 + 4並行）",
-        "ultraLarge": "超大型モデル（DeepSeek-R1 + H100 + 2並行）",
-        "enterprise": "エンタープライズモデル（Llama3-70B + A100 + 8並行）",
-        "highConcurrency": "高並行サービス（Llama3-70B + H100 + 32並行）",
+        "ultraLarge": "超大型モデル（DeepSeek-V4-Pro + H100 + 1並行）",
+        "enterprise": "エンタープライズモデル（Llama 4 Scout + H100 + 4並行）",
+        "highConcurrency": "高並行サービス（Llama 4 Scout + H100 + 16並行）",
         "lightweight": "軽量展開（Llama3-8B + RTX4090 + 4並行）",
         "mediumScale": "中規模（Llama3-8B + RTX4090 + 16並行）",
-        "popular": "🔥 人気モデル（Qwen2.5-72B + H100 + 6並行）",
+        "popular": "🔥 人気モデル（DeepSeek-V4-Flash + H100 + 4並行）",
         "reasoning": "推論モデル（QwQ-32B + RTX4090 + 8並行）"
       }
     },

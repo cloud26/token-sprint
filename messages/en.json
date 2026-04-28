@@ -243,7 +243,7 @@
         },
         "deepseek": {
           "modelName": "DeepSeek",
-          "modelVersions": "DeepSeek V3/R1",
+          "modelVersions": "DeepSeek V4/V3/R1",
           "features": "enterprise-grade solutions",
           "specialFeatures": [
             "Massive 671B parameter scale",
@@ -353,9 +353,9 @@
           "keywordName": "deepseek",
           "titleSuffix": "",
           "accuracyNote": "Approximate token counting for DeepSeek models using advanced estimation.",
-          "versions": "DeepSeek R1, V3",
+          "versions": "DeepSeek V4-Pro, V4-Flash, R1, V3",
           "features": "Online token estimator with cost calculation and optimization.",
-          "representativeModels": "DeepSeek-R1, DeepSeek-V3 Chat"
+          "representativeModels": "DeepSeek-V4-Pro, DeepSeek-V4-Flash, DeepSeek-R1"
         },
         "alibaba-qwen": {
           "company": "Alibaba Qwen",
@@ -576,12 +576,12 @@
       "description": "Click these examples to quickly configure popular model deployment scenarios!",
       "examples": {
         "flagship": "🆕 Flagship Model (Qwen3-235B + H100 + 4 concurrent)",
-        "ultraLarge": "Ultra-Large Model (DeepSeek-R1 + H100 + 2 concurrent)",
-        "enterprise": "Enterprise Model (Llama3-70B + A100 + 8 concurrent)",
-        "highConcurrency": "High Concurrency Service (Llama3-70B + H100 + 32 concurrent)",
+        "ultraLarge": "Ultra-Large Model (DeepSeek-V4-Pro + H100 + 1 concurrent)",
+        "enterprise": "Enterprise Model (Llama 4 Scout + H100 + 4 concurrent)",
+        "highConcurrency": "High Concurrency Service (Llama 4 Scout + H100 + 16 concurrent)",
         "lightweight": "Lightweight Deployment (Llama3-8B + RTX4090 + 4 concurrent)",
         "mediumScale": "Medium Scale (Llama3-8B + RTX4090 + 16 concurrent)",
-        "popular": "🔥 Popular Model (Qwen2.5-72B + H100 + 6 concurrent)",
+        "popular": "🔥 Popular Model (DeepSeek-V4-Flash + H100 + 4 concurrent)",
         "reasoning": "Reasoning Model (QwQ-32B + RTX4090 + 8 concurrent)"
       }
     },

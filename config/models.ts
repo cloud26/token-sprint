@@ -15,8 +15,8 @@ export const models: Record<string, ModelConfig> = {
     deepseek: {
         slug: "deepseek",
         name: "DeepSeek",
-        parameters: 671,
-        recommendedPrecision: "FP8"
+        parameters: 1600, // DeepSeek-V4-Pro默认参数
+        recommendedPrecision: "FP4+FP8"
     },
     qwen: {
         slug: "qwen",
