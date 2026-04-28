@@ -273,6 +273,17 @@
             "完全な思考連鎖アクセス",
             "ネイティブエージェント機能"
           ]
+        },
+        "mimo": {
+          "modelName": "MiMo",
+          "modelVersions": "MiMo-V2.5-Pro/V2.5/V2-Flash",
+          "features": "Xiaomiオープンソース MoE推論モデル",
+          "specialFeatures": [
+            "MiMo-V2.5-Pro: 1.02T MoE、42Bアクティブパラメータ",
+            "MiMo-V2.5: 310B オムニモーダル（テキスト/画像/動画/音声）",
+            "MiMo-V2-Flash: 309B 高速推論最適化",
+            "ハイブリッド・スライディングウィンドウ+グローバルアテンション・アーキテクチャ"
+          ]
         }
       }
     },

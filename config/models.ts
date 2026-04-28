@@ -29,6 +29,12 @@ export const models: Record<string, ModelConfig> = {
         name: "GPT-OSS",
         parameters: 117, // GPT-OSS-120B默认参数
         recommendedPrecision: "MXFP4"
+    },
+    mimo: {
+        slug: "mimo",
+        name: "MiMo",
+        parameters: 1020, // MiMo-V2.5-Pro默认参数
+        recommendedPrecision: "FP8"
     }
 }
 

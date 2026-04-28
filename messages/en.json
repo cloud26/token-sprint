@@ -273,6 +273,17 @@
             "Full chain-of-thought access",
             "Native agentic capabilities"
           ]
+        },
+        "mimo": {
+          "modelName": "MiMo",
+          "modelVersions": "MiMo-V2.5-Pro/V2.5/V2-Flash",
+          "features": "Xiaomi open-source MoE reasoning models",
+          "specialFeatures": [
+            "MiMo-V2.5-Pro: 1.02T MoE with 42B active parameters",
+            "MiMo-V2.5: 310B omnimodal (text/image/video/audio)",
+            "MiMo-V2-Flash: 309B optimized for fast inference",
+            "Hybrid sliding window + global attention architecture"
+          ]
         }
       }
     },
