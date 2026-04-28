@@ -106,7 +106,8 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                 (preferredModelType === 'qwen' && (modelName.includes('qwen') || modelName.includes('qwen3-coder') || modelName.includes('qwen3-next'))) ||
                 (preferredModelType === 'claude' && modelName.includes('claude')) ||
                 (preferredModelType === 'gemini' && modelName.includes('gemini')) ||
-                (preferredModelType === 'gpt' && modelName.includes('gpt-oss'))
+                (preferredModelType === 'gpt' && modelName.includes('gpt-oss')) ||
+                (preferredModelType === 'mimo' && modelName.includes('mimo'))
             ) {
                 preferred.push(model)
             } else {
@@ -127,7 +128,8 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
             'qwen': 'Qwen3-Coder-480B-A35B',
             'claude': 'DeepSeek-R1', // Claude模型不在modelExamples中，使用默认
             'gemini': 'DeepSeek-R1',  // Gemini模型不在modelExamples中，使用默认
-            'gpt': 'GPT-OSS-120B' // GPT-OSS系列默认使用120B模型
+            'gpt': 'GPT-OSS-120B', // GPT-OSS系列默认使用120B模型
+            'mimo': 'MiMo-V2.5-Pro' // MiMo系列默认使用V2.5-Pro模型
         }
 
         return defaultModels[preferredModelType] || "DeepSeek-R1"
@@ -408,7 +410,8 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                         (preferredModelType === 'deepseek' && seriesLower.includes('deepseek')) ||
                                                         (preferredModelType === 'llama' && seriesLower.includes('llama')) ||
                                                         (preferredModelType === 'qwen' && (seriesLower.includes('qwen') || seriesLower.includes('qwen 3'))) ||
-                                                        (preferredModelType === 'gpt' && seriesLower.includes('gpt-oss'))
+                                                        (preferredModelType === 'gpt' && seriesLower.includes('gpt-oss')) ||
+                                                        (preferredModelType === 'mimo' && seriesLower.includes('mimo'))
                                                     ) {
                                                         preferredSeries.push(series);
                                                     } else {

@@ -272,6 +272,17 @@
             "Vollständiger Chain-of-Thought-Zugang",
             "Native Agenten-Fähigkeiten"
           ]
+        },
+        "mimo": {
+          "modelName": "MiMo",
+          "modelVersions": "MiMo-V2.5-Pro/V2.5/V2-Flash",
+          "features": "Xiaomi Open-Source-MoE-Reasoning-Modelle",
+          "specialFeatures": [
+            "MiMo-V2.5-Pro: 1.02T MoE mit 42B aktiven Parametern",
+            "MiMo-V2.5: 310B Omnimodal (Text/Bild/Video/Audio)",
+            "MiMo-V2-Flash: 309B optimiert für schnelle Inferenz",
+            "Hybride Sliding-Window- + globale Aufmerksamkeitsarchitektur"
+          ]
         }
       }
     },

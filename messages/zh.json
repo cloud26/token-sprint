@@ -273,6 +273,17 @@
             "完整思维链访问",
             "原生智能体能力"
           ]
+        },
+        "mimo": {
+          "modelName": "MiMo",
+          "modelVersions": "MiMo-V2.5-Pro/V2.5/V2-Flash",
+          "features": "小米开源MoE推理模型",
+          "specialFeatures": [
+            "MiMo-V2.5-Pro: 1.02T MoE，42B激活参数",
+            "MiMo-V2.5: 310B 全模态（文本/图像/视频/音频）",
+            "MiMo-V2-Flash: 309B 高速推理优化",
+            "混合滑动窗口+全局注意力架构"
+          ]
         }
       }
     },
