@@ -108,6 +108,42 @@ export const tokenCounterModels: TokenCounterModel[] = [
         name: 'Moonshot Kimi',
         company: 'Moonshot',
         defaultModel: 'kimi-k2.6'
+    },
+    {
+        slug: 'mistral-ai',
+        name: 'Mistral AI',
+        company: 'Mistral',
+        defaultModel: 'mistral-large'
+    },
+    {
+        slug: 'google-gemma',
+        name: 'Google Gemma',
+        company: 'Google Gemma',
+        defaultModel: 'gemma-3-27b'
+    },
+    {
+        slug: 'microsoft-phi',
+        name: 'Microsoft Phi',
+        company: 'Microsoft',
+        defaultModel: 'phi-4'
+    },
+    {
+        slug: 'meta-codellama',
+        name: 'Meta CodeLlama',
+        company: 'Meta CodeLlama',
+        defaultModel: 'code-llama'
+    },
+    {
+        slug: 'xiaomi-mimo',
+        name: 'Xiaomi MiMo',
+        company: 'Xiaomi',
+        defaultModel: 'mimo-v2.5-pro'
+    },
+    {
+        slug: 'openai-gpt-oss',
+        name: 'OpenAI GPT-OSS',
+        company: 'OpenAI OSS',
+        defaultModel: 'gpt-oss-120b'
     }
 ]
 

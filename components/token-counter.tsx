@@ -79,6 +79,8 @@ const models: ModelInfo[] = [
     { value: "code-llama", label: "Code Llama 🤗", encoding: "huggingface", hub: "Xenova/llama-code-tokenizer" },
 
     // DeepSeek 系列 - 使用官方 Hugging Face 模型
+    { value: "deepseek-v4-pro", label: "DeepSeek V4 Pro 🤗", encoding: "huggingface", hub: "deepseek-ai/DeepSeek-V3" },
+    { value: "deepseek-v4-flash", label: "DeepSeek V4 Flash 🤗", encoding: "huggingface", hub: "deepseek-ai/DeepSeek-V3" },
     { value: "deepseek-r1", label: "DeepSeek R1 🤗", encoding: "huggingface", hub: "deepseek-ai/DeepSeek-R1" },
     { value: "deepseek-v3", label: "DeepSeek V3 🤗", encoding: "huggingface", hub: "deepseek-ai/DeepSeek-V3" },
     { value: "deepseek-v2", label: "DeepSeek V2 🤗", encoding: "huggingface", hub: "deepseek-ai/DeepSeek-V2" },
@@ -87,11 +89,29 @@ const models: ModelInfo[] = [
     { value: "mistral-large", label: "Mistral Large 🤗", encoding: "huggingface", hub: "Xenova/mistral-tokenizer-v3" },
     { value: "mistral-nemo", label: "Mistral Nemo 🤗", encoding: "huggingface", hub: "Xenova/Mistral-Nemo-Instruct-Tokenizer" },
     { value: "codestral", label: "Codestral 🤗", encoding: "huggingface", hub: "Xenova/mistral-tokenizer-v3" },
+    { value: "mixtral-8x22b", label: "Mixtral 8x22B 🤗", encoding: "huggingface", hub: "Xenova/mistral-tokenizer-v3" },
+    { value: "mixtral-8x7b", label: "Mixtral 8x7B 🤗", encoding: "huggingface", hub: "Xenova/mistral-tokenizer-v3" },
 
     // Google Gemini 系列 - 使用估算（因为没有官方 tokenizer）
     { value: "gemini-1.5-pro", label: "Gemini 1.5 Pro ⚠️", encoding: "gpt-4" },
     { value: "gemini-1.5-flash", label: "Gemini 1.5 Flash ⚠️", encoding: "gpt-4" },
     { value: "gemini-pro", label: "Gemini Pro ⚠️", encoding: "gpt-4" },
+
+    // Google Gemma 系列 - 使用 Hugging Face tokenizer
+    { value: "gemma-3-27b", label: "Gemma 3 27B 🤗", encoding: "huggingface", hub: "Xenova/gemma-tokenizer" },
+    { value: "gemma-3-12b", label: "Gemma 3 12B 🤗", encoding: "huggingface", hub: "Xenova/gemma-tokenizer" },
+    { value: "gemma-3-4b", label: "Gemma 3 4B 🤗", encoding: "huggingface", hub: "Xenova/gemma-tokenizer" },
+
+    // Microsoft Phi 系列 - 使用 Hugging Face tokenizer
+    { value: "phi-4", label: "Phi-4 🤗", encoding: "huggingface", hub: "Xenova/phi3-tokenizer" },
+    { value: "phi-4-mini", label: "Phi-4-mini 🤗", encoding: "huggingface", hub: "Xenova/phi3-tokenizer" },
+    { value: "phi-3-medium", label: "Phi-3-medium 🤗", encoding: "huggingface", hub: "Xenova/phi3-tokenizer" },
+    { value: "phi-3-small", label: "Phi-3-small 🤗", encoding: "huggingface", hub: "Xenova/phi3-tokenizer" },
+
+    // Xiaomi MiMo 系列 - 使用 Hugging Face tokenizer
+    { value: "mimo-v2.5-pro", label: "MiMo-V2.5-Pro 🤗", encoding: "huggingface", hub: "XiaomiMiMo/MiMo-7B-RL" },
+    { value: "mimo-v2.5-lite", label: "MiMo-V2.5-Lite 🤗", encoding: "huggingface", hub: "XiaomiMiMo/MiMo-7B-RL" },
+    { value: "mimo-7b", label: "MiMo-7B 🤗", encoding: "huggingface", hub: "XiaomiMiMo/MiMo-7B-RL" },
 
     // GLM-4.5 系列 - 使用官方 Hugging Face 模型
     { value: "glm-5", label: "GLM-5 🤗", encoding: "huggingface", hub: "zai-org/GLM-5" },
@@ -162,23 +182,33 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
             let isPreferred = false
             if (company === 'openai' && (modelValue.startsWith('gpt-') || modelValue.startsWith('text-'))) {
                 isPreferred = true
+            } else if (company === 'openai oss' && modelValue.startsWith('gpt-oss')) {
+                isPreferred = true
             } else if (company === 'anthropic' && modelValue.startsWith('claude')) {
                 isPreferred = true
             } else if (company === 'google' && modelValue.startsWith('gemini')) {
                 isPreferred = true
+            } else if (company === 'google gemma' && modelValue.startsWith('gemma')) {
+                isPreferred = true
             } else if (company === 'meta' && modelValue.startsWith('llama')) {
+                isPreferred = true
+            } else if (company === 'meta codellama' && modelValue.startsWith('code-llama')) {
                 isPreferred = true
             } else if (company === 'deepseek' && modelValue.startsWith('deepseek')) {
                 isPreferred = true
             } else if (company === 'alibaba' && (modelValue.startsWith('qwen') || modelValue.startsWith('qwq'))) {
                 isPreferred = true
-            } else if (company === 'mistral' && (modelValue.startsWith('mistral') || modelValue.startsWith('codestral'))) {
+            } else if (company === 'mistral' && (modelValue.startsWith('mistral') || modelValue.startsWith('codestral') || modelValue.startsWith('mixtral'))) {
+                isPreferred = true
+            } else if (company === 'microsoft' && modelValue.startsWith('phi')) {
                 isPreferred = true
             } else if (company === 'minimax' && modelValue.startsWith('minimax')) {
                 isPreferred = true
             } else if (company === 'zhipu' && modelValue.startsWith('glm')) {
                 isPreferred = true
             } else if (company === 'moonshot' && modelValue.startsWith('kimi')) {
+                isPreferred = true
+            } else if (company === 'xiaomi' && modelValue.startsWith('mimo')) {
                 isPreferred = true
             }
 
