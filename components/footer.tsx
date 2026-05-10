@@ -1,31 +1,14 @@
-import { Coffee, Github, X, Globe, Mail, Heart, ExternalLink } from "lucide-react"
-import { Button } from "./ui/button"
+import { Mail, Heart } from "lucide-react"
 import { useTranslations } from 'next-intl'
-
-interface ProjectLink {
-    name: string
-    url: string
-    description: string
-}
 
 export function Footer() {
     const t = useTranslations('common')
 
-    // 你可以在这里添加你的项目链接
-    const projectLinks: ProjectLink[] = [
-        {
-            name: "Costcat",
-            url: "https://costcat.darkraven.ai/",
-            description: "Cut Cloud Costs with Smart Optimization"
-        }
-    ]
-
     return (
         <footer className="mt-12 py-6 border-t border-border bg-background">
             <div className="max-w-4xl mx-auto px-4">
-                {/* Coffee Support & Projects in one row */}
+                {/* Coffee Support */}
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-4">
-                    {/* Coffee Support */}
                     <div className="flex items-center gap-3">
                         <Heart className="w-4 h-4 text-red-500" />
                         <a
@@ -41,30 +24,6 @@ export function Footer() {
                             />
                         </a>
                     </div>
-
-                    {/* Project Links */}
-                    {projectLinks.length > 0 && (
-                        <div className="flex items-center gap-3">
-                            <span className="text-sm text-muted-foreground">Related:</span>
-                            <div className="flex gap-2">
-                                {projectLinks.map((project) => (
-                                    <a
-                                        key={project.name}
-                                        href={project.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="group flex items-center gap-2 px-3 py-2 rounded-md bg-secondary/50 hover:bg-secondary transition-colors duration-200"
-                                        title={project.description}
-                                    >
-                                        <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-                                        <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                                            {project.name}
-                                        </span>
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
-                    )}
                 </div>
 
                 {/* Copyright Section */}

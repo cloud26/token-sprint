@@ -48,7 +48,10 @@
           "glm": "GLM-Serie (🤗)",
           "mistral": "Mistral-Serie (🤗)",
           "gemini": "Google Gemini-Serie (Schätzung)",
-          "qwen": "Qwen-Serie (🤗)"
+          "qwen": "Qwen-Serie (🤗)",
+          "kimi": "Kimi-Serie (🤗)",
+          "minimax": "MiniMax-Serie (🤗)",
+          "mimo": "MiMo-Serie (🤗)"
         }
       },
       "optimizationTipsFor": "Optimierungstipps für {model}",
@@ -395,6 +398,16 @@
           "versions": "Kimi-K2.5",
           "features": "Online-Token-Schätzer mit Hugging Face Tokenizer.",
           "representativeModels": "Kimi-K2.5"
+        },
+        "xiaomi-mimo": {
+          "company": "Xiaomi",
+          "displayName": "MiMo",
+          "keywordName": "mimo",
+          "titleSuffix": "",
+          "accuracyNote": "Genaue Token-Zählung für MiMo-Modelle mit dem offiziellen Hugging Face Tokenizer.",
+          "versions": "MiMo-V2.5-Pro, MiMo-V2.5, MiMo-V2-Flash",
+          "features": "Online-Token-Schätzer mit Hugging Face Tokenizer und MoE-Modellunterstützung.",
+          "representativeModels": "MiMo-V2.5-Pro, MiMo-V2.5, MiMo-V2-Flash"
         }
       }
     }

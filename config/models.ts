@@ -65,7 +65,7 @@ export const tokenCounterModels: TokenCounterModel[] = [
         slug: 'anthropic-claude',
         name: 'Anthropic Claude',
         company: 'Anthropic',
-        defaultModel: 'claude-3.5-sonnet'
+        defaultModel: 'claude-4.6-sonnet'
     },
     {
         slug: 'google-gemini',
@@ -108,6 +108,12 @@ export const tokenCounterModels: TokenCounterModel[] = [
         name: 'Moonshot Kimi',
         company: 'Moonshot',
         defaultModel: 'kimi-k2.6'
+    },
+    {
+        slug: 'xiaomi-mimo',
+        name: 'Xiaomi MiMo',
+        company: 'Xiaomi',
+        defaultModel: 'mimo-v2.5-pro'
     }
 ]
 

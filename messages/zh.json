@@ -49,7 +49,10 @@
           "glm": "GLM 系列 (🤗)",
           "mistral": "Mistral 系列 (🤗)",
           "gemini": "Google Gemini 系列 (估算)",
-          "qwen": "Qwen 系列 (🤗)"
+          "qwen": "Qwen 系列 (🤗)",
+          "kimi": "Kimi 系列 (🤗)",
+          "minimax": "MiniMax 系列 (🤗)",
+          "mimo": "MiMo 系列 (🤗)"
         }
       },
       "optimizationTipsFor": "{model} 优化建议",
@@ -387,6 +390,15 @@
           "versions": "Kimi-K2.5",
           "features": "在线token估算器，支持Hugging Face分词器。",
           "representativeModels": "Kimi-K2.5"
+        },
+        "xiaomi-mimo": {
+          "company": "小米",
+          "displayName": "MiMo",
+          "keywordName": "mimo",
+          "accuracyNote": "使用官方Hugging Face分词器为MiMo模型提供精确的token计数。",
+          "versions": "MiMo-V2.5-Pro、MiMo-V2.5、MiMo-V2-Flash",
+          "features": "在线token估算器，支持Hugging Face分词器和MoE模型。",
+          "representativeModels": "MiMo-V2.5-Pro、MiMo-V2.5、MiMo-V2-Flash"
         }
       }
     }

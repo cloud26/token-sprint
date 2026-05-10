@@ -70,7 +70,11 @@ const models: ModelInfo[] = [
     { value: "claude-3-sonnet", label: "Claude 3 Sonnet 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
     { value: "claude-3-haiku", label: "Claude 3 Haiku 🤗", encoding: "huggingface", hub: "Xenova/claude-tokenizer" },
 
-    // Meta Llama 系列 - 使用 Hugging Face tokenizer
+    // Meta Llama 4 系列 - 使用 Hugging Face tokenizer
+    { value: "llama-4-scout", label: "Llama 4 Scout 🤗", encoding: "huggingface", hub: "meta-llama/Llama-4-Scout-17B-16E-Instruct" },
+    { value: "llama-4-maverick", label: "Llama 4 Maverick 🤗", encoding: "huggingface", hub: "meta-llama/Llama-4-Maverick-17B-128E-Instruct" },
+
+    // Meta Llama 3 系列 - 使用 Hugging Face tokenizer
     { value: "llama-3.3", label: "Llama 3.3 🤗", encoding: "huggingface", hub: "unsloth/Llama-3.3-70B-Instruct" },
     { value: "llama-3.2", label: "Llama 3.2 🤗", encoding: "huggingface", hub: "Xenova/Llama-3.2-Tokenizer" },
     { value: "llama-3.1", label: "Llama 3.1 🤗", encoding: "huggingface", hub: "Xenova/Meta-Llama-3.1-Tokenizer" },
@@ -78,10 +82,22 @@ const models: ModelInfo[] = [
     { value: "llama-2", label: "Llama 2 🤗", encoding: "huggingface", hub: "Xenova/llama2-tokenizer" },
     { value: "code-llama", label: "Code Llama 🤗", encoding: "huggingface", hub: "Xenova/llama-code-tokenizer" },
 
+    // DeepSeek V4 系列 - 使用官方 Hugging Face 模型
+    { value: "deepseek-v4-pro", label: "DeepSeek-V4-Pro 🤗", encoding: "huggingface", hub: "deepseek-ai/DeepSeek-V3" },
+    { value: "deepseek-v4-flash", label: "DeepSeek-V4-Flash 🤗", encoding: "huggingface", hub: "deepseek-ai/DeepSeek-V3" },
+
     // DeepSeek 系列 - 使用官方 Hugging Face 模型
     { value: "deepseek-r1", label: "DeepSeek R1 🤗", encoding: "huggingface", hub: "deepseek-ai/DeepSeek-R1" },
     { value: "deepseek-v3", label: "DeepSeek V3 🤗", encoding: "huggingface", hub: "deepseek-ai/DeepSeek-V3" },
     { value: "deepseek-v2", label: "DeepSeek V2 🤗", encoding: "huggingface", hub: "deepseek-ai/DeepSeek-V2" },
+
+    // DeepSeek-R1 蒸馏系列
+    { value: "deepseek-r1-distill-qwen-32b", label: "DeepSeek-R1-Distill-Qwen-32B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "deepseek-r1-distill-qwen-14b", label: "DeepSeek-R1-Distill-Qwen-14B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "deepseek-r1-distill-qwen-7b", label: "DeepSeek-R1-Distill-Qwen-7B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "deepseek-r1-distill-qwen-1.5b", label: "DeepSeek-R1-Distill-Qwen-1.5B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "deepseek-r1-distill-llama-70b", label: "DeepSeek-R1-Distill-Llama-70B 🤗", encoding: "huggingface", hub: "unsloth/Llama-3.3-70B-Instruct" },
+    { value: "deepseek-r1-distill-llama-8b", label: "DeepSeek-R1-Distill-Llama-8B 🤗", encoding: "huggingface", hub: "Xenova/Meta-Llama-3.1-Tokenizer" },
 
     // Mistral 系列 - 使用 Hugging Face tokenizer
     { value: "mistral-large", label: "Mistral Large 🤗", encoding: "huggingface", hub: "Xenova/mistral-tokenizer-v3" },
@@ -93,8 +109,14 @@ const models: ModelInfo[] = [
     { value: "gemini-1.5-flash", label: "Gemini 1.5 Flash ⚠️", encoding: "gpt-4" },
     { value: "gemini-pro", label: "Gemini Pro ⚠️", encoding: "gpt-4" },
 
-    // GLM-4.5 系列 - 使用官方 Hugging Face 模型
+    // GLM-5.1 系列
+    { value: "glm-5.1", label: "GLM-5.1 🤗", encoding: "huggingface", hub: "zai-org/GLM-5.1" },
+    // GLM-5 系列
     { value: "glm-5", label: "GLM-5 🤗", encoding: "huggingface", hub: "zai-org/GLM-5" },
+    // GLM-4.7 系列
+    { value: "glm-4.7", label: "GLM-4.7 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.7" },
+    { value: "glm-4.7-flash", label: "GLM-4.7-Flash 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.7-Flash" },
+    // GLM-4.5 系列
     { value: "glm-4.5", label: "GLM-4.5 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5" },
     { value: "glm-4.5-air", label: "GLM-4.5-Air 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5-Air" },
     { value: "glm-4.5-base", label: "GLM-4.5-Base 🤗", encoding: "huggingface", hub: "zai-org/GLM-4.5-Base" },
@@ -112,6 +134,13 @@ const models: ModelInfo[] = [
     // Qwen3 系列
     { value: "qwen3-coder-480b", label: "Qwen3-Coder-480B-A35B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen3-235b", label: "Qwen3-235B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen3-32b", label: "Qwen3-32B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen3-30b-a3b", label: "Qwen3-30B-A3B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen3-14b", label: "Qwen3-14B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen3-8b", label: "Qwen3-8B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen3-4b", label: "Qwen3-4B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen3-1.7b", label: "Qwen3-1.7B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
+    { value: "qwen3-0.6b", label: "Qwen3-0.6B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     // Qwen2.5 系列
     { value: "qwen2.5-72b", label: "Qwen2.5-72B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
     { value: "qwen2.5-32b", label: "Qwen2.5-32B 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
@@ -127,10 +156,19 @@ const models: ModelInfo[] = [
     { value: "qwen-max", label: "Qwen-Max 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
 
     // Kimi 系列 - 使用官方 Hugging Face 模型 (原生INT4量化)
+    { value: "kimi-k2.6", label: "Kimi-K2.6 🤗", encoding: "huggingface", hub: "moonshotai/Kimi-K2.5" },
     { value: "kimi-k2.5", label: "Kimi-K2.5 🤗", encoding: "huggingface", hub: "moonshotai/Kimi-K2.5" },
+    { value: "kimi-k2", label: "Kimi-K2 🤗", encoding: "huggingface", hub: "moonshotai/Kimi-K2" },
 
     // MiniMax 系列 - 使用官方 Hugging Face 模型
+    { value: "minimax-m2.7", label: "MiniMax-M2.7 🤗", encoding: "huggingface", hub: "MiniMaxAI/MiniMax-M2.5" },
     { value: "minimax-m2.5", label: "MiniMax-M2.5 🤗", encoding: "huggingface", hub: "MiniMaxAI/MiniMax-M2.5" },
+    { value: "minimax-m2", label: "MiniMax-M2 🤗", encoding: "huggingface", hub: "MiniMaxAI/MiniMax-M2" },
+
+    // MiMo 系列 (小米) - 使用官方 Hugging Face 模型
+    { value: "mimo-v2.5-pro", label: "MiMo-V2.5-Pro 🤗", encoding: "huggingface", hub: "XiaomiMiMo/MiMo-V2.5-Pro" },
+    { value: "mimo-v2.5", label: "MiMo-V2.5 🤗", encoding: "huggingface", hub: "XiaomiMiMo/MiMo-V2.5" },
+    { value: "mimo-v2-flash", label: "MiMo-V2-Flash 🤗", encoding: "huggingface", hub: "XiaomiMiMo/MiMo-V2-Flash" },
 ]
 
 export default function TokenCounter({ language, defaultModel, preferredCompany, restrictToCompany }: TokenCounterProps) {
@@ -179,6 +217,8 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
             } else if (company === 'zhipu' && modelValue.startsWith('glm')) {
                 isPreferred = true
             } else if (company === 'moonshot' && modelValue.startsWith('kimi')) {
+                isPreferred = true
+            } else if (company === 'xiaomi' && modelValue.startsWith('mimo')) {
                 isPreferred = true
             }
 
@@ -447,7 +487,19 @@ export default function TokenCounter({ language, defaultModel, preferredCompany,
                                             },
                                             {
                                                 name: tc('modelGroups.qwen'),
-                                                filter: (m: ModelInfo) => m.value.startsWith('qwen')
+                                                filter: (m: ModelInfo) => m.value.startsWith('qwen') || m.value.startsWith('qwq')
+                                            },
+                                            {
+                                                name: tc('modelGroups.kimi'),
+                                                filter: (m: ModelInfo) => m.value.startsWith('kimi')
+                                            },
+                                            {
+                                                name: tc('modelGroups.minimax'),
+                                                filter: (m: ModelInfo) => m.value.startsWith('minimax')
+                                            },
+                                            {
+                                                name: tc('modelGroups.mimo'),
+                                                filter: (m: ModelInfo) => m.value.startsWith('mimo')
                                             }
                                         ];
 
