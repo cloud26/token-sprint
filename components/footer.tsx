@@ -9,7 +9,6 @@ export function Footer() {
             <div className="max-w-4xl mx-auto px-4">
                 {/* Coffee Support */}
                 <div className="flex items-center justify-center gap-6 mb-4">
-                    {/* Coffee Support */}
                     <div className="flex items-center gap-3">
                         <Heart className="w-4 h-4 text-red-500" />
                         <a
