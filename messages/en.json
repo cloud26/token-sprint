@@ -396,6 +396,66 @@
           "versions": "Kimi-K2.5",
           "features": "Online token estimator with Hugging Face tokenizer.",
           "representativeModels": "Kimi-K2.5"
+        },
+        "mistral-ai": {
+          "company": "Mistral AI",
+          "displayName": "Mistral AI",
+          "keywordName": "mistral",
+          "titleSuffix": "Online",
+          "accuracyNote": "Accurate token counting for Mistral and Mixtral models using the official Hugging Face tokenizer.",
+          "versions": "Mistral Large, Mistral Nemo, Mixtral 8x22B, Mixtral 8x7B, Codestral",
+          "features": "Native Hugging Face tokenizer accuracy, MoE model support, real-time token calculation.",
+          "representativeModels": "Mistral Large, Mistral Nemo, Mixtral 8x22B, Mixtral 8x7B, Codestral"
+        },
+        "google-gemma": {
+          "company": "Google",
+          "displayName": "Google Gemma",
+          "keywordName": "gemma",
+          "titleSuffix": "Online",
+          "accuracyNote": "Accurate token counting for Google Gemma open-source models using Hugging Face tokenizer.",
+          "versions": "Gemma 3 27B, Gemma 3 12B, Gemma 3 4B",
+          "features": "Native Hugging Face tokenizer accuracy, open-source model support, real-time token calculation.",
+          "representativeModels": "Gemma 3 27B, Gemma 3 12B, Gemma 3 4B"
+        },
+        "microsoft-phi": {
+          "company": "Microsoft",
+          "displayName": "Microsoft Phi",
+          "keywordName": "phi",
+          "titleSuffix": "Online",
+          "accuracyNote": "Accurate token counting for Microsoft Phi series models using Hugging Face tokenizer.",
+          "versions": "Phi-4, Phi-4-mini, Phi-3-medium, Phi-3-small",
+          "features": "Native Hugging Face tokenizer accuracy, small language model support, real-time token calculation.",
+          "representativeModels": "Phi-4, Phi-4-mini, Phi-3-medium, Phi-3-small"
+        },
+        "meta-codellama": {
+          "company": "Meta",
+          "displayName": "Meta CodeLlama",
+          "keywordName": "codellama",
+          "titleSuffix": "Online",
+          "accuracyNote": "Accurate token counting for Meta CodeLlama code-specialized models using Hugging Face tokenizer.",
+          "versions": "CodeLlama 70B, CodeLlama 34B, CodeLlama 13B",
+          "features": "Native Hugging Face tokenizer accuracy, code-specialized model support, real-time token calculation.",
+          "representativeModels": "CodeLlama 70B, CodeLlama 34B, CodeLlama 13B"
+        },
+        "xiaomi-mimo": {
+          "company": "Xiaomi",
+          "displayName": "Xiaomi MiMo",
+          "keywordName": "mimo",
+          "titleSuffix": "",
+          "accuracyNote": "Accurate token counting for Xiaomi MiMo series models using Hugging Face tokenizer.",
+          "versions": "MiMo-V2.5-Pro, MiMo-V2.5-Lite, MiMo-7B",
+          "features": "Online token estimator with Hugging Face tokenizer, MoE model support.",
+          "representativeModels": "MiMo-V2.5-Pro, MiMo-V2.5-Lite, MiMo-7B"
+        },
+        "openai-gpt-oss": {
+          "company": "OpenAI",
+          "displayName": "OpenAI GPT-OSS",
+          "keywordName": "gpt-oss",
+          "titleSuffix": "Online",
+          "accuracyNote": "Accurate token counting for OpenAI GPT-OSS open-weight models using the official Hugging Face tokenizer.",
+          "versions": "GPT-OSS-120B, GPT-OSS-20B",
+          "features": "Official Hugging Face tokenizer accuracy, open-weight model support, real-time token calculation.",
+          "representativeModels": "GPT-OSS-120B, GPT-OSS-20B"
         }
       }
     }

@@ -387,6 +387,60 @@
           "versions": "Kimi-K2.5",
           "features": "在线token估算器，支持Hugging Face分词器。",
           "representativeModels": "Kimi-K2.5"
+        },
+        "mistral-ai": {
+          "company": "Mistral AI",
+          "displayName": "Mistral AI",
+          "keywordName": "mistral",
+          "accuracyNote": "使用官方Hugging Face分词器为Mistral和Mixtral系列模型提供精确的token计数。",
+          "versions": "Mistral Large, Mistral Nemo, Mixtral 8x22B, Mixtral 8x7B, Codestral",
+          "features": "原生Hugging Face分词器精度，支持MoE模型，实时token计算。",
+          "representativeModels": "Mistral Large, Mistral Nemo, Mixtral 8x22B, Mixtral 8x7B, Codestral"
+        },
+        "google-gemma": {
+          "company": "Google",
+          "displayName": "Google Gemma",
+          "keywordName": "gemma",
+          "accuracyNote": "使用Hugging Face分词器为Google Gemma开源模型提供精确的token计数。",
+          "versions": "Gemma 3 27B, Gemma 3 12B, Gemma 3 4B",
+          "features": "原生Hugging Face分词器精度，支持开源模型，实时token计算。",
+          "representativeModels": "Gemma 3 27B, Gemma 3 12B, Gemma 3 4B"
+        },
+        "microsoft-phi": {
+          "company": "Microsoft",
+          "displayName": "Microsoft Phi",
+          "keywordName": "phi",
+          "accuracyNote": "使用Hugging Face分词器为Microsoft Phi系列模型提供精确的token计数。",
+          "versions": "Phi-4, Phi-4-mini, Phi-3-medium, Phi-3-small",
+          "features": "原生Hugging Face分词器精度，支持小型语言模型，实时token计算。",
+          "representativeModels": "Phi-4, Phi-4-mini, Phi-3-medium, Phi-3-small"
+        },
+        "meta-codellama": {
+          "company": "Meta",
+          "displayName": "Meta CodeLlama",
+          "keywordName": "codellama",
+          "accuracyNote": "使用Hugging Face分词器为Meta CodeLlama代码专用模型提供精确的token计数。",
+          "versions": "CodeLlama 70B, CodeLlama 34B, CodeLlama 13B",
+          "features": "原生Hugging Face分词器精度，支持代码专用模型，实时token计算。",
+          "representativeModels": "CodeLlama 70B, CodeLlama 34B, CodeLlama 13B"
+        },
+        "xiaomi-mimo": {
+          "company": "Xiaomi",
+          "displayName": "Xiaomi MiMo",
+          "keywordName": "mimo",
+          "accuracyNote": "使用Hugging Face分词器为小米MiMo系列模型提供精确的token计数。",
+          "versions": "MiMo-V2.5-Pro, MiMo-V2.5-Lite, MiMo-7B",
+          "features": "在线token估算器，支持Hugging Face分词器和MoE模型。",
+          "representativeModels": "MiMo-V2.5-Pro, MiMo-V2.5-Lite, MiMo-7B"
+        },
+        "openai-gpt-oss": {
+          "company": "OpenAI",
+          "displayName": "OpenAI GPT-OSS",
+          "keywordName": "gpt-oss",
+          "accuracyNote": "使用官方Hugging Face分词器为OpenAI GPT-OSS开源权重模型提供精确的token计数。",
+          "versions": "GPT-OSS-120B, GPT-OSS-20B",
+          "features": "官方Hugging Face分词器精度，支持开源权重模型，实时token计算。",
+          "representativeModels": "GPT-OSS-120B, GPT-OSS-20B"
         }
       }
     }
