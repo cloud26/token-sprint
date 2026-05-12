@@ -1105,6 +1105,24 @@ export const gpuModels: GPUModel[] = [
     memoryBandwidthInGB: 512,
   },
   {
+    name: "Huawei Ascend 950DT",
+    memory: 144,
+    fp16Tflops: 800,
+    architecture: "昇腾",
+    category: "数据中心",
+    releaseYear: 2026,
+    memoryBandwidthInGB: 4000,
+  }, // 144GB HiZQ 2.0 HBM, 4 TB/s, 1 PFLOPS FP8, 2 PFLOPS FP4
+  {
+    name: "Huawei Ascend 950PR",
+    memory: 128,
+    fp16Tflops: 500,
+    architecture: "昇腾",
+    category: "数据中心",
+    releaseYear: 2026,
+    memoryBandwidthInGB: 1600,
+  }, // 128GB HiB1.0 HBM, 1.6 TB/s, 1 PFLOPS FP8, Atlas 350卡搭载
+  {
     name: "Huawei Ascend 910C",
     memory: 128,
     fp16Tflops: 800,
