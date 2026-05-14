@@ -724,9 +724,9 @@
     }
   },
   "updateNotification": {
-    "title": "Neue Features",
-    "feature1": "Genauere GPU-Berechnungen",
-    "feature2": "Umfassender FAQ-Leitfaden",
+    "title": "Neuigkeiten",
+    "feature1": "Huawei Ascend 950DT GPU hinzugefügt",
+    "feature2": "Neueste 2025-Modelldaten synchronisiert",
     "dismiss": "Benachrichtigung schließen"
   }
 }
