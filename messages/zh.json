@@ -715,9 +715,9 @@
     }
   },
   "updateNotification": {
-    "title": "最新功能",
-    "feature1": "更准确的GPU计算",
-    "feature2": "全面的FAQ指南",
+    "title": "最新更新",
+    "feature1": "新增华为 Ascend 950DT 显卡",
+    "feature2": "同步 2025 年最新模型数据",
     "dismiss": "关闭通知"
   }
 }

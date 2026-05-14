@@ -725,9 +725,9 @@
     }
   },
   "updateNotification": {
-    "title": "新機能のご紹介",
-    "feature1": "より正確なGPU計算",
-    "feature2": "包括的なFAQガイド",
+    "title": "最新アップデート",
+    "feature1": "Huawei Ascend 950DT GPUを追加",
+    "feature2": "2025年最新モデルデータを同期",
     "dismiss": "通知を閉じる"
   }
 }

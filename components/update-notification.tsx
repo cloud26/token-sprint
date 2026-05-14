@@ -10,7 +10,7 @@ export function UpdateNotification() {
     const [isVisible, setIsVisible] = useState(false);
 
     // 更新版本号 - 每次有新更新时修改这个值
-    const UPDATE_VERSION = "2024-12-19-gpu-optimization";
+    const UPDATE_VERSION = "2025-05-14-new-models";
 
     useEffect(() => {
         // 检查用户是否已经关闭过这个版本的通知
