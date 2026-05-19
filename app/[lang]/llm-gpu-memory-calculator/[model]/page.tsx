@@ -19,6 +19,7 @@ import { SideNav } from "@/components/side-nav"
 import { GPUSelectionGuide } from "@/components/gpu-selection-guide"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { UpdateNotification } from "@/components/update-notification"
+import { SiteWideAd } from "@/components/site-wide-ad"
 import { getModelBySlug, getAllModelSlugs } from "@/config/models"
 import { notFound } from "next/navigation"
 import { getTranslations } from 'next-intl/server'
@@ -106,6 +107,7 @@ export default function ModelSpecificCalculatorPage({
                 <div className="w-full max-w-2xl space-y-2 flex-1">
                     {/* 更新通知 */}
                     <UpdateNotification />
+                    <SiteWideAd />
 
                     <PageContent model={model} />
 
