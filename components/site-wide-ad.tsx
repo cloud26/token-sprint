@@ -5,6 +5,12 @@ import { X, ExternalLink } from "lucide-react";
 import { useLocale } from "next-intl";
 import { Button } from "@/components/ui/button";
 
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 const AD_VERSION = "minimax-token-plan-2025";
 const AD_LINK =
   "https://platform.minimaxi.com/subscribe/token-plan?code=LONFQ0dT3m&source=link";
@@ -19,6 +25,14 @@ export function SiteWideAd() {
       setIsVisible(true);
     }
   }, []);
+
+  const handleClick = () => {
+    window.gtag?.("event", "ad_click", {
+      event_category: "site_wide_ad",
+      event_label: "minimax_token_plan",
+      transport_type: "beacon",
+    });
+  };
 
   const handleDismiss = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -36,6 +50,7 @@ export function SiteWideAd() {
       href={AD_LINK}
       target="_blank"
       rel="noopener noreferrer sponsored"
+      onClick={handleClick}
       className="block rounded-lg shadow-sm overflow-hidden transition-shadow hover:shadow-md"
       style={{ background: "linear-gradient(135deg, #E8453C 0%, #FF6B5B 100%)" }}
     >
