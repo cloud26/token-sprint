@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { X, Megaphone } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 
 export function UpdateNotification() {
+    const t = useTranslations("updateNotification");
     const [isVisible, setIsVisible] = useState(false);
 
     const UPDATE_VERSION = "2026-05-19-minimax-token-plan-ad";
@@ -36,10 +38,10 @@ export function UpdateNotification() {
                     </div>
                     <div className="min-w-0 flex-1 space-y-2">
                         <p className="text-sm font-semibold leading-relaxed">
-                            🚀 MiniMax Token Plan 惊喜上线！新增语音、音乐、视频和图片生成权益。邀请好友享双重好礼，助力开发体验！
+                            {t("line1")}
                         </p>
                         <p className="text-sm leading-relaxed text-white/95">
-                            好友立享 <span className="font-semibold">9折</span> 专属优惠 + Builder 权益，你赢返利 + 社区特权！
+                            {t("line2")}
                         </p>
                         <a
                             href={AD_LINK}
@@ -47,7 +49,7 @@ export function UpdateNotification() {
                             rel="noopener noreferrer"
                             className="inline-flex rounded-md bg-white px-3 py-1.5 text-sm font-semibold text-[#ff4f45] transition-colors hover:bg-white/90"
                         >
-                            👉 立即参与
+                            {t("cta")}
                         </a>
                     </div>
                     <Button
@@ -57,7 +59,7 @@ export function UpdateNotification() {
                         onClick={handleDismiss}
                     >
                         <X className="h-4 w-4" />
-                        <span className="sr-only">关闭广告</span>
+                        <span className="sr-only">{t("dismiss")}</span>
                     </Button>
                 </div>
             </div>

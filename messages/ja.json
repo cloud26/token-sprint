@@ -725,9 +725,9 @@
     }
   },
   "updateNotification": {
-    "title": "最新アップデート",
-    "feature1": "Huawei Ascend 950DT GPUを追加",
-    "feature2": "2025年最新モデルデータを同期",
-    "dismiss": "通知を閉じる"
+    "line1": "🚀 MiniMax Token Plan が登場！音声・音楽・動画・画像生成の特典が追加され、友達招待でダブル特典も獲得できます。",
+    "line2": "友達は限定10%オフ + Builder特典、あなたはキャッシュバック + コミュニティ特典を獲得。",
+    "cta": "👉 今すぐ参加",
+    "dismiss": "広告を閉じる"
   }
 }

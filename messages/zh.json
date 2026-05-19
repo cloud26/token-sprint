@@ -715,9 +715,9 @@
     }
   },
   "updateNotification": {
-    "title": "最新更新",
-    "feature1": "新增华为 Ascend 950DT 显卡",
-    "feature2": "同步 2025 年最新模型数据",
-    "dismiss": "关闭通知"
+    "line1": "🚀 MiniMax Token Plan 惊喜上线！新增语音、音乐、视频和图片生成权益。邀请好友享双重好礼，助力开发体验！",
+    "line2": "好友立享 9折 专属优惠 + Builder 权益，你赢返利 + 社区特权！",
+    "cta": "👉 立即参与",
+    "dismiss": "关闭广告"
   }
 }

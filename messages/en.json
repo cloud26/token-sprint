@@ -725,9 +725,9 @@
     }
   },
   "updateNotification": {
-    "title": "What's New",
-    "feature1": "Added Huawei Ascend 950DT GPU",
-    "feature2": "Synced latest 2025 model data",
-    "dismiss": "Dismiss notification"
+    "line1": "🚀 MiniMax Token Plan is now live! Get new voice, music, video, and image generation benefits, plus double rewards when you invite friends.",
+    "line2": "Your friends get an exclusive 10% discount + Builder benefits, while you earn cashback + community perks.",
+    "cta": "👉 Join now",
+    "dismiss": "Dismiss ad"
   }
 }
