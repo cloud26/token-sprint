@@ -22,6 +22,7 @@ import { SideNav } from "@/components/side-nav"
 import Link from "next/link"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { UpdateNotification } from "@/components/update-notification"
+import { SiteWideAd } from "@/components/site-wide-ad"
 import { getTranslations } from 'next-intl/server'
 import { useTranslations, useLocale } from 'next-intl'
 
@@ -65,6 +66,7 @@ export default function TokenCounterPage({
                 <div className="w-full max-w-2xl space-y-2 flex-1">
                     {/* 更新通知 */}
                     <UpdateNotification />
+                    <SiteWideAd />
 
                     <PageContent />
 

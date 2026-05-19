@@ -13,6 +13,7 @@ import { Footer } from "@/components/footer"
 import { GPUSelectionGuide } from "@/components/gpu-selection-guide"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { UpdateNotification } from "@/components/update-notification"
+import { SiteWideAd } from "@/components/site-wide-ad"
 import { getCanonicalUrl, generateLanguageAlternates, getLocaleForLanguage, type Language } from "@/config/languages"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
@@ -66,6 +67,7 @@ export default function Home({
                 <div className="w-full max-w-2xl space-y-2 flex-1">
                     {/* 更新通知 */}
                     <UpdateNotification />
+                    <SiteWideAd />
 
                     {/* 面包屑导航 */}
                     <Breadcrumb items={[{ label: t('nav.aiTools'), current: true }]} />
