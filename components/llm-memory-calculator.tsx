@@ -29,6 +29,9 @@ interface ContextLengthOption {
     scenarios: string
 }
 
+const MAX_GPU_BANDWIDTH = Math.max(...gpuModels.map((gpu) => gpu.memoryBandwidthInGB))
+const MIN_BANDWIDTH_BAR_PERCENT = 3
+
 export default function LLMMemoryCalculator({ preferredModelType }: CalculatorProps) {
     const t = useTranslations('calculator')
     const locale = useLocale()
@@ -164,10 +167,6 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
 
     const selectedGpu = gpuModels.find((gpu) => `${gpu.name} (${gpu.memory}GB)` === gpuModel)
     const gpuMemory = selectedGpu ? selectedGpu.memory : 80 // 默认使用 80GB
-    const maxGpuBandwidth = React.useMemo(
-        () => Math.max(...gpuModels.map((gpu) => gpu.memoryBandwidthInGB)),
-        []
-    )
 
     const formatBandwidth = (bandwidth: number) => {
         if (bandwidth >= 1000) {
@@ -706,7 +705,10 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                             {gpuModels.map((gpu) => {
                                 const gpuValue = `${gpu.name} (${gpu.memory}GB)`
                                 const isSelected = gpuModel === gpuValue
-                                const bandwidthPercent = Math.max((gpu.memoryBandwidthInGB / maxGpuBandwidth) * 100, 3)
+                                const bandwidthPercent = Math.max(
+                                    (gpu.memoryBandwidthInGB / MAX_GPU_BANDWIDTH) * 100,
+                                    MIN_BANDWIDTH_BAR_PERCENT
+                                )
 
                                 return (
                                     <div
