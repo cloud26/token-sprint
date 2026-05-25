@@ -44,7 +44,7 @@ export const gpuModels: GPUModel[] = [
     architecture: "Blackwell",
     category: "数据中心",
     releaseYear: 2024,
-  }, // NVIDIA Blackwell datasheet: 192GB HBM3e, 8 TB/s
+  }, // NVIDIA Blackwell datasheet: 192GB HBM3e, 8 TB/s (replaces earlier low estimate)
   {
     name: "NVIDIA B100",
     memory: 192, // GB
@@ -53,7 +53,7 @@ export const gpuModels: GPUModel[] = [
     architecture: "Blackwell",
     category: "数据中心",
     releaseYear: 2024,
-  }, // Public B100 spec sheets: 192GB HBM3e, 8 TB/s
+  }, // Public B100 spec sheets: 192GB HBM3e, 8 TB/s (replaces earlier low estimate)
 
   // NVIDIA Hopper架构
   {
