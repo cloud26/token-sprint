@@ -22,6 +22,7 @@ export interface GPUModel {
 
 // GPU完整规格信息 - 包含内存、性能和发布年份
 // memoryBandwidthInGB 使用公开规格页/数据表中的显存带宽值；不要填写未发布的估算值。
+// Use public specification pages/datasheets for memoryBandwidthInGB; do not enter unpublished estimates.
 export const gpuModels: GPUModel[] = [
   // NVIDIA 最新架构 - Blackwell Ultra
   {
