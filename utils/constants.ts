@@ -448,7 +448,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "NVIDIA V100 (32GB)",
     memory: 32,
-    memoryBandwidthInGB: 870,
+    memoryBandwidthInGB: 900,
     fp16Tflops: 125,
     architecture: "Volta",
     category: "数据中心",
