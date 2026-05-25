@@ -21,6 +21,7 @@ export interface GPUModel {
 }
 
 // GPU完整规格信息 - 包含内存、性能和发布年份
+// memoryBandwidthInGB 使用公开规格页/数据表中的显存带宽值；不要填写未发布的估算值。
 export const gpuModels: GPUModel[] = [
   // NVIDIA 最新架构 - Blackwell Ultra
   {
@@ -37,21 +38,21 @@ export const gpuModels: GPUModel[] = [
   {
     name: "NVIDIA B200",
     memory: 192,
-    memoryBandwidthInGB: 5000,
+    memoryBandwidthInGB: 8000,
     fp16Tflops: 2250,
     architecture: "Blackwell",
     category: "数据中心",
     releaseYear: 2024,
-  }, // FP16 dense with sparsity
+  }, // 192GB HBM3e, 8 TB/s
   {
     name: "NVIDIA B100",
     memory: 192, // GB
-    memoryBandwidthInGB: 4500, // GB/s，估计值
+    memoryBandwidthInGB: 8000,
     fp16Tflops: 1750, // dense FP16，不含 sparsity
     architecture: "Blackwell",
     category: "数据中心",
     releaseYear: 2024,
-  },
+  }, // 192GB HBM3e, 8 TB/s
 
   // NVIDIA Hopper架构
   {
@@ -66,7 +67,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "NVIDIA H100",
     memory: 80,
-    memoryBandwidthInGB: 3300,
+    memoryBandwidthInGB: 3350,
     fp16Tflops: 989,
     architecture: "Hopper",
     category: "数据中心",
@@ -119,7 +120,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "NVIDIA L2",
     memory: 24,
-    memoryBandwidthInGB: 432,
+    memoryBandwidthInGB: 300,
     fp16Tflops: 96,
     architecture: "Ada Lovelace",
     releaseYear: 2023,
@@ -195,15 +196,6 @@ export const gpuModels: GPUModel[] = [
     category: "消费级",
     releaseYear: 2025,
   }, // TechPowerUp verified: 8960 CUDA cores, 16GB GDDR7, 896 GB/s
-  {
-    name: "NVIDIA RTX 5080 SUPER",
-    memory: 24,
-    memoryBandwidthInGB: 1020,
-    fp16Tflops: 56.28,
-    architecture: "Blackwell",
-    category: "消费级",
-    releaseYear: 2025,
-  }, // TechPowerUp specs: same cores as 5080 but 24GB GDDR7, 32 Gbps
   {
     name: "NVIDIA RTX 5070",
     memory: 12,
@@ -327,7 +319,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "NVIDIA RTX 4060",
     memory: 8,
-    memoryBandwidthInGB: 288,
+    memoryBandwidthInGB: 272,
     fp16Tflops: 35,
     architecture: "Ada Lovelace",
     category: "消费级",
@@ -384,39 +376,39 @@ export const gpuModels: GPUModel[] = [
   {
     name: "NVIDIA A100 (80GB)",
     memory: 80,
-    memoryBandwidthInGB: 1940,
+    memoryBandwidthInGB: 2039,
     fp16Tflops: 77.97,
     architecture: "Ampere",
     category: "数据中心",
     releaseYear: 2021,
-  }, // TechPowerUp verified: GA100, 6912 CUDA cores, 80GB HBM2e, 1.94 TB/s
+  }, // NVIDIA A100 80GB, 2.039 TB/s
   {
     name: "NVIDIA A100 (40GB)",
     memory: 40,
-    memoryBandwidthInGB: 1560,
+    memoryBandwidthInGB: 1555,
     fp16Tflops: 77.97,
     architecture: "Ampere",
     category: "数据中心",
     releaseYear: 2020,
-  }, // TechPowerUp verified: GA100, 6912 CUDA cores, 40GB HBM2e, 1.56 TB/s
+  }, // NVIDIA A100 40GB, 1.555 TB/s
   {
     name: "NVIDIA A800 (80GB)",
     memory: 80,
-    memoryBandwidthInGB: 2000,
+    memoryBandwidthInGB: 2039,
     fp16Tflops: 77.97,
     architecture: "Ampere",
     category: "数据中心",
     releaseYear: 2022,
-  }, // 中国特供版 A100，NVLink带宽受限，80GB HBM2e，2.0 TB/s
+  }, // 中国特供版 A100，NVLink带宽受限，80GB HBM2e，2.039 TB/s
   {
     name: "NVIDIA A800 (40GB)",
     memory: 40,
-    memoryBandwidthInGB: 1560,
+    memoryBandwidthInGB: 1555,
     fp16Tflops: 77.97,
     architecture: "Ampere",
     category: "数据中心",
     releaseYear: 2022,
-  }, // 中国特供版 A100 40GB版本
+  }, // 中国特供版 A100 40GB版本，1.555 TB/s
   {
     name: "NVIDIA A40",
     memory: 48,
@@ -447,7 +439,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "NVIDIA V100S",
     memory: 32,
-    memoryBandwidthInGB: 900,
+    memoryBandwidthInGB: 1134,
     fp16Tflops: 130,
     architecture: "Volta",
     category: "数据中心",
@@ -456,7 +448,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "NVIDIA V100 (32GB)",
     memory: 32,
-    memoryBandwidthInGB: 900,
+    memoryBandwidthInGB: 870,
     fp16Tflops: 125,
     architecture: "Volta",
     category: "数据中心",
@@ -474,7 +466,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "NVIDIA T4",
     memory: 16,
-    memoryBandwidthInGB: 300,
+    memoryBandwidthInGB: 320,
     fp16Tflops: 65,
     architecture: "Turing",
     category: "推理专用",
@@ -483,7 +475,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "NVIDIA P100 (16GB)",
     memory: 16,
-    memoryBandwidthInGB: 720,
+    memoryBandwidthInGB: 732,
     fp16Tflops: 21,
     architecture: "Pascal",
     category: "数据中心",
@@ -561,7 +553,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "AMD Instinct MI250X",
     memory: 128,
-    memoryBandwidthInGB: 2048,
+    memoryBandwidthInGB: 3200,
     fp16Tflops: 380,
     architecture: "CDNA 2",
     category: "数据中心",
@@ -570,7 +562,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "AMD Instinct MI250",
     memory: 128,
-    memoryBandwidthInGB: 2048,
+    memoryBandwidthInGB: 3200,
     fp16Tflops: 360,
     architecture: "CDNA 2",
     category: "数据中心",
@@ -579,7 +571,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "AMD Instinct MI210",
     memory: 64,
-    memoryBandwidthInGB: 1024,
+    memoryBandwidthInGB: 1600,
     fp16Tflops: 180,
     architecture: "CDNA 2",
     category: "数据中心",
@@ -588,7 +580,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "AMD Instinct MI100",
     memory: 32,
-    memoryBandwidthInGB: 1024,
+    memoryBandwidthInGB: 1200,
     fp16Tflops: 150,
     architecture: "CDNA 1",
     category: "数据中心",
@@ -597,7 +589,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "AMD Instinct MI60",
     memory: 32,
-    memoryBandwidthInGB: 900,
+    memoryBandwidthInGB: 1024,
     fp16Tflops: 120,
     architecture: "Vega",
     category: "数据中心",
@@ -606,7 +598,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "AMD Instinct MI50",
     memory: 32,
-    memoryBandwidthInGB: 900,
+    memoryBandwidthInGB: 1024,
     fp16Tflops: 100,
     architecture: "Vega",
     category: "数据中心",
@@ -615,7 +607,7 @@ export const gpuModels: GPUModel[] = [
   {
     name: "AMD Instinct MI25",
     memory: 16,
-    memoryBandwidthInGB: 512,
+    memoryBandwidthInGB: 484,
     fp16Tflops: 50,
     architecture: "Vega",
     category: "数据中心",
@@ -793,7 +785,7 @@ export const gpuModels: GPUModel[] = [
     architecture: "M4",
     category: "Apple Silicon",
     releaseYear: 2024,
-    memoryBandwidthInGB: 410,
+    memoryBandwidthInGB: 546,
   },
   {
     name: "Apple M4 Max (64GB)",
@@ -802,7 +794,7 @@ export const gpuModels: GPUModel[] = [
     architecture: "M4",
     category: "Apple Silicon",
     releaseYear: 2024,
-    memoryBandwidthInGB: 410,
+    memoryBandwidthInGB: 546,
   },
   {
     name: "Apple M4 Max (36GB)",
@@ -847,7 +839,7 @@ export const gpuModels: GPUModel[] = [
     architecture: "M4",
     category: "Apple Silicon",
     releaseYear: 2024,
-    memoryBandwidthInGB: 100,
+    memoryBandwidthInGB: 120,
   },
   {
     name: "Apple M4 (24GB)",
@@ -856,7 +848,7 @@ export const gpuModels: GPUModel[] = [
     architecture: "M4",
     category: "Apple Silicon",
     releaseYear: 2024,
-    memoryBandwidthInGB: 100,
+    memoryBandwidthInGB: 120,
   },
   {
     name: "Apple M4 (16GB)",
@@ -865,7 +857,7 @@ export const gpuModels: GPUModel[] = [
     architecture: "M4",
     category: "Apple Silicon",
     releaseYear: 2024,
-    memoryBandwidthInGB: 100,
+    memoryBandwidthInGB: 120,
   },
   {
     name: "Apple M3 Ultra (192GB)",
@@ -1138,7 +1130,7 @@ export const gpuModels: GPUModel[] = [
     architecture: "昇腾",
     category: "数据中心",
     releaseYear: 2023,
-    memoryBandwidthInGB: 1200,
+    memoryBandwidthInGB: 1600,
   },
   {
     name: "Huawei Ascend 910A",
@@ -1147,7 +1139,7 @@ export const gpuModels: GPUModel[] = [
     architecture: "昇腾",
     category: "数据中心",
     releaseYear: 2022,
-    memoryBandwidthInGB: 1024,
+    memoryBandwidthInGB: 910,
   },
   {
     name: "Huawei Ascend 910",
@@ -1156,7 +1148,7 @@ export const gpuModels: GPUModel[] = [
     architecture: "昇腾",
     category: "数据中心",
     releaseYear: 2019,
-    memoryBandwidthInGB: 1024,
+    memoryBandwidthInGB: 910,
   },
   {
     name: "Huawei Ascend 710",
