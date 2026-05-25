@@ -526,7 +526,12 @@
       "label": "GPU-Modell",
       "placeholder": "GPU-Modelle suchen...",
       "searchPlaceholder": "GPU-Modelle suchen...",
-      "notFound": "Kein GPU-Modell gefunden"
+      "notFound": "Kein GPU-Modell gefunden",
+      "bandwidth": {
+        "title": "GPU-Speicherbandbreite",
+        "subtitle": "Vergleichen Sie alle GPUs nach Speicherbandbreite. Höhere Bandbreite verbessert meist den LLM-Inferenzdurchsatz.",
+        "selectedLabel": "Ausgewählte GPU"
+      }
     },
     "results": {
       "totalMemory": "Erforderlicher Gesamtspeicher",

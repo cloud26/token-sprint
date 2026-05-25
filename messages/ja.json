@@ -527,7 +527,12 @@
       "label": "GPUモデル",
       "placeholder": "GPUモデルを検索...",
       "searchPlaceholder": "GPUモデルを検索...",
-      "notFound": "GPUモデルが見つかりません"
+      "notFound": "GPUモデルが見つかりません",
+      "bandwidth": {
+        "title": "GPUメモリ帯域幅",
+        "subtitle": "すべてのGPUをメモリ帯域幅で比較します。帯域幅が高いほど、通常LLM推論スループットが向上します。",
+        "selectedLabel": "選択中のGPU"
+      }
     },
     "results": {
       "totalMemory": "必要総メモリ",
