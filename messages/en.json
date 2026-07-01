@@ -474,24 +474,6 @@
       },
       "options": [
         {
-          "value": "1024",
-          "label": "1K tokens",
-          "description": "Standard interactions",
-          "scenarios": "Typical usage: Customer service, document Q&A, code assistance"
-        },
-        {
-          "value": "2048",
-          "label": "2K tokens",
-          "description": "Extended conversations",
-          "scenarios": "Typical usage: Technical discussions, detailed analysis, longer documents"
-        },
-        {
-          "value": "4096",
-          "label": "4K tokens",
-          "description": "Complex tasks",
-          "scenarios": "Typical usage: Paper analysis, code review, comprehensive reports"
-        },
-        {
           "value": "8192",
           "label": "8K tokens",
           "description": "Long-form content",
@@ -520,6 +502,18 @@
           "label": "128K tokens",
           "description": "Massive documents, panoramic analysis",
           "scenarios": "Typical usage: Research surveys, large project planning, enterprise AI assistants"
+        },
+        {
+          "value": "262144",
+          "label": "256K tokens",
+          "description": "Massive multi-document analysis",
+          "scenarios": "Typical usage: Large-scale research, multi-project codebase analysis, comprehensive enterprise AI"
+        },
+        {
+          "value": "524288",
+          "label": "512K tokens",
+          "description": "Extreme-scale context, full enterprise knowledge",
+          "scenarios": "Typical usage: Entire codebases, complete book series, comprehensive knowledge bases"
         }
       ]
     },

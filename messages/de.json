@@ -473,24 +473,6 @@
       },
       "options": [
         {
-          "value": "1024",
-          "label": "1K Token",
-          "description": "Standard-Interaktionen",
-          "scenarios": "Typische Nutzung: Kundenservice, Dokument-Q&A, Code-Unterstützung"
-        },
-        {
-          "value": "2048",
-          "label": "2K Token",
-          "description": "Erweiterte Gespräche",
-          "scenarios": "Typische Nutzung: Technische Diskussionen, detaillierte Analysen, längere Dokumente"
-        },
-        {
-          "value": "4096",
-          "label": "4K Token",
-          "description": "Komplexe Aufgaben",
-          "scenarios": "Typische Nutzung: Papieranalyse, Code-Review, umfassende Berichte"
-        },
-        {
           "value": "8192",
           "label": "8K Token",
           "description": "Lange Inhalte",
@@ -519,6 +501,18 @@
           "label": "128K Token",
           "description": "Massive Dokumente, panoramische Analyse",
           "scenarios": "Geeignet für: Forschungsübersichten, große Projektplanung, unternehmensweite KI-Assistenten"
+        },
+        {
+          "value": "262144",
+          "label": "256K Token",
+          "description": "Massive Multi-Dokument-Analyse",
+          "scenarios": "Geeignet für: Großforschung, Multi-Projekt-Codebase-Analyse, umfassende Unternehmens-KI"
+        },
+        {
+          "value": "524288",
+          "label": "512K Token",
+          "description": "Extremer Kontext, vollständiges Unternehmens-Wissen",
+          "scenarios": "Geeignet für: Gesamte Codebasen, vollständige Buchserien, umfassende Wissensdatenbanken"
         }
       ]
     },

@@ -464,24 +464,6 @@
       },
       "options": [
         {
-          "value": "1024",
-          "label": "1K tokens",
-          "description": "标准交互",
-          "scenarios": "典型使用: 客服机器人、文档问答、代码辅助"
-        },
-        {
-          "value": "2048",
-          "label": "2K tokens",
-          "description": "扩展对话",
-          "scenarios": "典型使用: 技术讨论、详细分析、较长文档"
-        },
-        {
-          "value": "4096",
-          "label": "4K tokens",
-          "description": "复杂任务",
-          "scenarios": "典型使用: 论文分析、代码审查、综合报告"
-        },
-        {
           "value": "8192",
           "label": "8K tokens",
           "description": "长篇内容",
@@ -510,6 +492,18 @@
           "label": "128K tokens",
           "description": "海量文档、全景分析",
           "scenarios": "典型使用: 研究综述、大型项目规划、企业级AI助手"
+        },
+        {
+          "value": "262144",
+          "label": "256K tokens",
+          "description": "超大规模文档、多项目分析",
+          "scenarios": "典型使用: 大规模研究、多项目代码库分析、全面的企业AI"
+        },
+        {
+          "value": "524288",
+          "label": "512K tokens",
+          "description": "极大规模上下文、完整企业知识",
+          "scenarios": "典型使用: 完整代码库、系列书籍、综合知识库"
         }
       ]
     },
