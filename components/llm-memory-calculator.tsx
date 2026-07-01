@@ -42,24 +42,6 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     // Context Length 配置选项 - 从翻译文件获取
     const CONTEXT_LENGTH_OPTIONS: ContextLengthOption[] = t.raw('contextLength.options') || [
         {
-            value: '1024',
-            label: '1K tokens',
-            description: '标准交互',
-            scenarios: '典型使用: 客服机器人、文档问答、代码辅助'
-        },
-        {
-            value: '2048',
-            label: '2K tokens',
-            description: '扩展对话',
-            scenarios: '典型使用: 技术讨论、详细分析、较长文档'
-        },
-        {
-            value: '4096',
-            label: '4K tokens',
-            description: '复杂任务',
-            scenarios: '典型使用: 论文分析、代码审查、综合报告'
-        },
-        {
             value: '8192',
             label: '8K tokens',
             description: '长篇内容',
@@ -159,7 +141,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
     const [gpuModel, setGpuModel] = useState<string>("NVIDIA H100 (80GB)")
     const [selectedModel, setSelectedModel] = useState<string>(getDefaultModel())
     const [batchSize, setBatchSize] = useState<string>("1") // 并发用户数 - 影响KV缓存显存
-    const [contextLength, setContextLength] = useState<string>("4096") // 上下文长度
+    const [contextLength, setContextLength] = useState<string>("8192") // 上下文长度
     // 移除期望吞吐量配置 - 专注于内存计算
     const [manualGpuCount, setManualGpuCount] = useState<string>("") // 手动设置的GPU数量
 

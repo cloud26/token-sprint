@@ -474,24 +474,6 @@
       },
       "options": [
         {
-          "value": "1024",
-          "label": "1Kトークン",
-          "description": "標準的なやりとり",
-          "scenarios": "典型的な使用: カスタマーサービス、文書Q&A、コード支援"
-        },
-        {
-          "value": "2048",
-          "label": "2Kトークン",
-          "description": "拡張された会話",
-          "scenarios": "典型的な使用: 技術的議論、詳細な分析、長めの文書"
-        },
-        {
-          "value": "4096",
-          "label": "4Kトークン",
-          "description": "複雑なタスク",
-          "scenarios": "典型的な使用: 論文分析、コードレビュー、包括的なレポート"
-        },
-        {
           "value": "8192",
           "label": "8Kトークン",
           "description": "長文コンテンツ",

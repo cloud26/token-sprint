@@ -464,24 +464,6 @@
       },
       "options": [
         {
-          "value": "1024",
-          "label": "1K tokens",
-          "description": "标准交互",
-          "scenarios": "典型使用: 客服机器人、文档问答、代码辅助"
-        },
-        {
-          "value": "2048",
-          "label": "2K tokens",
-          "description": "扩展对话",
-          "scenarios": "典型使用: 技术讨论、详细分析、较长文档"
-        },
-        {
-          "value": "4096",
-          "label": "4K tokens",
-          "description": "复杂任务",
-          "scenarios": "典型使用: 论文分析、代码审查、综合报告"
-        },
-        {
           "value": "8192",
           "label": "8K tokens",
           "description": "长篇内容",

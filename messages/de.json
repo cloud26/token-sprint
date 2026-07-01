@@ -473,24 +473,6 @@
       },
       "options": [
         {
-          "value": "1024",
-          "label": "1K Token",
-          "description": "Standard-Interaktionen",
-          "scenarios": "Typische Nutzung: Kundenservice, Dokument-Q&A, Code-Unterstützung"
-        },
-        {
-          "value": "2048",
-          "label": "2K Token",
-          "description": "Erweiterte Gespräche",
-          "scenarios": "Typische Nutzung: Technische Diskussionen, detaillierte Analysen, längere Dokumente"
-        },
-        {
-          "value": "4096",
-          "label": "4K Token",
-          "description": "Komplexe Aufgaben",
-          "scenarios": "Typische Nutzung: Papieranalyse, Code-Review, umfassende Berichte"
-        },
-        {
           "value": "8192",
           "label": "8K Token",
           "description": "Lange Inhalte",
