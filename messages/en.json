@@ -520,6 +520,18 @@
           "label": "128K tokens",
           "description": "Massive documents, panoramic analysis",
           "scenarios": "Typical usage: Research surveys, large project planning, enterprise AI assistants"
+        },
+        {
+          "value": "262144",
+          "label": "256K tokens",
+          "description": "Massive multi-document analysis",
+          "scenarios": "Typical usage: Large-scale research, multi-project codebase analysis, comprehensive enterprise AI"
+        },
+        {
+          "value": "524288",
+          "label": "512K tokens",
+          "description": "Extreme-scale context, full enterprise knowledge",
+          "scenarios": "Typical usage: Entire codebases, complete book series, comprehensive knowledge bases"
         }
       ]
     },

@@ -519,6 +519,18 @@
           "label": "128K Token",
           "description": "Massive Dokumente, panoramische Analyse",
           "scenarios": "Geeignet für: Forschungsübersichten, große Projektplanung, unternehmensweite KI-Assistenten"
+        },
+        {
+          "value": "262144",
+          "label": "256K Token",
+          "description": "Massive Multi-Dokument-Analyse",
+          "scenarios": "Geeignet für: Großforschung, Multi-Projekt-Codebase-Analyse, umfassende Unternehmens-KI"
+        },
+        {
+          "value": "524288",
+          "label": "512K Token",
+          "description": "Extremer Kontext, vollständiges Unternehmens-Wissen",
+          "scenarios": "Geeignet für: Gesamte Codebasen, vollständige Buchserien, umfassende Wissensdatenbanken"
         }
       ]
     },
