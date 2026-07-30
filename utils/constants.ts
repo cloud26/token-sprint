@@ -2361,6 +2361,25 @@ export const MODELS: ModelInfo[] = [
     defaultPrecision: "INT4",
   },
 
+  // Kimi K3 系列 (Moonshot AI新一代万亿参数MoE智能体模型)
+  {
+    name: "Kimi-K3",
+    parameters: "1T",
+    parametersNum: 1000,
+    value: "kimi-k3",
+    d_model: 7168, // Same architecture as K2/K2.5/K2.6
+    n_layers: 61, // Same architecture as K2/K2.5/K2.6
+    n_kv_heads: 1, // MLA (Multi-head Latent Attention)
+    d_head: 512, // MLA compressed latent dimension
+    activeParams: 32,
+    isMoE: true,
+    source: "Kimi-K3: 1T-A32B next-generation agentic model with improved reasoning and tool-use; MLA attention; same MoE architecture as K2 series",
+    verificationUrl: "https://huggingface.co/moonshotai/Kimi-K2.5",
+    series: "Kimi K2",
+    category: "原始模型",
+    defaultPrecision: "INT4",
+  },
+
   // Kimi K2.6 系列 (Moonshot AI最新编程智能体模型)
   {
     name: "Kimi-K2.6",

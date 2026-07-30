@@ -107,7 +107,7 @@ export const tokenCounterModels: TokenCounterModel[] = [
         slug: 'moonshot-kimi',
         name: 'Moonshot Kimi',
         company: 'Moonshot',
-        defaultModel: 'kimi-k2.6'
+        defaultModel: 'kimi-k3'
     },
     {
         slug: 'xiaomi-mimo',
