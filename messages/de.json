@@ -286,6 +286,17 @@
             "MiMo-V2-Flash: 309B optimiert für schnelle Inferenz",
             "Hybride Sliding-Window- + globale Aufmerksamkeitsarchitektur"
           ]
+        },
+        "kimi": {
+          "modelName": "Kimi",
+          "modelVersions": "Kimi-K3/K2.6/K2.5/K2",
+          "features": "Billionen-Parameter-MoE-Agentenmodelle von Moonshot AI",
+          "specialFeatures": [
+            "Kimi-K3: 1T-A32B Agentenmodell der nächsten Generation",
+            "1T Gesamt-, 32B aktive Parameter, MoE-Architektur",
+            "MLA (Multi-head Latent Attention) für effizienten KV-Cache",
+            "Native INT4-Quantisierung für optimale Speichernutzung"
+          ]
         }
       }
     },

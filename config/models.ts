@@ -35,6 +35,12 @@ export const models: Record<string, ModelConfig> = {
         name: "MiMo",
         parameters: 1020, // MiMo-V2.5-Pro默认参数
         recommendedPrecision: "FP8"
+    },
+    kimi: {
+        slug: "kimi",
+        name: "Kimi",
+        parameters: 1000, // Kimi-K3默认参数 (1T-A32B)
+        recommendedPrecision: "INT4"
     }
 }
 
@@ -107,7 +113,7 @@ export const tokenCounterModels: TokenCounterModel[] = [
         slug: 'moonshot-kimi',
         name: 'Moonshot Kimi',
         company: 'Moonshot',
-        defaultModel: 'kimi-k2.6'
+        defaultModel: 'kimi-k3'
     },
     {
         slug: 'xiaomi-mimo',

@@ -156,6 +156,7 @@ const models: ModelInfo[] = [
     { value: "qwen-max", label: "Qwen-Max 🤗", encoding: "huggingface", hub: "Qwen/Qwen-tokenizer" },
 
     // Kimi 系列 - 使用官方 Hugging Face 模型 (原生INT4量化)
+    { value: "kimi-k3", label: "Kimi-K3 🤗", encoding: "huggingface", hub: "moonshotai/Kimi-K2.5" },
     { value: "kimi-k2.6", label: "Kimi-K2.6 🤗", encoding: "huggingface", hub: "moonshotai/Kimi-K2.5" },
     { value: "kimi-k2.5", label: "Kimi-K2.5 🤗", encoding: "huggingface", hub: "moonshotai/Kimi-K2.5" },
     { value: "kimi-k2", label: "Kimi-K2 🤗", encoding: "huggingface", hub: "moonshotai/Kimi-K2" },

@@ -287,6 +287,17 @@
             "MiMo-V2-Flash: 309B 高速推理优化",
             "混合滑动窗口+全局注意力架构"
           ]
+        },
+        "kimi": {
+          "modelName": "Kimi",
+          "modelVersions": "Kimi-K3/K2.6/K2.5/K2",
+          "features": "Moonshot AI 万亿参数 MoE 智能体模型",
+          "specialFeatures": [
+            "Kimi-K3: 1T-A32B 新一代智能体模型",
+            "1T 总参数，32B 激活参数 MoE 架构",
+            "MLA（多头潜在注意力）高效 KV 缓存",
+            "原生 INT4 量化，显存占用更优"
+          ]
         }
       }
     },
