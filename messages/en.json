@@ -532,7 +532,12 @@
       "label": "GPU Model",
       "placeholder": "Search GPU models...",
       "searchPlaceholder": "Search GPU models...",
-      "notFound": "No GPU model found"
+      "notFound": "No GPU model found",
+      "bandwidth": {
+        "title": "GPU Memory Bandwidth",
+        "subtitle": "Compare all GPUs by memory bandwidth. Higher bandwidth usually improves LLM inference throughput.",
+        "selectedLabel": "Selected GPU"
+      }
     },
     "results": {
       "totalMemory": "Total Memory Required",

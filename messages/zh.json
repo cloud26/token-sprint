@@ -522,7 +522,12 @@
       "label": "GPU型号",
       "placeholder": "搜索GPU型号...",
       "searchPlaceholder": "搜索GPU型号...",
-      "notFound": "未找到匹配的GPU型号"
+      "notFound": "未找到匹配的GPU型号",
+      "bandwidth": {
+        "title": "GPU 显存带宽",
+        "subtitle": "按显存带宽对比所有 GPU。带宽越高，通常 LLM 推理吞吐越好。",
+        "selectedLabel": "当前 GPU"
+      }
     },
     "results": {
       "totalMemory": "总显存需求",
