@@ -2375,7 +2375,7 @@ export const MODELS: ModelInfo[] = [
     isMoE: true,
     source: "Kimi-K3: 1T-A32B next-generation agentic model with improved reasoning and tool-use; MLA attention; same MoE architecture as K2 series",
     verificationUrl: "https://huggingface.co/moonshotai/Kimi-K2.5",
-    series: "Kimi K2",
+    series: "Kimi K3",
     category: "原始模型",
     defaultPrecision: "INT4",
   },
@@ -2632,6 +2632,7 @@ export const getModelsByGroup = () => {
   // 按系列名称排序，优先显示最新发布的系列
   const seriesOrder = [
     "DeepSeek V4",
+    "Kimi K3",
     "Kimi K2",
     "GLM-5",
     "MiniMax M2",
