@@ -1,68 +1,68 @@
-# Token Sprint - AI 工具集
+# Token Sprint - AI Toolkit
 
-基于 Next.js 15 + shadcn/ui 构建的现代化 AI 工具集，提供 Token 生成速度可视化和 LLM 显存计算功能。
+A modern AI toolkit built with Next.js 15 and shadcn/ui, featuring token generation speed visualization and LLM GPU memory calculation.
 
-## 快速开始
+## Quick Start
 
-\`\`\`bash
-# 安装依赖
+```bash
+# Install dependencies
 pnpm install
 
-# 启动开发服务器
+# Start the development server
 pnpm dev
 
-# 在浏览器中打开
+# Open in your browser
 # http://localhost:3000
-\`\`\`
+```
 
-## 核心功能
+## Core Features
 
-- **Token 生成速度可视化器** - 实时体验不同的 token 生成速度对用户体验的影响
-- **大模型推理显存计算器** - 计算大语言模型推理所需的 GPU 显存和数量
+- **Token Generation Speed Visualizer** - Experience in real time how different token generation speeds affect the user experience
+- **LLM Inference GPU Memory Calculator** - Calculate the GPU memory and number of GPUs required for large language model inference
 
-## 技术栈
+## Tech Stack
 
 - Next.js 15 (App Router)
 - React 19 + TypeScript
 - shadcn/ui + Tailwind CSS
-- 支持中英文双语
-- Datadog 日志监控（可选）
+- Chinese and English language support
+- Datadog log monitoring (optional)
 
-## 日志监控（可选）
+## Log Monitoring (Optional)
 
-项目集成了 Datadog 日志监控功能，可以帮助你：
+The project integrates Datadog log monitoring to help you:
 
-- 监控用户使用情况和计算结果
-- 跟踪性能指标和错误信息
-- 分析用户行为和使用模式
+- Monitor user activity and calculation results
+- Track performance metrics and errors
+- Analyze user behavior and usage patterns
 
-### 快速配置
+### Quick Setup
 
-1. 创建 `.env.local` 文件
-2. 添加你的 Datadog Client Token：
-   \`\`\`env
+1. Create a `.env.local` file.
+2. Add your Datadog Client Token:
+   ```env
    NEXT_PUBLIC_DATADOG_CLIENT_TOKEN=your_token_here
-   \`\`\`
-3. 重启开发服务器
+   ```
+3. Restart the development server.
 
-详细配置说明请查看 [Datadog 设置指南](./doc/DATADOG_SETUP.md)
+For detailed configuration instructions, see the [Datadog Setup Guide](./doc/DATADOG_SETUP.md).
 
-### 测试配置
+### Test the Configuration
 
-\`\`\`bash
-# 运行配置检查脚本
+```bash
+# Run the configuration check script
 node scripts/test-datadog.js
-\`\`\`
+```
 
-> **注意**: 如果不配置 Datadog，应用仍会正常工作，日志将输出到控制台。
+> **Note:** The application works without Datadog configuration. Logs will be written to the console instead.
 
-## 文档
+## Documentation
 
-详细文档请查看 [doc/](./doc/) 目录：
+For detailed documentation, see the [doc/](./doc/) directory:
 
-- [项目概述](./doc/README.md)
-- [技术架构](./doc/ARCHITECTURE.md)
-- [组件设计](./doc/COMPONENTS.md)
-- [样式设计](./doc/STYLING.md)
-- [开发指南](./doc/DEVELOPMENT.md)
-- [Datadog 设置指南](./doc/DATADOG_SETUP.md)
+- [Project Overview](./doc/README.md)
+- [Technical Architecture](./doc/ARCHITECTURE.md)
+- [Component Design](./doc/COMPONENTS.md)
+- [Styling Guide](./doc/STYLING.md)
+- [Development Guide](./doc/DEVELOPMENT.md)
+- [Datadog Setup Guide](./doc/DATADOG_SETUP.md)
