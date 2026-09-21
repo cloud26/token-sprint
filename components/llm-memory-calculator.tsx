@@ -29,6 +29,9 @@ interface ContextLengthOption {
     scenarios: string
 }
 
+const MAX_GPU_BANDWIDTH = Math.max(...gpuModels.map((gpu) => gpu.memoryBandwidthInGB))
+const MIN_BANDWIDTH_BAR_PERCENT = 3
+
 export default function LLMMemoryCalculator({ preferredModelType }: CalculatorProps) {
     const t = useTranslations('calculator')
     const locale = useLocale()
@@ -160,6 +163,14 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
 
     const selectedGpu = gpuModels.find((gpu) => `${gpu.name} (${gpu.memory}GB)` === gpuModel)
     const gpuMemory = selectedGpu ? selectedGpu.memory : 80 // 默认使用 80GB
+
+    const formatBandwidth = (bandwidth: number) => {
+        if (bandwidth >= 1000) {
+            return `${(bandwidth / 1000).toFixed(bandwidth % 1000 === 0 ? 0 : 1)} TB/s`
+        }
+
+        return `${bandwidth} GB/s`
+    }
 
     // 获取选中模型的value用于精确匹配
     const selectedModelValue = sortedModelExamples.find(m => m.name === selectedModel)?.value
@@ -653,6 +664,7 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                                                                 <span className="font-medium text-xs truncate">{gpu.name}</span>
                                                                 <div className="flex items-center space-x-2 ml-2 flex-shrink-0">
                                                                     <span className="font-bold text-blue-600 text-sm">{gpu.memory}GB</span>
+                                                                    <span className="font-medium text-emerald-600 text-xs">{formatBandwidth(gpu.memoryBandwidthInGB)}</span>
                                                                 </div>
                                                             </div>
                                                             <div className="flex items-center justify-between w-full mt-1">
@@ -671,6 +683,61 @@ export default function LLMMemoryCalculator({ preferredModelType }: CalculatorPr
                             </PopoverContent>
                         </Popover>
                     </div>
+
+                    {/* GPU显存带宽可视化 */}
+                    <section className="space-y-2">
+                        <div className="flex items-center justify-between gap-2">
+                            <div>
+                                <Label className="text-sm font-medium">{t('gpu.bandwidth.title')}</Label>
+                                <p className="text-xs text-gray-500">{t('gpu.bandwidth.subtitle')}</p>
+                            </div>
+                            {selectedGpu && (
+                                <div className="text-right text-xs text-gray-600">
+                                    <div>{t('gpu.bandwidth.selectedLabel')}</div>
+                                    <div className="font-semibold text-emerald-700">{formatBandwidth(selectedGpu.memoryBandwidthInGB)}</div>
+                                </div>
+                            )}
+                        </div>
+                        <div className="max-h-72 overflow-y-auto rounded-lg border bg-slate-50 p-3 space-y-2">
+                            {gpuModels.map((gpu) => {
+                                const gpuValue = `${gpu.name} (${gpu.memory}GB)`
+                                const isSelected = gpuModel === gpuValue
+                                const bandwidthPercent = Math.max(
+                                    (gpu.memoryBandwidthInGB / MAX_GPU_BANDWIDTH) * 100,
+                                    MIN_BANDWIDTH_BAR_PERCENT
+                                )
+
+                                return (
+                                    <div
+                                        key={`bandwidth-${gpuValue}`}
+                                        className={cn(
+                                            "rounded-md border p-2 transition-colors",
+                                            isSelected ? "border-emerald-300 bg-emerald-50" : "border-slate-200 bg-white"
+                                        )}
+                                    >
+                                        <div className="mb-1 flex items-center justify-between gap-3">
+                                            <div className="min-w-0">
+                                                <div className="truncate text-xs font-medium text-slate-800">{gpu.name}</div>
+                                                <div className="text-[11px] text-slate-500">{gpu.architecture} · {gpu.memory}GB</div>
+                                            </div>
+                                            <div className="shrink-0 text-xs font-semibold text-emerald-700">
+                                                {formatBandwidth(gpu.memoryBandwidthInGB)}
+                                            </div>
+                                        </div>
+                                        <div className="h-2 overflow-hidden rounded-full bg-slate-200">
+                                            <div
+                                                className={cn(
+                                                    "h-full rounded-full",
+                                                    isSelected ? "bg-emerald-600" : "bg-emerald-400"
+                                                )}
+                                                style={{ width: `${bandwidthPercent}%` }}
+                                            />
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </section>
 
                     {/* 并发用户数 - 影响KV缓存显存 */}
                     <div className="space-y-1">
